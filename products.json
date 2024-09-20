@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name":" Automatic Feeder",
+        "price": 5600,
+        "image": "image/1.png"
+    },
+    {
+        "id": 2,
+        "name":" Dog Plate",
+        "price": 4500,
+        "image": "image/2.png"
+    },
+    {
+        "id": 3,
+        "name":" DOG CARRIER",
+        "price": 45000,
+        "image": "image/3.png"
+    },
+    {
+        "id": 4,
+        "name":" BREEEDWELL PSC25KG FEED",
+        "price": 26200,
+        "image": "image/4.png"
+    },
+    {
+        "id": 5,
+        "name":" HYBRID LAYER",
+        "price": 17000,
+        "image": "image/5.png"
+    },
+    {
+        "id": 6,
+        "name":" ODOUROUT",
+        "price": 6500,
+        "image": "image/6.png"
+    },
+    {
+        "id": 7,
+        "name":" ULTIMA FINISHER 25KG",
+        "price": 200,
+        "image": "image/7.png"
+    },
+    {
+        "id": 8,
+        "name":" 3 IN 1 IZOVA VACCINE",
+        "price": 70000,
+        "image": "image/8.png"
+    }
+
+]
