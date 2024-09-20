@@ -46,7 +46,7 @@ closeCart.addEventListener('click', () => {
                 newProduct.innerHTML = 
                 `<img src="${product.image}" alt="">
                 <h2>${product.name}</h2>
-                <div class="price">$${product.price}</div>
+                <div class="price">&#8358;${product.price}</div>
                 <button class="addCart">Add To Cart</button>`;
                 listProductHTML.appendChild(newProduct);
             });
