@@ -11,3 +11,7 @@ const displayCartItems = () => {
 };
 
 displayCartItems();
+document.querySelector('.checkout-button').addEventListener('click', function() {
+    // Perform any validation or actions here if necessary, I just added this right now
+    window.location.href = 'confirmation.html'; // Redirect to the confirmation page, i just added this right now
+});//just added this right now
