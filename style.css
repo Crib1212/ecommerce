@@ -185,7 +185,7 @@ body.showCart .container {
         grid-template-columns: repeat(2, 1fr);
     }
     .listCart .item {
-      margin-left: 10px;
+      margin-left: 20px;
 }
 a{
     display: flex;
