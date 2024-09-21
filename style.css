@@ -180,12 +180,12 @@ body.showCart .container {
 
 
 /* mobile */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
 }/*just added this code right now*/
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
     .cartTab {
         width: 100%; /* Make cart take up full width on small screens */
         right: -100%;/* remains 100*/
