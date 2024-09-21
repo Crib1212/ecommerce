@@ -184,11 +184,6 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
-    .cartTab {
-        width: 80%; /* Make the cart 80% of the screen width on small screens */
-        right: -80%; /* Initially hidden off the screen */
-        left: 20%; /* Shift the cart 20% from the left */
-    }
 }
 a{
     display: flex;
