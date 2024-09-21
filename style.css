@@ -170,8 +170,6 @@ body.showCart .container {
     /* Ensure the image fills the available space *//*just added this code newly*/
     max-width: 50px;
     /* Limit max width to avoid compression *//*just added this code newly*/
-    height: auto;
-    /* Maintain aspect ratio *//*just added this code newly*/
     object-fit: contain;
     /* Ensure image fits within its container *//*just added this code newly*/
 }
