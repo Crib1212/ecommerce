@@ -11,11 +11,7 @@ function openCart() {
         document.body.classList.add('showCart');//function for scrolling only on mobile device
     }
 }
-function closeCart() {
-    if (window.innerWidth <= 768) { // Apply only on mobile
-        document.body.classList.remove('showCart');
-    }
-}// function to close th e cart and continue
+
 const toggleCartWindow = () => {
     body.classList.toggle('showCart');
 };//just add this right now
