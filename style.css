@@ -165,7 +165,7 @@ body.showCart .container {
 }
 
 .listCart {
-    overflow: auto;
+    overflow: auto
 }
 
 .listCart::-webkit-scrollbar {
