@@ -47,5 +47,11 @@
         "price": 70000,
         "image": "image/8.png"
     }
+    {
+        "id": 9,
+        "name":" shoe",
+        "price": 7000,
+        "image": "image/9.png"
+    }
 
 ]
