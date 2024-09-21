@@ -192,7 +192,9 @@ body.showCart .container {
         gap: 10px;
         
     }.cartTab .btn {
-              position: fixed;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        position: fixed;
     }
 }
 
