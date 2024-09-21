@@ -2,6 +2,9 @@ body {
     margin: 0;
     font-family: Poppins;
 }
+body.showCart {
+    overflow: hidden;
+}
 
 .container {
     width: 1200px;
@@ -177,9 +180,7 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(3, 1fr);
     }
-    body.showCart {
-        overflow: hidden;
-    }
+   
 }
 
 
