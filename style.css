@@ -177,6 +177,9 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(3, 1fr);
     }
+    body.showCart {
+        overflow: hidden;
+    }
 }
 
 
