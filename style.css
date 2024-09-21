@@ -186,7 +186,7 @@ body.showCart .container {
     }
     .listCart .item {
       margin-left: 35px;
-      grid-template-columns: 40px 60px 40px 1fr;
+      grid-template-columns: 50px 60px 60px 1fr;
       gap: 5px;
 }
 a{
