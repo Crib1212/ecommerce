@@ -186,7 +186,7 @@ body.showCart .container {
     }
     .listCart .item {
       margin-left: 30px;
-      grid-template-columns: 50px 150px 50px 1fr;
+      grid-template-columns: 50px 1fr 30px 1fr;
 }
 a{
     display: flex;
