@@ -192,7 +192,7 @@ body.showCart .container {
         /*changed from 100 to 150*/ /* Initially hidden on the right */
     }
     body.showCart .cartTab {
-        right: 1; /* Show the cart when active */
+        right: 0; /* Show the cart when active */
     }
     body.showCart .container {
         transform: translateX(0); /* Prevent content from shifting */
