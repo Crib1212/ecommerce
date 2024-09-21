@@ -190,7 +190,11 @@ body.showCart .container {
         margin-left: 40px;
         grid-template-columns: 70px 100px 50px 1fr;
         gap: 10px;
+        
+    }.cartTab .btn {
+              position: fixed;
     }
+}
 
     a {
         display: flex;
