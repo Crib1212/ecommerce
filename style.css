@@ -187,8 +187,9 @@ body.showCart .container {
 }/*just added this code right now*/
 @media only screen and (max-width: 768px) {
     .cartTab {
-        width: 80%; /* Make cart take up full width on small screens */
         right: -100%;
+        width: 100%; /* Make cart take up full width on small screens */
+        
         /* remains 100*/
         /*changed from 100 to 150*/ /* Initially hidden on the right */
     }
