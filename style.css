@@ -185,6 +185,9 @@ body.showCart .container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+body.showCart .container {
+    transform: translateX(0); /* Prevent content from shifting */
+}
 a{
     display: flex;
     margin-left: 10px;
