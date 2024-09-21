@@ -186,7 +186,7 @@ body.showCart .container {
     }
 
     .listCart .item img {
-        width: 100%; /* Ensure the image fills the available space */
+        width: auto; /* Ensure the image fills the available space */
      
     }
 }
