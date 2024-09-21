@@ -6,7 +6,6 @@ let body = document.querySelector('body');
 let closeCart = document.querySelector('.close');
 let products = [];
 let cart = [];
-function openCart() 
 
 const toggleCartWindow = () => {
     body.classList.toggle('showCart');
