@@ -52,6 +52,27 @@
         "name":" shoe",
         "price": 7000,
         "image": "image/9.png"
+    },
+    {
+        "id": 10,
+        "name":"ultima Starter 25kg",
+        "price": 7000,
+        "image": "image/9.png"
+    },
+    {
+        "id": 11,
+        "name":" Dog bone",
+        "price": 7000,
+        "image": "image/11.png"
+    },
+    {
+        "id": 12,
+        "name":"Neoxymore WSP",
+        "price": 7000,
+        "image": "image/12.png"
     }
+
+
+
 
 ]
