@@ -119,9 +119,6 @@ body.showCart .container {
 .cartTab .btn {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    position:fixed;
-    bottom: 0; /* Align to the bottom *//*just added this for bitton position*/
-    width: 100%; /* Ensure buttons take full width of cart *//*just added for button position*/
 }
 
 .cartTab button {
@@ -180,7 +177,6 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(3, 1fr);
     }
-   
 }
 
 
