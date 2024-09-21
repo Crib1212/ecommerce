@@ -133,7 +133,7 @@ body.showCart .container {
 }
 
 .listCart .item img {
-    width: 100%;
+    width: auto;
 }
 
 .listCart .item {
