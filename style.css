@@ -111,8 +111,9 @@ body.showCart .container {
 
 .cartTab h1 {
     padding: 20px;
-    margin: 20;
+    margin: 0;
     font-weight: 300;
+    text-align: center;
 }
 
 .cartTab .btn {
