@@ -168,7 +168,7 @@ body.showCart .container {
     overflow: auto;
     width: 100%;
     /* Ensure the image fills the available space *//*just added this code newly*/
-    max-width: 50px;
+    max-width: 90px;
     /* Limit max width to avoid compression *//*just added this code newly*/
     object-fit: contain;
     /* Ensure image fits within its container *//*just added this code newly*/
