@@ -184,11 +184,8 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .listCart .item img {
-        width: 60%; /* Ensure the image fills the available space */
-     
-    }
+    .listCart .item {
+       width: 100px;
 }
 a{
     display: flex;
