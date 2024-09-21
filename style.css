@@ -119,6 +119,7 @@ body.showCart .container {
 .cartTab .btn {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    position:fixed
 }
 
 .cartTab button {
