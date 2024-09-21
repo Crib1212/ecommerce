@@ -166,12 +166,7 @@ body.showCart .container {
 
 .listCart {
     overflow: auto;
-    width: 100%;
-    /* Ensure the image fills the available space *//*just added this code newly*/
-    max-width: 90px;
-    /* Limit max width to avoid compression *//*just added this code newly*/
-    object-fit: contain;
-    /* Ensure image fits within its container *//*just added this code newly*/
+    width: 100px;
 }
 
 .listCart::-webkit-scrollbar {
@@ -192,9 +187,9 @@ body.showCart .container {
     }
 
     .cartTab {
-        width: 90%;
+        width: 100%;
         /* Make the cart take 90% of the screen width */
-        right: -90%;
+        right: -100%;
         /* Initially hide it off-screen */
     }
 
