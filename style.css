@@ -184,6 +184,9 @@ body.showCart .container {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
+    .cartTab {
+        width: 90%; /* Make the cart take 90% of the screen width */
+        right: -90%; /* Initially hide it off-screen */
 }
 a{
     display: flex;
