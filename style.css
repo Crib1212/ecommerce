@@ -219,6 +219,7 @@ body.showCart .container {
         display: inline-block;
         align-items: center;
         padding-top: 0px; /* Adjust for mobile view */
+        text-align: center;
     }
 
 }
