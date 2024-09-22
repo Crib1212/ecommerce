@@ -191,11 +191,9 @@ body.showCart .container {
         grid-template-columns: 70px 100px 50px 1fr;
         gap: 10px;
 
-    .cartTab h1 {
-            text-align: center;
-
-        }
+  
     }
+}
 
     a {
         display: flex;
