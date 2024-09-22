@@ -219,6 +219,12 @@ body.showCart .container {
         display: flex;
         align-items: center;
     }
+    .social-media a {
+        display: flex; /* Ensures the text and icons align properly */
+        justify-content: center; /* Centers content inside each link */
+        align-items: center;
+        width: auto; /* Set width as needed */
+    }
 }
 
 a {
