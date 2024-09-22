@@ -218,6 +218,7 @@ body.showCart .container {
         justify-content: center; /* just now Center the icons horizontally */
         display: inline-block;
         align-items: center;
+        padding-top: 20px; /* Adjust for mobile view */
     }
 
 }
