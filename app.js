@@ -12,15 +12,15 @@ const toggleCartWindow = () => {
 };//just add this right now
 
 listProductHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains('addCart')) {
-        let id_product = positionClick.parentElement.dataset.id;
-        addToCart(id_product);
+   // let positionClick = event.target;
+    //if (positionClick.classList.contains('addCart')) {
+      //  let id_product = positionClick.parentElement.dataset.id;
+        //addToCart(id_product);
 
         // Also show the cart window when "Add to Cart" is clicked
-        toggleCartWindow();  // <-- New line added here
+        //toggleCartWindow();  // <-- New line added here
     }
-}); //just added this right now
+}); //just added this right now//I commented what opens the cart whe you click on the add to cart button
 
 
 
