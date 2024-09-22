@@ -208,6 +208,10 @@ body.showCart .container {
     .title{
         margin-top: 250px;
     }
+    .cartTab{
+        position: relative;
+        bottom: 0;
+    }
 }
 
 a {
