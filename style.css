@@ -21,6 +21,12 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
+    position: fixed;
+    background-color: #eee;
+    width: 100%;
+    justify-content: space-between;
+    z-index: 1000;
+    top: 0;
 }
 
 .banner-img {
@@ -44,10 +50,13 @@ header {
     color: #fff;
     top: 50%;
     right: -20px;
+    cursor: pointer;
 }
 
 .title {
     font-size: xx-large;
+    margin-top: 150px;
+    
 }
 
 .listProduct .item img {
@@ -191,59 +200,59 @@ body.showCart .container {
         grid-template-columns: 70px 100px 50px 1fr;
         gap: 10px;
 
-  
+
     }
 }
 
-    a {
-        display: flex;
-        margin-left: 10px;
-        position: relative;
-    }
+a {
+    display: flex;
+    margin-left: 10px;
+    position: relative;
+}
 
-    footer {
-        background: black;
-        padding: 30px 0;
-    }
+footer {
+    background: black;
+    padding: 30px 0;
+}
 
-    .footer-category {
-        font-size: var(--fs-4);
-        font-weight: var(--weight-600);
-        margin-bottom: 15px;
-    }
+.footer-category {
+    font-size: var(--fs-4);
+    font-weight: var(--weight-600);
+    margin-bottom: 15px;
+}
 
-    .footer-category .footer-category-title {
-        color: pink;
-        text-transform: uppercase;
-    }
+.footer-category .footer-category-title {
+    color: pink;
+    text-transform: uppercase;
+}
 
-    .category-box-title {
-        color: #eee;
-    }
+.category-box-title {
+    color: #eee;
+}
 
-    .footer-category-link {
-        color: #d8cdcd;
-        /*adjust the colour of the footer link*/
-    }
+.footer-category-link {
+    color: #d8cdcd;
+    /*adjust the colour of the footer link*/
+}
 
-    /*.listProduct .item img[src="image/3.png"] + h2 {
+/*.listProduct .item img[src="image/3.png"] + h2 {
     margin-top: 20px; /* Adjust spacing for the title below 3.png */
-    /*}
+/*}
 
 /*.listProduct .item img[src="image/3.png"] + h2 + .price {
     margin-top: 0px; /* Adjust spacing for the price */
-    /*}
+/*}
 
 /*.listProduct .item img[src="image/3.png"] + h2 + .price + .addCart {
     margin-top: 130px; /* Adjust button position for 3.png product */
-    /*}
+/*}
 .listProduct .item h2,
 .listProduct .item .price,
 .listProduct .item button {
     margin: 5px 0;  /*Space around title, price, and button collectively */
-    /*}
+/*}
 .listProduct .item img {
     max-width: 50%;  Adjust this value to make the image smaller */
-    /*height: auto;  Maintain aspect ratio */
-    /*margin-bottom: 10px; /* Space below the image 
+/*height: auto;  Maintain aspect ratio */
+/*margin-bottom: 10px; /* Space below the image 
 }*/
