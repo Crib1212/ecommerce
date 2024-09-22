@@ -203,7 +203,7 @@ body.showCart .container {
 
     }
     .banner-img {
-        margin-top: 150px; /* Adjust for the space created by the fixed header */
+        margin-top: 250px; /* Adjust for the space created by the fixed header */
     }
 }
 
