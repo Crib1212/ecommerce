@@ -1,169 +1,77 @@
 [
     {
         "id": 1,
-        "name":" LD01 LOUNGE CHAIR",
-        "price": 200,
+        "name":" Automatic Feeder",
+        "price": 5600,
         "image": "image/1.png"
     },
     {
         "id": 2,
-        "name":" LD02 LOUNGE CHAIR",
-        "price": 250,
+        "name":" Dog Plate",
+        "price": 4500,
         "image": "image/2.png"
     },
     {
         "id": 3,
-        "name":" LD03 LOUNGE CHAIR",
-        "price": 290,
+        "name":" DOG CARRIER",
+        "price": 45000,
         "image": "image/3.png"
     },
     {
         "id": 4,
-        "name":" LD04 LOUNGE CHAIR",
-        "price": 200,
+        "name":" BREEEDWELL PSC25KG FEED",
+        "price": 26200,
         "image": "image/4.png"
     },
     {
         "id": 5,
-        "name":" LD05 LOUNGE CHAIR",
-        "price": 300,
+        "name":" HYBRID LAYER",
+        "price": 17000,
         "image": "image/5.png"
     },
     {
         "id": 6,
-        "name":" LD06 LOUNGE CHAIR",
-        "price": 200,
+        "name":" ODOUROUT",
+        "price": 6500,
         "image": "image/6.png"
     },
     {
         "id": 7,
-        "name":" LD07 LOUNGE CHAIR",
+        "name":" ULTIMA FINISHER 25KG",
         "price": 200,
         "image": "image/7.png"
     },
     {
         "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
+        "name":" 3 IN 1 IZOVA VACCINE",
+        "price": 70000,
         "image": "image/8.png"
     },
     {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
-    {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
+        "id": 9,
+        "name":" shoe",
+        "price": 7000,
+        "image": "image/9.png"
     },
     {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
-    }
-    ,
+        "id": 10,
+        "name":"ultima Starter 25kg",
+        "price": 7000,
+        "image": "image/9.png"
+    },
     {
-        "id": 8,
-        "name":" LD08 LOUNGE CHAIR",
-        "price": 200,
-        "image": "image/8.png"
+        "id": 11,
+        "name":" Dog bone",
+        "price": 7000,
+        "image": "image/11.png"
+    },
+    {
+        "id": 12,
+        "name":"Neoxymore WSP",
+        "price": 7000,
+        "image": "image/12.png"
     }
+
 
 
 
