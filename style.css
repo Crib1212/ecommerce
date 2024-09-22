@@ -213,6 +213,10 @@ body.showCart .container {
         bottom: 0;
         z-index: 1000;
     }
+    .social-media {
+        width: 100%; /*w just noEnsure it fits within the header */
+        justify-content: center; /* just now Center the icons horizontally */
+    }
 }
 
 a {
