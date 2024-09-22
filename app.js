@@ -19,8 +19,8 @@ const toggleCartWindow = () => {
 
         // Also show the cart window when "Add to Cart" is clicked
         //toggleCartWindow();  // <-- New line added here
-    }
-}); //just added this right now//I commented what opens the cart whe you click on the add to cart button
+    //}
+//}); //just added this right now//I commented what opens the cart whe you click on the add to cart button
 
 
 
