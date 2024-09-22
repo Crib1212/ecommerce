@@ -7,6 +7,24 @@ let closeCart = document.querySelector('.close');
 let products = [];
 let cart = [];
 
+const toggleCartWindow = () => {
+    body.classList.toggle('showCart');
+};//just add this right now
+
+listProductHTML.addEventListener('click', (event) => {
+    let positionClick = event.target;
+    if (positionClick.classList.contains('addCart')) {
+        let id_product = positionClick.parentElement.dataset.id;
+        addToCart(id_product);
+
+        // Also show the cart window when "Add to Cart" is clicked
+        toggleCartWindow();  // <-- New line added here
+    }
+}); //just added this right now
+
+
+
+
 
 iconCart.addEventListener('click', () => {
     body.classList.toggle('showCart');
@@ -28,19 +46,13 @@ closeCart.addEventListener('click', () => {
                 newProduct.innerHTML = 
                 `<img src="${product.image}" alt="">
                 <h2>${product.name}</h2>
-                <div class="price">$${product.price}</div>
+                <div class="price">&#8358;${product.price}</div>
                 <button class="addCart">Add To Cart</button>`;
                 listProductHTML.appendChild(newProduct);
             });
         }
     }
-    listProductHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        if(positionClick.classList.contains('addCart')){
-            let id_product = positionClick.parentElement.dataset.id;
-            addToCart(id_product);
-        }
-    })
+ 
 const addToCart = (product_id) => {
     let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
     if(cart.length <= 0){
@@ -82,7 +94,7 @@ const addCartToHTML = () => {
                 <div class="name">
                 ${info.name}
                 </div>
-                <div class="totalPrice">$${info.price * item.quantity}</div>
+                <div class="totalPrice">&#8358;${info.price * item.quantity}</div>
                 <div class="quantity">
                     <span class="minus"><</span>
                     <span>${item.quantity}</span>
