@@ -216,15 +216,10 @@ body.showCart .container {
     .social-media {
         width: 100%; /*w just noEnsure it fits within the header */
         justify-content: center; /* just now Center the icons horizontally */
-        display: flex;
+        display: inline-block;
         align-items: center;
     }
-    .social-media a {
-        display: flex; /* Ensures the text and icons align properly */
-        justify-content: center; /* Centers content inside each link */
-        align-items: center;
-        width: auto; /* Set width as needed */
-    }
+
 }
 
 a {
