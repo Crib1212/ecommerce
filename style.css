@@ -202,6 +202,9 @@ body.showCart .container {
 
 
     }
+    .banner-img {
+        margin-top: 100px; /* Adjust for the space created by the fixed header */
+    }
 }
 
 a {
