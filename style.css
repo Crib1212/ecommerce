@@ -217,6 +217,7 @@ body.showCart .container {
         width: 100%; /*w just noEnsure it fits within the header */
         justify-content: center; /* just now Center the icons horizontally */
         display: flex;
+        align-items: center;
     }
 }
 
