@@ -6,6 +6,10 @@ let body = document.querySelector('body');
 let closeCart = document.querySelector('.close');
 let products = [];
 let cart = [];
+document.querySelector('.checkOut').addEventListener('click', function() {
+    // Redirect to checkout page
+    window.location.href = 'checkout.html';
+});
 
 const toggleCartWindow = () => {
     body.classList.toggle('showCart');
@@ -21,8 +25,6 @@ listProductHTML.addEventListener('click', (event) => {
         //toggleCartWindow();  // <-- New line added here
     }
 }); //just added this right now//I commented what opens the cart whe you click on the add to cart button
-
-
 
 
 
@@ -155,4 +157,5 @@ const initApp = () => {
         }
     })
 }
+
 initApp();
