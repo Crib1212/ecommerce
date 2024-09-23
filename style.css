@@ -212,7 +212,7 @@ body.showCart .container {
         position: fixed;
         bottom: 0;
         z-index: 2000;
-        height: 80vh;
+        height: 100vh;
         max-height: 100;
         overflow-y: auto;
     }
