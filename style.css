@@ -211,7 +211,8 @@ body.showCart .container {
     .cartTab{
         position: fixed;
         bottom: 0;
-        z-index: 1000;
+        z-index: 2000;
+        right: 0;
     }
   
 }
