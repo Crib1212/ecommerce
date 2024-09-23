@@ -209,7 +209,7 @@ body.showCart .container {
         margin-top: 250px;
     }
     .cartTab{
-        position: sticky;
+        position: fixed;
         bottom: 0;
         z-index: 2000;
         overflow-y: auto;
