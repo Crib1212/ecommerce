@@ -214,7 +214,6 @@ body.showCart .container {
         z-index: 2000;
         right: 0;
         height: 100vh;
-        max-height: 100vh;
     }
   
 }
