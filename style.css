@@ -268,37 +268,37 @@ header .totalQuantity {
     font-size: large;
     font-weight: bold;
 }
-/* Responsive Styles for Mobile */
-@media (max-width: 768px) {
-    header img {
-        width: 40px;
-    }
 
-    header .totalQuantity {
-        width: 25px;
-        height: 25px;
-        font-size: medium;
-    }
-
+@media (max-width: 1024px) {
     .listProduct {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .listProduct .item img {
-        height: 200px;
-    }
-
-    .listProduct .item h2, .listProduct .item .price {
-        font-size: medium;
+        height: 250px;
     }
 
     .listProduct .item button {
-        width: 95%;
-        padding: 12px;
+        width: 90%;
     }
 
+    .container {
+        max-width: 100%;
+    }
+}
+
+/* Responsive Styles for Mobile */@media (max-width: 768px) {
     .cart {
-        width: 100%;
+        width: 100vw; /* Full width on mobile */
+    }
+    .listProduct {
+        grid-template-columns: repeat(2,1fr); /* Stack products in single column */
+        gap: 15px;
+    }
+    .cart .listCart .item {
+        grid-template-columns: 1fr 50px; /* Adjust for mobile view */
+    }
+    .checkoutLayout {
+        grid-template-columns: 1fr; /* Single column layout for mobile */
     }
 }
