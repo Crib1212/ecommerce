@@ -1,5 +1,7 @@
 body{
     font-family: monospace;
+    margin: 0;
+
 }/*removed overflow-x:hidden;*/
 
 .container{
@@ -13,18 +15,24 @@ body{
    
 }
 header img{
-    width: 50px;
+    width: 30px;
 }
 header{
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    position: fixed;
+    background-color: #eee;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    max-width: 90vw;
     
 
 }
 header .iconCart{
-    position: relative;
-    z-index: 1;
+    position: absolute;
     cursor: pointer;
     width: 50px;
 }
@@ -290,13 +298,12 @@ footer {
 .listCart .item {
     display: grid;
     grid-template-columns: 50px 1fr 70px;
-    gap: 15px;
+    gap: 10px;
   
 }
 .cartTab{
     position: fixed;
     bottom: 0;
-    z-index: 2000;
     overflow-y: auto;
 }
 
