@@ -287,18 +287,27 @@ header .totalQuantity {
     }
 }
 
-/* Responsive Styles for Mobile */@media (max-width: 768px) {
-    .cart {
-        width: 100vw; /* Full width on mobile */
+/* Responsive Styles for Mobile */
+    @media only screen and (max-width: 768px) {
+        .listProduct {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    
+        .listCart .item {
+            margin-left: 40px;
+            grid-template-columns: 70px 100px 50px 1fr;
+            gap: 10px;
+    
+    
+        }
+        
+        .title{
+            margin-top: 250px;
+        }
+        .cart{
+            position: fixed;
+            bottom: 0;
+            z-index: 2000;
+            overflow-y: auto;
+        }
     }
-    .listProduct {
-        grid-template-columns: repeat(2,1fr); /* Stack products in single column */
-        gap: 15px;
-    }
-    .cart .listCart .item {
-        grid-template-columns: 1fr 50px; /* Adjust for mobile view */
-    }
-    .checkoutLayout {
-        grid-template-columns: 1fr; /* Single column layout for mobile */
-    }
-}
