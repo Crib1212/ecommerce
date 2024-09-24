@@ -285,7 +285,6 @@ footer {
     .listCart .item {
         grid-template-columns: 70px 100px 50px 1fr;
         gap: 10px;
-        align-items: center;
         text-align: center;
 
 
