@@ -289,25 +289,40 @@ header .totalQuantity {
 
 /* Responsive Styles for Mobile */
     @media only screen and (max-width: 768px) {
-        .listProduct {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    
-        .listCart .item {
-            margin-left: 40px;
-            grid-template-columns: 70px 100px 50px 1fr;
-            gap: 10px;
-    
-    
-        }
         
-        .title{
-            margin-top: 250px;
-        }
-        .cart{
-            position: fixed;
-            bottom: 0;
-            z-index: 2000;
-            overflow-y: auto;
-        }
+
+    /**
+     * #CUSTOM PROPERTY
+     */
+  
+    :root {
+  
+      /**
+       * typography 
+       */
+  
+      --fs-1: 2.375rem;
+  
+    }
+  
+  
+  
+    /**
+     * #BASE 
+     */
+  
+    html { font-size: 17px; }
+  
+  
+  
+    /**
+     * #REUSED STYLE 
+     */
+  
+    .container {
+      max-width: 750px;
+      margin: auto;
+    }
+  
+  
     }
