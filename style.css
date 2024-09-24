@@ -42,7 +42,7 @@ header .totalQuantity{
 }
 .listProduct{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 .listProduct .item img{
@@ -51,9 +51,6 @@ header .totalQuantity{
     object-fit: cover;
 }
 .listProduct .item{
-    background-color: #EEEEE6;
-    padding: 20px;
-    border-radius: 20px;
     position: relative;
 }
 .listProduct .item h2{
@@ -268,8 +265,6 @@ footer {
     color: #d8cdcd;
     /*adjust the colour of the footer link*/
 }
-
-/* mobile */
 @media only screen and (max-width: 768px) {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
@@ -286,11 +281,4 @@ footer {
     .title{
         margin-top: 250px;
     }
-    .cartTab{
-        position: fixed;
-        bottom: 0;
-        z-index: 2000;
-        overflow-y: auto;
-    }
-  
 }
