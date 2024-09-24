@@ -122,6 +122,9 @@ header .totalQuantity{
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
+    align-items: center;
+    
+
     
 }
 .cart .listCart img{
@@ -280,10 +283,10 @@ footer {
     }
 
     .listCart .item {
-        margin-left: 40px;
         grid-template-columns: 70px 100px 50px 1fr;
         gap: 10px;
         align-items: center;
+        text-align: center;
 
 
     }
