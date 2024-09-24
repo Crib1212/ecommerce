@@ -1,30 +1,32 @@
 body{
     font-family: monospace;
-    font-synthesis: 15px;
 }/*removed overflow-x:hidden;*/
-a{
-    text-decoration: none;
-}
+
 .container{
     width: 1200px;
     margin: auto;
     max-width: 90vw;/*changed from 90% to 90vw*/
     transition: transform .5s;/*changed transform from 1 to .5s*/
     max-width: 90vw;
+    align-items: center;
+    padding-top: 10px;
    
 }
 header img{
-    width: 60px;
+    width: 50px;
 }
 header{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+
 }
 header .iconCart{
     position: relative;
     z-index: 1;
     cursor: pointer;
+    width: 50px;
 }
 header .totalQuantity{
     position: absolute;
@@ -46,6 +48,7 @@ header .totalQuantity{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    margin-top: 40px;
 }
 .listProduct .item img{
     width: 90%;
@@ -65,10 +68,12 @@ header .totalQuantity{
 }
 
 .listProduct .item h2{
+    text-align: center;
     font-weight: 700;
     font-size: x-large;
 }
 .listProduct .item .price{
+    text-align: center;
     font-size: x-large;
 }
 
