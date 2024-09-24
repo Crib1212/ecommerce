@@ -330,6 +330,7 @@ footer {
         bottom: 0;
         z-index: 2000;
         overflow-y: auto;
+        bottom: 0;
     }
 
 }
