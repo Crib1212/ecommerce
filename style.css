@@ -3,23 +3,15 @@ body{
     overflow-x: hidden;
     font-synthesis: 15px;
 }
-a {
-    display: flex;
-    margin-left: 10px;
-    position: relative;
-    width: 90px;
+a{
+    text-decoration: none;
 }
-
-
 .container{
     width: 1200px;
     margin: auto;
-    max-width: 90vw;
-    text-align: center;
-    padding-top: 10px;
-    transition: transform .5s;
+    max-width: 90%;
+    transition: transform 1s;
 }
-
 header img{
     width: 60px;
 }
@@ -29,10 +21,9 @@ header{
     justify-content: space-between;
 }
 header .iconCart{
-    
-        position:sticky;
-        margin-right: 120px;
-        }
+    position: relative;
+    z-index: 1;
+}
 header .totalQuantity{
     position: absolute;
     top: 0;
@@ -273,24 +264,4 @@ footer {
 .footer-category-link {
     color: #d8cdcd;
     /*adjust the colour of the footer link*/
-}
-@media (max-width: 768px) {
-    .listProduct {
-        flex: repeat(2, 1fr);
-    }
-    .cart {
-        width: 100%;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    .iconCart img {
-        width: 30px;
-    }
 }
