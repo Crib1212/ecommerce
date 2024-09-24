@@ -111,7 +111,7 @@ header .totalQuantity {
     gap: 20px;
     bottom: 0;
     overflow-y: auto;
-    padding: -20px;
+    padding: -40px;
 }
 
 .cart .buttons .checkout {
