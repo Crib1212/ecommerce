@@ -103,8 +103,6 @@ header .totalQuantity {
     color: #fff;
     position: fixed;
     width: 400px;
-    max-width: 80vw;
-    height: 100vh;
     background-color: #0E0F11;
     top: 0px;
     right: -100%;
@@ -330,7 +328,6 @@ footer {
         bottom: 0;
         z-index: 2000;
         overflow-y: auto;
-        bottom: 0;
     }
 
 }
