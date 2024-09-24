@@ -49,8 +49,12 @@ header .totalQuantity{
     width: 100%;
         height: 430px;
     object-fit: cover;
+    
 }
 .listProduct .item{
+    background-color: #EEEEE6;
+    padding: 20px;
+    border-radius: 20px;
     position: relative;
 }
 .listProduct .item h2{
@@ -59,6 +63,8 @@ header .totalQuantity{
 }
 .listProduct .item .price{
     font-size: x-large;
+    letter-spacing: 7px;
+    
 }
 
 .listProduct .item button{
