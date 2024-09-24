@@ -10,6 +10,7 @@ a{
     margin: auto;
     max-width: 90vw;/*changed from 90% to 90vw*/
     transition: transform .5s;/*changed transform from 1 to .5s*/
+    max-width: 90vw;
    
 }
 header img{
@@ -23,6 +24,7 @@ header{
 header .iconCart{
     position: relative;
     z-index: 1;
+    cursor: pointer;
 }
 header .totalQuantity{
     position: absolute;
@@ -42,17 +44,26 @@ header .totalQuantity{
 }
 .listProduct{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 .listProduct .item img{
-    width: 100%;
-        height: 430px;
+    width: 90%;
     object-fit: cover;
+    filter: drop-shadow(0 50px 20px #0009);
+   
 }
 .listProduct .item{
     position: relative;
+    background-color: #EEEEE6;
+    padding: 30px;
+    border-radius: 20px;
+    object-fit: cover;
+    width: 80%;/* to adjust the width of the img container*/
+    height: 80%;/* to adjust the height of the img container*/
+    
 }
+
 .listProduct .item h2{
     font-weight: 700;
     font-size: x-large;
@@ -84,15 +95,15 @@ header .totalQuantity{
     color: #fff;
     position: fixed;
     width: 400px;
-    max-width: 80vw;
     height: 100vh;
     background-color: #0E0F11;
     top: 0px;
-    right: -100%;
+    right: -400%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
     gap: 20px;
-    transition: right 1s;
+    transition: right .5s;
+    bottom:0px;
 }
 
 .cart .buttons .checkout{
@@ -275,7 +286,13 @@ footer {
     display: grid;
     grid-template-columns: 50px 1fr 70px;
     gap: 10px;
-    text-align: center;
-    align-items: center;
+  
 }
+.cartTab{
+    position: fixed;
+    bottom: 0;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
 }
