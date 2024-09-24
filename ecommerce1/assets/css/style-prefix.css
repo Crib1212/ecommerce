@@ -2436,7 +2436,7 @@ footer {
    */
 
   .container {
-    max-width: 750px;
+    max-width: 100px;
     margin: auto;
   }
 
