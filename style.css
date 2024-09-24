@@ -162,6 +162,7 @@ header .totalQuantity {
 }
 
 .cart .listCart {
+    padding: 40px;
     overflow: auto;
 }
 
