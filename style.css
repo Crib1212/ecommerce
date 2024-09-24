@@ -2,6 +2,7 @@ body{
     font-family: monospace;
     overflow-x: hidden;
     font-synthesis: 15px;
+    margin: 0;
 }
 a{
     text-decoration: none;
@@ -10,7 +11,7 @@ a{
     width: 1200px;
     margin: auto;
     max-width: 90%;
-    transition: transform 1s;
+    transition: transform .5s;
 }
 header img{
     width: 60px;
@@ -97,7 +98,10 @@ header .totalQuantity{
     display: grid;
     grid-template-rows: 50px 1fr 50px;
     gap: 20px;
-    transition: right 1s;
+    transition: right 1s; 
+    bottom: 0;
+    z-index: 2000;
+    overflow-y: auto;
 }
 
 .cart .buttons .checkout{
@@ -286,7 +290,7 @@ footer {
     .title{
         margin-top: 250px;
     }
-    .cartTab{
+    .cart{
         position: fixed;
         bottom: 0;
         z-index: 2000;
