@@ -265,20 +265,3 @@ footer {
     color: #d8cdcd;
     /*adjust the colour of the footer link*/
 }
-@media only screen and (max-width: 768px) {
-    .listProduct {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .listCart .item {
-        margin-left: 40px;
-        grid-template-columns: 70px 100px 50px 1fr;
-        gap: 10px;
-
-
-    }
-    
-    .title{
-        margin-top: 250px;
-    }
-}
