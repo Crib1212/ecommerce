@@ -1,161 +1,133 @@
-let listProductHTML = document.querySelector('.listProduct');
-let listCartHTML = document.querySelector('.listCart');
-let iconCart = document.querySelector('.icon-cart');
-let iconCartSpan = document.querySelector('.icon-cart span');
-let body = document.querySelector('body');
-let closeCart = document.querySelector('.close');
-let products = [];
-let cart = [];
-document.querySelector('.checkOut').addEventListener('click', function() {
-    // Redirect to checkout page
-    window.location.href = 'checkout.html';
+let iconCart = document.querySelector('.iconCart'); 
+let cart = document.querySelector('.cart');
+let container = document.querySelector('.container');
+let close = document.querySelector('.close');
+
+iconCart.addEventListener('click', function(){
+    if(cart.style.right == '-100%'){
+        cart.style.right = '0';
+        container.style.transform = 'translateX(-400px)';
+    }else{
+        cart.style.right = '-100%';
+        container.style.transform = 'translateX(0)';
+    }
 });
 
-const toggleCartWindow = () => {
-    body.classList.toggle('showCart');
-};//just add this right now
+close.addEventListener('click', function (){
+    cart.style.right = '-100%';
+    container.style.transform = 'translateX(0)';
+});
 
-listProductHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains('addCart')) {
-        let id_product = positionClick.parentElement.dataset.id;
-        addToCart(id_product);
-
-        // Also show the cart window when "Add to Cart" is clicked
-        //toggleCartWindow();  // <-- New line added here
-    }
-}); //just added this right now//I commented what opens the cart whe you click on the add to cart button
-
-
-
-iconCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-closeCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-
-    const addDataToHTML = () => {
-    // remove datas default from HTML
-
-        // add new datas
-        if(products.length > 0) // if has data
-        {
-            products.forEach(product => {
-                let newProduct = document.createElement('div');
-                newProduct.dataset.id = product.id;
-                newProduct.classList.add('item');
-                newProduct.innerHTML = 
-                `<img src="${product.image}" alt="">
-                <h2>${product.name}</h2>
-                <div class="price">&#8358;${product.price}</div>
-                <button class="addCart">Add To Cart</button>`;
-                listProductHTML.appendChild(newProduct);
-            });
-        }
-    }
- 
-const addToCart = (product_id) => {
-    let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(cart.length <= 0){
-        cart = [{
-            product_id: product_id,
-            quantity: 1
-        }];
-    }else if(positionThisProductInCart < 0){
-        cart.push({
-            product_id: product_id,
-            quantity: 1
-        });
-    }else{
-        cart[positionThisProductInCart].quantity = cart[positionThisProductInCart].quantity + 1;
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
-const addCartToMemory = () => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-const addCartToHTML = () => {
-    listCartHTML.innerHTML = '';
-    let totalQuantity = 0;
-    if(cart.length > 0){
-        cart.forEach(item => {
-            totalQuantity = totalQuantity +  item.quantity;
-            let newItem = document.createElement('div');
-            newItem.classList.add('item');
-            newItem.dataset.id = item.product_id;
-
-            let positionProduct = products.findIndex((value) => value.id == item.product_id);
-            let info = products[positionProduct];
-            listCartHTML.appendChild(newItem);
-            newItem.innerHTML = `
-            <div class="image">
-                    <img src="${info.image}">
-                </div>
-                <div class="name">
-                ${info.name}
-                </div>
-                <div class="totalPrice">&#8358;${info.price * item.quantity}</div>
-                <div class="quantity">
-                    <span class="minus"><</span>
-                    <span>${item.quantity}</span>
-                    <span class="plus">></span>
-                </div>
-            `;
-        })
-    }
-    iconCartSpan.innerText = totalQuantity;
-}
-
-listCartHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
-        let product_id = positionClick.parentElement.parentElement.dataset.id;
-        let type = 'minus';
-        if(positionClick.classList.contains('plus')){
-            type = 'plus';
-        }
-        changeQuantityCart(product_id, type);
-    }
-})
-const changeQuantityCart = (product_id, type) => {
-    let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(positionItemInCart >= 0){
-        let info = cart[positionItemInCart];
-        switch (type) {
-            case 'plus':
-                cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
-                break;
-        
-            default:
-                let changeQuantity = cart[positionItemInCart].quantity - 1;
-                if (changeQuantity > 0) {
-                    cart[positionItemInCart].quantity = changeQuantity;
-                }else{
-                    cart.splice(positionItemInCart, 1);
-                }
-                break;
-        }
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
-
-const initApp = () => {
-    // get data product
-    fetch('products.json')
+let products = null;
+// get data from file json
+fetch('product.json')
     .then(response => response.json())
     .then(data => {
         products = data;
         addDataToHTML();
+});
 
-        // get data cart from memory
-        if(localStorage.getItem('cart')){
-            cart = JSON.parse(localStorage.getItem('cart'));
-            addCartToHTML();
-        }
-    })
+// show datas product in list 
+function addDataToHTML() {
+    // remove default datas from HTML
+    let listProductHTML = document.querySelector('.listProduct');
+    listProductHTML.innerHTML = '';
+
+    // add new datas
+    if(products != null) { // if has data
+        products.forEach(product => {
+            let newProduct = document.createElement('div');
+            newProduct.classList.add('item');
+            newProduct.innerHTML = 
+            `<img src="${product.image}" alt="">
+            <h2>${product.name}</h2>
+            <div class="price">₦${product.price}</div> <!-- Changed $ to ₦ -->
+            <button onclick="addCart(${product.id})">Add To Cart</button>`;
+
+            listProductHTML.appendChild(newProduct);
+        });
+    }
 }
 
-initApp();
+// use cookie so the cart doesn't get lost on refresh page
+let listCart = [];
+function checkCart() {
+    var cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('listCart='));
+    if(cookieValue) {
+        listCart = JSON.parse(cookieValue.split('=')[1]);
+    } else {
+        listCart = [];
+    }
+}
+checkCart();
+
+function addCart($idProduct) {
+    let productsCopy = JSON.parse(JSON.stringify(products));
+    // If this product is not in the cart
+    if(!listCart[$idProduct]) {
+        listCart[$idProduct] = productsCopy.filter(product => product.id == $idProduct)[0];
+        listCart[$idProduct].quantity = 1;
+    } else {
+        // If this product is already in the cart, just increase the quantity
+        listCart[$idProduct].quantity++;
+    }
+    document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
+    addCartToHTML();
+}
+addCartToHTML();
+
+function addCartToHTML() {
+    // clear default data
+    let listCartHTML = document.querySelector('.listCart');
+    listCartHTML.innerHTML = '';
+
+    let totalHTML = document.querySelector('.totalQuantity');
+    let totalQuantity = 0;
+    // if has product in Cart
+    if(listCart) {
+        listCart.forEach(product => {
+            if(product) {
+                let newCart = document.createElement('div');
+                newCart.classList.add('item');
+                newCart.innerHTML = 
+                    `<img src="${product.image}">
+                    <div class="content">
+                        <div class="name">${product.name}</div>
+                        <div class="price">₦${product.price} / 1 product</div> <!-- Changed $ to ₦ -->
+                    </div>
+                    <div class="quantity">
+                        <button onclick="changeQuantity(${product.id}, '-')">-</button>
+                        <span class="value">${product.quantity}</span>
+                        <button onclick="changeQuantity(${product.id}, '+')">+</button>
+                    </div>`;
+                listCartHTML.appendChild(newCart);
+                totalQuantity = totalQuantity + product.quantity;
+            }
+        });
+    }
+    totalHTML.innerText = totalQuantity;
+}
+
+function changeQuantity($idProduct, $type) {
+    switch ($type) {
+        case '+':
+            listCart[$idProduct].quantity++;
+            break;
+        case '-':
+            listCart[$idProduct].quantity--;
+
+            // if quantity <= 0 then remove product from cart
+            if(listCart[$idProduct].quantity <= 0){
+                delete listCart[$idProduct];
+            }
+            break;
+        default:
+            break;
+    }
+    // save new data in cookie
+    document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
+    // reload HTML view cart
+    addCartToHTML();
+}
