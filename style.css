@@ -10,7 +10,7 @@ a{
     width: 1200px;
     margin: auto;
     max-width: 90%;
-    transition: transform 1s;
+    transition: transform .5s;
 }
 header img{
     width: 60px;
@@ -23,6 +23,7 @@ header{
 header .iconCart{
     position: relative;
     z-index: 1;
+    cursor: pointer;
 }
 header .totalQuantity{
     position: absolute;
@@ -264,4 +265,8 @@ footer {
 .footer-category-link {
     color: #d8cdcd;
     /*adjust the colour of the footer link*/
+}
+.header-logo img {
+    max-width: 150px; /* Adjust the size */
+    height: auto;
 }
