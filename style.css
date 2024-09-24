@@ -1,16 +1,16 @@
 body{
     font-family: monospace;
-    overflow-x: hidden;
     font-synthesis: 15px;
-}
+}/*removed overflow-x:hidden;*/
 a{
     text-decoration: none;
 }
 .container{
     width: 1200px;
     margin: auto;
-    max-width: 90%;
-    transition: transform 1s;
+    max-width: 90vw;/*changed from 90% to 90vw*/
+    transition: transform .5s;/*changed transform from 1 to .5s*/
+   
 }
 header img{
     width: 60px;
@@ -273,7 +273,7 @@ footer {
     }
 .listCart .item {
     display: grid;
-    grid-template-columns: 70px 150px 50px 1fr;
+    grid-template-columns: 50px 1fr 70px;
     gap: 10px;
     text-align: center;
     align-items: center;
