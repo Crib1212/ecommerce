@@ -297,6 +297,6 @@ header .totalQuantity {
         gap: 15px;
     }
     .cart .listCart .item {
-        grid-template-columns: 70px 1fr 700px;
+        grid-template-columns: 70px 1fr 70px;
     }
 }
