@@ -314,5 +314,11 @@ header .totalQuantity {
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
     }
+    .cart{
+        position: fixed;
+        bottom: 0;
+        z-index: 2000;
+        overflow-y: auto;
+    }
 }
 
