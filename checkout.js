@@ -2,12 +2,12 @@ let listCart = [];
 //mailfunction
 function sendMail(){
     let parms = {
-        name : document.getElementById("name").value,
-        phone : document.getElementById("phone").value,
-        address : document.getElementById("address").value,
-        email : document.getElementById("email").value,
-        country : document.getElementById("country").value,
-        city : document.getElementById("city").value,
+        name : document.getElementById("name").value.
+        phone : document.getElementById("phone").value.
+        address : document.getElementById("address").value.
+        email : document.getElementById("email").value.
+        country : document.getElementById("country").value.
+        city : document.getElementById("city").value.
         
     }
 
