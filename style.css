@@ -317,7 +317,7 @@ header .totalQuantity {
         bottom: 0;
         z-index: 2000;
         overflow-y: auto;
-        margin-right: 10;
+        margin-right: 40px;
     }
 }
 
