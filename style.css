@@ -71,19 +71,17 @@ header .totalQuantity {
 }
 
 .listProduct .item img {
-    width: 90%;
+    
     filter:drop-shadow(0 50px 20px #0009);
-    width: auto;
-    height: auto;
- 
+    width: 90%;
 }
 
 .listProduct .item {
-    padding: 20px;
+    
     border-radius: 20px;
     background-color: #EEEEE6;
     text-align: center;
-    
+    padding: 20px;
 }
 
 .listProduct .item h2 {
