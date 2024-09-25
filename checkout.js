@@ -1,4 +1,18 @@
 let listCart = [];
+//mailfunction
+function sendMail(){
+    let parms = {
+        name : document.getElementById("name").Value,
+        phone : document.getElementById("phone").Value,
+        address : document.getElementById("address").Value,
+        message : document.getElementById("message").Value,
+        country : document.getElementById("country").Value,
+        city : document.getElementById("city").Value,
+        
+    }
+
+    emailjs.send("service_vzfx9ok","template_bwmcw7c",parms).then(alert("Email Sent!!"))
+}
 function checkCart(){
         var cookieValue = document.cookie
         .split('; ')
