@@ -71,7 +71,7 @@ header .totalQuantity {
 }
 
 .listProduct .item img {
-    width: 90%;
+    width: 100%;
     filter:drop-shadow(0 50px 20px #0009);
  
 }
@@ -311,7 +311,7 @@ header .totalQuantity {
     }
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 10px;
     }
     .cart .listCart .item {
         grid-template-columns: 70px 1fr 70px;
