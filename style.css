@@ -318,6 +318,7 @@ header .totalQuantity {
         z-index: 2000;
         overflow-y: auto;
         margin-left: -100px;
+        max-width: 90vw;
     }
 }
 
