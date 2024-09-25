@@ -287,42 +287,16 @@ header .totalQuantity {
     }
 }
 
-/* Responsive Styles for Mobile */
-    @media only screen and (max-width: 768px) {
-        
-
-    /**
-     * #CUSTOM PROPERTY
-     */
-  
-    :root {
-  
-      /**
-       * typography 
-       */
-  
-      --fs-1: 2.375rem;
-  
+/*Responsive Style*/
+@media (max-width: 768px) {
+    .cart {
+        width: 100vw;
     }
-  
-  
-  
-    /**
-     * #BASE 
-     */
-  
-    html { font-size: 17px; }
-  
-  
-  
-    /**
-     * #REUSED STYLE 
-     */
-  
-    .container {
-      max-width: 750px;
-      margin: auto;
+    .listProduct {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
-  
-  
+    .cart .listCart .item {
+        grid-template-columns: 50px 1fr 50px;
     }
+}
