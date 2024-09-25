@@ -5,7 +5,7 @@ function sendMail(){
         name : document.getElementById("name").value,
         phone : document.getElementById("phone").value,
         address : document.getElementById("address").value,
-        message : document.getElementById("message").value,
+        email : document.getElementById("email").value,
         country : document.getElementById("country").value,
         city : document.getElementById("city").value,
         
