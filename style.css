@@ -83,6 +83,7 @@ header .totalQuantity {
     background-color: #EEEEE6;
     text-align: center;
     padding: 10px;
+    box-sizing: border-box;
    
 }
 
