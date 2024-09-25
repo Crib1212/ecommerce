@@ -290,13 +290,24 @@ header .totalQuantity {
 /*Responsive Style*/
 @media (max-width: 768px) {
     .cart {
-        width: 100vw;
+        width: 100vw; /* Full width */
+        height: 100vh; /* Full height */
+        top: 0; /* Align at the top */
+        right: 0; /* Bring it from the right */
     }
     .listProduct {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr); /* Two-column layout for product list */
+        gap: 15px; /* Adjust gap between items */
     }
     .cart .listCart .item {
-        grid-template-columns: 50px 1fr 50px;
+        grid-template-columns: 50px 1fr 50px; /* Adjust item layout in cart */
+    }
+    .cart h2 {
+        font-size: 24px; /* Adjust header font size for visibility */
+        padding: 20px; /* Space around header */
+    }
+    .cart .buttons {
+        grid-template-columns: 1fr; /* Stack buttons vertically */
+        gap: 10px; /* Space between buttons */
     }
 }
