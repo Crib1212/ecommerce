@@ -323,6 +323,6 @@ header .totalQuantity {
     .checkoutLayout {
         display: grid;
         grid-template-columns: repeat(1fr);
-        width: 100vw;
+        width: 100%;
 }
 
