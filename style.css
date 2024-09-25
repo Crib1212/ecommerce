@@ -202,7 +202,7 @@ header .totalQuantity {
 /* Checkout layout */
 .checkoutLayout {
     display: grid;
-    grid-template-columns: repeat(1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 50px;
     padding: 20px;
 }
@@ -320,5 +320,9 @@ header .totalQuantity {
         margin-left: -90px;
         max-width: 100vw;
     }
+    .checkoutLayout {
+        display: grid;
+        grid-template-columns: repeat(1fr);
+        width: 100vw;
 }
 
