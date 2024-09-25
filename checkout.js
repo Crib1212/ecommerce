@@ -2,15 +2,20 @@ let listCart = [];
 //mailfunction
 function sendMail(){
     let parms = {
-        name : document.getElementById("name").value.
-        phone : document.getElementById("phone").value.
-        address : document.getElementById("address").value.
-        email : document.getElementById("email").value.
-        country : document.getElementById("country").value.
-        city : document.getElementById("city").value.
+        name : document.getElementById("name").value,
+        phone : document.getElementById("phone").value,
+        address : document.getElementById("address").value,
+        email : document.getElementById("email").value,
+        country : document.getElementById("country").value,
+        city : document.getElementById("city").value,
         
-    }
-
+    };
+    emailjs.send("service_vzfx9ok", "template_bwmcw7c", parms)
+    .then(function(response) {
+        alert("Email Sent!!"); // Trigger alert on successful email sending
+    }, function(error) {
+        alert("Failed to send email. Please try again. Error: " + error); // Handle failure
+    });
     emailjs.send("service_vzfx9ok","template_bwmcw7c",parms).then(alert("Email Sent!!"))
 }
 function checkCart(){
