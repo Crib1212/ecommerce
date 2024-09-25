@@ -73,11 +73,11 @@ header .totalQuantity {
 .listProduct .item img {
     width: 100%;
     filter:drop-shadow(0 50px 20px #0009);
-    height: 100%;
+ 
 }
 
 .listProduct .item {
-    padding: 20px;
+    padding: 10px;
     border-radius: 20px;
     background-color: #EEEEE6;
     text-align: center;
