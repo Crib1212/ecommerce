@@ -11,8 +11,15 @@ function sendMail(){
         
     }
 
-    emailjs.send("service_vzfx9ok","template_bwmcw7c",parms).then(alert("Email Sent!!"))
-}
+    emailjs.send("service_vzfx9ok", "template_bwmcw7c", parms)
+    .then(function(response) {
+        alert("Email Sent Successfully!");
+        console.log("SUCCESS!", response.status, response.text);
+    }, function(error) {
+        alert("Failed to send email.");
+        console.log("FAILED...", error);
+    });
+}    
 function checkCart(){
         var cookieValue = document.cookie
         .split('; ')
