@@ -45,16 +45,16 @@
 
         <div class="right">
             <h1>Checkout</h1>
-
+            <form action="https://getform.io/f/bqonjnnb" method="POST">
             <div class="form">
                 <div class="group">
                     <label for="name">Full Name</label>
-                    <input type="text" name="name" id="name">
+                    <input type="text" name="name" id="name" required>
                 </div>
     
                 <div class="group">
                     <label for="phone">Phone Number</label>
-                    <input type="text" name="phone" id="phone">
+                    <input type="text" name="phone" id="phone" required>
                 </div>
     
                 <div class="group">
@@ -81,6 +81,10 @@
                         <option value="">FCT Abuja</option>
                     </select>
                 </div>
+                <!--hidden fields-->
+                <input type="hidden" name="total_quantity" id="total_quantity">
+                <input type="hidden" name="item_product" id="item_product">
+            
             </div>
             <div class="return">
                 <div class="row">

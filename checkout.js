@@ -1,18 +1,11 @@
 let listCart = [];
 //mailfunction
-function sendMail(){
-    let parms = {
-        name : document.getElementById("name").value,
-        phone : document.getElementById("phone").value,
-        address : document.getElementById("address").value,
-        email : document.getElementById("email").value,
-        country : document.getElementById("country").value,
-        city : document.getElementById("city").value,
-        
-    }
+document.querySelector('.buttonCheckout').addEventListener('click', function() {
+    // Update the hidden fields with total quantity and item details
+    document.getElementById('total_quantity').value = document.querySelector('.totalQuantity').innerText;
+    document.getElementById('item_product').value = listCart.map(product => product.name).join(', ');
+});
 
-    emailjs.send("service_vzfx9ok","template_bwmcw7c",parms).then(alert("Email Sent!!"))
-}
 function checkCart(){
         var cookieValue = document.cookie
         .split('; ')
