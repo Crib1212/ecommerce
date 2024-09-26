@@ -1,10 +1,65 @@
 let listCart = [];
 //mailfunction
 document.querySelector('.buttonCheckout').addEventListener('click', function() {
-    // Update the hidden fields with total quantity and item details
-    document.getElementById('total_quantity').value = document.querySelector('.totalQuantity').innerText;
-    document.getElementById('item_product').value = listCart.map(product => product.name).join(', ');
+    // Clear previous product details
+    const productDetailsDiv = document.getElementById('product-details');
+    productDetailsDiv.innerHTML = '';
+
+    // Loop through each product in listCart and create hidden input fields for name and quantity
+    listCart.forEach((product, index) => {
+        // Create hidden input for product name
+        const productNameInput = document.createElement('input');
+        productNameInput.type = 'hidden';
+        productNameInput.name = `product_${index + 1}_name`;  // e.g., product_1_name
+        productNameInput.value = product.name;
+        
+        // Create hidden input for product quantity
+        const productQuantityInput = document.createElement('input');
+        productQuantityInput.type = 'hidden';
+        productQuantityInput.name = `product_${index + 1}_quantity`;  // e.g., product_1_quantity
+        productQuantityInput.value = product.quantity;
+
+        // Append these hidden inputs to the product details div
+        productDetailsDiv.appendChild(productNameInput);
+        productDetailsDiv.appendChild(productQuantityInput);
+    });
 });
+
+document.querySelector('.buttonCheckout').addEventListener('click', function() {
+    // Clear any previous hidden fields
+    const productDetailsDiv = document.getElementById('product-details');
+    productDetailsDiv.innerHTML = '';
+
+    // Assuming listCart contains your product data
+    const listCart = [
+        { name: 'PRODUCT 1', quantity: 5, price: 500 },
+        { name: 'PRODUCT 2', quantity: 3, price: 300 }
+    ]; // Example cart items; replace this with your actual cart data
+
+    let totalPrice = 0; // Initialize total price variable
+
+    listCart.forEach((product, index) => {
+        // Calculate total price for each product
+        totalPrice += product.quantity * product.price;
+
+        // Create hidden fields for product details
+        productDetailsDiv.innerHTML += `
+            <input type="hidden" name="product_${index + 1}_name" value="${product.name}">
+            <input type="hidden" name="product_${index + 1}_quantity" value="${product.quantity}">
+            <input type="hidden" name="product_${index + 1}_price" value="${product.price}">
+        `;
+    });
+
+    // Add the total price to hidden fields
+    productDetailsDiv.innerHTML += `
+        <input type="hidden" name="total_price" value="${totalPrice}">
+        <input type="hidden" name="total_quantity" value="${document.querySelector('.totalQuantity').innerText}">
+    `;
+
+    // Optionally, submit the form programmatically
+    document.querySelector('form').submit();
+});
+
 
 function checkCart(){
         var cookieValue = document.cookie
