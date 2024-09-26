@@ -11,15 +11,8 @@ function sendMail(){
         
     }
 
-    emailjs.send("service_vzfx9ok", "template_bwmcw7c", parms)
-    .then(function(response) {
-        alert("Email Sent Successfully!");
-        console.log("SUCCESS!", response.status, response.text);
-    }, function(error) {
-        alert("Failed to send email.");
-        console.log("FAILED...", error);
-    });
-}    
+    emailjs.send("service_vzfx9ok","template_bwmcw7c",parms).then(alert("Email Sent!!"))
+}
 function checkCart(){
         var cookieValue = document.cookie
         .split('; ')
@@ -49,10 +42,10 @@ function addCartToHTML(){
                     `<img src="${product.image}">
                     <div class="info">
                         <div class="name">${product.name}</div>
-                        <div class="price">₦${product.price}/1 product</div>
+                        <div class="price">&#8358;${product.price}/1 product</div>
                     </div>
                     <div class="quantity">${product.quantity}</div>
-                    <div class="returnPrice">₦${product.price * product.quantity}</div>`;
+                    <div class="returnPrice">&#8358;${product.price * product.quantity}</div>`;
                 listCartHTML.appendChild(newCart);
                 totalQuantity = totalQuantity + product.quantity;
                 totalPrice = totalPrice + (product.price * product.quantity);
