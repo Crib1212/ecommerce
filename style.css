@@ -41,6 +41,7 @@ header {
 header .iconCart {
     position: relative;
     z-index: 1;
+    margin-right: 25px;
 }
 
 header .totalQuantity {
@@ -57,7 +58,6 @@ header .totalQuantity {
     align-items: center;
     border-radius: 50%;
     transform: translateX(20px);
-    position: absolute;
 }
 .product-title {
     text-align: center;
