@@ -14,9 +14,16 @@ a {
     transition: transform 0.3s ease;
     
 }
+.container .header-logo {
+    width: 100%;
+    margin: auto;
+    max-width: 90vw;
+    transition: transform 0.3s ease;
+    
+}
 
 header img {
-    width: 60px;
+    width: 50px;
 }
 
 header {
@@ -304,6 +311,12 @@ header .totalQuantity {
     .container {
         max-width: 100%;
     }
+    .header-logo img {
+        width: 150px; /* Adjust width as needed */
+        height: auto; /* Keeps the aspect ratio */
+        object-fit: contain; /* Ensures the image fits well within the container */
+    }
+   
 }
 
 /*Responsive Style*/
@@ -325,4 +338,7 @@ header .totalQuantity {
         gap: 10px;
 }
 /*for mobile*/
+.header-logo img {
+    width: 100px; /* Smaller logo on smaller screens */
+}
 }
