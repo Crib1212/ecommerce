@@ -348,6 +348,7 @@ header .totalQuantity {
         display: grid;
         grid-template-columns:1fr;
         gap: 10px;
+        width: 100%;
 }
 /*for mobile*/
 .header-logo img {
