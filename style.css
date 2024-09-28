@@ -221,7 +221,7 @@ header .totalQuantity {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 50px;
-    padding: 20px;
+    padding: 0px;
     
 }
 
