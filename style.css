@@ -344,11 +344,7 @@ header .totalQuantity {
         max-width: 100vw;
         height: auto;
     }
-    .checkoutLayout {
-        display: grid;
-        grid-template-columns:1fr;
-       
-}
+  
 /*for mobile*/
 .header-logo img {
     width: 100px; /* Smaller logo on smaller screens */
