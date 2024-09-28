@@ -331,7 +331,7 @@ header .totalQuantity {
 }
 
 /*Responsive Style*/
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 768px) {
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
     }
