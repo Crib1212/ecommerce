@@ -140,11 +140,11 @@ header .totalQuantity {
     width: 400px;
     background-color: #0E0F11;
     top: 0;
-    right: -100%;
+    right: -400%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
     gap: 20px;
-    transition: right 0.3s ease;
+    transition: right 0.5s ease;
     bottom: 0;
 }
 .category{
