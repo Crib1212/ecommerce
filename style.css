@@ -102,7 +102,7 @@ header .totalQuantity {
     display: block;
     filter:drop-shadow(0 50px 20px #0009);
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .listProduct .item {
@@ -130,7 +130,7 @@ header .totalQuantity {
     color: #eeeeee;
     padding: 20px 30px;
     border: none;
-    padding: 6px 11px;
+    padding: 10px;
     margin-top: 10px;
     border-radius: 20px;
     cursor: pointer;
