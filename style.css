@@ -27,6 +27,7 @@ a {
     height: 100%;
     padding: 20px;
     margin-top: 150px;
+   
 }
 
 header img {
@@ -420,5 +421,12 @@ header .totalQuantity {
    
     margin-top: 10px; /* Space between title and list */
     color: #333;
+}
+.banner-img{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    margin-top: 150px;
+   padding-right:40px;
 }
 }
