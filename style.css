@@ -99,10 +99,10 @@ header .totalQuantity {
 }
 
 .listProduct .item img {
-    display: block;
+    display:block;
     filter:drop-shadow(0 50px 20px #0009);
     width: 100%;
-    height: 100%;
+
 }
 
 .listProduct .item {
