@@ -22,6 +22,12 @@ a {
     transition: transform 0.3s ease;
     
 }
+.banner-img{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    margin-top: 150px;
+}
 
 header img {
     width: 60px;
@@ -79,7 +85,7 @@ header .totalQuantity {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 0px;
-    margin-top: 120px; /* Space between title and list */
+    margin-top: 10px; /* Space between title and list */
     color: #333;
 }
 .listProduct{
@@ -409,5 +415,10 @@ header .totalQuantity {
 }.product-title {
    
     margin-top: 160px; /* Space between title and list */
+}
+.product-title {
+   
+    margin-top: 10px; /* Space between title and list */
+    color: #333;
 }
 }
