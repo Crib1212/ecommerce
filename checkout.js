@@ -103,24 +103,3 @@ function addCartToHTML(){
     totalQuantityHTML.innerText = totalQuantity;
     totalPriceHTML.innerText = '₦' + totalPrice;
 }
-function sendMail() {
-    // Collect form and cart data, then send it to Zapier's webhook
-    fetch('https://hooks.zapier.com/hooks/catch/20309823/2miue63/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            name: document.getElementById('name').value,
-            phone: document.getElementById('phone').value,
-            // Add other form and cart details here
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
