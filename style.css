@@ -456,7 +456,7 @@ footer {
 
 
 /*Responsive Style*/
-@media only screen and (max-width: 786px) {
+@media only screen and (max-width: 700px) {
     .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
