@@ -477,7 +477,7 @@ footer {
         gap: 10px;
         width: 100%;
         max-width: 100vw;
-        padding: 10px;
+        padding-right:10px;
     }
 
     /*for mobile*/
