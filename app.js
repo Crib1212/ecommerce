@@ -9,20 +9,18 @@ function toggleMenu() {
     menu.classList.toggle('open');
   }
   
-iconCart.addEventListener('click', function(){
-    if(cart.style.right == '-100%'){
-        cart.style.right = '0';
-        container.style.transform = 'translateX(-400px)';
-    }else{
-        cart.style.right = '-100%';
-        container.style.transform = 'translateX(0)';
-    }
-})
-close.addEventListener('click', function (){
-    cart.style.right = '-100%';
-    container.style.transform = 'translateX(0)';
-})
 
+  iconCart.addEventListener('click', function() {
+    // Always open the cart and adjust the container position
+    cart.style.right = '0'; // Move the cart into view
+    container.style.transform = 'translateX(-400px)'; // Shift the container
+});
+
+// Close the cart when the close button is clicked
+close.addEventListener('click', function() {
+    cart.style.right = '-100%'; // Move the cart off-screen
+    container.style.transform = 'translateX(0)'; // Reset the container position
+});
 
 let products = null;
 // get data from file json
