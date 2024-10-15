@@ -472,11 +472,7 @@ footer {
     }
 
     .checkoutLayout {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-        width: 90%;
-        padding-right:40px;
+        padding: 0 10px; 
     }
 
     /*for mobile*/
