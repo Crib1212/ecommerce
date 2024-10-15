@@ -48,19 +48,26 @@
 
                         <div class="group">
                             <label for="country">Country</label>
-                            <select name="country" id="country">
-                                <option value="">Choose..</option>
-                                <option value="">Nigeria</option>
+                            <select name="country" id="country" required>
+                                <!--<option value="">Choose..</option>-->
+                                <option value="Nigeria">Nigeria</option>
+                               <!-- <option value="Ghana">Ghana</option>-->
+                               <!-- <option value="Uk">United Kingdom</option>-->
+                                <!-- Add more countries as needed -->
                             </select>
                         </div>
-
+                        
                         <div class="group">
                             <label for="city">City</label>
-                            <select name="city" id="city">
+                            <select name="city" id="city" required>
                                 <option value="">Choose..</option>
-                                <option value="">FCT Abuja</option>
+                                <option value="Fct_abuja">FCT Abuja</option>
+                                <option value="Lagos">Lagos</option>
+                                <option value="Portharcourt">Port Harcourt</option>
+                                <!-- Add more cities as needed -->
                             </select>
                         </div>
+                        
                         <!-- Hidden Fields for Product Name and Quantity -->
                         <div id="product-details" style="display:none;"></div>
 

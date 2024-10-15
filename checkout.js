@@ -121,3 +121,37 @@ function addCartToHTML(){
     totalQuantityHTML.innerText = totalQuantity;
     totalPriceHTML.innerText = '₦' + totalPrice;
 }
+// Example of populating the country dropdown using JavaScript
+document.addEventListener("DOMContentLoaded", function() {
+    const countrySelect = document.getElementById("country");
+    const citySelect = document.getElementById("city");
+    
+    // Populate the country dropdown
+    const countries = [""];
+    countries.forEach(country => {
+        const option = document.createElement("option");
+        option.value = country.toLowerCase().replace(/\s/g, "_");
+        option.textContent = country;
+        countrySelect.appendChild(option);
+    });
+
+    // Populate the city dropdown based on country selection
+    countrySelect.addEventListener("change", function() {
+        citySelect.innerHTML = ""; // Clear previous options
+        const cities = {
+            Nigeria: ["Choose..", "FCT Abuja", "Lagos", "Port Harcourt"],
+           // Ghana: ["Choose..", "Accra", "Kumasi", "Tamale"],
+           // Uk: ["Choose..", "London", "Manchester", "Birmingham"]
+        };
+        
+        const selectedCountry = this.value;
+        if (cities[selectedCountry]) {
+            cities[selectedCountry].forEach(city => {
+                const option = document.createElement("option");
+                option.value = city.toLowerCase().replace(/\s/g, "_");
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+        }
+    });
+});
