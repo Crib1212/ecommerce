@@ -1,4 +1,20 @@
 let listCart = [];
+
+function getProductDetailsFromHTML() {
+    const items = document.querySelectorAll('.list .item');
+    items.forEach(item => {
+        const productName = item.dataset.name; // Get product name from data attribute
+        const productPrice = parseInt(item.dataset.price); // Get product price from data attribute
+        const productQuantity = parseInt(item.dataset.quantity); // Get product quantity from data attribute
+        
+        // Push the product details into the listCart array
+        listCart.push({
+            name: productName,
+            price: productPrice,
+            quantity: productQuantity
+        });
+    });
+}
 //mailfunction
 document.querySelector('.buttonCheckout').addEventListener('click', function() {
     // Clear previous product details
@@ -32,11 +48,12 @@ document.querySelector('.buttonCheckout').addEventListener('click', function() {
 
     // Assuming listCart contains your product data
     const listCart = [
-        { name: 'PRODUCT 1', quantity: 5, price: 500 },
-        { name: 'PRODUCT 2', quantity: 3, price: 300 }
+
     ]; // Example cart items; replace this with your actual cart data
 
-    let totalPrice = 0; // Initialize total price variable
+   // Get the total price from the totalPrice div
+const totalPrice = parseFloat(document.querySelector('.totalPrice').innerText.replace(/₦/g, '').replace(/,/g, '').trim());
+
 
     listCart.forEach((product, index) => {
         // Calculate total price for each product
@@ -44,11 +61,12 @@ document.querySelector('.buttonCheckout').addEventListener('click', function() {
 
         // Create hidden fields for product details
         productDetailsDiv.innerHTML += `
-            <input type="hidden" name="product_${index + 1}_name" value="${product.name}">
-            <input type="hidden" name="product_${index + 1}_quantity" value="${product.quantity}">
-            <input type="hidden" name="product_${index + 1}_price" value="${product.price}">
-        `;
-    });
+        <input type="hidden" id="product_${index + 1}_id" name="product_${index + 1}_id" value="${product.id}">
+        <input type="hidden" id="product_${index + 1}_name" name="product_${index + 1}_name" value="${product.name}">
+        <input type="hidden" id="product_${index + 1}_quantity" name="product_${index + 1}_quantity" value="${product.quantity}">
+        <input type="hidden" id="product_${index + 1}_price" name="product_${index + 1}_price" value="${product.price}">
+    `;
+});
 
     // Add the total price to hidden fields
     productDetailsDiv.innerHTML += `
