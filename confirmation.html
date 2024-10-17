@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <div class="order-details"></div>
+        <div class="cart-details"></div>
+
+        <!-- Hidden form to submit to Formspree -->
+        <form id="orderForm" action="https://formspree.io/f/xgveelgg" method="POST" style="display: none;">
+            <input type="hidden" name="name" id="formName">
+            <input type="hidden" name="phone" id="formPhone">
+            <input type="hidden" name="address" id="formAddress">
+            <input type="hidden" name="email" id="formEmail">
+            <input type="hidden" name="country" id="formCountry">
+            <input type="hidden" name="city" id="formCity">
+            <input type="hidden" name="totalQuantity" id="formTotalQuantity">
+            <input type="hidden" name="totalPrice" id="formTotalPrice">
+            <input type="hidden" name="products" id="formProducts">
+        </form>
+
+        <button type="button" id="submitOrder" class="buttonCheckout">Submit Order</button>
+        <a href="index.html">Continue Shopping</a>
+    </div>
+
+    <script>
+        // Function to display order confirmation
+        function displayConfirmation() {
+            const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+            const listCart = JSON.parse(sessionStorage.getItem('listCart'));
+
+            // Display user details
+            let orderDetailsDiv = document.querySelector('.order-details');
+            orderDetailsDiv.innerHTML = `
+                <h2>Customer Details</h2>
+                <p><strong>Name:</strong> ${userDetails.name}</p>
+                <p><strong>Phone:</strong> ${userDetails.phone}</p>
+                <p><strong>Address:</strong> ${userDetails.address}</p>
+                <p><strong>Email:</strong> ${userDetails.email}</p>
+                <p><strong>Country:</strong> ${userDetails.country}</p>
+                <p><strong>City:</strong> ${userDetails.city}</p>
+                <p><strong>Total Quantity:</strong> ${userDetails.totalQuantity}</p>
+                <p><strong>Total Price:</strong> ₦${userDetails.totalPrice}</p>
+            `;
+
+            // Display cart items
+            let cartDetailsDiv = document.querySelector('.cart-details');
+            cartDetailsDiv.innerHTML = '<h2>Products Ordered</h2>';
+            let productsList = [];
+
+            listCart.forEach(product => {
+                if (product) {
+                    cartDetailsDiv.innerHTML += `
+                        <p>${product.name} - Quantity: ${product.quantity}</p>
+                    `;
+                    productsList.push(`${product.name} - Quantity: ${product.quantity}`);
+                }
+            });
+
+            // Populate the hidden form fields
+            document.getElementById('formName').value = userDetails.name;
+            document.getElementById('formPhone').value = userDetails.phone;
+            document.getElementById('formAddress').value = userDetails.address;
+            document.getElementById('formEmail').value = userDetails.email;
+            document.getElementById('formCountry').value = userDetails.country;
+            document.getElementById('formCity').value = userDetails.city;
+            document.getElementById('formTotalQuantity').value = userDetails.totalQuantity;
+            document.getElementById('formTotalPrice').value = userDetails.totalPrice;
+            document.getElementById('formProducts').value = productsList.join('\n ');
+        }
+
+        // Submit the form to Formspree when the button is clicked
+        document.getElementById('submitOrder').addEventListener('click', function () {
+            document.getElementById('orderForm').submit();
+        });
+
+        // Call the function on page load
+        document.addEventListener('DOMContentLoaded', displayConfirmation);
+    </script>
+</body>
+
+</html>

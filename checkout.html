@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Checkout</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
-
     <div class="container">
         <div class="checkoutLayout">
-
-
             <div class="returnCart">
                 <a href="index.html">keep shopping</a>
                 <h1>List Product in Cart</h1>
                 <div class="list">
+                    <!-- This will be populated dynamically -->
                 </div>
             </div>
-
 
             <div class="right">
                 <h1>Checkout</h1>
                 <form action="https://formspree.io/f/xgveelgg" method="POST">
                     <div class="form">
+                        <!-- User Information Fields -->
                         <div class="group">
                             <label for="name">Full Name</label>
                             <input type="text" name="name" id="name" required>
@@ -39,40 +34,34 @@
 
                         <div class="group">
                             <label for="address">Address</label>
-                            <input type="text" name="address" id="address">
+                            <input type="text" name="address" id="address" required>
                         </div>
+
                         <div class="group">
-                            <label for="email">email</label>
-                            <input type="text" name="email" id="email">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" required>
                         </div>
 
                         <div class="group">
                             <label for="country">Country</label>
                             <select name="country" id="country" required>
-                                <!--<option value="">Choose..</option>-->
                                 <option value="Nigeria">Nigeria</option>
-                               <!-- <option value="Ghana">Ghana</option>-->
-                               <!-- <option value="Uk">United Kingdom</option>-->
                                 <!-- Add more countries as needed -->
                             </select>
                         </div>
-                        
+
                         <div class="group">
                             <label for="city">City</label>
                             <select name="city" id="city" required>
-                                <option value="">Choose..</option>
                                 <option value="Fct_abuja">FCT Abuja</option>
                                 <option value="Lagos">Lagos</option>
                                 <option value="Portharcourt">Port Harcourt</option>
                                 <!-- Add more cities as needed -->
                             </select>
                         </div>
-                        
-                        <!-- Hidden Fields for Product Name and Quantity -->
-                        <div id="product-details" style="display:none;"></div>
-
-
                     </div>
+
+                    <!-- Hidden Fields for Checkout Summary -->
                     <div class="return">
                         <div class="row">
                             <div>Total Quantity</div>
@@ -82,28 +71,18 @@
                             <div>Total Price</div>
                             <div class="totalPrice"></div>
                         </div>
+
+                        <!-- Hidden Inputs for Form Submission -->
+                        <input type="hidden" name="totalQuantity" id="totalQuantity">
+                        <input type="hidden" name="totalPrice" id="totalPrice">
                     </div>
+
                     <button class="buttonCheckout" type="submit">CHECKOUT</button>
-                </form> 
+                </form>
             </div>
         </div>
     </div>
 
-
     <script src="checkout.js"></script>
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/67067ceccec6d0125df3f3b6/1i9olfvdc';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
 </body>
-
 </html>
