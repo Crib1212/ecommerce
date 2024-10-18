@@ -113,6 +113,12 @@
        "name": "Animal care layer mash 25kg",
         "price": 17300,
         "image": "images/20.png"
+    },
+    {
+    "id": 20,
+       "name": "3 in 1 vaccine",
+        "price": 17300,
+        "image": "images/22.png"
     }
- 
+
 ]
