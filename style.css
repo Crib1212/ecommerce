@@ -192,7 +192,7 @@ header .totalQuantity {
 
 .menu {
     position: fixed;
-    top: 100PX;
+    top: 100px;
     left: -150px;
     /* Initially hidden */
     width: 150px;
