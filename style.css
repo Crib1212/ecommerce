@@ -148,6 +148,7 @@ header .totalQuantity {
     margin-top: 10px;
     border-radius: 20px;
     cursor: pointer;
+    width: 30%;
 }
 
 /* Hover effect now only reveals the button without transitions */
