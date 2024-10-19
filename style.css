@@ -395,12 +395,8 @@ header .totalQuantity {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .listProduct .item img {
-        height: 250px;
-    }
-
     .listProduct .item button {
-        width: 90%;
+        width: 50%;
     }
 
     .container {
