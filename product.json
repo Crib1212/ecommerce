@@ -3,116 +3,116 @@
         "id": 1,
         "name": "Coxklin 100g",
         "price": 1800,
-        "image": "images/1.png"
+        "image": "../images/Coxklin.png"
     },
     {
         "id": 2,
         "name": "Aquaflox 100g",
         "price": 1600,
-        "image": "images/2.png"
+        "image": "../images/Aquaflox.png"
     },
     {
         "id": 3,
         "name": "Optimax can",
         "price": 1700,
-        "image": "images/3.png"
+        "image": "../images/Optimax_can.png"
     }
     ,
     {
         "id": 4,
-        "name": "Booster can",
+        "name": "Odour out",
         "price": 1700,
-        "image": "images/4.png"
+        "image": "../images/Odour_out.png"
     },
     {
         "id": 5,
         "name": "Booster can",
         "price": 1700,
-        "image": "images/5.png"
+        "image": "../images/5.png"
     },
     {
         "id": 6,
         "name": "Aquaceryl 100g",
         "price": 1500,
-        "image": "images/6.png"
+        "image": "../images/6.png"
     },
     {
         "id": 8,
         "name": "Diamond grain free",
         "price": 20000,
-        "image": "images/8.png"
+        "image": "../images/8.png"
     },
     {
         "id": 9,
         "name": "Diclamax 100g",
         "price": 1200,
-        "image": "images/9.png"
+        "image": "../images/9.png"
     },
     {
         "id": 10,
         "name": "Automatic feeder B/S",
         "price": 3000,
-        "image": "images/10.png"
+        "image": "../images/10.png"
     },
     {
         "id": 11,
         "name": "Automatic drinker M/S",
         "price": 3000,
-        "image": "mages/11.png"
+        "image": "../images/11.png"
     },
     {
         "id": 12,
         "name": "Three in one drinker",
         "price": 1450,
-        "image": "images/12.png"
+        "image": "../images/12.png"
     },
     {
         "id": 13,
         "name": "Quail feeder",
         "price": 2200,
-        "image": "images/13.png"
+        "image": "../images/13.png"
     },
     {
         "id": 14,
        "name": "Paper crate",
         "price": 8000,
-        "image": "images/14.png"
+        "image": "../images/14.png"
     },
     {
         "id": 15,
        "name": "Pulse sprayer 15L",
         "price": 1200,
-        "image": "images/15.png"
+        "image": "../images/15.png"
     },
     {
         "id": 16,
        "name": "Pet toy (bone)",
         "price": 1200,
-        "image": "images/16.png"
+        "image": "../images/16.png"
     },
     {
         "id": 17,
        "name": "Pet toy pink bone",
         "price": 2000,
-        "image": "images/17.png"
+        "image": "../images/17.png"
     },
     {
         "id": 18,
        "name": "Pet plate green",
         "price": 2000,
-        "image": "images/18.png"
+        "image": "../images/18.png"
     },
     {
         "id": 19,
        "name": "Pet cage yellow",
         "price": 40000,
-        "image": "images/19.png"
+        "image": "../images/19.png"
     },
     {
         "id": 20,
        "name": "Animal care layer mash 25kg",
         "price": 17300,
-        "image": "images/20.png"
+        "image": "../images/20.png"
     },
     {
         "id": 26,

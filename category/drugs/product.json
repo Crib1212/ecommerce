@@ -3,13 +3,13 @@
         "id": 1,
         "name": "Coxklin 100g",
         "price": 520,
-        "image": "../images/1.png"
+        "image": "../images/coxklin.png"
     },
     {
         "id": 2,
         "name": "Aquaflox 100g",
         "price": 220,
-        "image": "../images/2.png"
+        "image": "../images/aquaflox.png"
     },
    
     {
