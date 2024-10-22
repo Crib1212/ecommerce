@@ -1,19 +1,14 @@
 [
     {
         "id": 1,
-        "name": "Olam",
+        "name": "3 in 1 EDS Vaccine",
         "price": 520,
-        "image": "../images/Olam.png"
+        "image": "../images/3_in_1_EDS.png"
     },
     {
-        "id": 2,
-        "name": "Agrited",
-        "price": 220,
-        "image": "../images/Agrited.png"
-    },
-    {    "id": 20,
-       "name": "3 in 1 vaccine",
-        "price": 70000,
-        "image": "../images/26.png"
+        "id": 1,
+        "name": "3 in 1 EDS Vaccine",
+        "price": 520,
+        "image": "../images/vaccine_Boost.png"
     }
 ]

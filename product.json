@@ -58,7 +58,7 @@
         "id": 11,
         "name": "Automatic drinker M/S",
         "price": 3000,
-        "image": "images/11.png"
+        "image": "mages/11.png"
     },
     {
         "id": 12,
@@ -115,10 +115,10 @@
         "image": "images/20.png"
     },
     {
-    "id": 20,
-       "name": "3 in 1 vaccine",
-        "price": 17300,
-        "image": "images/22.png"
+        "id": 26,
+        "name": "Tylodox Extra 100g",
+        "price": 120,
+        "image": "../images/26.png"
     }
 
 ]

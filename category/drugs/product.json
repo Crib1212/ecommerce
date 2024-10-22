@@ -23,6 +23,12 @@
         "name": "Tylodox Extra 100g",
         "price": 120,
         "image": "../images/26.png"
+    },
+    {
+        "id": 12,
+        "name": "Three in one drinker",
+        "price": 120,
+        "image": "../images/12.png"
     }
     
     
