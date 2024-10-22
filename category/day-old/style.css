@@ -7,20 +7,20 @@ a {
     text-decoration: none;
 }
 
-.container {
-    width: 1200px;
-    margin: auto;
-    max-width: 90vw;
+.header-logo img{
+    width: 100px;
+    height: auto;
+    max-width: 100vw;
     transition: transform 0.3s ease;
-    overflow: hidden;
-    
+
 }
-.container .header-logo {
-    width: 100%;
-    margin: auto;
-    max-width: 90vw;
-    transition: transform 0.3s ease;
-    
+
+.banner-img {
+    width: 80%;
+    height: 450px;
+    margin-left: 150px;
+    margin-top: 150px;
+
 }
 
 header img {
@@ -39,14 +39,21 @@ header {
     position: fixed;
 
 }
+
 .header-sticky {
-    position: fixed; /* Fixes the header at the top */
-    top: 0; /* Aligns to the top of the viewport */
-    left: 0; /* Aligns to the left of the viewport */
-    width: 100%; /* Stretches across the viewport */
-    z-index: 1000; /* Ensures it stays on top of other content */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow for effect */
- 
+    position: fixed;
+    /* Fixes the header at the top */
+    top: 0;
+    /* Aligns to the top of the viewport */
+    left: 0;
+    /* Aligns to the left of the viewport */
+    width: 100%;
+    /* Stretches across the viewport */
+    z-index: 1000;
+    /* Ensures it stays on top of other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Stronger shadow for effect */
+
 }
 
 header .iconCart {
@@ -54,11 +61,7 @@ header .iconCart {
     z-index: 1;
     margin-right: 25px;
 }
-svg{
-width: 60px;
-height: auto; 
 
-}
 header .totalQuantity {
     position: absolute;
     top: 0;
@@ -74,16 +77,19 @@ header .totalQuantity {
     border-radius: 50%;
     transform: translateX(20px);
 }
+
 .product-title {
     text-align: center;
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 0px;
-    margin-top: 120px; /* Space between title and list */
+    margin-top: 10px;
+    /* Space between title and list */
     color: #333;
 }
-.listProduct{
-    
+
+.listProduct {
+
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -93,19 +99,19 @@ header .totalQuantity {
 
 .listProduct .item img {
     display: block;
-    filter:drop-shadow(0 50px 20px #0009);
+    filter: drop-shadow(0 50px 20px #0009);
     width: 100%;
-    height: auto;
+
 }
 
 .listProduct .item {
-    
+
     border-radius: 20px;
     background-color: #EEEEE6;
     text-align: center;
     padding: 10px;
     box-sizing: border-box;
-   
+
 }
 
 .listProduct .item h2 {
@@ -123,10 +129,11 @@ header .totalQuantity {
     color: #eeeeee;
     padding: 20px 30px;
     border: none;
-    padding: 6px 11px;
+    padding: 8px;
     margin-top: 10px;
     border-radius: 20px;
     cursor: pointer;
+    width: 30%;
 }
 
 /* Hover effect now only reveals the button without transitions */
@@ -139,59 +146,72 @@ header .totalQuantity {
     position: fixed;
     width: 400px;
     background-color: #0E0F11;
-    top: 0;
-    right: -400%;
+    top: 90px;
+    right: -100%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
     gap: 20px;
-    transition: right 0.5s ease;
+    transition: right 0.3s ease;
     bottom: 0;
+    
 }
-.category{
+
+.category {
     color: #000;
     background-color: #ffffff;
     width: 200px;
     top: 0;
-    left:-200%;
+    left: -200%;
     display: grid;
     grid-column: 1fr;
     gap: 10px;
     transition: left 0.5s ease;
 }
+
 .menu-icon {
     font-size: 30px;
     cursor: pointer;
+    position: fixed;
     right: 100px;
+
+}
+
+.menu {
     position: fixed;
-  }
-  .menu {
-    position: fixed;
-    top: 100px;
-    left: -150px; /* Initially hidden */
+    top: 145px;
+    border-radius: 5px;
+    left: -150px;
+    /* Initially hidden */
     width: 150px;
-    height: 100%;
-    background-color: black;
+    height: 70%;
+    background-color: rgb(0, 0, 0);
     transition: left 0.3s ease;
-  }
-  .menu ul {
+}
+
+.menu ul {
     list-style-type: none;
     padding: 0;
-  }
-  .menu ul li {
+}
+
+.menu ul li {
     padding: 15px;
     text-align: center;
-  }
-  .menu ul li a {
+}
+
+.menu ul li a {
     color: yellow;
     text-decoration: none;
     display: block;
-  }
-  .menu ul li a:hover {
-    background-color: inherit; ;
-  }
-  .menu.open {
+}
+
+.menu ul li a:hover {
+    background-color: inherit;
+    ;
+}
+
+.menu.open {
     left: 0;
-  }  
+}
 
 
 .cart .buttons .checkout {
@@ -272,7 +292,7 @@ header .totalQuantity {
     grid-template-columns: repeat(2, 1fr);
     gap: 50px;
     padding: 0px;
-    
+
 }
 
 .checkoutLayout .right {
@@ -296,7 +316,7 @@ header .totalQuantity {
     grid-column-end: 3;
 }
 
-.checkoutLayout .form input, 
+.checkoutLayout .form input,
 .checkoutLayout .form select {
     width: 100%;
     padding: 10px 20px;
@@ -346,7 +366,7 @@ header .totalQuantity {
     align-items: center;
     gap: 20px;
     margin-bottom: 30px;
-    padding: 0 10px;
+    padding: 0px;
     box-shadow: 0 10px 20px #5555;
     border-radius: 20px;
 }
@@ -362,54 +382,150 @@ header .totalQuantity {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .listProduct .item img {
-        height: 250px;
-    }
-
     .listProduct .item button {
-        width: 90%;
+        width: 60%;
     }
 
     .container {
         max-width: 100%;
     }
+
     .header-logo img {
-        width: 150px; /* Adjust width as needed */
-        height: auto; /* Keeps the aspect ratio */
-        object-fit: contain; /* Ensures the image fits well within the container */
+        width: 150px;
+        /* Adjust width as needed */
+        height: auto;
+        /* Keeps the aspect ratio */
+        object-fit: contain;
+        /* Ensures the image fits well within the container */
     }
-   
+
 }
 
+footer {
+    background-color: #000000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 20px;
+    padding-right: 10px;
+}
+
+.footer-section h3 {
+    font-size: 1.2em;
+    padding-right: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    padding-right: 10px;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+    padding-right: 10px;
+}
+
+.footer-section a {
+    text-decoration: none;
+    color: #ececec;
+    padding-right: 10px;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+
 /*Responsive Style*/
-@media only screen and (max-width: 800px) {
-    .listProduct{
+@media only screen and (max-width: 768px) {
+    .listProduct {
         grid-template-columns: repeat(2, 1fr);
     }
-    .cart{
+    .menu {
+        top: 145px;
+        border-radius: 5px;
+    }
+    .banner-img {
+        margin-left: 15px;
+    
+    }
+    .cart {
         position: fixed;
         bottom: 0;
+        border-radius: 5px;
+        top: 145px;
         z-index: 2000;
         overflow-y: auto;
         margin-left: -80px;
         max-width: 100vw;
         height: auto;
     }
+
     .checkoutLayout {
         display: grid;
-        grid-template-columns:1fr;
+        grid-template-columns: 1fr;
         gap: 10px;
         width: 100%;
         max-width: 100vw;
-}
-/*for mobile*/
-.header-logo img {
-    width: 100px; /* Smaller logo on smaller screens */
-}.listProduct{
+        padding: 0 10px; 
+        
+    }
+    * {
+        box-sizing: border-box; /* Ensures padding and borders are included in the element's width */
+    }
     
-    margin-top: 40px;
-}.product-title {
-   
-    margin-top: 160px; /* Space between title and list */
-}
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        width: 100%;
+    }
+    
+
+    /*for mobile*/
+    .header-logo img {
+        width: 100px;
+        /* Smaller logo on smaller screens */
+    }
+
+    .listProduct {
+
+        margin-top: 40px;
+    }
+
+    .product-title {
+
+        margin-top: 160px;
+        /* Space between title and list */
+    }
+
+    .product-title {
+
+        margin-top: 160px;
+        /* Space between title and list */
+        color: #333;
+    }
+
+    .banner-img {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        margin-top: 150px;
+        padding-right: 40px;
+    }
+
+    footer {
+        background-color: #000000;
+        padding: 20px;
+        display: grid;
+        justify-content:space-around;
+        padding-right: 10px;
+        grid-template-columns:1fr;
+    }
 }
