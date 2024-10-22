@@ -464,7 +464,7 @@ footer {
 
     .cart {
         position: fixed;
-        bottom: 0;
+        bottom: 0px;
         z-index: 2000;
         overflow-y: auto;
         margin-left: -80px;

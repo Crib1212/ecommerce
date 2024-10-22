@@ -3,17 +3,17 @@
         "id": 1,
         "name": "Olam",
         "price": 520,
-        "image": "images/Olam.png"
+        "image": "../images/Olam.png"
     },
     {
         "id": 2,
         "name": "Agrited",
         "price": 220,
-        "image": "images/Agrited.png"
+        "image": "../images/Agrited.png"
     },
     {    "id": 20,
        "name": "3 in 1 vaccine",
         "price": 70000,
-        "image": "images/22.png"
+        "image": "../images/26.png"
     }
 ]
