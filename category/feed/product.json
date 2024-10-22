@@ -1,13 +1,13 @@
 [
     
     {
-        "id": 20,
+        "id": 21,
        "name": "Animal care layer mash 25kg",
         "price": 120,
         "image": "../images/20.png"
     },
     {
-        "id": 21,
+        "id": 22,
        "name": "Animal care Nutria starter",
         "price": 120,
         "image": "../images/Nutria_starter.png"

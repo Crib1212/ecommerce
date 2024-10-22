@@ -1,12 +1,12 @@
 [
     {
-        "id": 1,
+        "id": 4,
         "name": "Coxklin 100g",
         "price": 520,
         "image": "../images/Coxklin.png"
     },
     {
-        "id": 2,
+        "id": 5,
         "name": "Aquaflox 100g",
         "price": 220,
         "image": "../images/aquaflox.png"
@@ -19,18 +19,51 @@
         "image": "../images/6.png"
     },
     {
-        "id": 26,
+        "id": 7,
         "name": "Tylodox Extra 100g",
         "price": 120,
-        "image": "../images/26.png"
+        "image": "../images/Tylo-dox_extra.png"
+    },
+    {
+        "id": 8,
+        "name": "Doxygen",
+        "price": 120,
+        "image": "../images/Doxygen.png"
+    },
+    {
+        "id": 9,
+        "name": "Neoxymore",
+        "price": 120,
+        "image": "../images/Neoxymore.png"
+    },
+    {
+        "id": 10,
+        "name": "Neotreat",
+        "price": 120,
+        "image": "../images/Neotreat.png"
+    },
+    {
+        "id": 11,
+        "name": "Organic drug",
+        "price": 120,
+        "image": "../images/Organic_drugs.png"
     },
     {
         "id": 12,
-        "name": "Three in one drinker",
+        "name": "OTC",
         "price": 120,
-        "image": "../images/12.png"
+        "image": "../images/OTC.png"
+    },
+    {
+        "id": 13,
+        "name": "Tylocol",
+        "price": 120,
+        "image": "../images/Tylocol.png"
+    }, {
+        "id": 14,
+        "name": "max-boost",
+        "price": 120,
+        "image": "../images/max-boost.png"
     }
     
-    
-   
 ]

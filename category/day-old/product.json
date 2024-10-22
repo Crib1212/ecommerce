@@ -1,12 +1,12 @@
 [
     {
-        "id": 1,
+        "id": 2,
         "name": "Olam",
         "price": 520,
         "image": "../images/Olam.png"
     },
     {
-        "id": 2,
+        "id": 3,
         "name": "Agrited",
         "price": 220,
         "image": "../images/Agrited.png"

@@ -1,15 +1,8 @@
 [
     {
-        "id": 1,
+        "id": 23,
         "name": "Olam",
         "price": 520,
         "image": "../images/Olam.png"
-    },
-    {
-        "id": 2,
-        "name": "Agrited",
-        "price": 220,
-        "image": "../images/Agrited.png"
     }
- 
 ]

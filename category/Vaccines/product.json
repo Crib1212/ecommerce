@@ -1,12 +1,12 @@
 [
     {
-        "id": 1,
+        "id": 31,
         "name": "3 in 1 EDS Vaccine",
         "price": 520,
         "image": "../images/3_in_1_EDS.png"
     },
     {
-        "id": 1,
+        "id": 32,
         "name": "3 in 1 EDS Vaccine",
         "price": 520,
         "image": "../images/vaccine_Boost.png"
