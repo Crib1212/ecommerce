@@ -77,7 +77,22 @@ header .totalQuantity {
     border-radius: 50%;
     transform: translateX(20px);
 }
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
 
+.social-media a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.social-media a img:hover {
+    transform: scale(1.2);
+}
 .product-title {
     text-align: center;
     font-size: 2em;
