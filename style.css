@@ -506,7 +506,7 @@ footer {
         height: auto;
     }
     .returnCart .list .item {
-       width: 90%;
+       width: 100%;
     }
     .checkoutLayout {
         display: grid;
