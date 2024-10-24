@@ -505,7 +505,9 @@ footer {
         max-width: 100vw;
         height: auto;
     }
-
+    .returnCart .list .item {
+       width: 90%;
+    }
     .checkoutLayout {
         display: grid;
         grid-template-columns: 1fr;
