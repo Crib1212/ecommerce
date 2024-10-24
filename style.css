@@ -398,7 +398,7 @@ header .totalQuantity {
     display: grid;
     grid-template-columns: 80px 1fr 50px 80px;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
     padding: 0px;
     box-shadow: 0 10px 20px #5555;
