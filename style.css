@@ -489,6 +489,11 @@ footer {
         margin-left: 15px;
     
     }
+    .social-media a img {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s;
+    }
     .cart {
         position: fixed;
         bottom: 0;
