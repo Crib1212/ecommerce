@@ -1,10 +1,11 @@
 [
    
+   
     {
-        "id": 24,
-        "name": "Optimax can",
-        "price": 250,
-        "image": "../images/Optimax.png"
+        "id": 32,
+        "name": "Standard Juvenile",
+        "price": 520,
+        "image": "../images/Standard-juvenile.png"
     }
     
 ]
