@@ -19,7 +19,7 @@ a {
     width: 80%;
     height: 450px;
     margin-left: 150px;
-    margin-top: 150px;
+    margin-top: 200px;
 
 }
 
@@ -78,11 +78,15 @@ header .totalQuantity {
     transform: translateX(20px);
 }
 .social-media {
-    display: flex;
+    display:flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 50%;
 }
+
 
 .social-media a img {
     width: 30px;
@@ -90,7 +94,22 @@ header .totalQuantity {
     transition: transform 0.3s;
 }
 
+
 .social-media a img:hover {
+    transform: scale(1.2);
+}
+.footer-social-media {
+    display:flex;
+    justify-content: center;
+    gap: 15px;
+    bottom: 0;
+}
+.footer-social-media a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+.footer-social-media a img:hover {
     transform: scale(1.2);
 }
 .product-title {
