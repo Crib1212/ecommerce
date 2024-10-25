@@ -1,5 +1,11 @@
 [
     {
+        "id": 33,
+        "name": "Chick on 1L",
+        "price": 5200,
+        "image": "../images/Chick_on_1L.png"
+    },
+    {
         "id": 1,
         "name": "Coxklin 100g",
         "price": 1800,
@@ -19,6 +25,12 @@
     }
     ,
     {
+        "id": 34,
+        "name": "Medecol 1L",
+        "price": 5200,
+        "image": "../images/Medecol_1L.png"
+    },
+    {
         "id": 4,
         "name": "Odour out",
         "price": 1700,
@@ -26,15 +38,21 @@
     },
     {
         "id": 5,
+        "name": "Coffefin 1L",
+        "price": 5200,
+        "image": "../images/Coffefin_1L.png"
+    },
+    {
+        "id": 35,
         "name": "Booster can",
         "price": 1700,
-        "image": "../images/5.png"
+        "image": "../images/Booster.png"
     },
     {
         "id": 6,
         "name": "Aquaceryl 100g",
         "price": 1500,
-        "image": "../images/6.png"
+        "image": "../images/Aquaceryl.png"
     },
     {
         "id": 8,
@@ -46,7 +64,7 @@
         "id": 9,
         "name": "Diclamax 100g",
         "price": 1200,
-        "image": "../images/9.png"
+        "image": "../images/Diclamax.png"
     },
     {
         "id": 10,
