@@ -19,7 +19,7 @@ a {
     width: 80%;
     height: 450px;
     margin-left: 150px;
-    margin-top: 150px;
+    margin-top: 200px;
 
 }
 
@@ -78,11 +78,15 @@ header .totalQuantity {
     transform: translateX(20px);
 }
 .social-media {
-    display: flex;
+    display:flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 50%;
 }
+
 
 .social-media a img {
     width: 30px;
@@ -90,7 +94,22 @@ header .totalQuantity {
     transition: transform 0.3s;
 }
 
+
 .social-media a img:hover {
+    transform: scale(1.2);
+}
+.footer-social-media {
+    display:flex;
+    justify-content: center;
+    gap: 15px;
+    bottom: 0;
+}
+.footer-social-media a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+.footer-social-media a img:hover {
     transform: scale(1.2);
 }
 .product-title {
@@ -261,11 +280,25 @@ header .totalQuantity {
 }
 
 .cart .listCart .item .quantity {
-    display: flex;
+    /*display: flex;
     justify-content: end;
-    align-items: center;
-}
+    align-items: center;*/
 
+        padding: 2px;
+        border: none;
+        border-radius: 5px;
+        font-size: 25px;
+        text-align: center;
+        color: #fff;
+        font-weight: 500;
+        margin: 10px;
+}
+input[type="number"]{
+
+    max-width: 50px;
+
+    
+}
 .cart .listCart .item .quantity span {
     display: block;
     width: 50px;
@@ -326,9 +359,9 @@ header .totalQuantity {
 }
 
 .checkoutLayout .form h1,
-.checkoutLayout .form .group:nth-child(-n+3) {
+.checkoutLayout .form .group:nth-child(-n+4) {
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 6;
 }
 
 .checkoutLayout .form input,
@@ -379,7 +412,7 @@ header .totalQuantity {
     display: grid;
     grid-template-columns: 80px 1fr 50px 80px;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
     padding: 0px;
     box-shadow: 0 10px 20px #5555;
@@ -470,6 +503,11 @@ footer {
         margin-left: 15px;
     
     }
+    .social-media a img {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s;
+    }
     .cart {
         position: fixed;
         bottom: 0;
@@ -481,7 +519,9 @@ footer {
         max-width: 100vw;
         height: auto;
     }
-
+    .returnCart .list .item {
+       width: 100%;
+    }
     .checkoutLayout {
         display: grid;
         grid-template-columns: 1fr;
@@ -512,6 +552,10 @@ footer {
     .listProduct {
 
         margin-top: 40px;
+    }
+    .listProduct .item button {
+        padding: 7px;
+        width: 70%;
     }
 
     .product-title {

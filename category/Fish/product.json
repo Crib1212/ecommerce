@@ -1,8 +1,11 @@
 [
+   
+   
     {
-        "id": 23,
-        "name": "Olam",
+        "id": 32,
+        "name": "Standard Juvenile",
         "price": 520,
-        "image": "../images/Olam.png"
+        "image": "../images/Standard-juvenile.png"
     }
+    
 ]

@@ -30,6 +30,7 @@ fetch('product.json')
         products = data;
         addDataToHTML();
 })
+.catch(error => console.error('Error loading products:', error));
 
 //show datas product in list 
 function addDataToHTML(){
@@ -106,9 +107,10 @@ function addCartToHTML(){
                         <div class="price">&#8358;${product.price} / 1 product</div>
                     </div>
                     <div class="quantity">
-                        <button onclick="changeQuantity(${product.id}, '-')">-</button>
-                        <span class="value">${product.quantity}</span>
-                        <button onclick="changeQuantity(${product.id}, '+')">+</button>
+                    
+                       <button onclick="changeQuantity(${product.id}, '+')">+</button> 
+                       <input type="number" id="quantity-${product.id}" value="${product.quantity}" onchange="changeQuantity(${product.id})">
+                       <button onclick="changeQuantity(${product.id}, '-')">-</button> 
                     </div>`;
                 listCartHTML.appendChild(newCart);
                 totalQuantity = totalQuantity + product.quantity;
@@ -117,22 +119,21 @@ function addCartToHTML(){
     }
     totalHTML.innerText = totalQuantity;
 }
-function changeQuantity($idProduct, $type){
-    switch ($type) {
-        case '+':
-            listCart[$idProduct].quantity++;
-            break;
-        case '-':
-            listCart[$idProduct].quantity--;
-
-            // if quantity <= 0 then remove product in cart
-            if(listCart[$idProduct].quantity <= 0){
-                delete listCart[$idProduct];
-            }
-            break;
-    
-        default:
-            break;
+function changeQuantity($idProduct, $type = null) {
+    if ($type === '+') {
+        listCart[$idProduct].quantity++;
+    } else if ($type === '-') {
+        listCart[$idProduct].quantity--;
+        if (listCart[$idProduct].quantity <= 0) {
+            delete listCart[$idProduct];
+        }
+    } else {
+        // For manual input change
+        let quantityInput = document.getElementById(`quantity-${$idProduct}`).value;
+        listCart[$idProduct].quantity = parseInt(quantityInput) || 0;
+        if (listCart[$idProduct].quantity <= 0) {
+            delete listCart[$idProduct];
+        }
     }
     // save new data in cookie
     document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
