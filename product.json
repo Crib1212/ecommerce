@@ -137,6 +137,13 @@
         "name": "Tylodox Extra 100g",
         "price": 120,
         "image": "../images/26.png"
+    },
+    {
+        "id": 40,
+        "name": "Vital feed finisher",
+        "price": 23450,
+        "image": "../images/Vital_feed_finisher.png"
     }
+
 
 ]
