@@ -13,9 +13,9 @@
     },
     {
         "id": 2,
-        "name": "Aquaflox 100g",
+        "name": "Maxi boost",
         "price": 1600,
-        "image": "../images/Aquaflox.png"
+        "image": "../images/Maxi-boost.png"
     },
     {
         "id": 3,
@@ -34,7 +34,7 @@
         "id": 4,
         "name": "Odour out",
         "price": 1700,
-        "image": "../images/Odour_out.png"
+        "image": "../images/OTC.png"
     },
     {
         "id": 5,
