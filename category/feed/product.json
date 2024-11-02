@@ -11,6 +11,78 @@
        "name": "Animal care Nutria starter",
         "price": 120,
         "image": "../images/Nutria_starter.png"
+    },
+    {
+        "id": 36,
+       "name": "Blue crown 2mm",
+        "price": 36000,
+        "image": "../images/Blue_crown_2mm.png"
+    },
+    {
+        "id": 37,
+       "name": "Hybrid grower",
+        "price": 36000,
+        "image": "../images/Hybrid_grower_mash.png"
+    },  {
+        "id": 38,
+       "name": "Ultima starter",
+        "price": 36000,
+        "image": "../images/Ultima_starter.png"
+    },
+    {
+        "id": 39,
+       "name": "Hybrid Layer mash",
+        "price": 36000,
+        "image": "../images/Hybrid_Layer_mash.png"
+    },
+    {
+        "id": 40,
+       "name": "Ultima finisher",
+        "price": 36000,
+        "image": "../images/Ultima_finisher.png"
+    },
+    {
+        "id": 41,
+       "name": "Vital feed finisher",
+        "price": 36000,
+        "image": "../images/Vital_feed_finisher.png"
+    },
+    {
+        "id": 42,
+       "name": "Vital feed starter",
+        "price": 36000,
+        "image": "../images/Vital_feed_starter.png"
+    },
+    {
+        "id": 43,
+       "name": "Hybrid starter crumbled",
+        "price": 36000,
+        "image": "../images/Hybrid_starter_25kg.png"
+    },
+    {
+        "id": 44,
+       "name": "Top line grower mash",
+        "price": 36000,
+        "image": "../images/Top_line_grower_mash.png"
+    },
+    {
+        "id": 45,
+       "name": "Base2 Catfish feed 4mm",
+        "price": 36000,
+        "image": "../images/Base2_4mm.png"
+    },
+    {
+        "id": 46,
+       "name": "Fish meal",
+        "price": 36000,
+        "image": "../images/Fish_meal_25kg.png"
     }
+    
+ 
+ 
+ 
+ 
+ 
+ 
  
 ]
