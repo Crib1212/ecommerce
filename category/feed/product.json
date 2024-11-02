@@ -76,13 +76,13 @@
        "name": "Fish meal",
         "price": 36000,
         "image": "../images/Fish_meal_25kg.png"
+    },
+    {
+        "id": 47,
+       "name": "DCP 25kg (Dicalcium phosphate)",
+        "price": 36000,
+        "image": "../images/DCP_25kg.png"
     }
-    
- 
- 
- 
- 
- 
  
  
 ]

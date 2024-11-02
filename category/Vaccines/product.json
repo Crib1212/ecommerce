@@ -4,5 +4,11 @@
         "name": "3 in 1 EDS Vaccine",
         "price": 520,
         "image": "../images/3_in_1_EDS.png"
+    },
+    {
+        "id": 45,
+        "name": "Gumboro 500 dose",
+        "price": 520,
+        "image": "../images/Gumboro_500_dose.png"
     }
 ]
