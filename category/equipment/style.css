@@ -735,22 +735,18 @@ footer {
 
     .listProduct {
 
-        margin-top: 40px;
+        margin-top: 30px;
     }
     .listProduct .item button {
         padding: 7px;
         width: 70%;
     }
 
+
+
     .product-title {
 
         margin-top: 160px;
-        /* Space between title and list */
-    }
-
-    .product-title {
-
-        margin-top: 10px;
         /* Space between title and list */
         color: #333;
     }
