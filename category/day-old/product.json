@@ -2,13 +2,13 @@
     {
         "id": 2,
         "name": "Olam",
-        "price": 520,
+        "price": 1430,
         "image": "../images/Olam.png"
     },
     {
         "id": 3,
         "name": "Agrited",
-        "price": 220,
+        "price": 1550,
         "image": "../images/Agrited.png"
     }
  
