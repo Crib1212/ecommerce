@@ -1,9 +1,9 @@
 [
     {
-        "id": 33,
-        "name": "Chick on 1L",
-        "price": 5200,
-        "image": "../images/Chick_on_1L.png"
+        "id": 54,
+        "name": "Bluecrown 4mm",
+        "price": 32600,
+        "image": "../images/Bluecrown-4mm-54.png"
     },
     {
         "id": 1,
@@ -20,27 +20,27 @@
     {
         "id": 3,
         "name": "Optimax can",
-        "price": 1700,
+        "price": 1750,
         "image": "../images/Optimax_can.png"
     }
     ,
     {
-        "id": 34,
-        "name": "Medecol 1L",
-        "price": 5200,
-        "image": "../images/Medecol_1L.png"
+        "id": 53,
+        "name": "Bluecrown 3mm",
+        "price": 32800,
+        "image": "../images/Bluecrown-3mm-53.png"
     },
     {
         "id": 4,
         "name": "OTC",
-        "price": 1700,
+        "price": 2100,
         "image": "../images/OTC.png"
     },
     {
-        "id": 5,
-        "name": "Coffefin 1L",
-        "price": 5200,
-        "image": "../images/Coffefin_1L.png"
+        "id": 56,
+        "name": "Bluecrown 6mm",
+        "price": 32400,
+        "image": "../images/Bluecrown-6mm-56.png"
     },
     {
         "id": 35,
@@ -51,13 +51,13 @@
     {
         "id": 6,
         "name": "Ultima finsher",
-        "price": 1500,
+        "price": 23500,
         "image": "../images/Ultima_finisher.png"
     },
     {
         "id": 8,
         "name": "Ultima starter",
-        "price": 20000,
+        "price": 23500,
         "image": "../images/Ultima_starter.png"
     },
     {
@@ -79,7 +79,7 @@
         "image": "../images/11.png"
     },
     {
-        "id": 12,
+        "id": 52,
         "name": "Blue crown 2mm",
         "price": 1450,
         "image": "../images/Blue_crown_2mm.png"
@@ -121,10 +121,10 @@
         "image": "../images/Breed_well_psc_25kg.png"
     },
     {
-        "id": 19,
-       "name": "Pet cage yellow",
-        "price": 40000,
-        "image": "../images/19.png"
+        "id": 51,
+       "name": "Ecofloat 9mm",
+        "price": 29500,
+        "image": "../images/Ecofloat-9mm-51.png"
     },
     {
         "id": 20,
