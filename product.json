@@ -2,7 +2,7 @@
     {
         "id": 54,
         "name": "Bluecrown 4mm",
-        "price": 32600,
+        "price": 32500,
         "image": "../images/Bluecrown-4mm-54.png"
     },
     {
@@ -27,7 +27,7 @@
     {
         "id": 53,
         "name": "Bluecrown 3mm",
-        "price": 32800,
+        "price": 32600,
         "image": "../images/Bluecrown-3mm-53.png"
     },
     {
@@ -81,7 +81,7 @@
     {
         "id": 52,
         "name": "Blue crown 2mm",
-        "price": 1450,
+        "price": 32900,
         "image": "../images/Blue_crown_2mm.png"
     },
     {
@@ -107,6 +107,12 @@
        "name": "Hybrid starter 25kg",
         "price": 1200,
         "image": "../images/Hybrid_starter_25kg.png"
+    },
+    {
+        "id": 59,
+        "name": "Bluecrown 9mm",
+        "price": 32200,
+        "image": "../images/Bluecrown-9mm-59.png"
     },
     {
         "id": 17,

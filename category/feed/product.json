@@ -15,7 +15,7 @@
     {
         "id": 36,
        "name": "Blue crown 2mm",
-        "price": 36000,
+        "price": 32900,
         "image": "../images/Blue_crown_2mm.png"
     },
     {
@@ -82,6 +82,36 @@
        "name": "DCP 25kg (Dicalcium phosphate)",
         "price": 36000,
         "image": "../images/DCP_25kg.png"
+    },
+    {
+        "id": 53,
+       "name": "Bluecrown 3mm",
+        "price": 32600,
+        "image": "../images/Bluecrown-3mm-53.png"
+    },
+    {
+        "id": 54,
+       "name": "Bluecrown 4mm",
+        "price": 32500,
+        "image": "../images/Bluecrown-4mm-54.png"
+    },
+    {
+        "id": 56,
+       "name": "Bluecrowm 6mm",
+        "price": 32400,
+        "image": "../images/Bluecrown-6mm-56.png"
+    },
+    {
+        "id": 59,
+       "name": "Bluecrown 9mm",
+        "price": 32200,
+        "image": "../images/Bluecrown-9mm-59.png"
+    },
+    {
+        "id": 51,
+       "name": "Ecofloat 9mm",
+        "price": 29000,
+        "image": "../images/Ecofloat-9mm-51.png"
     }
  
  
