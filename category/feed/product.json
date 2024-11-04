@@ -3,13 +3,13 @@
     {
         "id": 21,
        "name": "Animal care layer mash 25kg",
-        "price": 120,
+        "price": 17150,
         "image": "../images/20.png"
     },
     {
         "id": 22,
        "name": "Animal care Nutria starter",
-        "price": 120,
+        "price": 23550,
         "image": "../images/Nutria_starter.png"
     },
     {
@@ -21,66 +21,66 @@
     {
         "id": 37,
        "name": "Hybrid grower",
-        "price": 36000,
+        "price": 16550,
         "image": "../images/Hybrid_grower_mash.png"
     },  {
         "id": 38,
        "name": "Ultima starter",
-        "price": 36000,
+        "price": 23450,
         "image": "../images/Ultima_starter.png"
     },
     {
         "id": 39,
        "name": "Hybrid Layer mash",
-        "price": 36000,
+        "price": 17250,
         "image": "../images/Hybrid_Layer_mash.png"
     },
     {
         "id": 40,
        "name": "Ultima finisher",
-        "price": 36000,
+        "price": 23450,
         "image": "../images/Ultima_finisher.png"
     },
     {
         "id": 41,
        "name": "Vital feed finisher",
-        "price": 36000,
+        "price": 23250,
         "image": "../images/Vital_feed_finisher.png"
     },
     {
         "id": 42,
        "name": "Vital feed starter",
-        "price": 36000,
+        "price": 23250,
         "image": "../images/Vital_feed_starter.png"
     },
     {
         "id": 43,
        "name": "Hybrid starter crumbled",
-        "price": 36000,
+        "price": 20050,
         "image": "../images/Hybrid_starter_25kg.png"
     },
     {
         "id": 44,
        "name": "Top line grower mash",
-        "price": 36000,
+        "price": "out of stock",
         "image": "../images/Top_line_grower_mash.png"
     },
     {
         "id": 45,
        "name": "Base2 Catfish feed 4mm",
-        "price": 36000,
+        "price": "out of stock",
         "image": "../images/Base2_4mm.png"
     },
     {
         "id": 46,
-       "name": "Fish meal",
-        "price": 36000,
+       "name": "Fish meal 25kg",
+        "price": 78500,
         "image": "../images/Fish_meal_25kg.png"
     },
     {
         "id": 47,
        "name": "DCP 25kg (Dicalcium phosphate)",
-        "price": 36000,
+        "price": 70000,
         "image": "../images/DCP_25kg.png"
     },
     {
