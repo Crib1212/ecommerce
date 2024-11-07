@@ -407,7 +407,7 @@ button:hover {
         border-radius: 6px;
         font-family: 'Oleo Script', serif;
         font-weight: 400;
-        padding: 0.15em 0.1em 0.15em 0.1em;
+        padding: 0.25em 0.2em 0.25em 0.2em;
         font-size: 3.25em;
         letter-spacing: 0.05em;
         display: inline-block;
@@ -737,6 +737,34 @@ footer {
         top: 145px;
         border-radius: 5px;
     }
+    
+#logo {
+    display: inline-block;
+}
+
+    .logo-title{
+        background: #ff4486;
+        border-radius: 6px;
+        font-family: 'Oleo Script', serif;
+        font-weight: 400;
+        padding: 0.025em 0.02em 0.025em 0.02em;
+        font-size: 3.25em;
+        letter-spacing: 0.05em;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .logo-link {
+        color: white; /* Use the color set by the parent element */
+        text-decoration: none;
+        padding: 0 0.01em; /* Optional: adjust padding inside the link */
+    }
+    
+    /* Optional hover effect */
+    .logo-link:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
     .banner-img {
         margin-left: 15px;
     
