@@ -746,8 +746,8 @@ footer {
         background: #ff4486;
         border-radius: 6px;
         font-family: 'Oleo Script', serif;
-        font-weight: 200;
-        padding: 5px;
+        font-weight: 400;
+        padding: 2px 3px 2px 3px;
         font-size: 3.25em;
         letter-spacing: 0.05em;
         display: inline-block;
@@ -756,7 +756,7 @@ footer {
     .logo-link {
         color: white; /* Use the color set by the parent element */
         text-decoration: none;
-        padding: 0 0.01em; /* Optional: adjust padding inside the link */
+        padding: 1px; /* Optional: adjust padding inside the link */
     }
     
     /* Optional hover effect */
