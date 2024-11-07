@@ -742,21 +742,27 @@ footer {
     display: inline-block;
 }
 
-    .logo-title{
-        background: #ff4486;
-        border-radius: 6px;
-        font-family: 'Oleo Script', serif;
-        font-weight: 400;
-        padding: 2px 3px 2px 3px;
-        font-size: 3.25em;
-        letter-spacing: 0.05em;
-        display: inline-block;
-        vertical-align: middle;
+.logo-title {
+    background: #ff4486;
+    border-radius: 6px;
+    font-family: 'Oleo Script', serif;
+    font-weight: 400;
+    padding: 0px 1px;
+    font-size: 3.25em;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    vertical-align: middle;
+}
+@media (max-width: 600px) {
+    .logo-title {
+        font-size: 2em; /* Adjust font size for mobile */
+        padding: 0px 5px; /* Adjust padding as needed */
     }
+}
     .logo-link {
         color: white; /* Use the color set by the parent element */
         text-decoration: none;
-        padding: 1px; /* Optional: adjust padding inside the link */
+        padding: 0px; /* Optional: adjust padding inside the link */
     }
     
     /* Optional hover effect */
