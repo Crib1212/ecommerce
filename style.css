@@ -1,3 +1,6 @@
+@import url("fontawesome-all.min.css");
+@import url("https://fonts.googleapis.com/css?family=Oleo+Script:400|Open+Sans:300,300italic,600,600italic,800");
+
 body {
     font-family: sans-serif;
     overflow-x: hidden;
@@ -279,6 +282,7 @@ button:hover {
     margin-right: 8px;
     font-size: 25px;
     color: #0a74da; /* Customize icon color */
+    margin-top: 80px;
     
 }
 .whatsapp-chat i{
@@ -392,7 +396,43 @@ button:hover {
     gap: 10px;
     transition: left 0.5s ease;
 }
+/* Logo */
 
+#logo {
+    display: inline-block;
+}
+
+    .logo-title{
+        background: #ff4486;
+        border-radius: 6px;
+        font-family: 'Oleo Script', serif;
+        font-weight: 400;
+        padding: 0.25em 0.2em 0.25em 0.2em;
+        font-size: 3.25em;
+        letter-spacing: 0.05em;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .logo-link {
+        color: white; /* Use the color set by the parent element */
+        text-decoration: none;
+        padding: 0 0.1em; /* Optional: adjust padding inside the link */
+    }
+    
+    /* Optional hover effect */
+    .logo-link:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    #logo span {
+        font-weight: 800;
+        line-height: 4.5em;
+        letter-spacing: 0.025em;
+        font-size: 0.9em;
+        vertical-align: middle;
+        margin: 0 0 0 1.25em;
+    }
 .menu-icon {
     font-size: 40px;
     cursor: pointer;
