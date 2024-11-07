@@ -14,7 +14,13 @@ a {
     transition: transform 0.3s ease;
 
 }
-
+.home-icon {
+    font-size: 60px; /* Adjust as needed */
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 950px;
+}
 .banner-img {
     width: 80%;
     height: 450px;

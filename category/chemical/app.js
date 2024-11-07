@@ -4,6 +4,10 @@ let container = document.querySelector('.container');
 let close = document.querySelector('.close');
 let category = document.querySelector('.category');
 
+
+function goHome() {
+    window.location.href = "../../index.html"; // Adjust to your home page URL
+}
 function closeToast() {
     document.querySelector('.notification-toast').style.display = 'none';
 }

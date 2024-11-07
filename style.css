@@ -14,6 +14,13 @@ a {
     transition: transform 0.3s ease;
 
 }
+.home-icon {
+    font-size: 60px; /* Adjust as needed */
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 950px;
+}
 
 .banner-img {
     width: 80%;
@@ -271,13 +278,19 @@ button:hover {
     font-size: 16px;
     color: #333; /* Change color to fit your theme */
     margin-top: 160px;
+    gap: 15px;
 }
 
 .phone-contact i {
     margin-right: 8px;
-    font-size: 18px;
+    font-size: 25px;
     color: #0a74da; /* Customize icon color */
     
+}
+.whatsapp-chat i{
+    margin-right: 8px;
+    font-size: 30px;
+    color:green; /* Customize icon color */
 }
 
 .phone-contact .phone-number {

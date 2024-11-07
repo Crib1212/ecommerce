@@ -20,6 +20,12 @@
         </div>
 
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="home-icon" onclick="goHome()">🏠</div>
+        <!--<a href="index.html" class="home-icon">
+            <i class="fas fa-home"></i> <!-- Home icon 
+            <span>Home</span>
+        </a>-->
+        
         <div id="menu" class="menu">
             <ul>
                 <li><a href="category/drugs/index.html">DRUGS</a></li>
@@ -30,79 +36,92 @@
                 <li><a href="category/equipment/index.html">EQUIPMENT</a></li>
                 <li><a href="category/Fish/index.html">FISH BOOKING</a></li>
                 <li><a href="category/day-old/index.html">DAY-OLD CHICKS</a></li>
-               
-               
+
+
                 <!-- Add more categories as needed -->
             </ul>
         </div>
 
-   <!-- Social Media Icons after the Header -->
-   <div class="social-media">
-    <a href="https://www.facebook.com/" target="_blank">
-        <img src="images/facebook-icon.png" alt="facebook">
-    </a>
-    <a href="https://www.linkedin.com/" target="_blank">
-        <img src="images/linkedin-icon.png" alt="linkedin">
-    </a>
-      
-    <a href="https://www.instagram.com/" target="_blank">
-        <img src="images/instagram-icon.png" alt="instagram">
-    </a>
-      
-    <a href="https://www.tiktok.com/" target="_blank">
-        <img src="images/Tiktok-icon.png" alt="TikTok">
-    </a>
-    <a href="https://www.x.com/" target="_blank">
-        <img src="images/x-icon.png" alt="X">
-    </a>
-      
-    <a href="https://www.youtube.com/" target="_blank">
-        <img src="images/youtube-icon.png" alt="youtube">
-    </a>
-      
-</div>
+        <!-- Social Media Icons after the Header -->
+        <div class="social-media">
+            <a href="https://www.facebook.com/" target="_blank">
+                <img src="images/facebook-icon.png" alt="facebook">
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank">
+                <img src="images/linkedin-icon.png" alt="linkedin">
+            </a>
+
+            <a href="https://www.instagram.com/" target="_blank">
+                <img src="images/instagram-icon.png" alt="instagram">
+            </a>
+
+            <a href="https://www.tiktok.com/" target="_blank">
+                <img src="images/Tiktok-icon.png" alt="TikTok">
+            </a>
+            <a href="https://www.x.com/" target="_blank">
+                <img src="images/x-icon.png" alt="X">
+            </a>
+
+            <a href="https://www.youtube.com/" target="_blank">
+                <img src="images/youtube-icon.png" alt="youtube">
+            </a>
+
+        </div>
 
         <div class="iconCart">
             <img src="icon.png">
             <div class="totalQuantity"></div>
         </div>
     </header>
-    <a href="tel:+2349027275498" class="phone-contact">
-        <i class="fas fa-phone-alt"></i> <!-- Phone icon -->
-        <span class="phone-number">+2349027275498</span>
-    </a>
+    <div class="phone-contact">
+        <a href="tel:+2349027275498">
+            <i class="fas fa-phone-alt"></i> <!-- Phone icon -->
+            <span class="phone-number">+2349027275498</span>
+        </a>
+        <a href="https://wa.me/2349027275498" class="whatsapp-chat">
+            <i class="fab fa-whatsapp"></i> <!-- WhatsApp icon (using Font Awesome)-->
+            <span class="phone-number">WhatsApp</span>
+        </a>
+        <!--<a href="https://wa.me/message/SW5QYGF2TITYB1" class="phone-contact">
+                <img src="images/whatsapp.png" alt="whatsapp" class="whatsapp-icon">
+                <span class="phone-number">WhatsApp</span>
+            </a>-->
+    </div>
+
+
+
     <div class="notification-toast" data-toast>
-    
+
         <div class="toast-banner">
-          <img src="images/Diclamax.png" alt="diclamax" width="80" height="70">
+            <img src="images/Blue_crown_2mm.png" alt="Bluecrown" width="80" height="70">
         </div>
-    
+
         <div class="toast-detail">
             <button class="toast-close-btn" onclick="closeToast()">✕</button>
-    
-          <p class="toast-message">
-            Someone in new just bought
-          </p>
-    
-          <p class="toast-title">
-            Diclamax 100g
-          </p>
-    
-          <p class="toast-meta">
-            <time datetime="PT2M">2 Minutes</time> ago
-          </p>
-    
+
+            <p class="toast-message">
+                Someone in just bought
+            </p>
+
+            <p class="toast-title">
+                Bluecrown 2mm
+            </p>
+
+            <p class="toast-meta">
+                <time datetime="PT2M">2 Minutes</time> ago
+            </p>
+
         </div>
-    
-      </div>
-    
-  
-    
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button class="search-button" onclick="searchProducts()">Search</button>
-        </div>
-        <div id="productContainer"></div>
+
+    </div>
+
+
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button class="search-button" onclick="searchProducts()">Search</button>
+    </div>
+    <div id="productContainer"></div>
 
     <img src="category/images/banner.png" alt="promotion banner" class="banner-img">
     <h1 class="product-title">PRODUCT LIST</h1>
@@ -179,7 +198,7 @@
         </div>
         <!-- Add more sections as needed -->
     </footer>
-   
+
     <script src="app.js"></script>
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
