@@ -815,6 +815,14 @@ footer {
         width: 100px;
         /* Smaller logo on smaller screens */
     }
+    .phone-contact {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        color: #333; /* Change color to fit your theme */
+        margin-top: 130px;
+        gap: 15px;
+    }
 
     .listProduct {
 
