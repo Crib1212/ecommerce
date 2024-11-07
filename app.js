@@ -12,7 +12,6 @@ function closeToast() {
 }
 
 
-
 function toggleMenu() {
     var menu = document.getElementById('menu');
     menu.classList.toggle('open');

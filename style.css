@@ -14,13 +14,7 @@ a {
     transition: transform 0.3s ease;
 
 }
-.home-icon {
-    font-size: 60px; /* Adjust as needed */
-    cursor: pointer;
-    display: inline-block;
-    padding: 5px;
-    margin-left: 950px;
-}
+
 
 .banner-img {
     width: 80%;
@@ -400,11 +394,18 @@ button:hover {
 }
 
 .menu-icon {
-    font-size: 30px;
+    font-size: 40px;
     cursor: pointer;
     position: fixed;
     right: 100px;
 
+}
+.home-icon {
+    font-size: 50px; /* Adjust as needed */
+    cursor: pointer;
+    position: fixed;
+    padding: 5px;
+    right: 130px;
 }
 
 .menu {
@@ -414,7 +415,7 @@ button:hover {
     left: -150px;
     /* Initially hidden */
     width: 150px;
-    height: 70%;
+    height: 80%;
     background-color: rgb(0, 0, 0);
     transition: left 0.3s ease;
 }
