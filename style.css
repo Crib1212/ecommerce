@@ -474,7 +474,7 @@ button:hover {
 
 .menu {
     position: fixed;
-    top: 145px;
+    top: 225px;
     border-radius: 5px;
     left: -150px;
     /* Initially hidden */
@@ -758,7 +758,7 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
     .menu {
-        top: 145px;
+        top: 180px;
         border-radius: 5px;
     }
     
