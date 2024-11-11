@@ -369,6 +369,30 @@ button:hover {
 .listProduct .item:hover button {
     opacity: 1;
 }
+ /* Category Carousel */
+.category {
+    margin-bottom: 30px;
+}
+
+.category-item-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 15px;
+}
+
+.category-item {
+    flex: 0 0 auto;
+    width: 150px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    scroll-snap-align: center;
+}
+
 
 .cart {
     color: #fff;
@@ -385,7 +409,7 @@ button:hover {
     
 }
 
-.category {
+/*.category {
     color: #000;
     background-color: #ffffff;
     width: 200px;
@@ -395,7 +419,7 @@ button:hover {
     grid-column: 1fr;
     gap: 10px;
     transition: left 0.5s ease;
-}
+}*/
 /* Logo */
 
 #logo {
