@@ -21,7 +21,7 @@ a {
 
 .banner-img {
     width: 80%;
-    height: 450px;
+    height: 500px;
     margin-left: 150px;
 
 }
@@ -372,6 +372,7 @@ button:hover {
  /* Category Carousel */
 .category {
     margin-bottom: 30px;
+    color: #28a745;
 }
 
 .category-item-container {
