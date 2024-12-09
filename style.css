@@ -62,7 +62,6 @@ header {
 header .iconCart {
     position: relative;
     z-index: 1;
-    margin-right: 25px;
 }
 
 header .totalQuantity {
@@ -330,7 +329,8 @@ button:hover {
 .listProduct .item img {
     display: block;
     filter: drop-shadow(0 50px 20px #0009);
-    width: 100%;
+    width: 200px;
+    height: auto;
 
 }
 
@@ -339,7 +339,7 @@ button:hover {
     border-radius: 20px;
     background-color: #EEEEE6;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     box-sizing: border-box;
 
 }
@@ -377,7 +377,7 @@ button:hover {
 
 .category-item-container {
     display: flex;
-    gap: 15px;
+    gap: 5px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding: 15px;
@@ -393,14 +393,28 @@ button:hover {
     text-align: center;
     scroll-snap-align: center;
 }
+.scroll-arrow.left {
+  left: 20px;
+}
 
-
+.scroll-arrow.right {
+  right: 20px;
+}
+.category-item-title,
+.category-btn {
+  color: green; /* Sets text color to green */
+  font-weight: bold; /* Optional for emphasis */
+  text-decoration: none; /* Removes underline from links */
+}
+.category-btn:hover {
+  text-decoration: underline; /* Adds underline on hover for links */
+}
 .cart {
     color: #fff;
     position: fixed;
     width: 400px;
     background-color: #0E0F11;
-    top: 90px;
+    top: 220px;
     right: -100%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
@@ -425,6 +439,7 @@ button:hover {
 
 #logo {
     display: inline-block;
+    position: absolute;
 }
 
     .logo-title{
@@ -804,7 +819,7 @@ footer {
         position: fixed;
         bottom: 0;
         border-radius: 5px;
-        top: 145px;
+        top: 175px;
         z-index: 2000;
         overflow-y: auto;
         margin-left: -80px;
