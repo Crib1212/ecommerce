@@ -866,10 +866,9 @@ footer {
         background-color: #EEEEE6;
         text-align: center;
         padding: 3px;
-        align-items: center;
         box-sizing: border-box;
     
-    
+    }
     .listProduct .item button {
         padding: 7px;
         width: 70%;
