@@ -339,7 +339,7 @@ button:hover {
     border-radius: 20px;
     background-color: #EEEEE6;
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     box-sizing: border-box;
 
 }
@@ -381,6 +381,7 @@ button:hover {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding: 15px;
+
 }
 
 .category-item {
@@ -852,6 +853,12 @@ footer {
     .listProduct {
 
         margin-top: 40px;
+    }
+    .listProduct .item img {
+        display: block;
+        filter: drop-shadow(0 50px 20px #0009);
+        width: 200px;
+    
     }
     .listProduct .item button {
         padding: 7px;
