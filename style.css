@@ -857,9 +857,19 @@ footer {
     .listProduct .item img {
         display: block;
         filter: drop-shadow(0 50px 20px #0009);
-        width: 200px;
+        width: 150px;
     
     }
+    .listProduct .item {
+
+        border-radius: 20px;
+        background-color: #EEEEE6;
+        text-align: center;
+        padding: 3px;
+        align-items: center;
+        box-sizing: border-box;
+    
+    
     .listProduct .item button {
         padding: 7px;
         width: 70%;
