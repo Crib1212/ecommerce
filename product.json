@@ -49,24 +49,6 @@
         "image": "../images/Booster.png"
     },
     {
-        "id": 6,
-        "name": "Ultima finsher",
-        "price": 23400,
-        "image": "../images/Ultima_finisher.png"
-    },
-    {
-        "id": 8,
-        "name": "Ultima starter",
-        "price": 23450,
-        "image": "../images/Ultima_starter.png"
-    },
-    {
-        "id": 9,
-        "name": "Diclamax 100g",
-        "price": 1200,
-        "image": "../images/Diclamax.png"
-    },
-    {
         "id": 10,
         "name": "Automatic feeder B/S",
         "price": 3000,
@@ -115,40 +97,16 @@
         "image": "../images/Bluecrown-9mm-59.png"
     },
     {
-        "id": 17,
-       "name": "Vital feed starter",
-        "price": 23250,
-        "image": "../images/Vital_feed_starter.png"
-    },
-    {
-        "id": 18,
-       "name": "Breed well PSC 25kg",
-        "price": 26050,
-        "image": "../images/Breed_well_psc_25kg.png"
-    },
-    {
         "id": 51,
        "name": "Ecofloat 9mm",
         "price": 19300,
         "image": "../images/Ecofloat-9mm-51.png"
     },
     {
-        "id": 20,
-       "name": "Animal care layer mash 25kg",
-        "price": 17150,
-        "image": "../images/20.png"
-    },
-    {
         "id": 26,
         "name": "Tylodox Extra 100g",
         "price": 8000,
         "image": "../images/26.png"
-    },
-    {
-        "id": 40,
-        "name": "Vital feed finisher",
-        "price": 23250,
-        "image": "../images/Vital_feed_finisher.png"
     }
 
 
