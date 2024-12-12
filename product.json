@@ -1,34 +1,27 @@
 [
-    
     {
         "id": 1,
-        "name": "Coxklin 100g",
-        "price": 1800,
-        "image": "../images/Coxklin.png"
-    },
+       "name": "Hybrid starter 25kg",
+        "price": 22000,
+        "image": "../images/Hybrid_starter_25kg-1.png"
+    }, 
     {
-        "id": 2,
-        "name": "Maxi boost",
-        "price": 1600,
-        "image": "../images/Maxi-boost.png"
-    },
+        "id": 1,
+       "name": "Hybrid Grower Mash 25kg",
+        "price": 22000,
+        "image": "../images/Hybrid_grower_mash-2.png"
+    }, 
     {
         "id": 3,
-        "name": "Optimax can",
+        "name": "Hybrid Layer Mash 25kg",
         "price": 1750,
-        "image": "../images/Optimax_can.png"
+        "image": "../images/Hybrid_layer_mash-3.png"
     },
     {
         "id": 4,
-        "name": "OTC",
-        "price": 2100,
-        "image": "../images/OTC.png"
-    },
-    {
-        "id": 35,
-        "name": "Booster can",
+        "name": "Base 2 4mm",
         "price": 1700,
-        "image": "../images/Booster.png"
+        "image": "../images/Base2_4mm-4.png"
     },
     {
         "id": 10,
@@ -59,12 +52,6 @@
        "name": "Pulse sprayer 15L",
         "price": 17000,
         "image": "../images/15.png"
-    },
-    {
-        "id": 16,
-       "name": "Hybrid starter 25kg",
-        "price": 22000,
-        "image": "../images/Hybrid_starter_25kg.png"
     },
     {
         "id": 26,
