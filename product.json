@@ -1,10 +1,5 @@
 [
-    {
-        "id": 54,
-        "name": "Bluecrown 4mm",
-        "price": 26200,
-        "image": "../images/Bluecrown-4mm-54.png"
-    },
+    
     {
         "id": 1,
         "name": "Coxklin 100g",
@@ -22,25 +17,12 @@
         "name": "Optimax can",
         "price": 1750,
         "image": "../images/Optimax_can.png"
-    }
-    ,
-    {
-        "id": 53,
-        "name": "Bluecrown 3mm",
-        "price": 27550,
-        "image": "../images/Bluecrown-3mm-53.png"
     },
     {
         "id": 4,
         "name": "OTC",
         "price": 2100,
         "image": "../images/OTC.png"
-    },
-    {
-        "id": 56,
-        "name": "Bluecrown 6mm",
-        "price": 24600,
-        "image": "../images/Bluecrown-6mm-56.png"
     },
     {
         "id": 35,
@@ -59,12 +41,6 @@
         "name": "Automatic drinker M/S",
         "price": 3000,
         "image": "../images/11.png"
-    },
-    {
-        "id": 52,
-        "name": "Blue crown 2mm",
-        "price": 31900,
-        "image": "../images/Blue_crown_2mm.png"
     },
     {
         "id": 13,
@@ -89,18 +65,6 @@
        "name": "Hybrid starter 25kg",
         "price": 20050,
         "image": "../images/Hybrid_starter_25kg.png"
-    },
-    {
-        "id": 59,
-        "name": "Bluecrown 9mm",
-        "price": 23400,
-        "image": "../images/Bluecrown-9mm-59.png"
-    },
-    {
-        "id": 51,
-       "name": "Ecofloat 9mm",
-        "price": 19300,
-        "image": "../images/Ecofloat-9mm-51.png"
     },
     {
         "id": 26,
