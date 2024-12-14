@@ -330,7 +330,7 @@ button:hover {
 .listProduct .item img {
     display: block;
     filter: drop-shadow(0 50px 20px #0009);
-    width: 250px;
+    width: 100%;
 
 }
 
