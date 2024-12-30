@@ -1,118 +1,46 @@
 [
     
     {
-        "id": 21,
-       "name": "Animal care layer mash 25kg",
-        "price": 17150,
-        "image": "../images/20.png"
+        "id": 1,
+       "name": "Hybrid starter 25kg",
+        "price": 19950,
+        "image": "../images/Hybrid_starter_crumbled_25kg-1.png"
+    }, 
+    {
+        "id": 1,
+       "name": "Hybrid Grower Mash 25kg",
+        "price": 17650,
+        "image": "../images/Hybrid_grower_mash-2.png"
+    }, 
+    {
+        "id": 3,
+        "name": "Hybrid Layer Mash 25kg",
+        "price": 18450,
+        "image": "../images/Hybrid_layer_mash-3.png"
     },
     {
-        "id": 22,
-       "name": "Animal care Nutria starter",
-        "price": 23550,
-        "image": "../images/Nutria_starter.png"
+        "id": 4,
+        "name": "Hybrid 3 in 1 Special",
+        "price": 25250,
+        "image": "../images/Hybrid_3_in_1_Special-4.png"
     },
     {
-        "id": 36,
-       "name": "Blue crown 2mm",
-        "price": 31900,
-        "image": "../images/Blue_crown_2mm.png"
+        "id": 5,
+        "name": "Base 2 6mm",
+        "price": 19350,
+        "image": "../images/Base2_4mm-5.png"
     },
     {
-        "id": 37,
-       "name": "Hybrid grower",
-        "price": 16550,
-        "image": "../images/Hybrid_grower_mash.png"
-    },  {
-        "id": 38,
-       "name": "Ultima starter",
-        "price": 23450,
-        "image": "../images/Ultima_starter.png"
+        "id": 6,
+        "name": "Hybrid Base1 Super Starter 25kg",
+        "price": 24300,
+        "image": "../images/Hybrid_base1_Starter-25kg-6.png"
     },
     {
-        "id": 39,
-       "name": "Hybrid Layer mash",
-        "price": 17250,
-        "image": "../images/Hybrid_Layer_mash.png"
-    },
-    {
-        "id": 40,
-       "name": "Ultima finisher",
-        "price": 23450,
-        "image": "../images/Ultima_finisher.png"
-    },
-    {
-        "id": 41,
-       "name": "Vital feed finisher",
-        "price": 23250,
-        "image": "../images/Vital_feed_finisher.png"
-    },
-    {
-        "id": 42,
-       "name": "Vital feed starter",
-        "price": 23250,
-        "image": "../images/Vital_feed_starter.png"
-    },
-    {
-        "id": 43,
-       "name": "Hybrid starter crumbled",
-        "price": 20050,
-        "image": "../images/Hybrid_starter_25kg.png"
-    },
-    {
-        "id": 44,
-       "name": "Top line grower mash",
-        "price": "out of stock",
-        "image": "../images/Top_line_grower_mash.png"
-    },
-    {
-        "id": 45,
-       "name": "Base2 Catfish feed 4mm",
-        "price": "out of stock",
-        "image": "../images/Base2_4mm.png"
-    },
-    {
-        "id": 46,
-       "name": "Fish meal 25kg",
-        "price": 78500,
-        "image": "../images/Fish_meal_25kg.png"
-    },
-    {
-        "id": 47,
-       "name": "DCP 25kg (Dicalcium phosphate)",
-        "price": 70000,
-        "image": "../images/DCP_25kg.png"
-    },
-    {
-        "id": 53,
-       "name": "Bluecrown 3mm",
-        "price": 27550,
-        "image": "../images/Bluecrown-3mm-53.png"
-    },
-    {
-        "id": 54,
-       "name": "Bluecrown 4mm",
-        "price": 26200,
-        "image": "../images/Bluecrown-4mm-54.png"
-    },
-    {
-        "id": 56,
-       "name": "Bluecrowm 6mm",
-        "price": 24600,
-        "image": "../images/Bluecrown-6mm-56.png"
-    },
-    {
-        "id": 59,
-       "name": "Bluecrown 9mm",
-        "price": 23400,
-        "image": "../images/Bluecrown-9mm-59.png"
-    },
-    {
-        "id": 51,
-       "name": "Ecofloat 9mm",
-        "price": 19300,
-        "image": "../images/Ecofloat-9mm-51.png"
+        "id": 6,
+        "name": "Hybrid FInisher pellet 25kg",
+        "price": 21900,
+        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
     }
- 
  
 ]

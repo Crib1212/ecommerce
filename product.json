@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "id": 54,
         "name": "Bluecrown 4mm",
         "price": 27100,
@@ -52,13 +53,71 @@
     },
     {
         "id": 14,
+=======
+        "id": 1,
+       "name": "Hybrid starter 25kg",
+        "price": 21950,
+        "image": "../images/Hybrid_starter_25kg-1.png"
+    }, 
+    {
+        "id": 2,
+       "name": "Hybrid Grower Mash 25kg",
+        "price": 17650,
+        "image": "../images/Hybrid_grower_mash-2.png"
+    }, 
+    {
+        "id": 3,
+        "name": "Hybrid Layer Mash 25kg",
+        "price": 18450,
+        "image": "../images/Hybrid_layer_mash-3.png"
+    },
+    {
+        "id": 4,
+        "name": "Hybrid 3 in 1 Special",
+        "price": 25250,
+        "image": "../images/Hybrid_3_in_1_Special-4.png"
+    },
+    {
+        "id": 5,
+        "name": "Base 2 6mm",
+        "price": 19350,
+        "image": "../images/Base2_4mm-5.png"
+    },
+    {
+        "id": 6,
+        "name": "Hybrid Base1 Super Starter 25kg",
+        "price": 24300,
+        "image": "../images/Hybrid_base1_Starter-25kg-6.png"
+    },
+    {
+        "id": 7,
+        "name": "Hybrid FInisher pellet 25kg",
+        "price": 21900,
+        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
+    },
+    {
+        "id": 8,
+        "name": "Live chicken",
+        "price": 9900,
+        "image": "../images/Live_chicken.png"
+    },
+    {
+        "id": 9,
+        "name": "Kepro oxytet 1kg",
+        "price": 79000,
+        "image": "../images/Kepro_oxytet_1kg.png"
+    },
+    {
+        "id": 10,
+>>>>>>> 369e6bf46d0f2e2dd269a6dfd573a94193f3d130
        "name": "Paper crate",
         "price":10500,
         "image": "../images/14.png"
     },
     {
-        "id": 15,
+        "id": 11,
        "name": "Pulse sprayer 15L",
+<<<<<<< HEAD
         "price": 17500,
         "image": "../images/15.png"
     },
@@ -110,6 +169,16 @@
        "name": "Hybrid Layer mash",
         "price": 18050,
         "image": "../images/Hybrid_Layer_mash.png"
+=======
+        "price": 15000,
+        "image": "../images/15.png"
+    },
+    {
+        "id": 12,
+        "name": "Tylodox Extra 100g",
+        "price": 7900,
+        "image": "../images/26.png"
+>>>>>>> 369e6bf46d0f2e2dd269a6dfd573a94193f3d130
     }
 
 
