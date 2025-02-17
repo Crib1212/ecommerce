@@ -400,7 +400,7 @@ button:hover {
     position: fixed;
     width: 400px;
     background-color: #0E0F11;
-    top: 90px;
+    top: 224px;
     right: -100%;
     display: grid;
     grid-template-rows: 50px 1fr 50px;
