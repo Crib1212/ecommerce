@@ -1,9 +1,9 @@
 [
     {
         "id": 1,
-       "name": "Hybrid starter 25kg",
+       "name": "Breedwell PSC 25kg",
         "price": 21950,
-        "image": "../images/Hybrid_starter_25kg-1.png"
+        "image": "../images/Breed_well_psc_25kg.png"
     }, 
     {
         "id": 2,
@@ -25,9 +25,9 @@
     },
     {
         "id": 5,
-        "name": "Base 2 6mm",
+        "name": "Breed weell finisher 25kg",
         "price": 19350,
-        "image": "../images/Base2_4mm-5.png"
+        "image": "../images/Breedwell-Broiler-Finisher-pellet.jpg"
     },
     {
         "id": 6,
