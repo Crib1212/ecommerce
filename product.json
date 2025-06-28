@@ -70,6 +70,12 @@
         "name": "Tylodox Extra 100g",
         "price": 8100,
         "image": "../images/26.png"
+    },
+    {
+        "id": 13,
+        "name": "DHLPP",
+        "price": 4800,
+        "image": "../images/DHLPP.png"
     }
 
 
