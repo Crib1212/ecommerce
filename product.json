@@ -2,7 +2,7 @@
     {
         "id": 1,
        "name": "Breedwell PSC 25kg",
-        "price": 26900,
+        "price": 26500,
         "image": "../images/Breed_well_psc_25kg.png"
     }, 
     {
@@ -14,31 +14,31 @@
     {
         "id": 3,
         "name": "Hybrid Layer Mash 25kg",
-        "price": 17700,
+        "price": 16750,
         "image": "../images/Hybrid_layer_mash-3.png"
     },
     {
         "id": 4,
         "name": "Hybrid 3 in 1 Special",
-        "price": 24800,
+        "price": 23800,
         "image": "../images/Hybrid_3_in_1_Special-4.png"
     },
     {
         "id": 5,
         "name": "Breed weell finisher 25kg",
-        "price": 26800,
+        "price": 26450,
         "image": "../images/Breedwell-Broiler-Finisher-pellet.png"
     },
     {
         "id": 6,
         "name": "Hybrid Base1 Super Starter 25kg",
-        "price": 23800,
+        "price": 22700,
         "image": "../images/Hybrid_base1_Starter-25kg-6.png"
     },
     {
         "id": 7,
         "name": "Hybrid FInisher pellet 25kg",
-        "price": 21500,
+        "price": 20100,
         "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
     },
     {
@@ -62,7 +62,7 @@
     {
         "id": 11,
        "name": "Pulse sprayer 15L",
-        "price": 18000,
+        "price": 17500,
         "image": "../images/15.png"
     },
     {
