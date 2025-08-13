@@ -43,9 +43,9 @@
     },
     {
         "id": 8,
-        "name": "Live chicken",
-        "price": 12000,
-        "image": "../images/Live_chicken.png"
+        "name": "Ultima finisher",
+        "price": 23900,
+        "image": "../images/Ultima_finisher.png"
     },
     {
         "id": 9,
