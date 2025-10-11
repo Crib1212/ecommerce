@@ -47,6 +47,7 @@ function addDataToHTML(){
     // remove datas default from HTML
     let listProductHTML = document.querySelector('.listProduct');
     listProductHTML.innerHTML = '';
+    
 
     // add new datas
     if(products != null) // if has data
