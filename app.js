@@ -1,40 +1,98 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let iconCart = document.querySelector('.iconCart');
-    let cart = document.querySelector('.cart');
-    let container = document.querySelector('.container');
-    let close = document.querySelector('.close');
+    const iconCart = document.querySelector('.iconCart');
+    const cart = document.querySelector('.cart');
+    const container = document.querySelector('.container');
+    const close = document.querySelector('.close');
+    const category = document.querySelector('.category');
 
-    // Cart open/close animations
+    // State tracking
+    let isCartOpen = false;
+
+    /* ===============================
+       🧭 MENU TOGGLE (with animation)
+    ================================*/
+    window.toggleMenu = function () {
+        const menu = document.getElementById('menu');
+        if (!menu) return;
+
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            menu.style.display = 'block';
+            menu.style.opacity = '0';
+            menu.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                menu.style.opacity = '1';
+                menu.style.transform = 'translateY(0)';
+            }, 10);
+        } else {
+            menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            menu.style.opacity = '0';
+            menu.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                menu.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    // HOME AND TOAST
+    window.goHome = function () {
+        window.location.href = "index.html";
+    };
+    window.closeToast = function () {
+        const toast = document.querySelector('.notification-toast');
+        if (toast) toast.style.display = 'none';
+    };
+
+    /* ===============================
+       🛒 CART TOGGLE (with animation)
+    ================================*/
     iconCart.addEventListener('click', function () {
-        cart.style.right = '0';
-        container.style.transform = 'translateX(-400px)';
+        if (isCartOpen) {
+            cart.style.transition = 'right 0.5s ease';
+            cart.style.right = '-100%';
+            container.style.transition = 'transform 0.5s ease';
+            container.style.transform = 'translateX(0)';
+        } else {
+            cart.style.transition = 'right 0.5s ease';
+            cart.style.right = '0';
+            container.style.transition = 'transform 0.5s ease';
+            container.style.transform = 'translateX(-400px)';
+        }
+        isCartOpen = !isCartOpen;
     });
 
     close.addEventListener('click', function () {
+        cart.style.transition = 'right 0.5s ease';
         cart.style.right = '-100%';
+        container.style.transition = 'transform 0.5s ease';
         container.style.transform = 'translateX(0)';
+        isCartOpen = false;
     });
 
+    /* ===============================
+       🧾 PRODUCT LOADING
+    ================================*/
     let products = null;
 
-    // Load products from JSON
     fetch('product.json')
         .then(response => response.json())
         .then(data => {
             products = data;
-            addDataToHTML(); // Load all products
+            addDataToHTML(products);
         })
         .catch(error => console.error('Error loading products:', error));
 
-    // ✅ Normalize text (remove punctuation, spaces, special chars)
+    /* ===============================
+       ✨ TEXT NORMALIZATION
+    ================================*/
     function normalizeText(text) {
-        return text
-            .toLowerCase()
-            .replace(/['’`"“”.,\-_/\\()]/g, '') // remove punctuation
-            .replace(/\s+/g, ''); // remove all spaces
+        return text.toLowerCase().replace(/['’`"“”.,\-_/\\()]/g, '').replace(/\s+/g, '');
     }
 
-    // ✅ Display products (with optional highlighting)
+    /* ===============================
+       🎨 DISPLAY PRODUCTS + HIGHLIGHT
+    ================================*/
     function addDataToHTML(productList = products, highlight = '') {
         const listProductHTML = document.querySelector('.listProduct');
         listProductHTML.innerHTML = '';
@@ -43,22 +101,21 @@ document.addEventListener('DOMContentLoaded', () => {
             productList.forEach(product => {
                 let { name, description = '', category = '', image, price, id } = product;
 
-                // Highlight helper
                 const highlightText = (text, keyword) => {
                     if (!keyword) return text;
                     const regex = new RegExp(`(${keyword})`, 'gi');
-                    return text.replace(regex, '<mark>$1</mark>');
+                    return text.replace(regex, '<span style="background-color:#fff176; font-weight:bold;">$1</span>');
                 };
 
-                // Apply highlights
                 name = highlightText(name, highlight);
-                description = highlightText(description, highlight);
                 category = highlightText(category, highlight);
+                description = highlightText(description, highlight);
 
                 let newProduct = document.createElement('div');
                 newProduct.classList.add('item');
+                newProduct.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
                 newProduct.innerHTML = `
-                    <img src="${image}" alt="${name}">
+                    <img src="${image}" alt="">
                     <h2>${name}</h2>
                     ${category ? `<p class="category">Category: ${category}</p>` : ''}
                     ${description ? `<p class="desc">${description}</p>` : ''}
@@ -66,6 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button onclick="addCart(${id})">Add to cart</button>
                 `;
                 listProductHTML.appendChild(newProduct);
+
+                // Add small fade-in animation
+                newProduct.style.opacity = '0';
+                newProduct.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    newProduct.style.opacity = '1';
+                    newProduct.style.transform = 'translateY(0)';
+                }, 100);
             });
         } else {
             listProductHTML.innerHTML = `
@@ -79,13 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 🛒 Cart setup
+    /* ===============================
+       🛍 CART LOGIC
+    ================================*/
     let listCart = [];
 
     function checkCart() {
-        let cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('listCart='));
+        const cookieValue = document.cookie.split('; ').find(row => row.startsWith('listCart='));
         if (cookieValue) {
             listCart = JSON.parse(cookieValue.split('=')[1]);
         } else {
@@ -104,10 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             listCart[$idProduct].quantity++;
         }
 
-        document.cookie =
-            "listCart=" +
-            JSON.stringify(listCart) +
-            "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
+        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
         addCartToHTML();
     };
 
@@ -159,44 +221,43 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        document.cookie =
-            "listCart=" +
-            JSON.stringify(listCart) +
-            "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
+        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
         addCartToHTML();
     };
 
-    // 🔍 Smart Live Search + Highlight
+    /* ===============================
+       🔍 SEARCH BAR WITH HIGHLIGHT
+    ================================*/
     const searchInput = document.getElementById('searchInput');
-
-    searchInput.addEventListener('input', handleSearch);
-    searchInput.addEventListener('keypress', event => {
-        if (event.key === 'Enter') handleSearch();
-    });
+    const searchBtn = document.querySelector('.search-button');
 
     function handleSearch() {
-        const searchValueRaw = searchInput.value.toLowerCase().trim();
-        const normalizedSearch = normalizeText(searchValueRaw);
-
-        if (normalizedSearch === '') {
+        const rawSearch = searchInput.value.trim().toLowerCase();
+        if (!rawSearch) {
             addDataToHTML(products);
             return;
         }
 
-        const filteredProducts = products.filter(product => {
+        const normalizedSearch = normalizeText(rawSearch);
+        const filtered = products.filter(product => {
             const name = normalizeText(product.name || '');
             const desc = normalizeText(product.description || '');
-            const category = normalizeText(product.category || '');
-            return (
-                name.includes(normalizedSearch) ||
-                desc.includes(normalizedSearch) ||
-                category.includes(normalizedSearch)
-            );
+            const cat = normalizeText(product.category || '');
+            return name.includes(normalizedSearch) || desc.includes(normalizedSearch) || cat.includes(normalizedSearch);
         });
 
-        addDataToHTML(filteredProducts, searchValueRaw);
+        addDataToHTML(filtered, rawSearch);
     }
 
-    // Load cart on start
+    if (searchInput) {
+        searchInput.addEventListener('input', handleSearch);
+        searchInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') handleSearch();
+        });
+    }
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleSearch);
+    }
+
     addCartToHTML();
 });
