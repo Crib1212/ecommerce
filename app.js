@@ -8,71 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // State tracking
     let isCartOpen = false;
 
-    /* ===============================
-       🧭 MENU TOGGLE (with animation)
-    ================================*/
+    // MENU TOGGLE FUNCTION
     window.toggleMenu = function () {
         const menu = document.getElementById('menu');
-        if (!menu) return;
-
-        menu.classList.toggle('open');
-        if (menu.classList.contains('open')) {
-            menu.style.display = 'block';
-            menu.style.opacity = '0';
-            menu.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                menu.style.opacity = '1';
-                menu.style.transform = 'translateY(0)';
-            }, 10);
-        } else {
-            menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-            menu.style.opacity = '0';
-            menu.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                menu.style.display = 'none';
-            }, 400);
-        }
+        if (menu) menu.classList.toggle('open');
     };
 
-    // HOME AND TOAST
+    // GO HOME FUNCTION
     window.goHome = function () {
         window.location.href = "index.html";
     };
+
+    // CLOSE TOAST
     window.closeToast = function () {
         const toast = document.querySelector('.notification-toast');
         if (toast) toast.style.display = 'none';
     };
 
-    /* ===============================
-       🛒 CART TOGGLE (with animation)
-    ================================*/
+    // 🛒 CART TOGGLE OPEN/CLOSE
     iconCart.addEventListener('click', function () {
         if (isCartOpen) {
-            cart.style.transition = 'right 0.5s ease';
             cart.style.right = '-100%';
-            container.style.transition = 'transform 0.5s ease';
             container.style.transform = 'translateX(0)';
         } else {
-            cart.style.transition = 'right 0.5s ease';
             cart.style.right = '0';
-            container.style.transition = 'transform 0.5s ease';
             container.style.transform = 'translateX(-400px)';
         }
         isCartOpen = !isCartOpen;
     });
 
     close.addEventListener('click', function () {
-        cart.style.transition = 'right 0.5s ease';
         cart.style.right = '-100%';
-        container.style.transition = 'transform 0.5s ease';
         container.style.transform = 'translateX(0)';
         isCartOpen = false;
     });
 
-    /* ===============================
-       🧾 PRODUCT LOADING
-    ================================*/
+    // PRODUCTS SETUP
     let products = null;
 
     fetch('product.json')
@@ -83,16 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading products:', error));
 
-    /* ===============================
-       ✨ TEXT NORMALIZATION
-    ================================*/
+    // NORMALIZE TEXT FOR SEARCH
     function normalizeText(text) {
         return text.toLowerCase().replace(/['’`"“”.,\-_/\\()]/g, '').replace(/\s+/g, '');
     }
 
-    /* ===============================
-       🎨 DISPLAY PRODUCTS + HIGHLIGHT
-    ================================*/
+    // ADD DATA TO HTML WITH HIGHLIGHT SUPPORT
     function addDataToHTML(productList = products, highlight = '') {
         const listProductHTML = document.querySelector('.listProduct');
         listProductHTML.innerHTML = '';
@@ -107,13 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     return text.replace(regex, '<span style="background-color:#fff176; font-weight:bold;">$1</span>');
                 };
 
+                // Apply highlight to name, category, and description
                 name = highlightText(name, highlight);
                 category = highlightText(category, highlight);
                 description = highlightText(description, highlight);
 
                 let newProduct = document.createElement('div');
                 newProduct.classList.add('item');
-                newProduct.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
                 newProduct.innerHTML = `
                     <img src="${image}" alt="">
                     <h2>${name}</h2>
@@ -123,14 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button onclick="addCart(${id})">Add to cart</button>
                 `;
                 listProductHTML.appendChild(newProduct);
-
-                // Add small fade-in animation
-                newProduct.style.opacity = '0';
-                newProduct.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    newProduct.style.opacity = '1';
-                    newProduct.style.transform = 'translateY(0)';
-                }, 100);
             });
         } else {
             listProductHTML.innerHTML = `
@@ -144,9 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /* ===============================
-       🛍 CART LOGIC
-    ================================*/
+    // 🛒 CART SYSTEM
     let listCart = [];
 
     function checkCart() {
@@ -225,9 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addCartToHTML();
     };
 
-    /* ===============================
-       🔍 SEARCH BAR WITH HIGHLIGHT
-    ================================*/
+    // 🔍 SEARCH FUNCTION WITH HIGHLIGHTING
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.querySelector('.search-button');
 
