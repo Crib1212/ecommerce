@@ -4,72 +4,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');
     const close = document.querySelector('.close');
     const category = document.querySelector('.category');
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.querySelector('.search-button');
+
+    // State tracking
     let isCartOpen = false;
-    let products = [];
-    let listCart = [];
 
     /* ===============================
-       🧭 MENU TOGGLE (animated)
+       🧭 MENU TOGGLE (with animation)
     ================================*/
     window.toggleMenu = function () {
         const menu = document.getElementById('menu');
         if (!menu) return;
+
         menu.classList.toggle('open');
         if (menu.classList.contains('open')) {
             menu.style.display = 'block';
+            menu.style.opacity = '0';
+            menu.style.transform = 'translateY(-10px)';
             setTimeout(() => {
+                menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                 menu.style.opacity = '1';
                 menu.style.transform = 'translateY(0)';
             }, 10);
         } else {
+            menu.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             menu.style.opacity = '0';
-            menu.style.transform = 'translateY(-15px)';
+            menu.style.transform = 'translateY(-10px)';
             setTimeout(() => {
                 menu.style.display = 'none';
-            }, 300);
+            }, 400);
         }
     };
 
+    // HOME AND TOAST
+    window.goHome = function () {
+        window.location.href = "index.html";
+    };
+    window.closeToast = function () {
+        const toast = document.querySelector('.notification-toast');
+        if (toast) toast.style.display = 'none';
+    };
+
     /* ===============================
-       🛒 CART TOGGLE (animated)
+       🛒 CART TOGGLE (with animation)
     ================================*/
     iconCart.addEventListener('click', function () {
         if (isCartOpen) {
+            cart.style.transition = 'right 0.5s ease';
             cart.style.right = '-100%';
+            container.style.transition = 'transform 0.5s ease';
             container.style.transform = 'translateX(0)';
         } else {
+            cart.style.transition = 'right 0.5s ease';
             cart.style.right = '0';
+            container.style.transition = 'transform 0.5s ease';
             container.style.transform = 'translateX(-400px)';
         }
         isCartOpen = !isCartOpen;
     });
 
     close.addEventListener('click', function () {
+        cart.style.transition = 'right 0.5s ease';
         cart.style.right = '-100%';
+        container.style.transition = 'transform 0.5s ease';
         container.style.transform = 'translateX(0)';
         isCartOpen = false;
     });
 
     /* ===============================
-       🧾 LOAD PRODUCTS
+       🧾 PRODUCT LOADING
     ================================*/
+    let products = null;
+
     fetch('product.json')
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             products = data;
             addDataToHTML(products);
         })
-        .catch(err => console.error('Error loading product.json:', err));
+        .catch(error => console.error('Error loading products:', error));
 
     /* ===============================
-       🔠 NORMALIZE TEXT (for search)
+       ✨ TEXT NORMALIZATION
     ================================*/
     function normalizeText(text) {
-        return text
-            ? text.toLowerCase().replace(/['’`"“”.,\-_/\\()]/g, '').replace(/\s+/g, '')
-            : '';
+        return text.toLowerCase().replace(/['’`"“”.,\-_/\\()]/g, '').replace(/\s+/g, '');
     }
 
     /* ===============================
@@ -79,74 +97,79 @@ document.addEventListener('DOMContentLoaded', () => {
         const listProductHTML = document.querySelector('.listProduct');
         listProductHTML.innerHTML = '';
 
-        if (productList.length === 0) {
+        if (productList && productList.length > 0) {
+            productList.forEach(product => {
+                let { name, description = '', category = '', image, price, id } = product;
+
+                const highlightText = (text, keyword) => {
+                    if (!keyword) return text;
+                    const regex = new RegExp(`(${keyword})`, 'gi');
+                    return text.replace(regex, '<span style="background-color:#fff176; font-weight:bold;">$1</span>');
+                };
+
+                name = highlightText(name, highlight);
+                category = highlightText(category, highlight);
+                description = highlightText(description, highlight);
+
+                let newProduct = document.createElement('div');
+                newProduct.classList.add('item');
+                newProduct.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                newProduct.innerHTML = `
+                    <img src="${image}" alt="">
+                    <h2>${name}</h2>
+                    ${category ? `<p class="category">Category: ${category}</p>` : ''}
+                    ${description ? `<p class="desc">${description}</p>` : ''}
+                    <div class="price">&#8358;${price}</div>
+                    <button onclick="addCart(${id})">Add to cart</button>
+                `;
+                listProductHTML.appendChild(newProduct);
+
+                // Add small fade-in animation
+                newProduct.style.opacity = '0';
+                newProduct.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    newProduct.style.opacity = '1';
+                    newProduct.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        } else {
             listProductHTML.innerHTML = `
-                <div class="no-results">
-                    <p>No products found for "<strong>${highlight}</strong>"</p>
-                    <button id="showAllBtn">Show All Products</button>
-                </div>`;
+                <p>No results found for "<strong>${highlight}</strong>".</p>
+                <button id="showAllBtn">Show All Products</button>
+            `;
             document.getElementById('showAllBtn').addEventListener('click', () => {
                 addDataToHTML(products);
-                searchInput.value = '';
+                document.getElementById('searchInput').value = '';
             });
-            return;
         }
-
-        const highlightText = (text, keyword) => {
-            if (!keyword || !text) return text;
-            const regex = new RegExp(`(${keyword})`, 'gi');
-            return text.replace(regex, '<span style="background-color:#fff176; font-weight:bold;">$1</span>');
-        };
-
-        productList.forEach(product => {
-            let { name, description = '', category = '', image, price, id } = product;
-
-            const keyword = highlight.trim();
-            const highlightedName = highlightText(name, keyword);
-            const highlightedCategory = highlightText(category, keyword);
-            const highlightedDesc = highlightText(description, keyword);
-
-            let newProduct = document.createElement('div');
-            newProduct.classList.add('item');
-            newProduct.innerHTML = `
-                <img src="${image}" alt="${name}">
-                <h2>${highlightedName}</h2>
-                ${category ? `<p class="category">Category: ${highlightedCategory}</p>` : ''}
-                ${description ? `<p class="desc">${highlightedDesc}</p>` : ''}
-                <div class="price">&#8358;${price}</div>
-                <button onclick="addCart(${id})">Add to cart</button>
-            `;
-            listProductHTML.appendChild(newProduct);
-
-            // subtle fade-in
-            newProduct.style.opacity = '0';
-            newProduct.style.transform = 'translateY(10px)';
-            setTimeout(() => {
-                newProduct.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                newProduct.style.opacity = '1';
-                newProduct.style.transform = 'translateY(0)';
-            }, 10);
-        });
     }
 
     /* ===============================
-       🛍 CART FUNCTIONS
+       🛍 CART LOGIC
     ================================*/
+    let listCart = [];
+
     function checkCart() {
         const cookieValue = document.cookie.split('; ').find(row => row.startsWith('listCart='));
-        if (cookieValue) listCart = JSON.parse(cookieValue.split('=')[1]);
+        if (cookieValue) {
+            listCart = JSON.parse(cookieValue.split('=')[1]);
+        } else {
+            listCart = [];
+        }
     }
     checkCart();
 
-    window.addCart = function (id) {
+    window.addCart = function ($idProduct) {
         let productsCopy = JSON.parse(JSON.stringify(products));
-        if (!listCart[id]) {
-            listCart[id] = productsCopy.find(p => p.id == id);
-            listCart[id].quantity = 1;
+
+        if (!listCart[$idProduct]) {
+            listCart[$idProduct] = productsCopy.find(product => product.id == $idProduct);
+            listCart[$idProduct].quantity = 1;
         } else {
-            listCart[id].quantity++;
+            listCart[$idProduct].quantity++;
         }
-        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2026 23:59:59 UTC; path=/;";
+
+        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
         addCartToHTML();
     };
 
@@ -156,47 +179,58 @@ document.addEventListener('DOMContentLoaded', () => {
         listCartHTML.innerHTML = '';
         let totalQuantity = 0;
 
-        listCart.forEach(product => {
-            if (product) {
-                let newCart = document.createElement('div');
-                newCart.classList.add('item');
-                newCart.innerHTML = `
-                    <img src="${product.image}">
-                    <div class="content">
-                        <div class="name">${product.name}</div>
-                        <div class="price">&#8358;${product.price}</div>
-                    </div>
-                    <div class="quantity">
-                        <button onclick="changeQuantity(${product.id}, '+')">+</button>
-                        <input type="number" id="quantity-${product.id}" value="${product.quantity}" onchange="changeQuantity(${product.id})">
-                        <button onclick="changeQuantity(${product.id}, '-')">-</button>
-                    </div>
-                `;
-                listCartHTML.appendChild(newCart);
-                totalQuantity += product.quantity;
-            }
-        });
+        if (listCart) {
+            listCart.forEach(product => {
+                if (product) {
+                    let newCart = document.createElement('div');
+                    newCart.classList.add('item');
+                    newCart.innerHTML = `
+                        <img src="${product.image}">
+                        <div class="content">
+                            <div class="name">${product.name}</div>
+                            <div class="price">&#8358;${product.price}</div>
+                        </div>
+                        <div class="quantity">
+                            <button onclick="changeQuantity(${product.id}, '+')">+</button>
+                            <input type="number" id="quantity-${product.id}" value="${product.quantity}" onchange="changeQuantity(${product.id})">
+                            <button onclick="changeQuantity(${product.id}, '-')">-</button>
+                        </div>
+                    `;
+                    listCartHTML.appendChild(newCart);
+                    totalQuantity += product.quantity;
+                }
+            });
+        }
+
         totalHTML.innerText = totalQuantity;
     }
 
-    window.changeQuantity = function (id, type = null) {
-        if (type === '+') {
-            listCart[id].quantity++;
-        } else if (type === '-') {
-            listCart[id].quantity--;
-            if (listCart[id].quantity <= 0) delete listCart[id];
+    window.changeQuantity = function ($idProduct, $type = null) {
+        if ($type === '+') {
+            listCart[$idProduct].quantity++;
+        } else if ($type === '-') {
+            listCart[$idProduct].quantity--;
+            if (listCart[$idProduct].quantity <= 0) {
+                delete listCart[$idProduct];
+            }
         } else {
-            const input = document.getElementById(`quantity-${id}`);
-            listCart[id].quantity = parseInt(input.value) || 0;
-            if (listCart[id].quantity <= 0) delete listCart[id];
+            let quantityInput = document.getElementById(`quantity-${$idProduct}`).value;
+            listCart[$idProduct].quantity = parseInt(quantityInput) || 0;
+            if (listCart[$idProduct].quantity <= 0) {
+                delete listCart[$idProduct];
+            }
         }
-        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2026 23:59:59 UTC; path=/;";
+
+        document.cookie = "listCart=" + JSON.stringify(listCart) + "; expires=Thu, 31 Dec 2025 23:59:59 UTC; path=/;";
         addCartToHTML();
     };
 
     /* ===============================
-       🔍 SEARCH BAR (title + desc + category)
+       🔍 SEARCH BAR WITH HIGHLIGHT
     ================================*/
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.querySelector('.search-button');
+
     function handleSearch() {
         const rawSearch = searchInput.value.trim().toLowerCase();
         if (!rawSearch) {
@@ -206,14 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const normalizedSearch = normalizeText(rawSearch);
         const filtered = products.filter(product => {
-            const name = normalizeText(product.name);
-            const desc = normalizeText(product.description);
-            const cat = normalizeText(product.category);
-            return (
-                name.includes(normalizedSearch) ||
-                desc.includes(normalizedSearch) ||
-                cat.includes(normalizedSearch)
-            );
+            const name = normalizeText(product.name || '');
+            const desc = normalizeText(product.description || '');
+            const cat = normalizeText(product.category || '');
+            return name.includes(normalizedSearch) || desc.includes(normalizedSearch) || cat.includes(normalizedSearch);
         });
 
         addDataToHTML(filtered, rawSearch);
@@ -225,7 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') handleSearch();
         });
     }
-    if (searchBtn) searchBtn.addEventListener('click', handleSearch);
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleSearch);
+    }
 
     addCartToHTML();
 });
