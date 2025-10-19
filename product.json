@@ -25,9 +25,9 @@
     },
     {
         "id": 5,
-        "name": "Breed weell finisher 25kg",
+        "name": "Ultima starter pellet",
         "price": 26450,
-        "image": "../images/Breedwell-Broiler-Finisher-pellet.png"
+        "image": "../images/Ultima_starter.png"
     },
     {
         "id": 6,
@@ -37,9 +37,9 @@
     },
     {
         "id": 7,
-        "name": "Hybrid FInisher pellet 25kg",
+        "name": "Ultima Plus Super Starter",
         "price": 20100,
-        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
+        "image": "../images/Ultima_Plus_Super_Starter.png"
     },
     {
         "id": 8,
@@ -49,9 +49,9 @@
     },
     {
         "id": 9,
-        "name": "Kepro oxytet 1kg",
-        "price": 79000,
-        "image": "../images/Kepro_oxytet_1kg.png"
+        "name": "Ultima super starter",
+        "price": 24700,
+        "image": "../images/Ultima_super_starter.png"
     },
     {
         "id": 10,
@@ -76,7 +76,14 @@
         "name": "DHLPP",
         "price": 4800,
         "image": "../images/DHLPP.png"
+    },
+     {
+        "id": 14,
+        "name": "Ultima plus finisher",
+        "price": 25700,
+        "image": "../images/Ultima_plus_finisher.png"
     }
+
 
 
 ]
