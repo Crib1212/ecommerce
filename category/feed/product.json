@@ -47,7 +47,14 @@
         "name": "Ultima Starter 25kg",
         "price": 21900,
         "image": "../images/Ultima_starter.png"
+    },
+       {
+        "id": 8,
+        "name": "Animal care layer",
+        "price": 17100,
+        "image": "../images/Animal_care_layer.png"
     }
+ 
  
  
 ]
