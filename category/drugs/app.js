@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // HOME AND TOAST
     window.goHome = function () {
-        window.location.href = "index.html";
+        window.location.href = "../../../index.html";
     };
     window.closeToast = function () {
         const toast = document.querySelector('.notification-toast');
