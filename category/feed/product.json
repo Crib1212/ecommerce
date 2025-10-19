@@ -41,6 +41,13 @@
         "name": "Hybrid FInisher pellet 25kg",
         "price": 21900,
         "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
+    },
+      {
+        "id": 7,
+        "name": "Ultima Starter 25kg",
+        "price": 21900,
+        "image": "../images/Ultima_starter.png"
     }
+ 
  
 ]
