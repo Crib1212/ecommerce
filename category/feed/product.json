@@ -26,9 +26,9 @@
     },
     {
         "id": 5,
-        "name": "Base 2 6mm",
+        "name": "Blue crown 2mm",
         "price": 19350,
-        "image": "../images/Base2_4mm-5.png"
+        "image": "../images/blue_crown_2mm.png"
     },
     {
         "id": 6,
@@ -53,6 +53,42 @@
         "name": "Animal care layer",
         "price": 17100,
         "image": "../images/Animal_care_layer.png"
+    },
+      {
+        "id": 9,
+        "name": "chikun grower pellet",
+        "price": 16700,
+        "image": "../images/Chikun_grower_pellet.png"
+    },
+      {
+        "id": 10,
+        "name": "Eco float 3mm",
+        "price": 21100,
+        "image": "../images/Eco_float_3mm.png"
+    },
+      {
+        "id": 11,
+        "name": "Breedwell psc 25kg",
+        "price": 26700,
+        "image": "../images/Breed_well_psc_25kg.png"
+    },
+      {
+        "id": 12,
+        "name": "Bluecrown 3mm",
+        "price": 31100,
+        "image": "../images/Bluecrown-3mm-53.png"
+    },
+      {
+        "id": 13,
+        "name": "Bluecrown 4mm",
+        "price": 17100,
+        "image": "../images/Bluecrown-4mm-54.png"
+    },
+      {
+        "id": 14,
+        "name": "Bluecrown 9mm",
+        "price": 17100,
+        "image": "../images/Bluecrown-9mm-59.png"
     }
  
  
