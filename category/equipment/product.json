@@ -4,38 +4,38 @@
         "id": 15,
         "name": "Automatic feeder B/S",
         "price": 120,
-        "image": "../images/Automatic_feeder_3.png"
+        "image": "../../images/Automatic_feeder_3.png"
     },
     {
         "id": 16,
         "name": "Automatic drinker M/S",
         "price": 120,
-        "image": "../images/Automatic_drinker.png"
+        "image": "../../images/Automatic_drinker.png"
     },
     {
         "id": 17,
         "name": "Three in one drinker",
         "price": 120,
-        "image": "../images/3_in_1_drinker.png"
+        "image": "../../images/3_in_1_drinker.png"
     },
     {
         "id": 18,
         "name": "Quail feeder",
         "price": 120,
-        "image": "../images/Quail_feeder.png"
+        "image": "../../images/Quail_feeder.png"
     },
    
     {
         "id": 19,
        "name": "Paper crate",
         "price": 120,
-        "image": "../images/Paper_crate.png"
+        "image": "../../images/Paper_crate.png"
     },
     {
         "id": 20,
        "name": "Pulse sprayer 15L",
         "price": 120,
-        "image": "../images/Pulse_sprayer_15L.png"
+        "image": "../../images/Pulse_sprayer_15L.png"
     }
     
 ]

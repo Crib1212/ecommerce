@@ -3,45 +3,20 @@
     {
         "id": 24,
         "name": "Optimax can",
-        "price": 250,
-        "image": "../images/Optimax.png"
+        "price": 1750,
+        "image": "../../images/Optimax.png"
     }
     ,
     {
         "id": 25,
         "name": "Booster can",
-        "price": 420,
-        "image": "../images/Booster_can.png"
+        "price": 2000,
+        "image": "../../images/Booster_can.png"
     },
     {
         "id": 26,
         "name": "Booster can",
-        "price": 120,
-        "image": "../images/Booster.png"
-    },
-   
-    {
-        "id": 27,
-       "name": "Pet toy (bone)",
-        "price": 120,
-        "image": "../images/Pet_toy_bone.png"
-    },
-    {
-        "id": 28,
-       "name": "Pet toy pink bone",
-        "price": 120,
-        "image": "../images/Pet_toy_pink_bone.png"
-    },
-    {
-        "id": 29,
-       "name": "Pet plate green",
-        "price": 120,
-        "image": "../images/Pet_plate_green.png"
-    },
-    {
-        "id": 30,
-       "name": "Pet cage yellow",
-        "price": 120,
-        "image": "../images/Pet_cage_yellow.png"
+        "price": 2000,
+        "image": "../../images/Booster.png"
     }
 ]

@@ -4,13 +4,7 @@
        "name": "Breedwell PSC 25kg",
         "price": 26500,
         "image": "../images/Breed_well_psc_25kg.png"
-    }, 
-    {
-        "id": 2,
-       "name": "Hybrid Grower Mash 25kg",
-        "price": 16900,
-        "image": "../images/Hybrid_grower_mash-2.png"
-    }, 
+    },  
     {
         "id": 3,
         "name": "Hybrid Layer Mash 25kg",
@@ -53,12 +47,7 @@
         "price": 24700,
         "image": "../images/Ultima_super_starter.png"
     },
-    {
-        "id": 10,
-       "name": "Paper crate",
-        "price":10200,
-        "image": "../images/14.png"
-    },
+
     {
         "id": 11,
        "name": "Pulse sprayer 15L",

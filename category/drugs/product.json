@@ -3,31 +3,31 @@
         "id": 7,
         "name": "Tylodox Extra 100g",
         "price": 120,
-        "image": "../images/Tylo-dox_extra.png"
+        "image": "../../images/Tylo-dox_extra.png"
     },
     {
         "id": 8,
         "name": "Doxygen",
         "price": 120,
-        "image": "../images/Doxygen.png"
+        "image": "../../images/Doxygen.png"
     },
     {
         "id": 9,
         "name": "Neoxymore",
         "price": 120,
-        "image": "../images/Neoxymore.png"
+        "image": "../../images/Neoxymore.png"
     },
     {
         "id": 10,
         "name": "Neotreat",
         "price": 120,
-        "image": "../images/Neotreat.png"
+        "image": "../../images/Neotreat.png"
     },
     {
         "id": 13,
         "name": "Kepro Oxytet 1kg",
         "price": 120,
-        "image": "../images/Kepro_oxytet_1kg.png"
+        "image": "../../images/Kepro_oxytet_1kg.png"
     }
     
 ]

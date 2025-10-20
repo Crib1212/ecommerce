@@ -3,13 +3,13 @@
         "id": 2,
         "name": "Olam",
         "price": 1430,
-        "image": "../images/Olam.png"
+        "image": "../../images/Olam.png"
     },
     {
         "id": 3,
         "name": "Agrited",
         "price": 1570,
-        "image": "../images/Agrited.png"
+        "image": "../../images/Agrited.png"
     }
  
 ]
