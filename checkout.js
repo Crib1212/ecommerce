@@ -1,105 +1,110 @@
-let listCart = []; // Holds cart items
+/* ==========================================
+   🛒 CHECKOUT PAGE SCRIPT
+   Works with localStorage cart system
+========================================== */
 
-// Function to get product details from HTML (update as per your HTML structure)
-function getProductDetailsFromHTML() {
-    const items = document.querySelectorAll('.list .item');
-    items.forEach(item => {
-        const productName = item.dataset.name;
-        const productPrice = parseFloat(item.dataset.price);
-        const productQuantity = parseInt(item.dataset.quantity);
+let listCart = [];
 
-        listCart.push({
-            name: productName,
-            price: productPrice,
-            quantity: productQuantity
-        });
-    });
+/* ==========================================
+   📦 LOAD CART FROM LOCAL STORAGE
+========================================== */
+function loadCart() {
+    const stored = localStorage.getItem('listCart');
+    listCart = stored ? JSON.parse(stored) : [];
 }
-// Event listener for the checkout button
-document.querySelector('.buttonCheckout').addEventListener('click', function(event) {
-    event.preventDefault();  // Prevent default form submission
-    
-    // Gather user input data
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const address = document.getElementById('address').value;
-    const email = document.getElementById('email').value;
-    const country = document.getElementById('country').value;
-    const city = document.getElementById('city').value;
-    
-    // Store the cart details and user details in sessionStorage
-    sessionStorage.setItem('listCart', JSON.stringify(listCart));
-    sessionStorage.setItem('userDetails', JSON.stringify({
-        name,
-        phone,
-        address,
-        email,
-        country,
-        city,
-        totalQuantity: document.getElementById('totalQuantity').value,
-        totalPrice: document.getElementById('totalPrice').value
-    }));
 
-    // Redirect to the confirmation page
-    window.location.href = 'confirmation.html';  // Ensure the URL is correct
-});
+/* ==========================================
+   🧾 RENDER CART ITEMS ON CHECKOUT PAGE
+========================================== */
+function renderCheckoutCart() {
+    const cartContainer = document.querySelector('.returnCart .list');
+    const totalQuantityElement = document.querySelector('.totalQuantity');
+    const totalPriceElement = document.querySelector('.totalPrice');
 
-// Event listener for the checkout button
-document.querySelector('.buttonCheckout').addEventListener('click', function(event) {
-    event.preventDefault();  // Prevent default form submission
-    
-    // Store the cart details in a cookie
-    document.cookie = `listCart=${JSON.stringify(listCart)}; path=/`;
-    
-    // Redirect to the confirmation page
-    window.location.href = 'confirmation.html';  // Ensure the URL is correct
-});
+    if (!cartContainer) return;
 
-// Function to populate cart details in HTML
-function addCartToHTML() {
-    let listCartHTML = document.querySelector('.returnCart .list');
-    listCartHTML.innerHTML = '';  // Clear existing items
+    cartContainer.innerHTML = '';
 
-    let totalQuantityHTML = document.querySelector('.totalQuantity');
-    let totalPriceHTML = document.querySelector('.totalPrice');
     let totalQuantity = 0;
     let totalPrice = 0;
 
-    // Populate cart items
     listCart.forEach(product => {
-        if (product) {
-            let newCart = document.createElement('div');
-            newCart.classList.add('item');
-            newCart.innerHTML = `
-                <img src="${product.image}">
-                <div class="info">
-                    <div class="name">${product.name}</div>
-                    <div class="price">₦${product.price}/1 item</div>
-                </div>
-                <div class="quantity">${product.quantity}</div>
-                <div class="returnPrice">₦${product.price * product.quantity}</div>`;
-            listCartHTML.appendChild(newCart);
 
-            totalQuantity += product.quantity;
-            totalPrice += product.price * product.quantity;
-        }
+        const item = document.createElement('div');
+        item.classList.add('item');
+
+        item.innerHTML = `
+            <img src="${product.image}" width="60">
+            <div class="info">
+                <div class="name">${product.name}</div>
+                <div class="price">₦${product.price}</div>
+            </div>
+            <div class="quantity">x${product.quantity}</div>
+            <div class="returnPrice">
+                ₦${(product.price * product.quantity).toLocaleString()}
+            </div>
+        `;
+
+        cartContainer.appendChild(item);
+
+        totalQuantity += Number(product.quantity);
+        totalPrice += Number(product.price) * Number(product.quantity);
     });
 
-    totalQuantityHTML.innerText = totalQuantity;
-    totalPriceHTML.innerText = '₦' + totalPrice.toLocaleString();
+    if (totalQuantityElement) {
+        totalQuantityElement.innerText = totalQuantity;
+    }
+
+    if (totalPriceElement) {
+        totalPriceElement.innerText = "₦" + totalPrice.toLocaleString();
+    }
 }
 
-// On page load, check for existing cart items in cookies
-document.addEventListener('DOMContentLoaded', () => {
-    let cookieValue = document.cookie.split('; ').find(row => row.startsWith('listCart='));
-    if (cookieValue) {
-        listCart = JSON.parse(cookieValue.split('=')[1]);
-    }
-    addCartToHTML(); // Call to render the cart on page load
-});
-if (product && product.name && product.quantity) {
-    // Only proceed if product and its properties are valid
-    orderDetailsDiv.innerHTML += `<p>${product.name} - Quantity: ${product.quantity}</p>`;
-} else {
-    console.error('Invalid product data:', product);
+/* ==========================================
+   📝 HANDLE CHECKOUT FORM SUBMISSION
+========================================== */
+function setupCheckoutForm() {
+    const form = document.getElementById('checkoutForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Prevent submission if cart is empty
+        if (listCart.length === 0) {
+            alert("Your cart is empty.");
+            return;
+        }
+
+        // HTML5 validation check
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Collect form data safely
+        const formData = new FormData(form);
+        const userDetails = Object.fromEntries(formData.entries());
+
+        // Save user details
+        sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+        // Save cart snapshot for confirmation page
+        sessionStorage.setItem('checkoutCart', JSON.stringify(listCart));
+
+        // OPTIONAL: clear cart after successful checkout
+        // localStorage.removeItem('listCart');
+
+        // Redirect to confirmation page
+        window.location.href = '/confirmation.html';
+    });
 }
+
+/* ==========================================
+   🚀 INITIALIZE CHECKOUT PAGE
+========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    loadCart();
+    renderCheckoutCart();
+    setupCheckoutForm();
+});
