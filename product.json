@@ -1,118 +1,82 @@
 [
     {
         "id": 1,
-        "name": "Coxklin 100g",
-        "price": 1800,
-        "image": "images/1.png"
-    },
+       "name": "Breedwell PSC 25kg",
+        "price": 26500,
+        "image": "../images/Breed_well_psc_25kg.png"
+    }, 
     {
         "id": 2,
-        "name": "Aquaflox 100g",
-        "price": 1600,
-        "image": "images/2.png"
-    },
+       "name": "Hybrid Grower Mash 25kg",
+        "price": 16900,
+        "image": "../images/Hybrid_grower_mash-2.png"
+    }, 
     {
         "id": 3,
-        "name": "Optimax can",
-        "price": 1700,
-        "image": "images/3.png"
-    }
-    ,
+        "name": "Hybrid Layer Mash 25kg",
+        "price": 16750,
+        "image": "../images/Hybrid_layer_mash-3.png"
+    },
     {
         "id": 4,
-        "name": "Booster can",
-        "price": 1700,
-        "image": "images/4.png"
+        "name": "Hybrid 3 in 1 Special",
+        "price": 23800,
+        "image": "../images/Hybrid_3_in_1_Special-4.png"
     },
     {
         "id": 5,
-        "name": "Booster can",
-        "price": 1700,
-        "image": "images/5.png"
+        "name": "Breed weell finisher 25kg",
+        "price": 26450,
+        "image": "../images/Breedwell-Broiler-Finisher-pellet.png"
     },
     {
         "id": 6,
-        "name": "Aquaceryl 100g",
-        "price": 1500,
-        "image": "images/6.png"
+        "name": "Hybrid Base1 Super Starter 25kg",
+        "price": 22700,
+        "image": "../images/Hybrid_base1_Starter-25kg-6.png"
+    },
+    {
+        "id": 7,
+        "name": "Hybrid FInisher pellet 25kg",
+        "price": 20100,
+        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
     },
     {
         "id": 8,
-        "name": "Diamond grain free",
-        "price": 20000,
-        "image": "images/8.png"
+        "name": "Ultima finisher",
+        "price": 23900,
+        "image": "../images/Ultima_finisher.png"
     },
     {
         "id": 9,
-        "name": "Diclamax 100g",
-        "price": 1200,
-        "image": "images/9.png"
+        "name": "Kepro oxytet 1kg",
+        "price": 79000,
+        "image": "../images/Kepro_oxytet_1kg.png"
     },
     {
         "id": 10,
-        "name": "Automatic feeder B/S",
-        "price": 3000,
-        "image": "images/10.png"
+       "name": "Paper crate",
+        "price":10200,
+        "image": "../images/14.png"
     },
     {
         "id": 11,
-        "name": "Automatic drinker M/S",
-        "price": 3000,
-        "image": "images/11.png"
+       "name": "Pulse sprayer 15L",
+        "price": 17500,
+        "image": "../images/15.png"
     },
     {
         "id": 12,
-        "name": "Three in one drinker",
-        "price": 1450,
-        "image": "images/12.png"
+        "name": "Tylodox Extra 100g",
+        "price": 8100,
+        "image": "../images/26.png"
     },
     {
         "id": 13,
-        "name": "Quail feeder",
-        "price": 2200,
-        "image": "images/13.png"
-    },
-    {
-        "id": 14,
-       "name": "Paper crate",
-        "price": 8000,
-        "image": "images/14.png"
-    },
-    {
-        "id": 15,
-       "name": "Pulse sprayer 15L",
-        "price": 1200,
-        "image": "images/15.png"
-    },
-    {
-        "id": 16,
-       "name": "Pet toy (bone)",
-        "price": 1200,
-        "image": "images/16.png"
-    },
-    {
-        "id": 17,
-       "name": "Pet toy pink bone",
-        "price": 2000,
-        "image": "images/17.png"
-    },
-    {
-        "id": 18,
-       "name": "Pet plate green",
-        "price": 2000,
-        "image": "images/18.png"
-    },
-    {
-        "id": 19,
-       "name": "Pet cage yellow",
-        "price": 40000,
-        "image": "images/19.png"
-    },
-    {
-        "id": 20,
-       "name": "Animal care layer mash 25kg",
-        "price": 17300,
-        "image": "images/20.png"
+        "name": "DHLPP",
+        "price": 4800,
+        "image": "../images/DHLPP.png"
     }
- 
+
+
 ]

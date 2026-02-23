@@ -1,10 +1,53 @@
 [
     
     {
-        "id": 20,
-       "name": "Animal care layer mash 25kg",
-        "price": 120,
-        "image": "images/20.png"
+        "id": 1,
+       "name": "Hybrid starter 25kg",
+        "price": 19950,
+        "image": "../images/Hybrid_starter_25kg-1.png"
+    }, 
+    {
+        "id": 1,
+       "name": "Hybrid Grower Mash 25kg",
+        "price": 17650,
+        "image": "../images/Hybrid_grower_mash-2.png"
+    }, 
+    {
+        "id": 3,
+        "name": "Hybrid Layer Mash 25kg",
+        "price": 18450,
+        "image": "../images/Hybrid_layer_mash-3.png"
+    },
+    {
+        "id": 4,
+        "name": "Hybrid 3 in 1 Special",
+        "price": 25250,
+        "image": "../images/Hybrid_3_in_1_Special-4.png"
+    },
+    {
+        "id": 5,
+        "name": "Base 2 6mm",
+        "price": 19350,
+        "image": "../images/Base2_4mm-5.png"
+    },
+    {
+        "id": 6,
+        "name": "Hybrid Base1 Super Starter 25kg",
+        "price": 24300,
+        "image": "../images/Hybrid_base1_Starter-25kg-6.png"
+    },
+    {
+        "id": 6,
+        "name": "Hybrid FInisher pellet 25kg",
+        "price": 21900,
+        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
+    },
+      {
+        "id": 7,
+        "name": "Ultima Starter 25kg",
+        "price": 21900,
+        "image": "../images/Ultima_starter.png"
     }
+ 
  
 ]
