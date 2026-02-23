@@ -1,96 +1,10 @@
 [
     
     {
-        "id": 1,
-       "name": "Hybrid starter 25kg",
-        "price": 19950,
-        "image": "../../images/Hybrid_starter_25kg-1.png"
-    }, 
-    {
-        "id": 1,
-       "name": "Hybrid Grower Mash 25kg",
-        "price": 17650,
-        "image": "../../images/Hybrid_grower_mash-2.png"
-    }, 
-    {
-        "id": 3,
-        "name": "Hybrid Layer Mash 25kg",
-        "price": 18450,
-        "image": "../../images/Hybrid_layer_mash-3.png"
-    },
-    {
-        "id": 4,
-        "name": "Hybrid 3 in 1 Special",
-        "price": 25250,
-        "image": "../../images/Hybrid_3_in_1_Special-4.png"
-    },
-    {
-        "id": 5,
-        "name": "Blue crown 2mm",
-        "price": 19350,
-        "image": "../../images/Blue_crown_2mm.png"
-    },
-    {
-        "id": 6,
-        "name": "Hybrid Base1 Super Starter 25kg",
-        "price": 24300,
-        "image": "../../images/Hybrid_base1_Starter-25kg-6.png"
-    },
-    {
-        "id": 6,
-        "name": "Hybrid FInisher pellet 25kg",
-        "price": 21900,
-        "image": "../../images/Hybrid_finisher_pellet_25kg-7.png"
-    },
-      {
-        "id": 7,
-        "name": "Ultima Starter 25kg",
-        "price": 21900,
-        "image": "../../images/Ultima_starter.png"
-    },
-       {
-        "id": 8,
-        "name": "Animal care layer",
-        "price": 17100,
-        "image": "../../images/Animal_care_layer.png"
-    },
-      {
-        "id": 9,
-        "name": "chikun grower pellet",
-        "price": 16700,
-        "image": "../../images/Chikun_grower_pellet.png"
-    },
-      {
-        "id": 10,
-        "name": "Eco float 3mm",
-        "price": 21100,
-        "image": "../../images/Eco_float_3mm.png"
-    },
-      {
-        "id": 11,
-        "name": "Breedwell psc 25kg",
-        "price": 26700,
-        "image": "../../images/Breed_well_psc_25kg.png"
-    },
-      {
-        "id": 12,
-        "name": "Bluecrown 3mm",
-        "price": 31100,
-        "image": "../../images/Bluecrown-3mm-53.png"
-    },
-      {
-        "id": 13,
-        "name": "Bluecrown 4mm",
-        "price": 17100,
-        "image": "../../images/Bluecrown-4mm-54.png"
-    },
-      {
-        "id": 14,
-        "name": "Bluecrown 9mm",
-        "price": 17100,
-        "image": "../../images/Bluecrown-9mm-59.png"
+        "id": 20,
+       "name": "Animal care layer mash 25kg",
+        "price": 120,
+        "image": "images/20.png"
     }
- 
- 
  
 ]
