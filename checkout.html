@@ -10,21 +10,17 @@
     <div class="container">
         <div class="checkoutLayout">
             <div class="returnCart">
-                <button><a href="index.html">keep shopping</a></button>
-                <h1>List Product in Cart</h1>
+                <button><a href="index.html">Keep Shopping</a></button>
+                <h1>Products in Cart</h1>
                 <div class="list">
-                    <!-- This will be populated dynamically -->
+                    <!-- Populated dynamically by checkout.js -->
                 </div>
             </div>
 
             <div class="right">
                 <h1>Checkout</h1>
-                <form action="https://formspree.io/f/manyezve" method="POST">
-                    <!--https://formspree.io/f/xdkooqbr-->
-                    <!--https://formspree.io/f/mgveabqr-->
-                    
+                <form id="checkoutForm">
                     <div class="form">
-                        <!-- User Information Fields -->
                         <div class="group">
                             <label for="name">Full Name</label>
                             <input type="text" name="name" id="name" required>
@@ -49,7 +45,6 @@
                             <label for="country">Country</label>
                             <select name="country" id="country" required>
                                 <option value="Nigeria">Nigeria</option>
-                                <!-- Add more countries as needed -->
                             </select>
                         </div>
 
@@ -59,12 +54,11 @@
                                 <option value="Fct_abuja">FCT Abuja</option>
                                 <option value="Lagos">Lagos</option>
                                 <option value="Portharcourt">Port Harcourt</option>
-                                <!-- Add more cities as needed -->
                             </select>
                         </div>
                     </div>
 
-                    <!-- Hidden Fields for Checkout Summary -->
+                    <!-- Checkout Summary -->
                     <div class="return">
                         <div class="row">
                             <div>Total Quantity</div>
@@ -75,12 +69,12 @@
                             <div class="totalPrice"></div>
                         </div>
 
-                        <!-- Hidden Inputs for Form Submission -->
+                        <!-- Hidden fields for sessionStorage -->
                         <input type="hidden" name="totalQuantity" id="totalQuantity">
                         <input type="hidden" name="totalPrice" id="totalPrice">
                     </div>
 
-                    <button class="buttonCheckout" type="submit">CHECKOUT</button>
+                    <button class="buttonCheckout" type="submit">Place Order</button>
                 </form>
             </div>
         </div>
