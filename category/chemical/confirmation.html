@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmation</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Order Confirmation</h1>
@@ -16,8 +14,6 @@
 
         <!-- Hidden form to submit to Formspree -->
         <form id="orderForm" action="https://formspree.io/f/mgveabqr" method="POST" style="display: none;">
-            <!--https://formspree.io/f/xdkooqbr-->
-            <!--https://formspree.io/f/manyezve-->
             <input type="hidden" name="name" id="formName">
             <input type="hidden" name="phone" id="formPhone">
             <input type="hidden" name="address" id="formAddress">
@@ -29,15 +25,19 @@
             <input type="hidden" name="products" id="formProducts">
         </form>
 
-        <button type="button" id="submitOrder" class="buttonCheckout">Submit Order</button>
+        <button type="button" id="submitOrder" class="buttonCheckout">Place Order</button>
         <a href="index.html">Continue Shopping</a>
     </div>
 
     <script>
-        // Function to display order confirmation
         function displayConfirmation() {
             const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
-            const listCart = JSON.parse(sessionStorage.getItem('listCart'));
+            const listCart = JSON.parse(sessionStorage.getItem('checkoutCart'));
+
+            if (!userDetails || !listCart) {
+                alert("No order data found.");
+                return;
+            }
 
             // Display user details
             let orderDetailsDiv = document.querySelector('.order-details');
@@ -51,35 +51,28 @@
                 <p><strong>City:</strong> ${userDetails.city}</p>
             `;
 
-            // Initialize totals
+            // Display cart items
             let totalQuantity = 0;
             let totalPrice = 0;
-
-            // Display cart items
             let cartDetailsDiv = document.querySelector('.cart-details');
             cartDetailsDiv.innerHTML = '<h2>Products Ordered</h2>';
             let productsList = [];
 
             listCart.forEach(product => {
-                if (product) {
-                    // Add product quantity and price to totals
-                    totalQuantity += product.quantity;
-                    totalPrice += product.price * product.quantity;
-
-                    cartDetailsDiv.innerHTML += `
-                        <p>${product.name} - Quantity: ${product.quantity} - Price: ₦${(product.price * product.quantity).toFixed(2)}</p>
-                    `;
-                    productsList.push(`${product.name} - Quantity: ${product.quantity}`);
-                }
+                totalQuantity += product.quantity;
+                totalPrice += product.price * product.quantity;
+                cartDetailsDiv.innerHTML += `
+                    <p>${product.name} - Quantity: ${product.quantity} - Price: ₦${(product.price * product.quantity).toFixed(2)}</p>
+                `;
+                productsList.push(`${product.name} - Quantity: ${product.quantity}`);
             });
 
-            // Display total quantity and total price
             cartDetailsDiv.innerHTML += `
                 <h3>Total Quantity: ${totalQuantity}</h3>
                 <h3>Total Price: ₦${totalPrice.toFixed(2)}</h3>
             `;
 
-            // Populate the hidden form fields
+            // Populate hidden form fields BEFORE submitting
             document.getElementById('formName').value = userDetails.name;
             document.getElementById('formPhone').value = userDetails.phone;
             document.getElementById('formAddress').value = userDetails.address;
@@ -87,18 +80,27 @@
             document.getElementById('formCountry').value = userDetails.country;
             document.getElementById('formCity').value = userDetails.city;
             document.getElementById('formTotalQuantity').value = totalQuantity;
-            document.getElementById('formTotalPrice').value = totalPrice.toFixed(2); // Store price as string with two decimal places
+            document.getElementById('formTotalPrice').value = totalPrice.toFixed(2);
             document.getElementById('formProducts').value = productsList.join('\n');
         }
 
-        // Submit the form to Formspree when the button is clicked
+        // Submit the hidden form
         document.getElementById('submitOrder').addEventListener('click', function () {
-            document.getElementById('orderForm').submit();
+            const form = document.getElementById('orderForm');
+
+            // Check if all required hidden inputs have values
+            const inputs = form.querySelectorAll('input');
+            for (let input of inputs) {
+                if (!input.value) {
+                    alert("Order data is missing. Cannot submit.");
+                    return;
+                }
+            }
+
+            form.submit();
         });
 
-        // Call the function on page load
         document.addEventListener('DOMContentLoaded', displayConfirmation);
     </script>
 </body>
-
 </html>
