@@ -4,78 +4,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Wittyfare</title>
+    <link rel="shortcut icon" href="category/images/logo.png" style="width: 150px; height: auto;">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
-<body>
+<body onload="loadProducts()">
 
-   
-        <header class="header-sticky">
-            <a href="../../index.html" class="header-logo">
-                <img src="../images/logo.png" alt="Wittyfare logo">
+
+    <header class="header-sticky">
+        <div id="logo">
+            <h2 class="logo-title"><a href="../../index.html" class="logo-link" >Wittyfare</a></h2>
+        
+        </div>
+
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="home-icon" onclick="goHome()">🏠</div>
+        <!--<a href="index.html" class="home-icon">
+            <i class="fas fa-home"></i> <!-- Home icon 
+            <span>Home</span>
+        </a>-->
+        
+        <div id="menu" class="menu">
+            <ul>
+                <li><a href="category/drugs/index.html">DRUGS</a></li>
+                <li><a href="category/Vaccines/index.html">VACCINE</a></li>
+                <li><a href="category/feed/index.html">FEED</a></li>
+                <li><a href="category/pet-store/index.html">PET-ACCESSORIES</a></li>
+                <li><a href="category/chemical/index.html">CHEMICAL</a></li>
+                <li><a href="category/equipment/index.html">EQUIPMENT</a></li>
+                <li><a href="category/Fish/index.html">FISH BOOKING</a></li>
+                <li><a href="category/day-old/index.html">DAY-OLD CHICK</a></li>
+
+
+                <!-- Add more categories as needed -->
+            </ul>
+        </div>
+
+        <!-- Social Media Icons after the Header -->
+        <div class="social-media">
+            <a href="https://web.facebook.com/wittyfare" target="_blank">
+                <img src="images/facebook-icon.png" alt="facebook">
             </a>
-            <div class="menu-icon" onclick="toggleMenu()">☰</div>
-            <div class="home-icon" onclick="goHome()">🏠</div>
-            <div id="menu" class="menu">
-                <ul>
-                  <li><a href="../chemical/index.html">CHEMICAL</a></li>
-                  <li><a href="/index.html">DAY OLD</a></li>
-                  <li><a href="../drugs/index.html">DRUGS</a></li>
-                  <li><a href="../feed/index.html">FEED</a></li>
-                  <li><a href="../pet-store/index.html">PET-STORE</a></li>
-                  <li><a href="../equipment/index.html">EQUIPMENT</a></li>
-                  <li><a href="../Vaccines/index.html">VACCINES</a></li>
-                  <li><a href="../Fish/index.html">FISH BOOKING</a></li>
-                  <!-- Add more categories as needed -->
-                </ul>
-              </div>
-            <div class="iconCart">
-                <img src="icon.png">
-                <div class="totalQuantity">0</div>
-            </div>
-        </header>
-        <h1 class="product-title">DAY-OLD</h1>
-        <div class="listProduct">
-            <div class="item">
-                <img src="images/1.png" alt="">
+            <a href="http://www.linkedin.com/in/wittyfare-online-788390328" target="_blank">
+                <img src="images/linkedin-icon.png" alt="linkedin">
+            </a>
 
-                <h2>CoPilot / Black / Automatic</h2>
-                <div class="price">&#8358;550</div>
-                <button>Add To Cart</button>
-            </div>
+            <a href="https://www.instagram.com/wittyfare?igsh=Ym55MGdtMnhkMmZo" target="_blank">
+                <img src="images/instagram-icon.png" alt="instagram">
+            </a>
+
+            <a href="https://www.tiktok.com/@wittyfare_online" target="_blank">
+                <img src="images/Tiktok-icon.png" alt="TikTok">
+            </a>
+            <a href="https://www.x.com/wittyfare" target="_blank">
+                <img src="images/x-icon.png" alt="X">
+            </a>
+
+            <a href="https://www.youtube.com/@wittyfare?si=alGNdohR_egZwZJS" target="_blank">
+                <img src="images/youtube-icon.png" alt="youtube">
+            </a>
 
         </div>
+
+        <div class="iconCart">
+            <img src="icon.png">
+            <div class="totalQuantity"></div>
+        </div>
+    </header>
+    <div class="phone-contact">
+        <a href="tel:+2349027275498">
+            <i class="fas fa-phone-alt"></i> <!-- Phone icon -->
+            <span class="phone-number">+2349027275498</span>
+        </a>
+        <a href="https://wa.me/2349027275498" class="whatsapp-chat">
+            <i class="fab fa-whatsapp"></i> <!-- WhatsApp icon (using Font Awesome)-->
+            <span class="phone-number">WhatsApp</span>
+        </a>
+        <!--<a href="https://wa.me/message/SW5QYGF2TITYB1" class="phone-contact">
+                <img src="images/whatsapp.png" alt="whatsapp" class="whatsapp-icon">
+                <span class="phone-number">WhatsApp</span>
+            </a>-->
+    </div>
+
+
+
+    <div class="notification-toast" data-toast>
+
+        <div class="toast-banner">
+            <img src="images/Hybrid_3_in_1_Special-4.png" alt="Bluecrown" width="80" height="70">
+        </div>
+
+        <div class="toast-detail">
+            <button class="toast-close-btn" onclick="closeToast()">✕</button>
+
+            <p class="toast-message">
+                Someone in just bought
+            </p>
+
+            <p class="toast-title">
+                Hybrid Special 3  in 1 - 25kg
+            </p>
+
+            <p class="toast-meta">
+                <time datetime="PT2M">2 Minutes</time> ago
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button class="search-button" onclick="searchProducts()">Search</button>
+    </div>
+    <div id="productContainer"></div>
+
+    <img src="category/images/banner_2.png" alt="promotion banner" class="banner-img">
+
+     <!--
+      - CATEGORY
+    -->
+
+    <div class="category">
+
+        <div class="container">
   
+          <div class="category-item-container has-scrollbar">
+            
+  
+            <a href="category/drugs/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Diclamax.png" alt="drugs" width="60px">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Drugs</h3>
+                </div>
+  
+                <a href="category/drugs/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+            <a href="category/pet-store/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Pet_plate_green.png" alt="pet" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Pet Mart</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/pet-store/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+            
+            <a href="category/feed/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Hybrid_starter_crumbled_25kg-1.png" alt="feed" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Feed</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/feed/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
 
-   
+            <a href="category/Fish/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Standard-juvenile.png" alt="fish" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Fish booking</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/Fish/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+            
+            <a href="category/day-old/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Olam.png" alt="day old" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Day old</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/day-old/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+            
+            <a href="category/chemical/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Gobara_1L.png" alt="Chemical" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Chemical</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/chemical/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+            
+            <a href="category/equipment/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/Pulse_sprayer_15L.png" alt="equipment" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Equipment</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/equipment/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
 
-    
+            <a href="category/Vaccines/index.html">
+            <div class="category-item">
+  
+              <div class="category-img-box">
+                <img src="images/3_in_1_EDS.png" alt="Vaccines" width="60">
+              </div>
+  
+              <div class="category-content-box">
+  
+                <div class="category-content-flex">
+                  <h3 class="category-item-title">Vaccines</h3>
+  
+                  <p class="category-item-amount"></p>
+                </div>
+  
+                <a href="category/Vaccines/index.html" class="category-btn">Show all</a>
+  
+              </div>
+  
+            </div>
+            </a>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+    </div>
+    <h1 class="product-title">DAY OLD</h1>
+    <div class="listProduct"></div>
+
+
     <div class="cart">
 
         <h2>
-            CART
+            ORDER
         </h2>
 
-        <div class="listCart">
-
-
-            <div class="item">
-                <img src="images/1.png">
-                <div class="content">
-                    <div class="name">CoPilot / Black / Automatic</div>
-                    <div class="price">&#8358;550 / 1 product</div>
-                </div>
-                <div class="quantity">
-                    <button>-</button>
-                    <span class="value">3</span>
-                    <button>+</button>
-                </div>
-            </div>
-
-
-        </div>
+        <div class="listCart"></div>
 
         <div class="buttons">
             <div class="close">
@@ -86,12 +337,285 @@
             </div>
         </div>
     </div>
+
+ <!--
+      - BLOG
+    -->
+
+    <div class="blog">
+
+      <div class="container">
+
+        <div class="blog-container has-scrollbar">
+
+          <div class="blog-card">
+
+            <a href="category/drugs/index.html">
+              <img src="images/Aquaceryl.png" alt="What Aquaceryl is used for" width="300" class="blog-banner">
+            </a>
+
+            <div class="blog-content">
+
+              <a href="https://allwright.com.ng/product/aquaceryl-plus/" class="blog-category">ANTIBIOTICS</a>
+
+              <a href="https://allwright.com.ng/product/aquaceryl-plus/">
+                <h3 class="blog-title">What Aquaceryl is used for.</h3>
+              </a>
+
+              <p class="blog-meta">
+                By <cite>Mr Admin</cite> / <time datetime="2022-04-06">Apr 06, 2025</time>
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="category/feed/index.html">
+              <img src="images/feed_image.webp" alt="How to install automatic drinker."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="category/feed/index.html" class="blog-category">Feed</a>
+          
+              <h3>
+                <a href="https://www.youtube.com/watch?v=KbyVnVCECLw&themeRefresh=1" class="blog-title">This is where you find all your feed.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Robin</cite> / <time datetime="2022-01-18">Jan 18, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/">
+              <img src="images/3_in_1_EDS.png" alt="How effetive is our 3 in 1 vaccines."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/" class="blog-category">VACCINES</a>
+          
+              <h3>
+                <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/" class="blog-title">How effetive is our 3 in 1 vaccines.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Selsa</cite> / <time datetime="2022-02-10">Feb 10, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="category/feed/index.html">
+              <img src="images/Aller_aqua_2mm.png" alt="where you can get your aller aqua 2mm."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="https://afrimash.com/shop/livestock-section/livestock-feeds/aller-claria-float-15kg-feed-for-growers/" class="blog-category">FEED</a>
+          
+              <h3>
+                <a href="https://afrimash.com/shop/livestock-section/livestock-feeds/aller-claria-float-15kg-feed-for-growers/" class="blog-title">where you can get your aller aqua 2mm.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Pawar</cite> / <time datetime="2022-03-15">Mar 15, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+        <div class="blog">
+
+      <div class="container">
+
+        <div class="blog-container has-scrollbar">
+
+          <div class="blog-card">
+
+            <a href="https://allwright.com.ng/product/aquaceryl-plus/">
+              <img src="images/Aquaceryl.png" alt="What Aquaceryl is used for" width="300" class="blog-banner">
+            </a>
+
+            <div class="blog-content">
+
+              <a href="https://allwright.com.ng/product/aquaceryl-plus/" class="blog-category">Drugs</a>
+
+              <a href="https://allwright.com.ng/product/aquaceryl-plus/">
+                <h3 class="blog-title">What Aquaceryl is used for.</h3>
+              </a>
+
+              <p class="blog-meta">
+                By <cite>Mr Admin</cite> / <time datetime="2022-04-06">Apr 06, 2025</time>
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="https://www.youtube.com/watch?v=KbyVnVCECLw&themeRefresh=1">
+              <img src="images/Automatic_drinker.png" alt="How to install automatic drinker."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="https://www.youtube.com/watch?v=KbyVnVCECLw&themeRefresh=1" class="blog-category">Farm equipment </a>
+          
+              <h3>
+                <a href="https://www.youtube.com/watch?v=KbyVnVCECLw&themeRefresh=1" class="blog-title">How to install automatic drinker.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Robin</cite> / <time datetime="2022-01-18">Jan 18, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/">
+              <img src="images/3_in_1_EDS.png" alt="How effetive is our 3 in 1 vaccines."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/" class="blog-category">Vaccines</a>
+          
+              <h3>
+                <a href="https://petrosfarms.com/2023/02/protect-your-poultry-from-newcastle-disease-egg-drop-syndrome-and-infectious-bronchitis/" class="blog-title">How effetive is our 3 in 1 vaccines.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Selsa</cite> / <time datetime="2022-02-10">Feb 10, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+          <div class="blog-card">
+          
+            <a href="https://afrimash.com/shop/livestock-section/livestock-feeds/aller-claria-float-15kg-feed-for-growers/">
+              <img src="images/Aller_aqua_2mm.png" alt="where you can get your aller aqua 2mm."
+                class="blog-banner" width="300">
+            </a>
+          
+            <div class="blog-content">
+          
+              <a href="https://afrimash.com/shop/livestock-section/livestock-feeds/aller-claria-float-15kg-feed-for-growers/" class="blog-category">Fish feed</a>
+          
+              <h3>
+                <a href="https://afrimash.com/shop/livestock-section/livestock-feeds/aller-claria-float-15kg-feed-for-growers/" class="blog-title">where you can get your aller aqua 2mm.</a>
+              </h3>
+          
+              <p class="blog-meta">
+                By <cite>Mr Pawar</cite> / <time datetime="2022-03-15">Mar 15, 2025</time>
+              </p>
+          
+            </div>
+          
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
 
+  </main>
+
+    <footer>
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="#">Company Info</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Help</h3>
+            <ul>
+                <li><a href="#">Customer Service</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3><a href="#">Equipment</a></h3>
+            <ul>
+                <li><a href="#">Egg crate</a></li>
+                <li><a href="#">Feeder</a></li>
+                <li><a href="#">Drinker</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3><a href="#">Feed</a></h3>
+            <ul>
+                <li><a href="#">Starter</a></li>
+                <li><a href="#">Finisher</a></li>
+                <li><a href="#">Layer mash</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3><a href="#">Drugs</a></h3>
+            <ul>
+                <li><a href="#">Antibiotics</a></li>
+                <li><a href="#">Multivitamin</a></li>
+                <li><a href="#">Coccidiostat</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3><a href="#">Pet store</a></h3>
+            <ul>
+                <li><a href="#">Vaccines</a></li>
+                <li><a href="#">Dog cage</a></li>
+                <li><a href="#">Pet toys</a></li>
+            </ul>
+        </div>
+        <!-- Add more sections as needed -->
+    </footer>
 
     <script src="app.js"></script>
-
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/67067ceccec6d0125df3f3b6/1i9olfvdc';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 
 </html>
