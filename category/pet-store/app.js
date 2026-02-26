@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.goHome = function () {
-        window.location.href = ".../../index.html";
+        window.location.href = "../../index.html";
     };
 
     /* ===============================
