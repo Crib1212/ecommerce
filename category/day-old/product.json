@@ -8,8 +8,21 @@
     {
         "id": 3,
         "name": "Agrited",
-        "price": 1570,
+        "price": 1080,
         "image": "../images/Agrited.png"
+    },
+       {
+        "id": 4,
+        "name": "Agrited",
+        "price": 1080,
+        "image": "images/agriteddoc.webp"
+    },
+       
+    {
+        "id": 5,
+        "name": "Sayed dayold broiler chicks",
+        "price": 1100,
+        "image": "images/sayed-dayold-broiler.png"
     }
  
 ]

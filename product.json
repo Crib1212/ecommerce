@@ -1,4 +1,16 @@
 [
+        {
+        "id": 14,
+        "name": "Agrited",
+        "price": 1080,
+        "image": "../images/agriteddoc.webp"
+    },
+  {
+        "id": 15,
+        "name": "Sayed dayold broiler chicks",
+        "price": 1100,
+        "image": "../images/sayed-dayold-broiler.png"
+    },
     {
         "id": 1,
        "name": "Breedwell PSC 25kg",
@@ -77,6 +89,5 @@
         "price": 4800,
         "image": "../images/DHLPP.png"
     }
-
 
 ]
