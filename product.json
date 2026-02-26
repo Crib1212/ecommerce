@@ -14,61 +14,61 @@
     {
         "id": 1,
        "name": "Breedwell PSC 25kg",
-        "price": 26500,
+        "price": 22950,
         "image": "../images/Breed_well_psc_25kg.png"
     }, 
     {
         "id": 2,
        "name": "Hybrid Grower Mash 25kg",
-        "price": 16900,
+        "price": 12200,
         "image": "../images/Hybrid_grower_mash-2.png"
     }, 
     {
         "id": 3,
         "name": "Hybrid Layer Mash 25kg",
-        "price": 16750,
+        "price": 13000,
         "image": "../images/Hybrid_layer_mash-3.png"
     },
     {
         "id": 4,
         "name": "Hybrid 3 in 1 Special",
-        "price": 23800,
+        "price": 20300,
         "image": "../images/Hybrid_3_in_1_Special-4.png"
     },
     {
         "id": 5,
         "name": "Breed weell finisher 25kg",
-        "price": 26450,
+        "price": 22000,
         "image": "../images/Breedwell-Broiler-Finisher-pellet.png"
     },
     {
         "id": 6,
         "name": "Hybrid Base1 Super Starter 25kg",
-        "price": 22700,
+        "price": 19750,
         "image": "../images/Hybrid_base1_Starter-25kg-6.png"
     },
     {
         "id": 7,
         "name": "Hybrid FInisher pellet 25kg",
-        "price": 20100,
+        "price": 16700,
         "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
     },
     {
         "id": 8,
         "name": "Ultima finisher",
-        "price": 23900,
+        "price": 20150,
         "image": "../images/Ultima_finisher.png"
     },
     {
         "id": 9,
-        "name": "Kepro oxytet 1kg",
-        "price": 79000,
-        "image": "../images/Kepro_oxytet_1kg.png"
+        "name": "Booster",
+        "price": 2000,
+        "image": "../images/Booster.png"
     },
     {
         "id": 10,
        "name": "Paper crate",
-        "price":10200,
+        "price":12000,
         "image": "../images/14.png"
     },
     {
@@ -80,13 +80,13 @@
     {
         "id": 12,
         "name": "Tylodox Extra 100g",
-        "price": 8100,
+        "price": 9500,
         "image": "../images/26.png"
     },
     {
         "id": 13,
         "name": "DHLPP",
-        "price": 4800,
+        "price": 5000,
         "image": "../images/DHLPP.png"
     }
 
