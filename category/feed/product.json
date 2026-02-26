@@ -3,25 +3,25 @@
     {
         "id": 1,
        "name": "Hybrid starter 25kg",
-        "price": 19950,
+        "price": 20200,
         "image": "../images/Hybrid_starter_25kg-1.png"
     }, 
     {
         "id": 1,
        "name": "Hybrid Grower Mash 25kg",
-        "price": 17650,
+        "price": 12200,
         "image": "../images/Hybrid_grower_mash-2.png"
     }, 
     {
         "id": 3,
         "name": "Hybrid Layer Mash 25kg",
-        "price": 18450,
+        "price": 13000,
         "image": "../images/Hybrid_layer_mash-3.png"
     },
     {
         "id": 4,
         "name": "Hybrid 3 in 1 Special",
-        "price": 25250,
+        "price": 20300,
         "image": "../images/Hybrid_3_in_1_Special-4.png"
     },
     {
@@ -33,19 +33,19 @@
     {
         "id": 6,
         "name": "Hybrid Base1 Super Starter 25kg",
-        "price": 24300,
+        "price": 19750,
         "image": "../images/Hybrid_base1_Starter-25kg-6.png"
     },
     {
         "id": 6,
         "name": "Hybrid FInisher pellet 25kg",
-        "price": 21900,
+        "price": 16700,
         "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
     },
       {
         "id": 7,
         "name": "Ultima Starter 25kg",
-        "price": 21900,
+        "price": 20200,
         "image": "../images/Ultima_starter.png"
     }
  
