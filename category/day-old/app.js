@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>${name}</h2>
                 ${category ? `<p class="category">Category: ${category}</p>` : ''}
                 ${description ? `<p class="desc">${description}</p>` : ''}
-                <div class="price">₦${price}</div>
+                <div class="price">₦${price.toLocaleString()}</div>
                 <button onclick="addCart(${id})">Add to cart</button>
             `;
             listProductHTML.appendChild(newProduct);
