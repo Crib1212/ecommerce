@@ -1,3 +1,12 @@
+
+// Close button functionality
+function closeToast() {
+    const toast = document.querySelector('.notification-toast');
+    if (toast) {
+        toast.style.display = 'none';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const iconCart = document.querySelector('.iconCart');
@@ -131,6 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartCounter();
         renderCartItems();
         calculateCheckoutTotal();
+         // Trigger the toast
+    showToast(
+        'Someone just bought', // message
+        product.name,          // title
+        product.image           // image
+    );
     };
 
     function renderCartItems() {

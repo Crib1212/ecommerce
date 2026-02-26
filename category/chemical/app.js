@@ -1,3 +1,10 @@
+// Close button functionality
+function closeToast() {
+    const toast = document.querySelector('.notification-toast');
+    if (toast) {
+        toast.style.display = 'none';
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
 
     const iconCart = document.querySelector('.iconCart');
