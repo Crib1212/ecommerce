@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.goHome = function () {
-        window.location.href = "index.html";
+        window.location.href = ".../../index.html";
     };
 
     /* ===============================
@@ -29,10 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (iconCart) {
         iconCart.addEventListener('click', function () {
             if (isCartOpen) {
+                cart.style.transition = 'right 0.5s ease';
                 cart.style.right = '-100%';
+                container.style.transition = 'transform 0.5s ease';
                 container.style.transform = 'translateX(0)';
             } else {
+                cart.style.transition = 'right 0.5s ease';
                 cart.style.right = '0';
+                container.style.transition = 'transform 0.5s ease';
                 container.style.transform = 'translateX(-400px)';
             }
             isCartOpen = !isCartOpen;
@@ -41,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (close) {
         close.addEventListener('click', function () {
+            cart.style.transition = 'right 0.5s ease';
             cart.style.right = '-100%';
+            container.style.transition = 'transform 0.5s ease';
             container.style.transform = 'translateX(0)';
             isCartOpen = false;
         });
@@ -50,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ===============================
        🧾 LOAD PRODUCTS
     ================================*/
-    fetch(window.location.pathname.includes('category') ? '../../product.json' : 'product.json')
+    fetch(window.location.pathname.includes('category') ? 'product.json' : 'product.json')
         .then(res => res.json())
         .then(data => {
             products = data;
@@ -61,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ===============================
        🛍 CART SYSTEM
     ================================*/
-
     function loadCart() {
         const stored = localStorage.getItem('listCart');
         listCart = stored ? JSON.parse(stored) : [];
@@ -154,58 +159,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ===============================
-       🎨 DISPLAY PRODUCTS
+       🎨 DISPLAY PRODUCTS WITH HIGHLIGHT
     ================================*/
-    function addDataToHTML(productList) {
+    function normalizeText(text) {
+        return text.toLowerCase().replace(/['’`"“”.,\-_/\\()]/g, '').replace(/\s+/g, '');
+    }
+
+    function addDataToHTML(productList = products, highlight = '') {
         const listProductHTML = document.querySelector('.listProduct');
         if (!listProductHTML) return;
 
         listProductHTML.innerHTML = '';
 
+        if (!productList || productList.length === 0) {
+            listProductHTML.innerHTML = `
+                <p>No results found for "<strong>${highlight}</strong>".</p>
+                <button id="showAllBtn">Show All Products</button>
+            `;
+            const btn = document.getElementById('showAllBtn');
+            if (btn) btn.addEventListener('click', () => {
+                addDataToHTML(products);
+                if (searchInput) searchInput.value = '';
+            });
+            return;
+        }
+
         productList.forEach(product => {
+            let { name, category = '', description = '', image, price, id } = product;
+
+            const highlightText = (text, keyword) => {
+                if (!keyword) return text;
+                const regex = new RegExp(`(${keyword})`, 'gi');
+                return text.replace(regex, '<span style="background-color:#fff176; font-weight:bold;">$1</span>');
+            };
+
+            name = highlightText(name, highlight);
+            category = highlightText(category, highlight);
+            description = highlightText(description, highlight);
+
             const newProduct = document.createElement('div');
             newProduct.classList.add('item');
             newProduct.innerHTML = `
-                <img src="${product.image}" alt="">
-                <h2>${product.name}</h2>
-                <div class="price">₦${product.price}</div>
-                <button onclick="addCart(${product.id})">Add to cart</button>
+                <img src="${image}" alt="">
+                <h2>${name}</h2>
+                ${category ? `<p class="category">Category: ${category}</p>` : ''}
+                ${description ? `<p class="desc">${description}</p>` : ''}
+                <div class="price">₦${price}</div>
+                <button onclick="addCart(${id})">Add to cart</button>
             `;
             listProductHTML.appendChild(newProduct);
         });
     }
 
     /* ===============================
-       🔍 SEARCH
+       🔍 SEARCH ENGINE
     ================================*/
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.querySelector('.search-button');
 
-    function normalizeText(text) {
-        return text.toLowerCase().replace(/\s+/g, '');
-    }
+    function handleSearch(e) {
+        if (e) e.preventDefault();
+        if (!products || !products.length) return;
 
-    function handleSearch() {
-        if (!products) return;
-
-        const raw = searchInput.value.trim().toLowerCase();
-        if (!raw) {
+        const rawSearch = searchInput.value.trim().toLowerCase();
+        if (!rawSearch) {
             addDataToHTML(products);
             return;
         }
 
-        const filtered = products.filter(product =>
-            normalizeText(product.name).includes(normalizeText(raw)) ||
-            normalizeText(product.category || '').includes(normalizeText(raw))
-        );
+        const normalizedSearch = normalizeText(rawSearch);
+        const filtered = products.filter(product => {
+            const name = normalizeText(product.name || '');
+            const desc = normalizeText(product.description || '');
+            const cat = normalizeText(product.category || '');
+            return name.includes(normalizedSearch) || desc.includes(normalizedSearch) || cat.includes(normalizedSearch);
+        });
 
-        addDataToHTML(filtered);
+        addDataToHTML(filtered, rawSearch);
     }
 
     if (searchInput) {
         searchInput.addEventListener('input', handleSearch);
         searchInput.addEventListener('keypress', e => {
-            if (e.key === 'Enter') handleSearch();
+            if (e.key === 'Enter') handleSearch(e);
         });
     }
 
