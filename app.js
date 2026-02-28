@@ -230,9 +230,6 @@ window.removeItem = function(idProduct) {
     renderCartItems();
     calculateCheckoutTotal();
 };
-    /* ===============================
-       RENDER CART ITEMS
-    ================================*/
 
     /* ===============================
        🎨 DISPLAY PRODUCTS WITH HIGHLIGHT

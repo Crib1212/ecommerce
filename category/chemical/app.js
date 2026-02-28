@@ -140,30 +140,89 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateCheckoutTotal();
     };
 
-    function renderCartItems() {
-        const listCartHTML = document.querySelector('.listCart');
-        if (!listCartHTML) return;
+            /* ===============================
+       RENDER CART ITEMS
+    ================================*/
 
-        listCartHTML.innerHTML = '';
+function renderCartItems() {
+    const listCartHTML = document.querySelector('.listCart');
+    if (!listCartHTML) return;
 
-        listCart.forEach(product => {
-            const item = document.createElement('div');
-            item.classList.add('item');
-            item.innerHTML = `
-                <img src="${product.image}">
-                <div class="content">
-                    <div class="name">${product.name}</div>
-                    <div class="price">₦${product.price}</div>
-                </div>
-                <div class="quantity">
-                    <button onclick="changeQuantity(${product.id}, '-')">-</button>
-                    <span>${product.quantity}</span>
+    listCartHTML.innerHTML = '';
+
+    listCart.forEach(product => {
+        const item = document.createElement('div');
+        item.classList.add('item');
+
+        item.innerHTML = `
+            <img src="${product.image}">
+
+            <div class="content">
+                <div class="name">${product.name}</div>
+                <div class="price">₦${product.price}</div>
+            </div>
+
+            <div class="cartControls">
+                <!-- DELETE ON LEFT -->
+                <button class="deleteBtn" onclick="removeItem(${product.id})">🗑</button>
+
+                <!-- VERTICAL QUANTITY ON RIGHT -->
+                <div class="verticalQty">
                     <button onclick="changeQuantity(${product.id}, '+')">+</button>
+
+                    <input 
+                        type="number" 
+                        min="1" 
+                        value="${product.quantity}" 
+                        id="qty-${product.id}"
+                    >
+
+                    <button onclick="changeQuantity(${product.id}, '-')">-</button>
                 </div>
-            `;
-            listCartHTML.appendChild(item);
+            </div>
+        `;
+
+        listCartHTML.appendChild(item);
+
+        // Attach Enter key listener to the input
+        const qtyInput = document.getElementById(`qty-${product.id}`);
+        qtyInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // prevent form submission if inside a form
+                updateQuantity(product.id, qtyInput.value);
+            }
         });
-    }
+
+        // Also trigger update when input changes normally
+        qtyInput.addEventListener('change', () => {
+            updateQuantity(product.id, qtyInput.value);
+        });
+    });
+}
+// Update quantity manually
+window.updateQuantity = function(idProduct, value) {
+    const item = listCart.find(p => p.id == idProduct);
+    if (!item) return;
+
+    let qty = parseInt(value);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    item.quantity = qty;
+
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+};
+
+// Delete item
+window.removeItem = function(idProduct) {
+    listCart = listCart.filter(p => p.id != idProduct);
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+};
+
 
     /* ===============================
        🎨 DISPLAY PRODUCTS WITH HIGHLIGHT
