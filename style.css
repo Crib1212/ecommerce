@@ -865,8 +865,17 @@ footer {
 .footer-section a:hover {
     text-decoration: underline;
 }
-
-
+.seo-header {
+    text-align: center;          /* Center it on the page */
+    font-size: 2.5em;            /* Large header */
+    font-weight: bold;           /* Make it bold */
+    color: #28a745;              /* Brand green, adjust as needed */
+    margin: 20px 0;              /* Space above and below */
+    font-family: 'Oleo Script', cursive; /* Matches your theme font */
+}
+.seo-header {
+    text-shadow: 1px 1px 2px #00000050;
+}
 /*Responsive Style*/
 @media only screen and (max-width: 768px) {
     .listProduct {
@@ -1000,4 +1009,10 @@ footer {
         padding-right: 10px;
         grid-template-columns:1fr;
     }
+    @media (max-width: 768px) {
+    .seo-header {
+        font-size: 1.8em;
+        margin: 15px 0;
+    }
+}
 }
