@@ -124,6 +124,7 @@ header .totalQuantity {
     flex-direction: column;
     align-items: center;
 }
+
 .seo-marquee {
   position: relative;
   width: 100%;
@@ -1071,5 +1072,53 @@ footer {
   .seo-marquee span {
     font-size: 0.9rem;
   }
+}
+/* ===============================
+   MOBILE & TABLET SIZE UPGRADE
+================================ */
+
+/* Tablets */
+@media only screen and (max-width: 768px) {
+
+    .cartControls {
+        gap: 20px; /* more spacing */
+    }
+
+    .deleteBtn {
+        font-size: 22px;
+        padding: 8px 12px;
+    }
+
+    .verticalQty button {
+        font-size: 20px;
+        padding: 12px 18px;
+    }
+
+    .verticalQty input {
+        width: 60px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
+
+/* Phones */
+@media only screen and (max-width: 480px) {
+
+    .deleteBtn {
+        font-size: 24px;
+        padding: 10px 14px;
+    }
+
+    .verticalQty button {
+        font-size: 22px;
+        padding: 12px 18px;
+    }
+
+    .verticalQty input {
+        width: 70px;
+        height: 40px;
+        font-size: 20px;
+    }
 }
 }
