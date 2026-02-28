@@ -992,7 +992,31 @@ footer {
         font-size: 18px;
     }
 }
+/* Container for buttons */
+.checkout-buttons {
+    display: flex;
+    justify-content: space-between; /* Pushes buttons to opposite ends */
+    align-items: center; /* Vertically center them */
+    margin-top: 20px;
+}
 
+/* Continue Shopping link */
+.continueShopping {
+    display: inline-block;
+    text-decoration: none;
+    color:blue;
+    font-weight: bold;
+    padding: 10px 25px;
+    border: 2px solid none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background-color: yellow;
+}
+
+.continueShopping:hover {
+    background-color: green;
+    color: yellow;
+}
 /* Phones */
 @media only screen and (max-width: 480px) {
 
