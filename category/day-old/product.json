@@ -2,26 +2,26 @@
     {
         "id": 2,
         "name": "Olam",
-        "price": 1430,
+        "price": 1150,
         "image": "../images/Olam.png"
     },
     {
         "id": 3,
         "name": "Agrited",
-        "price": 1080,
+        "price": 1180,
         "image": "../images/Agrited.png"
     },
        {
         "id": 4,
         "name": "Agrited",
-        "price": 1080,
+        "price": 1180,
         "image": "images/agriteddoc.webp"
     },
        
     {
         "id": 5,
         "name": "Sayed dayold broiler chicks",
-        "price": 1100,
+        "price": 1200,
         "image": "images/sayed-dayold-broiler.png"
     }
  

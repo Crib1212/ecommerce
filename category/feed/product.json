@@ -47,7 +47,37 @@
         "name": "Ultima Starter 25kg",
         "price": 20200,
         "image": "../images/Ultima_starter.png"
-    }
+    },
+    {
+        "id": 14,
+        "name": "Blue crown 2mm",
+        "price": 23000,
+        "image": "../images/Blue_crown_2mm.png"
+    },
+    {
+        "id": 15,
+        "name": "Blue crown 3mm",
+        "price": 22000,
+        "image": "../images/Bluecrown-3mm-53.png"
+    },
+{
+        "id": 16,
+        "name": "Blue crown 4mm",
+        "price": 18500,
+        "image": "../images/Bluecrown-4mm-54.png"
+    },
+    {
+        "id": 17,
+        "name": "Blue crown 6mm",
+        "price": 18000,
+        "image": "../images/Bluecrown-6mm-56.png"
+    },
+      {
+        "id": 18,
+        "name": "Blue crown 9mm",
+        "price": 18000,
+        "image": "../images/Bluecrown-9mm-59.png"
+    }   
  
  
 ]
