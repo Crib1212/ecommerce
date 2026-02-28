@@ -231,6 +231,7 @@ window.removeItem = function(idProduct) {
     calculateCheckoutTotal();
 };
 
+
     /* ===============================
        🎨 DISPLAY PRODUCTS WITH HIGHLIGHT
     ================================*/

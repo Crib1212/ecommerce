@@ -101,6 +101,29 @@ header .totalQuantity {
 .social-media a img:hover {
     transform: scale(1.2);
 }
+.cartControls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align everything to the left */
+    gap: 15px; /* Space between delete button and quantity */
+    margin-left: -10px; /* Shift both a bit left; increase if needed */
+}
+
+.cartControls .deleteBtn {
+    background-color: #b31010;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.cartControls .verticalQty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .seo-marquee {
   position: relative;
   width: 100%;
