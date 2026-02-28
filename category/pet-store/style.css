@@ -837,3 +837,186 @@ footer {
 .footer-section a:hover {
     text-decoration: underline;
 }
+/* ===============================
+   MOBILE & TABLET SIZE UPGRADE
+================================ */
+
+/* Tablets */
+@media only screen and (max-width: 768px) {
+
+    .listProduct {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu {
+        top: 180px;
+        border-radius: 5px;
+    }
+
+    #logo {
+        display: inline-block;
+    }
+
+    .logo-title {
+        background: #ff4486;
+        border-radius: 6px;
+        font-family: 'Oleo Script', serif;
+        font-weight: 400;
+        padding: 20px 5px;
+        font-size: 2em;
+        letter-spacing: 0.05em;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .logo-link {
+        color: white;
+        text-decoration: none;
+        padding: 0px;
+    }
+
+    .logo-link:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    .banner-img {
+        margin-left: 15px;
+    }
+
+    .social-media a img {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s;
+    }
+
+    .cart {
+        position: fixed;
+        bottom: 0;
+        border-radius: 5px;
+        top: 145px;
+        z-index: 2000;
+        overflow-y: auto;
+        margin-left: -80px;
+        max-width: 100vw;
+        height: auto;
+    }
+
+    .returnCart .list .item {
+       width: 100%;
+    }
+
+    .checkoutLayout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        width: 100%;
+        max-width: 100vw;
+        padding: 0 10px; 
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* Logo adjustments for mobile */
+    .header-logo img {
+        width: 100px;
+    }
+
+    /* Phone contact adjustments */
+    .phone-contact {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        color: #333;
+        margin-top: 130px;
+        gap: 15px;
+    }
+
+    .listProduct {
+        margin-top: 40px;
+    }
+
+    .listProduct .item button {
+        padding: 7px;
+        width: 70%;
+    }
+
+    .product-title {
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .banner-img {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        padding-right: 40px;
+    }
+
+    footer {
+        background-color: #000000;
+        padding: 20px;
+        display: grid;
+        justify-content: space-around;
+        padding-right: 10px;
+        grid-template-columns: 1fr;
+    }
+
+    .cartControls {
+        gap: 20px;
+    }
+
+    .deleteBtn {
+        font-size: 22px;
+        padding: 8px 12px;
+    }
+
+    .verticalQty button {
+        font-size: 20px;
+        padding: 12px 18px;
+    }
+
+    .verticalQty input {
+        width: 60px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
+/* Phones */
+@media only screen and (max-width: 480px) {
+
+    .seo-marquee {
+        font-size: 1.5rem;
+        padding: 6px 0;
+    }
+
+    .seo-marquee span {
+        font-size: 0.9rem;
+    }
+
+    .deleteBtn {
+        font-size: 24px;
+        padding: 10px 14px;
+    }
+
+    .verticalQty button {
+        font-size: 22px;
+        padding: 12px 18px;
+    }
+
+    .verticalQty input {
+        width: 70px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
