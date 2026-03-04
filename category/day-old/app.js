@@ -1,3 +1,26 @@
+function showToast(message, title, image) {
+    const toast = document.querySelector('.notification-toast');
+    if (!toast) return;
+
+    const toastImg = toast.querySelector('.toast-banner img');
+    const toastMessage = toast.querySelector('.toast-message');
+    const toastTitle = toast.querySelector('.toast-title');
+    const toastTime = toast.querySelector('.toast-meta time');
+
+    // Update content dynamically
+    toastImg.src = image;
+    toastTitle.innerText = title;
+    toastMessage.innerText = message;
+    toastTime.innerText = "Just now";
+
+    // Show toast
+    toast.style.display = 'flex';
+
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 3000);
+}
 // Close button functionality
 function closeToast() {
     const toast = document.querySelector('.notification-toast');
@@ -5,6 +28,7 @@ function closeToast() {
         toast.style.display = 'none';
     }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const iconCart = document.querySelector('.iconCart');
@@ -102,26 +126,33 @@ document.addEventListener('DOMContentLoaded', () => {
         totalElement.innerText = "₦" + total.toLocaleString();
     }
 
-    window.addCart = function (idProduct) {
-        const product = products.find(p => p.id == idProduct);
-        if (!product) return;
+  window.addCart = function (idProduct) {
+    const product = products.find(p => p.id == idProduct);
+    if (!product) return;
 
-        const existing = listCart.find(p => p.id == idProduct);
+    const existing = listCart.find(p => p.id == idProduct);
 
-        if (existing) {
-            existing.quantity++;
-        } else {
-            listCart.push({
-                ...product,
-                quantity: 1
-            });
-        }
+    if (existing) {
+        existing.quantity++;
+    } else {
+        listCart.push({
+            ...product,
+            quantity: 1
+        });
+    }
 
-        saveCart();
-        updateCartCounter();
-        renderCartItems();
-        calculateCheckoutTotal();
-    };
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+
+    // ✅ SHOW TOAST HERE
+    showToast(
+        "Added to cart",
+        product.name,
+        product.image
+    );
+};
 
     window.changeQuantity = function (idProduct, type) {
         const item = listCart.find(p => p.id == idProduct);
@@ -138,9 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartCounter();
         renderCartItems();
         calculateCheckoutTotal();
+        
     };
 
-           /* ===============================
+        /* ===============================
        RENDER CART ITEMS
     ================================*/
 

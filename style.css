@@ -177,24 +177,24 @@ button:hover {
     background-color: #218838;
 }
 
-/* NOTIFICATION TOAST */
 .notification-toast {
     position: fixed;
-    bottom: 80px;
-    left: 20px;
+    bottom: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    max-width: 300px;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 15px;
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 5px 20px hsla(0, 0%, 0%, 0.15);
-    transform: translateX(calc(-100% - 40px));
-    transition: 0.5s ease-in-out;
-    z-index: 5;
-    animation: slideInOut 10s ease-in-out infinite;
+    background: white;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    animation: slideIn 0.4s ease;
+    z-index: 9999;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity:0; }
+    to { transform: translateX(0); opacity:1; }
 }
 
 @keyframes slideInOut {
