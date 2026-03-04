@@ -23,6 +23,19 @@
         "name": "Sayed dayold broiler chicks",
         "price": 1200,
         "image": "images/sayed-dayold-broiler.png"
+    },
+      {
+        "id": 6,
+        "name": "Tosam broiler chicks",
+        "price": 1050,
+        "image": "images/tosam-chicks.png"
     }
- 
+    ,
+      {
+        "id": 7,
+        "name": "Olam broiler chicks",
+        "price": 1050,
+        "image": "images/olam-broiler-chicks.png"
+    }
+  
 ]

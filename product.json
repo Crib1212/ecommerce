@@ -17,6 +17,12 @@
         "price": 1050,
         "image": "../images/tosam-chicks.png"
     },
+      {
+        "id": 20,
+        "name": "Olam broiler chicks",
+        "price": 1050,
+        "image": "../images/olam-broiler-chicks.png"
+    },
     {
         "id": 1,
        "name": "Breedwell PSC 25kg",
