@@ -11,6 +11,12 @@
         "price": 1100,
         "image": "../images/sayed-dayold-broiler.png"
     },
+     {
+        "id": 19,
+        "name": "Tosam chicks",
+        "price": 1050,
+        "image": "../images/tosam-chicks.png"
+    },
     {
         "id": 1,
        "name": "Breedwell PSC 25kg",
@@ -118,7 +124,6 @@
         "name": "Blue crown 9mm",
         "price": 18000,
         "image": "../images/Bluecrown-9mm-59.png"
-    }   
-    
+    }
 
 ]
