@@ -2,19 +2,19 @@
     {
         "id": 2,
         "name": "Olam",
-        "price": 1150,
+        "price": 1100,
         "image": "../images/Olam.png"
     },
     {
         "id": 3,
         "name": "Agrited",
-        "price": 1180,
+        "price": 1270,
         "image": "../images/Agrited.png"
     },
        {
         "id": 4,
         "name": "Agrited",
-        "price": 1180,
+        "price": 1270,
         "image": "images/agriteddoc.webp"
     },
        
@@ -27,14 +27,14 @@
       {
         "id": 6,
         "name": "Tosam broiler chicks",
-        "price": 1050,
+        "price": 1220,
         "image": "images/tosam-chicks.png"
     }
     ,
       {
         "id": 7,
         "name": "Olam broiler chicks",
-        "price": 1050,
+        "price": 1100,
         "image": "images/olam-broiler-chicks.png"
     }
   
