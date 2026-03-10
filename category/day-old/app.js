@@ -303,7 +303,7 @@ window.removeItem = function(idProduct) {
                 ${category ? `<p class="category">Category: ${category}</p>` : ''}
                 ${description ? `<p class="desc">${description}</p>` : ''}
                 <div class="price">₦${price.toLocaleString()}</div>
-                <button onclick="addCart(${id})">Add to cart</button>
+                <button onclick="addCart('${id}')">Add to cart</button>
             `;
             listProductHTML.appendChild(newProduct);
         });
