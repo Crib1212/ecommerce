@@ -1,38 +1,38 @@
 [
     {
-        "id": 2,
+        "id": 5300,
         "name": "Olam",
         "price": 1100,
         "image": "../images/Olam.png"
     },
     {
-        "id": 3,
+        "id": 5000,
         "name": "Agrited",
         "price": 1270,
         "image": "../images/Agrited.png"
     },
        {
-        "id": 4,
+        "id": 5000,
         "name": "Agrited",
         "price": 1270,
         "image": "images/agriteddoc.webp"
     },
        
     {
-        "id": 5,
+        "id": 5100,
         "name": "Sayed dayold broiler chicks",
-        "price": 1200,
+        "price": 1300,
         "image": "images/sayed-dayold-broiler.png"
     },
       {
-        "id": 6,
+        "id": 5200,
         "name": "Tosam broiler chicks",
         "price": 1220,
         "image": "images/tosam-chicks.png"
     }
     ,
       {
-        "id": 7,
+        "id": 5300,
         "name": "Olam broiler chicks",
         "price": 1100,
         "image": "images/olam-broiler-chicks.png"
