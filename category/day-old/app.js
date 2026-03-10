@@ -196,11 +196,11 @@ function renderCartItems() {
 
             <div class="cartControls">
                 <!-- DELETE ON LEFT -->
-                <button class="deleteBtn" onclick="removeItem(${product.id})">🗑</button>
+                <button class="deleteBtn" onclick="removeItem('${product.id}')">🗑</button>
 
                 <!-- VERTICAL QUANTITY ON RIGHT -->
                 <div class="verticalQty">
-                    <button onclick="changeQuantity(${product.id}, '+')">+</button>
+                    <button onclick="changeQuantity('${product.id}', '+')">+</button>
 
                     <input 
                         type="number" 
@@ -209,7 +209,7 @@ function renderCartItems() {
                         id="qty-${product.id}"
                     >
 
-                    <button onclick="changeQuantity(${product.id}, '-')">-</button>
+                    <button onclick="changeQuantity('${product.id}', '-')">-</button>
                 </div>
             </div>
         `;
@@ -220,12 +220,12 @@ function renderCartItems() {
         const qtyInput = document.getElementById(`qty-${product.id}`);
         qtyInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); // prevent form submission if inside a form
+                e.preventDefault();
                 updateQuantity(product.id, qtyInput.value);
             }
         });
 
-        // Also trigger update when input changes normally
+        // Trigger update when input changes normally
         qtyInput.addEventListener('change', () => {
             updateQuantity(product.id, qtyInput.value);
         });
