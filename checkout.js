@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (price between name & quantity)
+   🛒 CHECKOUT PAGE SCRIPT (editable quantity)
 ========================================== */
 
 let listCart = [];
@@ -38,7 +38,9 @@ function renderCheckoutCart() {
             <img src="${product.image}" width="60">
             <div class="name" style="flex:2; font-weight:bold;">${product.name}</div>
             <div class="price" style="flex:1; text-align:right;">₦${product.price.toLocaleString()}</div>
-            <div class="quantity" style="flex:1; text-align:center;">x${product.quantity}</div>
+            <div class="quantity" style="flex:1; text-align:center;">
+                x <input type="number" class="quantity-input" data-id="${product.id}" value="${product.quantity}" min="1" style="width:50px; text-align:center;">
+            </div>
             <div class="returnPrice" style="flex:1; text-align:right;">₦${subtotal}</div>
             <button class="delete-btn" data-id="${product.id}" 
                 style="background:red; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Delete</button>
@@ -55,6 +57,25 @@ function renderCheckoutCart() {
 
     document.getElementById('totalQuantity').value = totalQuantity;
     document.getElementById('totalPrice').value = totalPrice.toFixed(2);
+}
+
+// Update quantity when user edits the input
+function setupQuantityInputs() {
+    document.addEventListener('change', function(e){
+        if(e.target.classList.contains('quantity-input')){
+            const id = e.target.dataset.id;
+            const item = listCart.find(i => i.id === id);
+            const value = parseInt(e.target.value);
+            if(item && value > 0){
+                item.quantity = value;
+            } else {
+                // Remove item if quantity <= 0
+                listCart = listCart.filter(i => i.id !== id);
+            }
+            localStorage.setItem('listCart', JSON.stringify(listCart));
+            renderCheckoutCart();
+        }
+    });
 }
 
 // Delete item from cart
@@ -102,5 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCart();
     renderCheckoutCart();
     setupDeleteButtons();
+    setupQuantityInputs();
     setupCheckoutForm();
 });
