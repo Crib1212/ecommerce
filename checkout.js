@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (with delete button)
+   🛒 CHECKOUT PAGE SCRIPT (with delete button styled)
 ========================================== */
 
 let listCart = [];
@@ -22,20 +22,7 @@ function renderCheckoutCart() {
     let totalQuantity = 0;
     let totalPrice = 0;
 
-    if(listCart.length === 0){
-        cartContainer.innerHTML = '<p>Your cart is empty</p>';
-        if(totalQuantityElement) totalQuantityElement.innerText = 0;
-        if(totalPriceElement) totalPriceElement.innerText = '₦0';
-        document.getElementById('totalQuantity').value = 0;
-        document.getElementById('totalPrice').value = 0;
-        return;
-    }
-
     listCart.forEach(product => {
-        const subtotal = product.price * product.quantity;
-        totalQuantity += Number(product.quantity);
-        totalPrice += subtotal;
-
         const item = document.createElement('div');
         item.classList.add('item');
         item.style.display = 'flex';
@@ -43,33 +30,26 @@ function renderCheckoutCart() {
         item.style.justifyContent = 'space-between';
         item.style.padding = '10px 0';
         item.style.borderBottom = '1px solid #ddd';
+        item.style.gap = '10px'; // close the gap
+
+        const subtotal = (product.price * product.quantity).toLocaleString();
 
         item.innerHTML = `
-            <!-- Image + Name -->
-            <div style="display:flex; align-items:center; gap:10px; flex:2;">
-                <img src="${product.image}" alt="${product.name}" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">
-                <div class="name" style="font-weight:bold;">${product.name}</div>
+            <img src="${product.image}" width="60">
+            <div class="info">
+                <div class="name">${product.name}</div>
+                <div class="price">₦${product.price}</div>
             </div>
-
-            <!-- Price -->
-            <div class="price" style="width:80px; text-align:right; flex:1;">₦${product.price.toLocaleString()}</div>
-
-            <!-- Quantity with x -->
-            <div class="quantity" style="width:60px; text-align:center; flex:1;">
-                x${product.quantity}
-            </div>
-
-            <!-- Subtotal -->
-            <div class="returnPrice" style="width:100px; text-align:right; flex:1;">₦${subtotal.toLocaleString()}</div>
-
-            <!-- Delete button after subtotal -->
-            <div style="flex:0.5; text-align:right;">
-                <button class="delete-btn" data-id="${product.id}" 
-                    style="background:red; color:white; border:none; border-radius:4px; cursor:pointer; padding:4px 8px;">Delete</button>
-            </div>
+            <div class="quantity">x${product.quantity}</div>
+            <div class="returnPrice">₦${subtotal}</div>
+            <button class="delete-btn" data-id="${product.id}" 
+                style="background:red; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Delete</button>
         `;
 
         cartContainer.appendChild(item);
+
+        totalQuantity += Number(product.quantity);
+        totalPrice += Number(product.price) * Number(product.quantity);
     });
 
     if (totalQuantityElement) totalQuantityElement.innerText = totalQuantity;
@@ -126,6 +106,6 @@ function setupCheckoutForm() {
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
     renderCheckoutCart();
-    setupDeleteButtons();
+    setupDeleteButtons(); // Setup delete functionality
     setupCheckoutForm();
 });
