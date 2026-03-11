@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (delete after subtotal + x in quantity)
+   🛒 CHECKOUT PAGE SCRIPT (with delete button)
 ========================================== */
 
 let listCart = [];
@@ -37,7 +37,7 @@ function renderCheckoutCart() {
         totalPrice += subtotal;
 
         const item = document.createElement('div');
-        item.classList.add('cart-item');
+        item.classList.add('item');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
         item.style.justifyContent = 'space-between';
@@ -56,7 +56,7 @@ function renderCheckoutCart() {
 
             <!-- Quantity with x -->
             <div class="quantity" style="width:60px; text-align:center; flex:1;">
-                x <input type="number" class="quantity-input" data-id="${product.id}" value="${product.quantity}" min="1" style="width:50px; text-align:center;">
+                x${product.quantity}
             </div>
 
             <!-- Subtotal -->
@@ -72,7 +72,6 @@ function renderCheckoutCart() {
         cartContainer.appendChild(item);
     });
 
-    // Update totals
     if (totalQuantityElement) totalQuantityElement.innerText = totalQuantity;
     if (totalPriceElement) totalPriceElement.innerText = "₦" + totalPrice.toLocaleString();
 
@@ -87,25 +86,6 @@ function setupDeleteButtons() {
         if(e.target.classList.contains('delete-btn')){
             const id = e.target.dataset.id;
             listCart = listCart.filter(item => item.id !== id);
-            localStorage.setItem('listCart', JSON.stringify(listCart));
-            renderCheckoutCart();
-        }
-    });
-}
-
-// Quantity change
-function setupQuantityInputs() {
-    document.addEventListener('change', function(e){
-        if(e.target.classList.contains('quantity-input')){
-            const id = e.target.dataset.id;
-            const item = listCart.find(i => i.id === id);
-            const value = parseInt(e.target.value);
-            if(item && value > 0){
-                item.quantity = value;
-            } else {
-                // Remove item if quantity <= 0
-                listCart = listCart.filter(i => i.id !== id);
-            }
             localStorage.setItem('listCart', JSON.stringify(listCart));
             renderCheckoutCart();
         }
@@ -146,7 +126,6 @@ function setupCheckoutForm() {
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
     renderCheckoutCart();
-    setupCheckoutForm();
     setupDeleteButtons();
-    setupQuantityInputs();
+    setupCheckoutForm();
 });
