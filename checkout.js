@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (editable quantity)
+   🛒 CHECKOUT PAGE SCRIPT (compact layout)
 ========================================== */
 
 let listCart = [];
@@ -30,18 +30,29 @@ function renderCheckoutCart() {
         item.style.justifyContent = 'space-between';
         item.style.padding = '10px 0';
         item.style.borderBottom = '1px solid #ddd';
-        item.style.gap = '10px';
+        item.style.gap = '3px'; // reduced gap between flex items
 
         const subtotal = (product.price * product.quantity).toLocaleString();
 
         item.innerHTML = `
-            <img src="${product.image}" width="60">
-            <div class="name" style="flex:2; font-weight:bold;">${product.name}</div>
-            <div class="price" style="flex:1; text-align:right;">₦${product.price.toLocaleString()}</div>
-            <div class="quantity" style="flex:1; text-align:center;">
-                x <input type="number" class="quantity-input" data-id="${product.id}" value="${product.quantity}" min="1" style="width:50px; text-align:center;">
+            <!-- Image + Name -->
+            <div style="display:flex; align-items:center; gap:5px; flex:2;">
+                <img src="${product.image}" width="60" style="border-radius:5px;">
+                <div class="name" style="font-weight:bold;">${product.name}</div>
             </div>
-            <div class="returnPrice" style="flex:1; text-align:right;">₦${subtotal}</div>
+
+            <!-- Price -->
+            <div class="price" style="flex:1; text-align:left;">₦${product.price.toLocaleString()}</div>
+
+            <!-- Quantity -->
+            <div class="quantity" style="flex:1; text-align:left;">
+                x <input type="number" class="quantity-input" data-id="${product.id}" value="${product.quantity}" min="1" style="width:40px; text-align:center;">
+            </div>
+
+            <!-- Subtotal -->
+            <div class="returnPrice" style="flex:1; text-align:left;">₦${subtotal}</div>
+
+            <!-- Delete button -->
             <button class="delete-btn" data-id="${product.id}" 
                 style="background:red; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Delete</button>
         `;
@@ -59,7 +70,7 @@ function renderCheckoutCart() {
     document.getElementById('totalPrice').value = totalPrice.toFixed(2);
 }
 
-// Update quantity when user edits the input
+// Update quantity
 function setupQuantityInputs() {
     document.addEventListener('change', function(e){
         if(e.target.classList.contains('quantity-input')){
@@ -69,7 +80,6 @@ function setupQuantityInputs() {
             if(item && value > 0){
                 item.quantity = value;
             } else {
-                // Remove item if quantity <= 0
                 listCart = listCart.filter(i => i.id !== id);
             }
             localStorage.setItem('listCart', JSON.stringify(listCart));
@@ -78,7 +88,7 @@ function setupQuantityInputs() {
     });
 }
 
-// Delete item from cart
+// Delete item
 function setupDeleteButtons() {
     document.addEventListener('click', function(e){
         if(e.target.classList.contains('delete-btn')){
@@ -90,7 +100,7 @@ function setupDeleteButtons() {
     });
 }
 
-// Handle checkout form submission
+// Checkout form
 function setupCheckoutForm() {
     const form = document.getElementById('checkoutForm');
     if (!form) return;
