@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (with delete & x quantity)
+   🛒 CHECKOUT PAGE SCRIPT (delete after subtotal + x in quantity)
 ========================================== */
 
 let listCart = [];
@@ -37,7 +37,7 @@ function renderCheckoutCart() {
         totalPrice += subtotal;
 
         const item = document.createElement('div');
-        item.classList.add('item');
+        item.classList.add('cart-item');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
         item.style.justifyContent = 'space-between';
@@ -72,6 +72,7 @@ function renderCheckoutCart() {
         cartContainer.appendChild(item);
     });
 
+    // Update totals
     if (totalQuantityElement) totalQuantityElement.innerText = totalQuantity;
     if (totalPriceElement) totalPriceElement.innerText = "₦" + totalPrice.toLocaleString();
 
@@ -102,6 +103,7 @@ function setupQuantityInputs() {
             if(item && value > 0){
                 item.quantity = value;
             } else {
+                // Remove item if quantity <= 0
                 listCart = listCart.filter(i => i.id !== id);
             }
             localStorage.setItem('listCart', JSON.stringify(listCart));

@@ -777,27 +777,6 @@ input[type="number"] {
     font-size: large;
     font-weight: bold;
 }
-/* Keep Shopping Button */
-.returnCart > button {
-    background-color: green; /* Bright yellow */
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 15px;
-}
-
-.returnCart > button a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.returnCart > button:hover {
-    background-color: #d4ac0d; /* Darker yellow on hover */
-}
 
 /* MEDIA QUERIES FOR RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
@@ -1065,5 +1044,4 @@ footer {
         height: 40px;
         font-size: 20px;
     }
-    
 }
