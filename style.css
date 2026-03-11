@@ -1065,44 +1065,5 @@ footer {
         height: 40px;
         font-size: 20px;
     }
-    /* Mobile Responsive */
-@media (max-width: 768px) {
-    .container {
-        margin: 10px;
-        padding: 10px;
-        max-width: 100%; /* full width */
-    }
-
-    .checkoutLayout {
-        flex-direction: column; /* stack cart and form vertically */
-    }
-
-    .returnCart, .right {
-        width: 100%; /* full width */
-        margin-bottom: 20px;
-    }
-
-    .returnCart > button,
-    .buttonCheckout {
-        width: 100%; /* buttons span full width */
-    }
-
-    .returnCart .list .cart-item {
-        flex-direction: column; /* stack image + info + quantity vertically */
-        align-items: flex-start;
-    }
-
-    .returnCart .list .cart-item img {
-        margin-bottom: 5px;
-    }
-
-    .returnCart .list .cart-item .quantity,
-    .returnCart .list .cart-item .returnPrice,
-    .returnCart .list .cart-item .price,
-    .returnCart .list .cart-item button {
-        width: 100%;
-        text-align: left;
-        margin-top: 5px;
-    }
-}
+    
 }
