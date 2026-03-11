@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT (with delete button styled)
+   🛒 CHECKOUT PAGE SCRIPT (price between name & quantity)
 ========================================== */
 
 let listCart = [];
@@ -30,18 +30,16 @@ function renderCheckoutCart() {
         item.style.justifyContent = 'space-between';
         item.style.padding = '10px 0';
         item.style.borderBottom = '1px solid #ddd';
-        item.style.gap = '10px'; // close the gap
+        item.style.gap = '10px';
 
         const subtotal = (product.price * product.quantity).toLocaleString();
 
         item.innerHTML = `
             <img src="${product.image}" width="60">
-            <div class="info">
-                <div class="name">${product.name}</div>
-                <div class="price">₦${product.price}</div>
-            </div>
-            <div class="quantity">x${product.quantity}</div>
-            <div class="returnPrice">₦${subtotal}</div>
+            <div class="name" style="flex:2; font-weight:bold;">${product.name}</div>
+            <div class="price" style="flex:1; text-align:right;">₦${product.price.toLocaleString()}</div>
+            <div class="quantity" style="flex:1; text-align:center;">x${product.quantity}</div>
+            <div class="returnPrice" style="flex:1; text-align:right;">₦${subtotal}</div>
             <button class="delete-btn" data-id="${product.id}" 
                 style="background:red; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Delete</button>
         `;
@@ -55,7 +53,6 @@ function renderCheckoutCart() {
     if (totalQuantityElement) totalQuantityElement.innerText = totalQuantity;
     if (totalPriceElement) totalPriceElement.innerText = "₦" + totalPrice.toLocaleString();
 
-    // Update hidden inputs for sessionStorage
     document.getElementById('totalQuantity').value = totalQuantity;
     document.getElementById('totalPrice').value = totalPrice.toFixed(2);
 }
@@ -93,11 +90,9 @@ function setupCheckoutForm() {
         const formData = new FormData(form);
         const userDetails = Object.fromEntries(formData.entries());
 
-        // Save user details and cart snapshot to sessionStorage
         sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
         sessionStorage.setItem('checkoutCart', JSON.stringify(listCart));
 
-        // Redirect to confirmation page
         window.location.href = '/confirmation.html';
     });
 }
@@ -106,6 +101,6 @@ function setupCheckoutForm() {
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
     renderCheckoutCart();
-    setupDeleteButtons(); // Setup delete functionality
+    setupDeleteButtons();
     setupCheckoutForm();
 });
