@@ -4,5 +4,12 @@
         "name": "Odour out",
         "price": 520,
         "image": "../images/Odour_out.png"
+    },
+    {
+        "id": "Gobara1L",
+        "name": "Gobara 1L",
+        "price": 520,
+        "image": "../images/Gobara_1L.png"
     }
 ]
+

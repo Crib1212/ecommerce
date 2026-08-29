@@ -2,7 +2,7 @@
         {
         "id": "Agrited",
         "name": "Agrited broiler chicks",
-        "price": 1270,
+        "price": 1350,
         "image": "../images/agriteddoc.webp"
     },
   {
@@ -14,7 +14,7 @@
      {
         "id": "Tosam",
         "name": "Tosam broiler chicks",
-        "price": 1220,
+        "price": 1250,
         "image": "../images/tosam-chicks.png"
     },
       {

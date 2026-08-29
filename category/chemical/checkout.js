@@ -1,5 +1,5 @@
 /* ==========================================
-   🛒 CHECKOUT PAGE SCRIPT
+   🛒 CHECKOUT PAGE SCRIPT (compact layout)
 ========================================== */
 
 let listCart = [];
@@ -25,15 +25,38 @@ function renderCheckoutCart() {
     listCart.forEach(product => {
         const item = document.createElement('div');
         item.classList.add('item');
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.justifyContent = 'space-between';
+        item.style.padding = '10px 0';
+        item.style.borderBottom = '1px solid #ddd';
+        item.style.gap = '3px'; // reduced gap between flex items
+
+        const subtotal = (product.price * product.quantity).toLocaleString();
+
         item.innerHTML = `
-            <img src="${product.image}" width="60">
-            <div class="info">
-                <div class="name">${product.name}</div>
-                <div class="price">₦${product.price}</div>
+            <!-- Image + Name -->
+            <div style="display:flex; align-items:center; gap:5px; flex:2;">
+                <img src="${product.image}" width="60" style="border-radius:5px;">
+                <div class="name" style="font-weight:bold;">${product.name}</div>
             </div>
-            <div class="quantity">x${product.quantity}</div>
-            <div class="returnPrice">₦${(product.price * product.quantity).toLocaleString()}</div>
+
+            <!-- Price -->
+            <div class="price" style="flex:1; text-align:left;">₦${product.price.toLocaleString()}</div>
+
+            <!-- Quantity -->
+            <div class="quantity" style="flex:1; text-align:left;">
+                x <input type="number" class="quantity-input" data-id="${product.id}" value="${product.quantity}" min="1" style="width:40px; text-align:center;">
+            </div>
+
+            <!-- Subtotal -->
+            <div class="returnPrice" style="flex:1; text-align:left;">₦${subtotal}</div>
+
+            <!-- Delete button -->
+            <button class="delete-btn" data-id="${product.id}" 
+                style="background:red; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Delete</button>
         `;
+
         cartContainer.appendChild(item);
 
         totalQuantity += Number(product.quantity);
@@ -43,12 +66,41 @@ function renderCheckoutCart() {
     if (totalQuantityElement) totalQuantityElement.innerText = totalQuantity;
     if (totalPriceElement) totalPriceElement.innerText = "₦" + totalPrice.toLocaleString();
 
-    // Update hidden inputs for sessionStorage
     document.getElementById('totalQuantity').value = totalQuantity;
     document.getElementById('totalPrice').value = totalPrice.toFixed(2);
 }
 
-// Handle checkout form submission
+// Update quantity
+function setupQuantityInputs() {
+    document.addEventListener('change', function(e){
+        if(e.target.classList.contains('quantity-input')){
+            const id = e.target.dataset.id;
+            const item = listCart.find(i => i.id === id);
+            const value = parseInt(e.target.value);
+            if(item && value > 0){
+                item.quantity = value;
+            } else {
+                listCart = listCart.filter(i => i.id !== id);
+            }
+            localStorage.setItem('listCart', JSON.stringify(listCart));
+            renderCheckoutCart();
+        }
+    });
+}
+
+// Delete item
+function setupDeleteButtons() {
+    document.addEventListener('click', function(e){
+        if(e.target.classList.contains('delete-btn')){
+            const id = e.target.dataset.id;
+            listCart = listCart.filter(item => item.id !== id);
+            localStorage.setItem('listCart', JSON.stringify(listCart));
+            renderCheckoutCart();
+        }
+    });
+}
+
+// Checkout form
 function setupCheckoutForm() {
     const form = document.getElementById('checkoutForm');
     if (!form) return;
@@ -69,11 +121,9 @@ function setupCheckoutForm() {
         const formData = new FormData(form);
         const userDetails = Object.fromEntries(formData.entries());
 
-        // Save user details and cart snapshot to sessionStorage
         sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
         sessionStorage.setItem('checkoutCart', JSON.stringify(listCart));
 
-        // Redirect to confirmation page
         window.location.href = '/confirmation.html';
     });
 }
@@ -82,5 +132,7 @@ function setupCheckoutForm() {
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
     renderCheckoutCart();
+    setupDeleteButtons();
+    setupQuantityInputs();
     setupCheckoutForm();
 });
