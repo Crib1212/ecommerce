@@ -3,83 +3,781 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+
+    <title>Checkout | WittyFare Agrovet & Farms</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Optional: Font Awesome if already used on your website -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 </head>
+
 <body>
-    <div class="container">
-        <div class="checkoutLayout">
-            <div class="returnCart">
-                <button><a href="index.html">Keep Shopping</a></button>
-                <h1>Products in Cart</h1>
-                <div class="list">
-                    <!-- Populated dynamically by checkout.js -->
-                </div>
-            </div>
 
-            <div class="right">
-                <h1>Checkout</h1>
-                <form id="checkoutForm">
-                    <div class="form">
-                        <div class="group">
-                            <label for="name">Full Name</label>
-                            <input type="text" name="name" id="name" required>
-                        </div>
+    <!-- ================= TOP BAR ================= -->
+    <div class="checkout-topbar">
+        <div class="checkout-topbar-inner">
+            <span>
+                <i class="fa-solid fa-truck"></i>
+                Fast & Reliable Delivery
+            </span>
 
-                        <div class="group">
-                            <label for="phone">Phone Number</label>
-                            <input type="text" name="phone" id="phone" required>
-                        </div>
+            <div class="checkout-top-links">
+                <span>
+                    <i class="fa-solid fa-phone"></i>
+                    +234 810 123 4567
+                </span>
 
-                        <div class="group">
-                            <label for="address">Address</label>
-                            <input type="text" name="address" id="address" required>
-                        </div>
-
-                        <div class="group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" required>
-                        </div>
-
-                        <div class="group">
-                            <label for="country">Country</label>
-                            <select name="country" id="country" required>
-                                <option value="Nigeria">Nigeria</option>
-                            </select>
-                        </div>
-
-                        <div class="group">
-                            <label for="city">City</label>
-                            <select name="city" id="city" required>
-                                <option value="Fct_abuja">FCT Abuja</option>
-                                <option value="Lagos">Lagos</option>
-                                <option value="Portharcourt">Port Harcourt</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Checkout Summary -->
-                    <div class="return">
-                        <div class="row">
-                            <div>Total Quantity</div>
-                            <div class="totalQuantity"></div>
-                        </div>
-                        <div class="row">
-                            <div>Total Price</div>
-                            <div class="totalPrice"></div>
-                        </div>
-
-                        <!-- Hidden fields for sessionStorage -->
-                        <input type="hidden" name="totalQuantity" id="totalQuantity">
-                        <input type="hidden" name="totalPrice" id="totalPrice">
-                    </div>
-
-                    <button class="buttonCheckout" type="submit">Place Order</button>
-                </form>
+                <span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Chat on WhatsApp
+                </span>
             </div>
         </div>
     </div>
 
+
+    <!-- ================= HEADER ================= -->
+    <header class="checkout-header">
+
+        <div class="checkout-header-inner">
+
+            <a href="index.html" class="checkout-logo">
+                <span class="logo-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </span>
+
+                <span>
+                    <strong>WittyFare</strong>
+                    <small>Agrovet & Farms</small>
+                </span>
+            </a>
+
+            <a href="cart.html" class="checkout-cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge">0</span>
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CHECKOUT PROGRESS ================= -->
+    <section class="checkout-progress">
+
+        <div class="progress-step active">
+            <span>1</span>
+            <small>Cart</small>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step active">
+            <span>2</span>
+            <small>Details</small>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+            <span>3</span>
+            <small>Payment</small>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+            <span>4</span>
+            <small>Confirmation</small>
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="checkout-container">
+
+        <!-- Back to shopping -->
+        <a href="index.html" class="back-shopping">
+            <i class="fa-solid fa-arrow-left"></i>
+            Continue Shopping
+        </a>
+
+
+        <div class="checkout-heading">
+
+            <div>
+                <h1>Checkout</h1>
+
+                <p>
+                    Complete your details below to place your order.
+                </p>
+            </div>
+
+            <div class="secure-checkout">
+                <i class="fa-solid fa-lock"></i>
+                Secure Checkout
+            </div>
+
+        </div>
+
+
+        <!-- ================= CHECKOUT LAYOUT ================= -->
+        <div class="checkout-main-layout">
+
+
+            <!-- =========================================
+                 LEFT SIDE
+            ========================================== -->
+            <div class="checkout-left">
+
+
+                <form id="checkoutForm">
+
+
+                    <!-- ================= CUSTOMER ================= -->
+                    <section class="checkout-card">
+
+                        <div class="checkout-section-title">
+
+                            <div class="section-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+
+                            <div>
+                                <h2>Customer Information</h2>
+                                <p>Tell us how we can reach you.</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="checkout-form-grid">
+
+                            <div class="group">
+                                <label for="name">
+                                    Full Name <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    placeholder="Enter your full name"
+                                    autocomplete="name"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="group">
+                                <label for="phone">
+                                    Phone Number <span>*</span>
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    id="phone"
+                                    placeholder="080 1234 5678"
+                                    autocomplete="tel"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="group">
+                                <label for="whatsapp">
+                                    WhatsApp Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="whatsapp"
+                                    id="whatsapp"
+                                    placeholder="080 1234 5678"
+                                    autocomplete="tel"
+                                >
+
+                                <small class="input-help">
+                                    We'll use WhatsApp to confirm your order.
+                                </small>
+                            </div>
+
+
+                            <div class="group">
+                                <label for="email">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    placeholder="you@example.com"
+                                    autocomplete="email"
+                                >
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- ================= DELIVERY ================= -->
+                    <section class="checkout-card">
+
+                        <div class="checkout-section-title">
+
+                            <div class="section-icon">
+                                <i class="fa-solid fa-truck"></i>
+                            </div>
+
+                            <div>
+                                <h2>Delivery Information</h2>
+                                <p>Where should we deliver your order?</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="checkout-form-grid">
+
+
+                            <div class="group full-width">
+
+                                <label for="address">
+                                    Delivery Address <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="address"
+                                    id="address"
+                                    placeholder="House/Shop number, street name, apartment, etc."
+                                    autocomplete="street-address"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="group">
+
+                                <label for="country">
+                                    Country <span>*</span>
+                                </label>
+
+                                <select
+                                    name="country"
+                                    id="country"
+                                    required
+                                >
+                                    <option value="Nigeria" selected>
+                                        🇳🇬 Nigeria
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="group">
+
+                                <label for="city">
+                                    City / Area <span>*</span>
+                                </label>
+
+                                <select
+                                    name="city"
+                                    id="city"
+                                    required
+                                >
+                                    <option value="Fct_abuja">
+                                        FCT Abuja
+                                    </option>
+
+                                    <option value="Lagos">
+                                        Lagos
+                                    </option>
+
+                                    <option value="Portharcourt">
+                                        Port Harcourt
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="group full-width">
+
+                                <label for="deliveryInstructions">
+                                    Delivery Instructions
+                                    <small>(Optional)</small>
+                                </label>
+
+                                <textarea
+                                    name="deliveryInstructions"
+                                    id="deliveryInstructions"
+                                    rows="3"
+                                    placeholder="E.g. Call me before delivery, leave with the gatekeeper, etc."
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- ================= PAYMENT ================= -->
+                    <section class="checkout-card">
+
+                        <div class="checkout-section-title">
+
+                            <div class="section-icon">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+
+                            <div>
+                                <h2>Payment Method</h2>
+                                <p>Choose how you want to pay for your order.</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="payment-options">
+
+
+                            <label class="payment-option selected">
+
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="online"
+                                    checked
+                                >
+
+                                <div class="payment-option-content">
+
+                                    <div class="payment-option-icon">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>Pay Online</strong>
+
+                                        <span>
+                                            Card, USSD or other available payment options
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="transfer"
+                                >
+
+                                <div class="payment-option-content">
+
+                                    <div class="payment-option-icon">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>Bank Transfer</strong>
+
+                                        <span>
+                                            Pay directly to our bank account
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="delivery"
+                                >
+
+                                <div class="payment-option-content">
+
+                                    <div class="payment-option-icon">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>Pay on Delivery</strong>
+
+                                        <span>
+                                            Pay when your order is delivered
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="payment-security">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            <div>
+                                <strong>Your payment is safe with us</strong>
+
+                                <p>
+                                    Your payment information is protected with secure encryption.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- ================= HIDDEN EXISTING FIELDS ================= -->
+
+                    <input
+                        type="hidden"
+                        name="totalQuantity"
+                        id="totalQuantity"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="totalPrice"
+                        id="totalPrice"
+                    >
+
+
+
+                    <!-- ================= PLACE ORDER ================= -->
+
+                    <div class="checkout-submit-area">
+
+                        <p class="terms-text">
+                            By placing your order, you agree to our
+                            <a href="#">Terms & Conditions</a>
+                            and
+                            <a href="#">Privacy Policy</a>.
+                        </p>
+
+                        <button
+                            class="buttonCheckout"
+                            type="submit"
+                        >
+                            <i class="fa-solid fa-lock"></i>
+
+                            <span>PLACE ORDER</span>
+
+                            <strong class="checkout-button-total">
+                                <!-- JS can update this if desired -->
+                            </strong>
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 RIGHT SIDE
+            ========================================== -->
+            <aside class="checkout-right">
+
+
+                <!-- ================= ORDER ================= -->
+                <section class="order-summary-card">
+
+                    <div class="order-summary-header">
+
+                        <div>
+                            <i class="fa-solid fa-bag-shopping"></i>
+
+                            <h2>Your Order</h2>
+                        </div>
+
+                        <span class="items-count">
+                            <!-- JS can populate -->
+                            Items
+                        </span>
+
+                    </div>
+
+
+                    <!-- IMPORTANT:
+                         Your existing checkout.js can continue
+                         populating this element.
+                    -->
+                    <div class="list">
+                        <!-- Products populated dynamically by checkout.js -->
+                    </div>
+
+
+                    <!-- ================= TOTAL ================= -->
+                    <div class="order-totals">
+
+                        <div class="summary-row">
+                            <span>Items</span>
+                            <strong class="totalQuantity"></strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <strong class="totalPrice"></strong>
+                        </div>
+
+                        <div class="summary-row delivery-row">
+                            <span>
+                                Delivery Fee
+                                <i
+                                    class="fa-solid fa-circle-info"
+                                    title="Delivery fee may depend on your location"
+                                ></i>
+                            </span>
+
+                            <strong>
+                                Calculated
+                            </strong>
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <div class="summary-row grand-total">
+
+                            <span>Total Amount</span>
+
+                            <strong class="totalPrice"></strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DELIVERY NOTICE -->
+                    <div class="delivery-notice">
+
+                        <i class="fa-solid fa-truck"></i>
+
+                        <div>
+
+                            <strong>Delivery available</strong>
+
+                            <p>
+                                Delivery fee may vary based on your location.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= HELP ================= -->
+                <section class="checkout-help-card">
+
+                    <div class="help-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                    <div>
+
+                        <h3>Need Help?</h3>
+
+                        <p>
+                            Our team is available to help you complete your order.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="https://wa.me/2348101234567"
+                        target="_blank"
+                        class="whatsapp-checkout"
+                    >
+                        <i class="fa-brands fa-whatsapp"></i>
+                        Chat with us on WhatsApp
+                    </a>
+
+
+                    <div class="help-phone">
+                        <i class="fa-solid fa-phone"></i>
+                        +234 810 123 4567
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= TRUST ================= -->
+                <section class="checkout-trust-card">
+
+                    <div class="trust-item">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <div>
+                            <strong>Secure Checkout</strong>
+                            <span>Your data is protected</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <div>
+                            <strong>Quality Products</strong>
+                            <span>Genuine agrovet products</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <i class="fa-solid fa-truck-fast"></i>
+
+                        <div>
+                            <strong>Fast Delivery</strong>
+                            <span>Delivery to your doorstep</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <i class="fa-solid fa-headset"></i>
+
+                        <div>
+                            <strong>Customer Support</strong>
+                            <span>We're here to help</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="checkout-footer">
+
+        <div class="checkout-footer-inner">
+
+            <div class="footer-brand">
+
+                <h2>
+                    <i class="fa-solid fa-leaf"></i>
+                    WittyFare
+                </h2>
+
+                <p>
+                    Your trusted partner in animal health,
+                    feeds, equipment and farm solutions.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Quick Links</h3>
+
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="#">Categories</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Customer Service</h3>
+
+                <a href="#">Shipping & Delivery</a>
+                <a href="#">Return Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Contact Us</h3>
+
+                <span>
+                    <i class="fa-solid fa-phone"></i>
+                    +234 810 123 4567
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-envelope"></i>
+                    info@wittyfare.com
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Abuja, FCT, Nigeria
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+            © 2026 WittyFare Agrovet & Farms. All Rights Reserved.
+        </div>
+
+    </footer>
+
+
     <script src="checkout.js"></script>
+
 </body>
 </html>
