@@ -6,7 +6,8 @@
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/agriteddoc.webp",
-    "description": "Agrited day-old broiler chicks for poultry farmers."
+    "description": "Agrited day-old broiler chicks for poultry farmers.",
+     "featured": true
   },
   {
     "id": "day-old-sayed-broiler-chicks",
@@ -36,6 +37,16 @@
     "description": "Olam day-old broiler chicks for poultry farmers."
   },
 
+  {
+    "id": "feed-ultima-finisher",
+    "name": "Ultima Finisher",
+    "price": 22950,
+    "category": "feed",
+    "slug": "ultima-finisher 25kg",
+    "image": "/images/Ultima_finisher.png",
+    "description": "ultima finisher poultry feed in a 25kg bag.",
+     "featured": true
+  },
   {
     "id": "feed-breedwell-psc-25kg",
     "name": "Breedwell PSC 25kg",
@@ -115,7 +126,8 @@
     "category": "feed",
     "slug": "booster",
     "image": "/images/Booster.png",
-    "description": "Booster poultry feed product."
+    "description": "Booster poultry feed product.",
+    "featured": true
   },
 
   {
@@ -125,7 +137,19 @@
     "category": "equipment",
     "slug": "paper-crate",
     "image": "/images/14.png",
-    "description": "Paper crate for poultry and farm handling."
+    "description": "Paper crate for poultry and farm handling.",
+    "featured": true
+  },
+
+   {
+    "id": "juvenile-fish",
+    "name": "Juvenile Fish",
+    "price": 100,
+    "category": "fish",
+    "slug": "juvenile-fish",
+    "image": "/images/juvefish.jpg",
+    "description": "Juvenile fish.",
+    "featured": true
   },
   {
     "id": "equipment-pulse-sprayer-15l",

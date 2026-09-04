@@ -787,23 +787,44 @@ function getPageCategory() {
 }
 
 
+/* =========================================================
+   🏷️ CATEGORY + FEATURED FILTER
+========================================================= */
+
 function getProductsForCurrentPage() {
 
     const category =
         getPageCategory();
 
-    if (!category) {
 
-        return products;
+    /* =====================================================
+       CATEGORY PAGE
+       Show ALL products in that category
+       featured true OR false
+    ===================================================== */
+
+    if (category) {
+
+        return products.filter(
+            product =>
+                String(product.category || '')
+                    .toLowerCase() ===
+                category.toLowerCase()
+        );
 
     }
 
+
+    /* =====================================================
+       HOMEPAGE
+       Show ONLY FEATURED products
+    ===================================================== */
+
     return products.filter(
         product =>
-            String(product.category || '')
-                .toLowerCase() ===
-            category.toLowerCase()
+            product.featured === true
     );
+
 }
 
 
@@ -1686,7 +1707,6 @@ function updateProductSEO(product) {
 
 }
 
-let chatOpen = false;
 
 function openChat() {
     if (typeof Tawk_API === "undefined") return;
