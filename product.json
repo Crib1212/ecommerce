@@ -1,135 +1,205 @@
 [
-        {
-        "id": "Agrited",
-        "name": "Agrited broiler chicks",
-        "price": 1350,
-        "image": "../images/agriteddoc.webp"
-    },
   {
-        "id": "Sayed",
-        "name": "Sayed dayold broiler chicks",
-        "price": 1300,
-        "image": "../images/sayed-dayold-broiler.png"
-    },
-     {
-        "id": "Tosam",
-        "name": "Tosam broiler chicks",
-        "price": 1250,
-        "image": "../images/tosam-chicks.png"
-    },
-      {
-        "id": "Olam",
-        "name": "Olam broiler chicks",
-        "price": 1100,
-        "image": "../images/olam-broiler-chicks.png"
-    },
-    {
-        "id": "PSC",
-       "name": "Breedwell PSC 25kg",
-        "price": 22950,
-        "image": "../images/Breed_well_psc_25kg.png"
-    }, 
-    {
-        "id": "HGM",
-       "name": "Hybrid Grower Mash 25kg",
-        "price": 12200,
-        "image": "../images/Hybrid_grower_mash-2.png"
-    }, 
-    {
-        "id": "HLM",
-        "name": "Hybrid Layer Mash 25kg",
-        "price": 13000,
-        "image": "../images/Hybrid_layer_mash-3.png"
-    },
-    {
-        "id": "H3in1",
-        "name": "Hybrid 3 in 1 Special",
-        "price": 20300,
-        "image": "../images/Hybrid_3_in_1_Special-4.png"
-    },
-    {
-        "id": "B2",
-        "name": "Breed weell finisher 25kg",
-        "price": 22000,
-        "image": "../images/Breedwell-Broiler-Finisher-pellet.png"
-    },
-    {
-        "id": "HB1",
-        "name": "Hybrid Base1 Super Starter 25kg",
-        "price": 19750,
-        "image": "../images/Hybrid_base1_Starter-25kg-6.png"
-    },
-    {
-        "id": "HFP",
-        "name": "Hybrid FInisher pellet 25kg",
-        "price": 16700,
-        "image": "../images/Hybrid_finisher_pellet_25kg-7.png"
-    },
-    {
-        "id": "UFP",
-        "name": "Ultima finisher",
-        "price": 20150,
-        "image": "../images/Ultima_finisher.png"
-    },
-    {
-        "id": "Booster",
-        "name": "Booster",
-        "price": 1750,
-        "image": "../images/Booster.png"
-    },
-    {
-        "id": "PaperCrate",
-       "name": "Paper crate",
-        "price":12000,
-        "image": "../images/14.png"
-    },
-    {
-        "id": "PulseSprayer",
-       "name": "Pulse sprayer 15L",
-        "price": 17500,
-        "image": "../images/15.png"
-    },
-    {
-        "id": "Tylodox",
-        "name": "Tylodox Extra 100g",
-        "price": 9500,
-        "image": "../images/26.png"
-    },
-    {
-        "id": "DHLPP",
-        "name": "DHLPP",
-        "price": 5000,
-        "image": "../images/DHLPP.png"
-    },
-    {
-        "id": "BlueCrown2mm",
-        "name": "Blue crown 2mm",
-        "price": 23000,
-        "image": "../images/Blue_crown_2mm.png"
-    },
-    {
-        "id": "BlueCrown3mm",
-        "name": "Blue crown 3mm",
-        "price": 22000,
-        "image": "../images/Bluecrown-3mm-53.png"
-    },
-{
-        "id": "BlueCrown4mm",
-        "name": "Blue crown 4mm",
-        "price": 18500,
-        "image": "../images/Bluecrown-4mm-54.png"
-    },
-    {
-        "id": "BlueCrown6mm",
-        "name": "Blue crown 6mm",
-        "price": 18000,
-        "image": "../images/Bluecrown-6mm-56.png"
-    },
-      {
-        "id": "BlueCrown9mm",
-        "name": "Blue crown 9mm",
-        "price": 18000,
-        "image": "../images/Bluecrown-9mm-59.png"
-    }
+    "id": "day-old-agrited-broiler-chicks",
+    "name": "Agrited Broiler Chicks",
+    "price": 1350,
+    "category": "day-old",
+    "slug": "agrited-broiler-chicks",
+    "image": "/images/agriteddoc.webp",
+    "description": "Agrited day-old broiler chicks for poultry farmers."
+  },
+  {
+    "id": "day-old-sayed-broiler-chicks",
+    "name": "Sayed Day-old Broiler Chicks",
+    "price": 1300,
+    "category": "day-old",
+    "slug": "sayed-day-old-broiler-chicks",
+    "image": "/images/sayed-dayold-broiler.png",
+    "description": "Sayed day-old broiler chicks for poultry farming."
+  },
+  {
+    "id": "day-old-tosam-broiler-chicks",
+    "name": "Tosam Broiler Chicks",
+    "price": 1250,
+    "category": "day-old",
+    "slug": "tosam-broiler-chicks",
+    "image": "/images/tosam-chicks.png",
+    "description": "Tosam day-old broiler chicks for poultry production."
+  },
+  {
+    "id": "day-old-olam-broiler-chicks",
+    "name": "Olam Broiler Chicks",
+    "price": 1100,
+    "category": "day-old",
+    "slug": "olam-broiler-chicks",
+    "image": "/images/olam-broiler-chicks.png",
+    "description": "Olam day-old broiler chicks for poultry farmers."
+  },
 
+  {
+    "id": "feed-breedwell-psc-25kg",
+    "name": "Breedwell PSC 25kg",
+    "price": 22950,
+    "category": "feed",
+    "slug": "breedwell-psc-25kg",
+    "image": "/images/Breed_well_psc_25kg.png",
+    "description": "Breedwell PSC poultry feed in a 25kg bag."
+  },
+  {
+    "id": "feed-hybrid-grower-mash-25kg",
+    "name": "Hybrid Grower Mash 25kg",
+    "price": 12200,
+    "category": "feed",
+    "slug": "hybrid-grower-mash-25kg",
+    "image": "/images/Hybrid_grower_mash-2.png",
+    "description": "Hybrid grower mash 25kg for growing poultry."
+  },
+  {
+    "id": "feed-hybrid-layer-mash-25kg",
+    "name": "Hybrid Layer Mash 25kg",
+    "price": 13000,
+    "category": "feed",
+    "slug": "hybrid-layer-mash-25kg",
+    "image": "/images/Hybrid_layer_mash-3.png",
+    "description": "Hybrid layer mash 25kg for laying birds."
+  },
+  {
+    "id": "feed-hybrid-3-in-1-special",
+    "name": "Hybrid 3 in 1 Special",
+    "price": 20300,
+    "category": "feed",
+    "slug": "hybrid-3-in-1-special",
+    "image": "/images/Hybrid_3_in_1_Special-4.png",
+    "description": "Hybrid 3 in 1 special poultry feed."
+  },
+  {
+    "id": "feed-breedwell-finisher-25kg",
+    "name": "Breedwell Finisher 25kg",
+    "price": 22000,
+    "category": "feed",
+    "slug": "breedwell-finisher-25kg",
+    "image": "/images/Breedwell-Broiler-Finisher-pellet.png",
+    "description": "Breedwell broiler finisher feed in a 25kg bag."
+  },
+  {
+    "id": "feed-hybrid-base1-super-starter-25kg",
+    "name": "Hybrid Base1 Super Starter 25kg",
+    "price": 19750,
+    "category": "feed",
+    "slug": "hybrid-base1-super-starter-25kg",
+    "image": "/images/Hybrid_base1_Starter-25kg-6.png",
+    "description": "Hybrid Base1 super starter poultry feed."
+  },
+  {
+    "id": "feed-hybrid-finisher-pellet-25kg",
+    "name": "Hybrid Finisher Pellet 25kg",
+    "price": 16700,
+    "category": "feed",
+    "slug": "hybrid-finisher-pellet-25kg",
+    "image": "/images/Hybrid_finisher_pellet_25kg-7.png",
+    "description": "Hybrid finisher pellet feed in a 25kg bag."
+  },
+  {
+    "id": "feed-ultima-finisher",
+    "name": "Ultima Finisher",
+    "price": 20150,
+    "category": "feed",
+    "slug": "ultima-finisher",
+    "image": "/images/Ultima_finisher.png",
+    "description": "Ultima finisher feed for poultry."
+  },
+  {
+    "id": "feed-booster",
+    "name": "Booster",
+    "price": 1750,
+    "category": "feed",
+    "slug": "booster",
+    "image": "/images/Booster.png",
+    "description": "Booster poultry feed product."
+  },
+
+  {
+    "id": "equipment-paper-crate",
+    "name": "Paper Crate",
+    "price": 12000,
+    "category": "equipment",
+    "slug": "paper-crate",
+    "image": "/images/14.png",
+    "description": "Paper crate for poultry and farm handling."
+  },
+  {
+    "id": "equipment-pulse-sprayer-15l",
+    "name": "Pulse Sprayer 15L",
+    "price": 17500,
+    "category": "equipment",
+    "slug": "pulse-sprayer-15l",
+    "image": "/images/15.png",
+    "description": "15 litre pulse sprayer for farm applications."
+  },
+
+  {
+    "id": "drugs-tylodox-extra-100g",
+    "name": "Tylodox Extra 100g",
+    "price": 9500,
+    "category": "drugs",
+    "slug": "tylodox-extra-100g",
+    "image": "/images/26.png",
+    "description": "Tylodox Extra 100g veterinary product."
+  },
+
+  {
+    "id": "vaccines-dhlpp",
+    "name": "DHLPP",
+    "price": 5000,
+    "category": "vaccines",
+    "slug": "dhlpp",
+    "image": "/images/DHLPP.png",
+    "description": "DHLPP vaccine product for animal health."
+  },
+
+  {
+    "id": "feed-blue-crown-2mm",
+    "name": "Blue Crown 2mm",
+    "price": 23000,
+    "category": "feed",
+    "slug": "blue-crown-2mm",
+    "image": "/images/Blue_crown_2mm.png",
+    "description": "Blue Crown fish feed in 2mm size."
+  },
+  {
+    "id": "feed-blue-crown-3mm",
+    "name": "Blue Crown 3mm",
+    "price": 22000,
+    "category": "feed",
+    "slug": "blue-crown-3mm",
+    "image": "/images/Bluecrown-3mm-53.png",
+    "description": "Blue Crown fish feed in 3mm size."
+  },
+  {
+    "id": "feed-blue-crown-4mm",
+    "name": "Blue Crown 4mm",
+    "price": 18500,
+    "category": "feed",
+    "slug": "blue-crown-4mm",
+    "image": "/images/Bluecrown-4mm-54.png",
+    "description": "Blue Crown fish feed in 4mm size."
+  },
+  {
+    "id": "feed-blue-crown-6mm",
+    "name": "Blue Crown 6mm",
+    "price": 18000,
+    "category": "feed",
+    "slug": "blue-crown-6mm",
+    "image": "/images/Bluecrown-6mm-56.png",
+    "description": "Blue Crown fish feed in 6mm size."
+  },
+  {
+    "id": "feed-blue-crown-9mm",
+    "name": "Blue Crown 9mm",
+    "price": 18000,
+    "category": "feed",
+    "slug": "blue-crown-9mm",
+    "image": "/images/Bluecrown-9mm-59.png",
+    "description": "Blue Crown fish feed in 9mm size."
+  }
 ]
