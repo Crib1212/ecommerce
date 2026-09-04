@@ -3323,7 +3323,7 @@ footer {
         gap: 3px;
         text-align: center;
 
-        transform: translateX(8px);
+        transform: translateX(12px);
     }
 
     .checkout-topbar-inner > span {
