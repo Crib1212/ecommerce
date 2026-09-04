@@ -600,6 +600,7 @@ function createProductCard(
         name = '',
         category = '',
         description = '',
+        vendor = '',
         image = '',
         price = 0,
         id
@@ -648,7 +649,7 @@ function createProductCard(
         <h2>
             ${highlightedName}
         </h2>
-
+${vendor ? `<p class="vendor">Vendor: ${escapeHTML(vendor)}</p>` : ''}
         ${
             category
                 ? `

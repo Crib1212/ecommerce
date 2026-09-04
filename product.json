@@ -133,6 +133,7 @@
   {
     "id": "equipment-paper-crate",
     "name": "Paper Crate",
+    "vendor": "kingstonagrovet",
     "price": 12000,
     "category": "equipment",
     "slug": "paper-crate",
