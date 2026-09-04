@@ -35,7 +35,10 @@ function loadCart() {
 
                 foundCart = parsed;
 
-                console.log("Checkout cart loaded from:", key);
+                console.log(
+                    "Checkout cart loaded from:",
+                    key
+                );
 
                 break;
             }
@@ -66,10 +69,12 @@ function loadCart() {
 
     listCart = foundCart.map(normalizeProduct);
 
+
     console.log(
         "Products in checkout:",
         listCart
     );
+
 }
 
 
@@ -151,7 +156,131 @@ function saveCart() {
 
 
 /* =========================================================
-   RENDER CHECKOUT CART
+   GET CART TOTALS
+========================================================= */
+
+function getCartTotals() {
+
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+
+    if (!Array.isArray(listCart)) {
+
+        return {
+            totalQuantity: 0,
+            totalPrice: 0
+        };
+
+    }
+
+
+    listCart.forEach(product => {
+
+        const quantity =
+            Number(product.quantity) || 0;
+
+        const price =
+            Number(product.price) || 0;
+
+
+        totalQuantity += quantity;
+
+        totalPrice +=
+            price * quantity;
+
+    });
+
+
+    return {
+        totalQuantity,
+        totalPrice
+    };
+
+}
+
+
+/* =========================================================
+   UPDATE ALL CART BADGES
+========================================================= */
+
+function updateCartBadge() {
+
+    const totals =
+        getCartTotals();
+
+
+    const badges =
+        document.querySelectorAll(
+            ".cart-badge, .iconCart .totalQuantity"
+        );
+
+
+    badges.forEach(badge => {
+
+        badge.textContent =
+            totals.totalQuantity;
+
+
+        badge.style.display =
+            totals.totalQuantity > 0
+                ? "flex"
+                : "none";
+
+    });
+
+}
+
+
+/* =========================================================
+   UPDATE ITEMS COUNT
+========================================================= */
+
+function updateItemsCount(totalQuantity) {
+
+    const itemsCount =
+        document.querySelector(
+            ".items-count"
+        );
+
+
+    if (!itemsCount)
+        return;
+
+
+    itemsCount.textContent =
+        `${totalQuantity} ${
+            totalQuantity === 1
+                ? "Item"
+                : "Items"
+        }`;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   RENDER CHECKOUT ORDER SUMMARY
 ========================================================= */
 
 function renderCheckoutCart() {
@@ -199,6 +328,12 @@ function renderCheckoutCart() {
     const hiddenPrice =
         document.getElementById(
             "totalPrice"
+        );
+
+
+    const buttonTotal =
+        document.querySelector(
+            ".checkout-button-total"
         );
 
 
@@ -265,16 +400,25 @@ function renderCheckoutCart() {
         }
 
 
-        updateCartBadge();
+        if (buttonTotal) {
+
+            buttonTotal.textContent = "₦0";
+
+        }
+
 
         updateItemsCount(0);
+
+        updateCartBadge();
+
+        renderSlideCart();
 
         return;
     }
 
 
     /* =====================================================
-       TOTALS
+       CALCULATE TOTALS
     ===================================================== */
 
     let totalQuantity = 0;
@@ -283,7 +427,7 @@ function renderCheckoutCart() {
 
 
     /* =====================================================
-       PRODUCTS
+       RENDER PRODUCTS
     ===================================================== */
 
     listCart.forEach(product => {
@@ -305,19 +449,9 @@ function renderCheckoutCart() {
         totalPrice += subtotal;
 
 
-        /* -----------------------------------------------
-           PRODUCT ELEMENT
-        ----------------------------------------------- */
-
         const item =
             document.createElement("div");
 
-
-        /*
-           IMPORTANT:
-           Use checkout-product-item because
-           that is what your CSS styles.
-        */
 
         item.className =
             "checkout-product-item";
@@ -388,6 +522,7 @@ function renderCheckoutCart() {
                 >
 
                     <i class="fa-solid fa-trash"></i>
+
                     Remove
 
                 </button>
@@ -403,7 +538,7 @@ function renderCheckoutCart() {
 
 
     /* =====================================================
-       UPDATE TOTALS
+       UPDATE TOTAL QUANTITY
     ===================================================== */
 
     quantityElements.forEach(element => {
@@ -414,13 +549,22 @@ function renderCheckoutCart() {
     });
 
 
+    /* =====================================================
+       UPDATE TOTAL PRICE
+    ===================================================== */
+
     priceElements.forEach(element => {
 
         element.textContent =
-            "₦" + totalPrice.toLocaleString();
+            "₦" +
+            totalPrice.toLocaleString();
 
     });
 
+
+    /* =====================================================
+       UPDATE HIDDEN INPUTS
+    ===================================================== */
 
     if (hiddenQuantity) {
 
@@ -439,22 +583,21 @@ function renderCheckoutCart() {
 
 
     /* =====================================================
-       CHECKOUT BUTTON
+       UPDATE CHECKOUT BUTTON
     ===================================================== */
-
-    const buttonTotal =
-        document.querySelector(
-            ".checkout-button-total"
-        );
-
 
     if (buttonTotal) {
 
         buttonTotal.textContent =
-            "₦" + totalPrice.toLocaleString();
+            "₦" +
+            totalPrice.toLocaleString();
 
     }
 
+
+    /* =====================================================
+       UPDATE OTHER CART ELEMENTS
+    ===================================================== */
 
     updateItemsCount(totalQuantity);
 
@@ -470,85 +613,152 @@ function renderCheckoutCart() {
 
 
 /* =========================================================
-   ITEMS COUNT
+   RENDER SLIDE-OUT CART
 ========================================================= */
 
-function updateItemsCount(totalQuantity) {
+function renderSlideCart() {
 
-    const itemsCount =
+    const cartContainer =
         document.querySelector(
-            ".items-count"
+            ".listCart"
         );
 
 
-    if (!itemsCount)
+    if (!cartContainer)
         return;
 
 
-    itemsCount.textContent =
-        `${totalQuantity} ${
-            totalQuantity === 1
-                ? "Item"
-                : "Items"
-        }`;
-
-}
+    cartContainer.innerHTML = "";
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+    /* =====================================================
+       EMPTY CART
+    ===================================================== */
 
-function escapeHTML(value) {
+    if (
+        !Array.isArray(listCart) ||
+        listCart.length === 0
+    ) {
 
-    const div =
-        document.createElement("div");
+        cartContainer.innerHTML = `
 
-    div.textContent =
-        value ?? "";
+            <div class="empty-cart">
 
-    return div.innerHTML;
+                <i class="fa-solid fa-cart-shopping"></i>
 
-}
+                <p>
+                    Your cart is empty.
+                </p>
 
+            </div>
 
-/* =========================================================
-   CART BADGE
-========================================================= */
+        `;
 
-function updateCartBadge() {
-
-    const badges =
-        document.querySelectorAll(
-            ".cart-badge"
-        );
+        return;
+    }
 
 
-    const total =
-        listCart.reduce(
+    /* =====================================================
+       RENDER PRODUCTS
+    ===================================================== */
 
-            (sum, product) => {
+    listCart.forEach(product => {
 
-                return sum +
-                    Number(
-                        product.quantity || 0
-                    );
-
-            },
-
-            0
-
-        );
+        const quantity =
+            Number(product.quantity) || 1;
 
 
-    badges.forEach(badge => {
+        const price =
+            Number(product.price) || 0;
 
-        badge.textContent = total;
 
-        badge.style.display =
-            total > 0
-                ? "flex"
-                : "none";
+        const subtotal =
+            price * quantity;
+
+
+        const item =
+            document.createElement("div");
+
+
+        item.className =
+            "item";
+
+
+        item.innerHTML = `
+
+            <img
+                src="${escapeHTML(product.image)}"
+                alt="${escapeHTML(product.name)}"
+                onerror="this.style.display='none';"
+            >
+
+
+            <div class="content">
+
+                <div class="name">
+                    ${escapeHTML(product.name)}
+                </div>
+
+
+                <div class="price">
+                    ₦${subtotal.toLocaleString()}
+                </div>
+
+            </div>
+
+
+            <div class="cartControls">
+
+                <button
+                    type="button"
+                    class="deleteBtn slide-cart-delete"
+                    data-id="${escapeHTML(product.id)}"
+                    title="Remove product"
+                    aria-label="Remove ${escapeHTML(product.name)}"
+                >
+                    🗑
+                </button>
+
+
+                <div class="verticalQty">
+
+                    <button
+                        type="button"
+                        class="slide-cart-plus"
+                        data-id="${escapeHTML(product.id)}"
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
+
+
+                    <input
+                        type="number"
+                        min="1"
+                        value="${quantity}"
+                        class="slide-cart-qty"
+                        data-id="${escapeHTML(product.id)}"
+                        aria-label="Quantity"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="slide-cart-minus"
+                        data-id="${escapeHTML(product.id)}"
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        cartContainer.appendChild(item);
 
     });
 
@@ -556,7 +766,349 @@ function updateCartBadge() {
 
 
 /* =========================================================
-   REMOVE PRODUCT
+   OPEN / CLOSE SLIDE CART
+========================================================= */
+
+function setupCart() {
+
+    const iconCart =
+        document.querySelector(
+            ".iconCart"
+        );
+
+
+    const cart =
+        document.querySelector(
+            ".cart"
+        );
+
+
+    const close =
+        document.querySelector(
+            ".cart .close"
+        );
+
+
+    const container =
+        document.querySelector(
+            ".checkout-container"
+        );
+
+
+    if (!iconCart || !cart) {
+
+        console.warn(
+            "Cart icon or cart panel not found."
+        );
+
+        return;
+    }
+
+
+    let isCartOpen = false;
+
+
+    /* =====================================================
+       OPEN CART
+    ===================================================== */
+
+    function openCart() {
+
+        renderSlideCart();
+
+
+        cart.style.transition =
+            "right 0.5s ease";
+
+
+        cart.style.right =
+            "0";
+
+
+        if (container) {
+
+            container.style.transition =
+                "transform 0.5s ease";
+
+
+            container.style.transform =
+                "translateX(-400px)";
+
+        }
+
+
+        isCartOpen = true;
+
+    }
+
+
+    /* =====================================================
+       CLOSE CART
+    ===================================================== */
+
+    function closeCart() {
+
+        cart.style.transition =
+            "right 0.5s ease";
+
+
+        cart.style.right =
+            "-100%";
+
+
+        if (container) {
+
+            container.style.transition =
+                "transform 0.5s ease";
+
+
+            container.style.transform =
+                "translateX(0)";
+
+        }
+
+
+        isCartOpen = false;
+
+    }
+
+
+    /* =====================================================
+       CART ICON CLICK
+    ===================================================== */
+
+    iconCart.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+
+            if (isCartOpen) {
+
+                closeCart();
+
+            } else {
+
+                openCart();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
+
+    if (close) {
+
+        close.addEventListener(
+            "click",
+            closeCart
+        );
+
+    }
+
+
+    /* =====================================================
+       MAKE FUNCTIONS AVAILABLE
+    ===================================================== */
+
+    window.openCheckoutCart =
+        openCart;
+
+
+    window.closeCheckoutCart =
+        closeCart;
+
+}
+
+
+/* =========================================================
+   REMOVE PRODUCT FROM CHECKOUT
+========================================================= */
+
+function removeProduct(productId) {
+
+    const id =
+        String(productId);
+
+
+    listCart =
+        listCart.filter(
+            product =>
+                String(product.id) !== id
+        );
+
+
+    saveCart();
+
+
+    renderCheckoutCart();
+
+    renderSlideCart();
+
+    updateCartBadge();
+
+
+    console.log(
+        "🗑 Product removed:",
+        id
+    );
+
+}
+
+
+/* =========================================================
+   INCREASE PRODUCT QUANTITY
+========================================================= */
+
+function increaseQuantity(productId) {
+
+    const id =
+        String(productId);
+
+
+    const product =
+        listCart.find(
+            item =>
+                String(item.id) === id
+        );
+
+
+    if (!product)
+        return;
+
+
+    product.quantity =
+        (Number(product.quantity) || 1) + 1;
+
+
+    saveCart();
+
+
+    renderCheckoutCart();
+
+    renderSlideCart();
+
+    updateCartBadge();
+
+}
+
+
+/* =========================================================
+   DECREASE PRODUCT QUANTITY
+========================================================= */
+
+function decreaseQuantity(productId) {
+
+    const id =
+        String(productId);
+
+
+    const product =
+        listCart.find(
+            item =>
+                String(item.id) === id
+        );
+
+
+    if (!product)
+        return;
+
+
+    const newQuantity =
+        (Number(product.quantity) || 1) - 1;
+
+
+    if (newQuantity <= 0) {
+
+        removeProduct(id);
+
+        return;
+
+    }
+
+
+    product.quantity =
+        newQuantity;
+
+
+    saveCart();
+
+
+    renderCheckoutCart();
+
+    renderSlideCart();
+
+    updateCartBadge();
+
+}
+
+
+/* =========================================================
+   SET PRODUCT QUANTITY
+========================================================= */
+
+function setProductQuantity(
+    productId,
+    quantity
+) {
+
+    const id =
+        String(productId);
+
+
+    const product =
+        listCart.find(
+            item =>
+                String(item.id) === id
+        );
+
+
+    if (!product)
+        return;
+
+
+    let newQuantity =
+        parseInt(
+            quantity,
+            10
+        );
+
+
+    if (
+        isNaN(newQuantity) ||
+        newQuantity <= 0
+    ) {
+
+        removeProduct(id);
+
+        return;
+
+    }
+
+
+    product.quantity =
+        newQuantity;
+
+
+    saveCart();
+
+
+    renderCheckoutCart();
+
+    renderSlideCart();
+
+    updateCartBadge();
+
+}
+
+
+/* =========================================================
+   CHECKOUT DELETE BUTTONS
 ========================================================= */
 
 function setupDeleteButtons() {
@@ -581,17 +1133,7 @@ function setupDeleteButtons() {
                 );
 
 
-            listCart =
-                listCart.filter(
-                    product =>
-                        String(product.id) !== id
-                );
-
-
-            saveCart();
-
-
-            renderCheckoutCart();
+            removeProduct(id);
 
         }
     );
@@ -600,7 +1142,7 @@ function setupDeleteButtons() {
 
 
 /* =========================================================
-   UPDATE QUANTITY
+   CHECKOUT QUANTITY INPUTS
 ========================================================= */
 
 function setupQuantityInputs() {
@@ -625,46 +1167,138 @@ function setupQuantityInputs() {
                 );
 
 
-            const quantity =
-                parseInt(
-                    input.value,
-                    10
+            setProductQuantity(
+                id,
+                input.value
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SLIDE CART CONTROLS
+========================================================= */
+
+function setupSlideCartControls() {
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+
+            /* ---------------------------------------------
+               DELETE
+            --------------------------------------------- */
+
+            const deleteButton =
+                event.target.closest(
+                    ".slide-cart-delete"
                 );
 
 
-            if (
-                quantity <= 0 ||
-                isNaN(quantity)
-            ) {
+            if (deleteButton) {
 
-                listCart =
-                    listCart.filter(
-                        product =>
-                            String(product.id) !== id
-                    );
-
-            } else {
-
-                const product =
-                    listCart.find(
-                        item =>
-                            String(item.id) === id
+                const id =
+                    String(
+                        deleteButton.dataset.id
                     );
 
 
-                if (product) {
+                removeProduct(id);
 
-                    product.quantity =
-                        quantity;
-
-                }
+                return;
 
             }
 
 
-            saveCart();
+            /* ---------------------------------------------
+               PLUS
+            --------------------------------------------- */
 
-            renderCheckoutCart();
+            const plusButton =
+                event.target.closest(
+                    ".slide-cart-plus"
+                );
+
+
+            if (plusButton) {
+
+                const id =
+                    String(
+                        plusButton.dataset.id
+                    );
+
+
+                increaseQuantity(id);
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               MINUS
+            --------------------------------------------- */
+
+            const minusButton =
+                event.target.closest(
+                    ".slide-cart-minus"
+                );
+
+
+            if (minusButton) {
+
+                const id =
+                    String(
+                        minusButton.dataset.id
+                    );
+
+
+                decreaseQuantity(id);
+
+                return;
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       MANUAL QUANTITY
+    ===================================================== */
+
+    document.addEventListener(
+        "change",
+        function(event) {
+
+            const input =
+                event.target.closest(
+                    ".slide-cart-qty"
+                );
+
+
+            if (!input)
+                return;
+
+
+            const id =
+                String(
+                    input.dataset.id
+                );
+
+
+            setProductQuantity(
+                id,
+                input.value
+            );
 
         }
     );
@@ -748,9 +1382,9 @@ function setupCheckoutForm() {
             event.preventDefault();
 
 
-            /* -----------------------------------------
-               Check cart
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               CHECK CART
+            --------------------------------------------- */
 
             if (
                 !Array.isArray(listCart) ||
@@ -766,9 +1400,9 @@ function setupCheckoutForm() {
             }
 
 
-            /* -----------------------------------------
-               Validate form
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               VALIDATE FORM
+            --------------------------------------------- */
 
             if (!form.checkValidity()) {
 
@@ -779,9 +1413,9 @@ function setupCheckoutForm() {
             }
 
 
-            /* -----------------------------------------
-               Normalize cart
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               NORMALIZE CART
+            --------------------------------------------- */
 
             listCart =
                 listCart.map(
@@ -789,31 +1423,25 @@ function setupCheckoutForm() {
                 );
 
 
-            /* -----------------------------------------
-               Calculate totals
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               CALCULATE TOTALS
+            --------------------------------------------- */
 
-            let totalQuantity = 0;
-
-            let totalPrice = 0;
-
-
-            listCart.forEach(product => {
-
-                totalQuantity +=
-                    Number(product.quantity);
+            const totals =
+                getCartTotals();
 
 
-                totalPrice +=
-                    Number(product.price) *
-                    Number(product.quantity);
-
-            });
+            const totalQuantity =
+                totals.totalQuantity;
 
 
-            /* -----------------------------------------
-               Customer information
-            ----------------------------------------- */
+            const totalPrice =
+                totals.totalPrice;
+
+
+            /* ---------------------------------------------
+               GET CUSTOMER INFORMATION
+            --------------------------------------------- */
 
             const formData =
                 new FormData(form);
@@ -833,9 +1461,9 @@ function setupCheckoutForm() {
                 totalPrice.toFixed(2);
 
 
-            /* -----------------------------------------
-               SAVE CUSTOMER
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               SAVE CUSTOMER DETAILS
+            --------------------------------------------- */
 
             sessionStorage.setItem(
                 "userDetails",
@@ -845,9 +1473,9 @@ function setupCheckoutForm() {
             );
 
 
-            /* -----------------------------------------
-               SAVE PRODUCTS
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               SAVE CART
+            --------------------------------------------- */
 
             sessionStorage.setItem(
                 "checkoutCart",
@@ -857,9 +1485,9 @@ function setupCheckoutForm() {
             );
 
 
-            /* -----------------------------------------
-               SAVE COMPLETE ORDER
-            ----------------------------------------- */
+            /* ---------------------------------------------
+               CREATE ORDER SNAPSHOT
+            --------------------------------------------- */
 
             const orderSnapshot = {
 
@@ -881,6 +1509,10 @@ function setupCheckoutForm() {
             };
 
 
+            /* ---------------------------------------------
+               SAVE ORDER
+            --------------------------------------------- */
+
             sessionStorage.setItem(
                 "currentOrder",
                 JSON.stringify(
@@ -895,9 +1527,9 @@ function setupCheckoutForm() {
             );
 
 
-            /* -----------------------------------------
+            /* ---------------------------------------------
                GO TO CONFIRMATION
-            ----------------------------------------- */
+            --------------------------------------------- */
 
             window.location.href =
                 "confirmation.html";
@@ -909,7 +1541,7 @@ function setupCheckoutForm() {
 
 
 /* =========================================================
-   INITIALIZE
+   INITIALIZE CHECKOUT
 ========================================================= */
 
 document.addEventListener(
@@ -921,17 +1553,79 @@ document.addEventListener(
         );
 
 
+        /* ---------------------------------------------
+           LOAD CART
+        --------------------------------------------- */
+
         loadCart();
+
+
+        /* ---------------------------------------------
+           RENDER ORDER
+        --------------------------------------------- */
 
         renderCheckoutCart();
 
+
+        /* ---------------------------------------------
+           RENDER SLIDE CART
+        --------------------------------------------- */
+
+        renderSlideCart();
+
+
+        /* ---------------------------------------------
+           SETUP CART
+        --------------------------------------------- */
+
+        setupCart();
+
+
+        /* ---------------------------------------------
+           DELETE
+        --------------------------------------------- */
+
         setupDeleteButtons();
+
+
+        /* ---------------------------------------------
+           QUANTITY
+        --------------------------------------------- */
 
         setupQuantityInputs();
 
+
+        /* ---------------------------------------------
+           SLIDE CART CONTROLS
+        --------------------------------------------- */
+
+        setupSlideCartControls();
+
+
+        /* ---------------------------------------------
+           PAYMENT
+        --------------------------------------------- */
+
         setupPaymentOptions();
 
+
+        /* ---------------------------------------------
+           CHECKOUT FORM
+        --------------------------------------------- */
+
         setupCheckoutForm();
+
+
+        /* ---------------------------------------------
+           UPDATE BADGE
+        --------------------------------------------- */
+
+        updateCartBadge();
+
+
+        console.log(
+            "✅ WittyFare checkout initialized successfully."
+        );
 
     }
 );

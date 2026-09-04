@@ -1213,7 +1213,6 @@ function setupCart() {
 
 }
 
-
 /* =========================================================
    🚀 INITIALIZE
 ========================================================= */
@@ -1687,6 +1686,20 @@ function updateProductSEO(product) {
 
 }
 
+let chatOpen = false;
+
+function openChat() {
+    if (typeof Tawk_API === "undefined") return;
+
+    if (chatOpen) {
+        Tawk_API.minimize();
+        chatOpen = false;
+    } else {
+        Tawk_API.showWidget();
+        Tawk_API.maximize();
+        chatOpen = true;
+    }
+}
 
 /* =========================================================
    META DESCRIPTION

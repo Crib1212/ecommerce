@@ -129,19 +129,66 @@ header img {
    HOME / MENU / CART ICONS
 ========================================================= */
 
-.home-icon,
-.menu-icon,
-.iconCart {
+/* HOME */
+.home-icon {
     position: fixed;
     top: 20px;
+    right: 205px;
     height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 3000;
+    font-size: 32px;
 }
 
+/* MENU */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 150px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3000;
+    font-size: 32px;
+}
+
+/* CHAT */
+.chat-icon {
+    position: fixed;
+    top: 20px;
+    right: 225px;
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    z-index: 3000;
+    font-size: 32px;
+}
+
+/* CART */
+.iconCart {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    z-index: 3000;
+}
 /* HOME */
 
 .home-icon {
@@ -188,7 +235,10 @@ header img {
     font-weight: bold;
     line-height: 1;
 }
-
+/* Hide Tawk.to default floating button */
+iframe[title*="chat"] {
+    /* Tawk handles its own widget */
+}
 
 /* =========================================================
    BANNER
@@ -1116,7 +1166,7 @@ footer {
     border-radius: 20px;
     margin-top: 10px;
     border: none;
-    background-color: #6a6fc9;
+    background-color: white;
     color: #fff;
 }
 
@@ -1201,89 +1251,26 @@ footer {
 
 
 /* =========================================================
-   CHECKOUT BUTTONS
-========================================================= */
-
-.checkout-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.continueShopping {
-    display: inline-block;
-
-    text-decoration: none;
-
-    color: blue;
-
-    font-weight: bold;
-
-    padding: 10px 25px;
-
-    border-radius: 20px;
-
-    transition: all 0.3s ease;
-
-    background-color: yellow;
-}
-
-.continueShopping:hover {
-    background-color: green;
-    color: yellow;
-}
-
-
-/* =========================================================
-   WITTYFARE CHECKOUT PAGE
-========================================================= */
-
-.witty-checkout-page {
-    --wf-green: #2c8a38;
-    --wf-green-dark: #206b2a;
-    --wf-mint: #49d8b9;
-
-    --wf-text: #20252b;
-    --wf-muted: #6b7280;
-    --wf-border: #e5e7eb;
-
-    --wf-bg: #f6f8f7;
-    --wf-white: #fff;
-
-    background: var(--wf-bg);
-    color: var(--wf-text);
-
-    min-height: 100vh;
-}
-
-.witty-checkout-page * {
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   CHECKOUT TOP BAR
+   CHECKOUT HEADER — SAME HORIZONTAL LINE AS TOPBAR
 ========================================================= */
 
 .checkout-topbar {
     width: 100%;
+    height: 76px;
     background: #143c1b;
     color: #fff;
-    font-size: 13px;
 }
 
 .checkout-topbar-inner {
     width: 100%;
     max-width: 1180px;
+    height: 76px;
     margin: 0 auto;
-
-    padding: 8px 20px;
+    padding: 0 20px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 20px;
 }
 
@@ -1293,85 +1280,171 @@ footer {
 ========================================================= */
 
 .checkout-header {
-    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: auto;
+    min-height: 76px;
+
+    padding: 0;
+    margin: 0;
+
     background: transparent;
-    border-bottom: none;
+    border: none;
+    border-radius: 0;
     box-shadow: none;
+
+    z-index: 1001;
 }
 
 .checkout-header-inner {
-    max-width: 1180px;
     min-height: 76px;
-
-    margin: 0 auto;
-
-    padding: 12px 20px;
+    padding: 0 20px;
 
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
     gap: 20px;
 }
 
-.checkout-brand {
+
+/* =========================================================
+   WITTYFARE LOGO
+========================================================= */
+
+.checkout-logo {
     display: flex;
     align-items: center;
     gap: 10px;
 
+    color: #fff;
     text-decoration: none;
-    color: var(--wf-text);
 }
 
-.checkout-brand-mark {
+.logo-icon {
     width: 42px;
     height: 42px;
 
     display: grid;
     place-items: center;
 
-    background: transparent;
-    border-radius: 0;
+    background: #49d8b9;
+    color: #143c1b;
 
+    border-radius: 11px;
     font-size: 21px;
 }
 
-.checkout-brand strong {
+.checkout-logo strong {
     display: block;
-    font-size: 24px;
+
+    font-size: 22px;
     line-height: 1;
 
-    color: var(--wf-green-dark);
+    color: #fff;
 }
 
-.checkout-brand small {
+.checkout-logo small {
     display: block;
+
     margin-top: 4px;
 
-    color: var(--wf-muted);
-    font-size: 11px;
+    color: #d5e8da;
+    font-size: 10px;
 }
 
-.checkout-back-link {
-    padding: 10px 14px;
 
-    color: var(--wf-green-dark);
+/* =========================================================
+   CART
+========================================================= */
 
-    font-size: 13px;
-    font-weight: 700;
+.checkout-cart {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-size: 22px;
 
     text-decoration: none;
-
-    border-radius: 9px;
-
-    transition: 0.2s ease;
 }
 
-.checkout-back-link:hover {
-    background: #edf8ef;
+.cart-badge {
+    position: absolute;
+
+    top: -3px;
+    right: -5px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e53935;
+    color: #fff;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: 800;
 }
 
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media screen and (max-width: 600px) {
+
+    .checkout-topbar {
+        height: 65px;
+    }
+
+    .checkout-topbar-inner {
+        height: 65px;
+        padding: 0 14px;
+    }
+
+    .checkout-header {
+        min-height: 65px;
+    }
+
+    .checkout-header-inner {
+        min-height: 65px;
+        padding: 0 14px;
+        gap: 10px;
+    }
+
+    .checkout-logo strong {
+        font-size: 18px;
+    }
+
+    .checkout-logo small {
+        font-size: 9px;
+    }
+
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+
+    .checkout-cart {
+        width: 36px;
+        height: 36px;
+        font-size: 19px;
+    }
+}
 /* =========================================================
    CHECKOUT PROGRESS
 ========================================================= */

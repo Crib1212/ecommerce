@@ -45,6 +45,11 @@
         ☰
     </div>
 
+   <!-- CHAT ICON -->
+<div class="chat-icon" onclick="openChat()" title="Chat">
+    💬
+</div>
+
     <!-- SOCIAL MEDIA -->
     <div class="social-media">
 
@@ -856,6 +861,10 @@
     var Tawk_API = Tawk_API || {},
         Tawk_LoadStart = new Date();
 
+    Tawk_API.onLoad = function () {
+        Tawk_API.hideWidget();
+    };
+
     (function () {
 
         var s1 = document.createElement("script"),
@@ -873,6 +882,15 @@
 
     })();
 
+</script>
+<script>
+    window.addEventListener("load", function () {
+
+        if (typeof Tawk_API !== "undefined") {
+            Tawk_API.hideWidget();
+        }
+
+    });
 </script>
 
 
