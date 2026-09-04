@@ -3322,6 +3322,8 @@ footer {
 
         gap: 3px;
         text-align: center;
+
+        transform: translateX(8px);
     }
 
     .checkout-topbar-inner > span {
