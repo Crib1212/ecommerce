@@ -5,53 +5,57 @@
 
 let products = [];
 let listCart = [];
+let chatOpen = false;
 
 
 /* =========================================================
    🔔 TOAST NOTIFICATION
 ========================================================= */
 
-function showToast(message, title, image) {
+function showToast(message, title = "Wittyfare", image = "") {
 
-    const toast = document.querySelector('.notification-toast');
+    const toast = document.querySelector(".notification-toast");
 
     if (!toast) return;
 
-    const toastImg = toast.querySelector('.toast-banner img');
-    const toastMessage = toast.querySelector('.toast-message');
-    const toastTitle = toast.querySelector('.toast-title');
-    const toastTime = toast.querySelector('.toast-meta time');
+    const toastImg = toast.querySelector(".toast-banner img");
+    const toastMessage = toast.querySelector(".toast-message");
+    const toastTitle = toast.querySelector(".toast-title");
+    const toastTime = toast.querySelector(".toast-meta time");
 
     if (toastImg && image) {
         toastImg.src = image;
+        toastImg.alt = title || "Product";
     }
 
     if (toastTitle) {
-        toastTitle.innerText = title;
+        toastTitle.textContent = title;
     }
 
     if (toastMessage) {
-        toastMessage.innerText = message;
+        toastMessage.textContent = message;
     }
 
     if (toastTime) {
-        toastTime.innerText = "Just now";
+        toastTime.textContent = "Just now";
     }
 
-    toast.style.display = 'flex';
+    toast.style.display = "flex";
 
-    setTimeout(() => {
-        toast.style.display = 'none';
+    clearTimeout(toast._hideTimer);
+
+    toast._hideTimer = setTimeout(() => {
+        toast.style.display = "none";
     }, 3000);
 }
 
 
 function closeToast() {
 
-    const toast = document.querySelector('.notification-toast');
+    const toast = document.querySelector(".notification-toast");
 
     if (toast) {
-        toast.style.display = 'none';
+        toast.style.display = "none";
     }
 }
 
@@ -62,22 +66,47 @@ function closeToast() {
 
 window.toggleMenu = function () {
 
-    const menu = document.getElementById('menu');
+    const menu = document.getElementById("menu");
 
     if (!menu) return;
 
-    menu.classList.toggle('open');
+    const isOpen = menu.classList.toggle("open");
 
-    menu.style.display =
-        menu.classList.contains('open')
-            ? 'block'
-            : 'none';
+    /*
+       Do not force display:none/block if CSS controls
+       the drawer animation.
+    */
+
+    menu.setAttribute("aria-hidden", String(!isOpen));
+
+    const overlay = document.getElementById("menuOverlay");
+
+    if (overlay) {
+        overlay.classList.toggle("active", isOpen);
+    }
+};
+
+
+window.closeMenu = function () {
+
+    const menu = document.getElementById("menu");
+
+    if (menu) {
+        menu.classList.remove("open");
+        menu.setAttribute("aria-hidden", "true");
+    }
+
+    const overlay = document.getElementById("menuOverlay");
+
+    if (overlay) {
+        overlay.classList.remove("active");
+    }
 };
 
 
 window.goHome = function () {
 
-    window.location.href = '/';
+    window.location.href = "/";
 };
 
 
@@ -87,7 +116,69 @@ window.goHome = function () {
 
 function formatPrice(price) {
 
-    return '₦' + Number(price || 0).toLocaleString('en-NG');
+    return "₦" +
+        Number(price || 0).toLocaleString("en-NG");
+}
+
+
+/* =========================================================
+   🖼 PRODUCT IMAGE PATH
+========================================================= */
+
+function getProductImage(image) {
+
+    if (!image) {
+        return "../images/logo.png";
+    }
+
+    const imagePath = String(image).trim();
+
+    /*
+       Absolute URL
+    */
+
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("data:")
+    ) {
+        return imagePath;
+    }
+
+    /*
+       Root-relative image
+       Example:
+       /images/feed.png
+    */
+
+    if (imagePath.startsWith("/")) {
+        return imagePath;
+    }
+
+    /*
+       Product JSON normally stores:
+       images/feed.png
+
+       Product page is:
+       /product/index.html
+
+       Therefore:
+       ../images/feed.png
+    */
+
+    if (imagePath.startsWith("../")) {
+        return imagePath;
+    }
+
+    if (imagePath.startsWith("./")) {
+        return "../" + imagePath.substring(2);
+    }
+
+    if (imagePath.startsWith("images/")) {
+        return "../" + imagePath;
+    }
+
+    return "../images/" + imagePath;
 }
 
 
@@ -97,7 +188,7 @@ function formatPrice(price) {
 
 function loadCart() {
 
-    const stored = localStorage.getItem('listCart');
+    const stored = localStorage.getItem("listCart");
 
     try {
 
@@ -111,7 +202,7 @@ function loadCart() {
 
     } catch (error) {
 
-        console.error('Cart loading error:', error);
+        console.error("Cart loading error:", error);
 
         listCart = [];
     }
@@ -120,10 +211,17 @@ function loadCart() {
 
 function saveCart() {
 
-    localStorage.setItem(
-        'listCart',
-        JSON.stringify(listCart)
-    );
+    try {
+
+        localStorage.setItem(
+            "listCart",
+            JSON.stringify(listCart)
+        );
+
+    } catch (error) {
+
+        console.error("Cart saving error:", error);
+    }
 }
 
 
@@ -134,7 +232,7 @@ function saveCart() {
 function updateCartCounter() {
 
     const counters =
-        document.querySelectorAll('.totalQuantity');
+        document.querySelectorAll(".totalQuantity");
 
     let total = 0;
 
@@ -144,24 +242,16 @@ function updateCartCounter() {
 
     });
 
-    counters.forEach(el => {
+    counters.forEach(element => {
 
-        el.innerText = total;
+        element.textContent = total;
 
     });
 }
 
 
 /* =========================================================
-   💳 CHECKOUT TOTAL
-========================================================= */
-
-/* =========================================================
    💰 CART TOTAL
-========================================================= */
-
-/* =========================================================
-   💰 CALCULATE CART TOTAL
 ========================================================= */
 
 function calculateCheckoutTotal() {
@@ -170,31 +260,64 @@ function calculateCheckoutTotal() {
 
     listCart.forEach(item => {
 
-        const price = Number(item.price) || 0;
-        const quantity = Number(item.quantity) || 0;
+        const price =
+            Number(item.price) || 0;
+
+        const quantity =
+            Number(item.quantity) || 0;
 
         total += price * quantity;
 
     });
 
-    const formattedTotal = formatPrice(total);
+    const formattedTotal =
+        formatPrice(total);
 
-    /* Product page cart total */
+    /*
+       Cart total
+    */
+
     document
-        .querySelectorAll('.totalPrice')
+        .querySelectorAll(".totalPrice")
         .forEach(element => {
-            element.textContent = formattedTotal;
+
+            element.textContent =
+                formattedTotal;
+
         });
 
-    /* Checkout page total */
+
+    /*
+       Checkout total
+    */
+
     document
-        .querySelectorAll('.checkoutTotal')
+        .querySelectorAll(".checkoutTotal")
         .forEach(element => {
-            element.textContent = formattedTotal;
+
+            element.textContent =
+                formattedTotal;
+
+        });
+
+
+    /*
+       Other possible total elements
+    */
+
+    document
+        .querySelectorAll("[data-cart-total]")
+        .forEach(element => {
+
+            element.textContent =
+                formattedTotal;
+
         });
 
     return total;
 }
+
+
 /* =========================================================
    🛒 ADD TO CART
 ========================================================= */
@@ -203,23 +326,29 @@ window.addCart = function (idProduct) {
 
     const product =
         products.find(
-            p => String(p.id) === String(idProduct)
+            item =>
+                String(item.id) ===
+                String(idProduct)
         );
 
     if (!product) {
 
         console.error(
-            'Product not found:',
+            "Wittyfare: Product not found:",
             idProduct
         );
 
         return;
     }
 
+
     const existing =
         listCart.find(
-            p => String(p.id) === String(idProduct)
+            item =>
+                String(item.id) ===
+                String(idProduct)
         );
+
 
     if (existing) {
 
@@ -232,11 +361,14 @@ window.addCart = function (idProduct) {
 
             ...product,
 
+            price:
+                Number(product.price) || 0,
+
             quantity: 1
 
         });
-
     }
+
 
     saveCart();
 
@@ -246,12 +378,67 @@ window.addCart = function (idProduct) {
 
     calculateCheckoutTotal();
 
+
     showToast(
         "Added to cart",
-        product.name,
-        product.image
+        product.name || "Product",
+        getToastImage(product.image)
     );
+
+
+    /*
+       Optional:
+       Open the cart automatically only when the
+       product page specifically requests it.
+
+       We do NOT automatically open the cart here
+       because it can be annoying on homepage/category pages.
+    */
+
 };
+
+
+/* =========================================================
+   🖼 TOAST IMAGE
+========================================================= */
+
+function getToastImage(image) {
+
+    if (!image) {
+
+        return "/images/logo.png";
+    }
+
+    const imagePath = String(image);
+
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("/")
+    ) {
+
+        return imagePath;
+    }
+
+    /*
+       On root/category pages the image from product.json
+       normally points to images/...
+    */
+
+    if (imagePath.startsWith("../images/")) {
+
+        return "/" +
+            imagePath.replace("../", "");
+
+    }
+
+    if (imagePath.startsWith("images/")) {
+
+        return "/" + imagePath;
+    }
+
+    return "/images/" + imagePath;
+}
 
 
 /* =========================================================
@@ -265,34 +452,38 @@ window.changeQuantity = function (
 
     const item =
         listCart.find(
-            p => String(p.id) === String(idProduct)
+            product =>
+                String(product.id) ===
+                String(idProduct)
         );
 
     if (!item) return;
 
-    if (type === '+') {
+
+    if (type === "+") {
 
         item.quantity =
             Number(item.quantity || 0) + 1;
-
     }
 
-    if (type === '-') {
+
+    if (type === "-") {
 
         item.quantity =
             Number(item.quantity || 0) - 1;
-
     }
+
 
     if (item.quantity <= 0) {
 
         listCart =
             listCart.filter(
-                p =>
-                    String(p.id) !==
+                product =>
+                    String(product.id) !==
                     String(idProduct)
             );
     }
+
 
     saveCart();
 
@@ -315,20 +506,29 @@ window.updateQuantity = function (
 
     const item =
         listCart.find(
-            p => String(p.id) === String(idProduct)
+            product =>
+                String(product.id) ===
+                String(idProduct)
         );
 
     if (!item) return;
 
-    let qty = parseInt(value);
 
-    if (isNaN(qty) || qty < 1) {
+    let quantity =
+        parseInt(value, 10);
 
-        qty = 1;
 
+    if (
+        Number.isNaN(quantity) ||
+        quantity < 1
+    ) {
+
+        quantity = 1;
     }
 
-    item.quantity = qty;
+
+    item.quantity = quantity;
+
 
     saveCart();
 
@@ -348,10 +548,11 @@ window.removeItem = function (idProduct) {
 
     listCart =
         listCart.filter(
-            p =>
-                String(p.id) !==
+            product =>
+                String(product.id) !==
                 String(idProduct)
         );
+
 
     saveCart();
 
@@ -370,11 +571,13 @@ window.removeItem = function (idProduct) {
 function renderCartItems() {
 
     const listCartHTML =
-        document.querySelector('.listCart');
+        document.querySelector(".listCart");
 
     if (!listCartHTML) return;
 
-    listCartHTML.innerHTML = '';
+
+    listCartHTML.innerHTML = "";
+
 
     if (listCart.length === 0) {
 
@@ -391,22 +594,27 @@ function renderCartItems() {
     listCart.forEach(product => {
 
         const item =
-            document.createElement('div');
+            document.createElement("div");
 
-        item.classList.add('item');
+        item.classList.add("item");
+
+
+        const image =
+            getCartImage(product.image);
 
 
         item.innerHTML = `
 
             <img
-                src="${product.image}"
-                alt="${escapeHTML(product.name)}"
+                src="${escapeAttribute(image)}"
+                alt="${escapeAttribute(product.name || "Product")}"
+                loading="lazy"
             >
 
             <div class="content">
 
                 <div class="name">
-                    ${escapeHTML(product.name)}
+                    ${escapeHTML(product.name || "Product")}
                 </div>
 
                 <div class="price">
@@ -418,18 +626,20 @@ function renderCartItems() {
             <div class="cartControls">
 
                 <button
+                    type="button"
                     class="deleteBtn"
-                    onclick="removeItem('${product.id}')"
-                    aria-label="Remove ${escapeHTML(product.name)}"
+                    data-remove-id="${escapeAttribute(product.id)}"
+                    aria-label="Remove ${escapeAttribute(product.name || "product")}"
                 >
                     🗑
                 </button>
 
-
                 <div class="verticalQty">
 
                     <button
-                        onclick="changeQuantity('${product.id}', '+')"
+                        type="button"
+                        data-qty-action="increase"
+                        data-product-id="${escapeAttribute(product.id)}"
                     >
                         +
                     </button>
@@ -437,12 +647,15 @@ function renderCartItems() {
                     <input
                         type="number"
                         min="1"
-                        value="${product.quantity}"
-                        id="qty-${product.id}"
+                        value="${Number(product.quantity) || 1}"
+                        id="qty-${escapeAttribute(product.id)}"
+                        aria-label="Quantity for ${escapeAttribute(product.name || "product")}"
                     >
 
                     <button
-                        onclick="changeQuantity('${product.id}', '-')"
+                        type="button"
+                        data-qty-action="decrease"
+                        data-product-id="${escapeAttribute(product.id)}"
                     >
                         -
                     </button>
@@ -456,21 +669,81 @@ function renderCartItems() {
         listCartHTML.appendChild(item);
 
 
+        /*
+           Delete button
+        */
+
+        const deleteButton =
+            item.querySelector(
+                "[data-remove-id]"
+            );
+
+        if (deleteButton) {
+
+            deleteButton.addEventListener(
+                "click",
+                () => {
+
+                    removeItem(
+                        product.id
+                    );
+
+                }
+            );
+        }
+
+
+        /*
+           Increase/decrease
+        */
+
+        const quantityButtons =
+            item.querySelectorAll(
+                "[data-qty-action]"
+            );
+
+
+        quantityButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const action =
+                        button.dataset.qtyAction;
+
+                    changeQuantity(
+                        product.id,
+                        action === "increase"
+                            ? "+"
+                            : "-"
+                    );
+
+                }
+            );
+
+        });
+
+
+        /*
+           Manual quantity
+        */
+
         const qtyInput =
-            document.getElementById(
-                `qty-${product.id}`
+            item.querySelector(
+                `#qty-${CSS.escape(String(product.id))}`
             );
 
 
         if (qtyInput) {
 
             qtyInput.addEventListener(
-                'keydown',
-                e => {
+                "keydown",
+                event => {
 
-                    if (e.key === 'Enter') {
+                    if (event.key === "Enter") {
 
-                        e.preventDefault();
+                        event.preventDefault();
 
                         updateQuantity(
                             product.id,
@@ -483,7 +756,7 @@ function renderCartItems() {
 
 
             qtyInput.addEventListener(
-                'change',
+                "change",
                 () => {
 
                     updateQuantity(
@@ -493,10 +766,50 @@ function renderCartItems() {
 
                 }
             );
-
         }
 
     });
+}
+
+
+/* =========================================================
+   🖼 CART IMAGE
+========================================================= */
+
+function getCartImage(image) {
+
+    if (!image) {
+        return "/images/logo.png";
+    }
+
+    const imagePath =
+        String(image).trim();
+
+
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("/")
+    ) {
+
+        return imagePath;
+    }
+
+
+    if (imagePath.startsWith("../images/")) {
+
+        return "/" +
+            imagePath.replace("../", "");
+    }
+
+
+    if (imagePath.startsWith("images/")) {
+
+        return "/" + imagePath;
+    }
+
+
+    return "/images/" + imagePath;
 }
 
 
@@ -506,12 +819,18 @@ function renderCartItems() {
 
 function escapeHTML(value) {
 
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
 }
 
 
@@ -521,10 +840,13 @@ function escapeHTML(value) {
 
 function normalizeText(text) {
 
-    return String(text || '')
+    return String(text || "")
         .toLowerCase()
-        .replace(/['’`"“”.,\-_/\\()]/g, '')
-        .replace(/\s+/g, '');
+        .replace(
+            /['’`"“”.,\\\-_/()[\]]/g,
+            ""
+        )
+        .replace(/\s+/g, "");
 }
 
 
@@ -534,62 +856,102 @@ function normalizeText(text) {
 
 function highlightText(text, keyword) {
 
-    if (!keyword) {
-
-        return escapeHTML(text);
-
-    }
-
     const safeText =
         escapeHTML(text);
 
+
+    if (!keyword) {
+
+        return safeText;
+    }
+
+
+    /*
+       Escape keyword before creating RegExp
+    */
+
     const safeKeyword =
-        escapeHTML(keyword);
+        escapeHTML(keyword)
+            .replace(
+                /[.*+?^${}()|[\]\\]/g,
+                "\\$&"
+            );
+
 
     if (!safeKeyword) {
 
         return safeText;
-
     }
+
 
     const regex =
         new RegExp(
             `(${safeKeyword})`,
-            'gi'
+            "gi"
         );
+
 
     return safeText.replace(
         regex,
-        '<span style="background-color:#fff176;font-weight:bold;">$1</span>'
+        '<span class="search-highlight">$1</span>'
     );
 }
 
-function getProductPageURL(id) {
-    const path = window.location.pathname;
 
-    // Pages inside category folders
-    if (
-        path.includes('/category/')
-    ) {
-        return '../../product/index.html?id=' +
-            encodeURIComponent(id);
-    }
-
-    // Product page itself
-    if (
-        path.includes('/product/')
-    ) {
-        return './index.html?id=' +
-            encodeURIComponent(id);
-    }
-
-    // Homepage / root
-    return 'product/index.html?id=' +
-        encodeURIComponent(id);
-}
 /* =========================================================
-   🛍 PRODUCT CARD
+   🔗 PRODUCT PAGE URL
 ========================================================= */
+
+function getProductPageURL(id) {
+
+    const path =
+        window.location.pathname;
+
+
+    /*
+       Category pages:
+       /category/feed/index.html
+
+       Product page:
+       /product/index.html
+    */
+
+    if (
+        path.includes("/category/")
+    ) {
+
+        return (
+            "../../product/index.html?id=" +
+            encodeURIComponent(id)
+        );
+    }
+
+
+    /*
+       Product page itself
+    */
+
+    if (
+        path.includes("/product/")
+    ) {
+
+        return (
+            "./index.html?id=" +
+            encodeURIComponent(id)
+        );
+    }
+
+
+    /*
+       Homepage/root
+    */
+
+    return (
+        "product/index.html?id=" +
+        encodeURIComponent(id)
+    );
+}
+
 
 /* =========================================================
    🛍 PRODUCT CARD
@@ -597,20 +959,27 @@ function getProductPageURL(id) {
 
 function createProductCard(
     product,
-    highlight = ''
+    highlight = ""
 ) {
+
+    if (!product) {
+        return null;
+    }
+
+
     const {
-        name = '',
-        category = '',
-        description = '',
-        vendor = '',
-        image = '',
+        name = "",
+        category = "",
+        description = "",
+        vendor = "",
+        image = "",
         price = 0,
         id,
-        farmSize = '',
+        farmSize = "",
         includes = [],
-        packageType = ''
+        packageType = ""
     } = product;
+
 
     const highlightedName =
         highlightText(
@@ -618,11 +987,13 @@ function createProductCard(
             highlight
         );
 
+
     const highlightedCategory =
         highlightText(
             category,
             highlight
         );
+
 
     const highlightedDescription =
         highlightText(
@@ -630,54 +1001,96 @@ function createProductCard(
             highlight
         );
 
+
     const newProduct =
-        document.createElement('div');
+        document.createElement("div");
 
-    newProduct.classList.add('item');
 
-    /* Add special class to farm packages */
-    if (category === 'farm-packages') {
-        newProduct.classList.add('farm-package-card');
-    }
+    newProduct.classList.add("item");
 
-    /* Package contents */
-    let packageContents = '';
+
+    /*
+       Farm package special class
+    */
 
     if (
-        category === 'farm-packages' &&
+        category === "farm-packages"
+    ) {
+
+        newProduct.classList.add(
+            "farm-package-card"
+        );
+    }
+
+
+    /*
+       Package contents
+    */
+
+    let packageContents = "";
+
+
+    if (
+        category === "farm-packages" &&
         Array.isArray(includes) &&
         includes.length
     ) {
+
         packageContents = `
+
             <div class="package-includes">
-                <strong>Includes:</strong>
+
+                <strong>
+                    Includes:
+                </strong>
+
                 <ul>
+
                     ${includes
                         .slice(0, 4)
                         .map(item => `
-                            <li>${escapeHTML(item)}</li>
+                            <li>
+                                ${escapeHTML(item)}
+                            </li>
                         `)
-                        .join('')}
+                        .join("")}
+
                 </ul>
 
                 ${
                     includes.length > 4
-                        ? `<small>+ ${includes.length - 4} more items</small>`
-                        : ''
+                        ? `
+                            <small>
+                                + ${includes.length - 4}
+                                more items
+                            </small>
+                        `
+                        : ""
                 }
+
             </div>
         `;
     }
 
+
+    const productURL =
+        getProductPageURL(id);
+
+
+    const productImage =
+        getCardImage(image);
+
+
     newProduct.innerHTML = `
+
         <a
-            href="${getProductPageURL(id)}"
+            href="${escapeAttribute(productURL)}"
             class="product-page-link"
         >
 
             <img
-                src="${image}"
-                alt="${escapeHTML(name)}"
+                src="${escapeAttribute(productImage)}"
+                alt="${escapeAttribute(name)}"
                 loading="lazy"
             >
 
@@ -685,26 +1098,33 @@ function createProductCard(
                 ${highlightedName}
             </h2>
 
+
             ${
                 vendor
                     ? `
                         <p class="vendor">
-                            Vendor: ${escapeHTML(vendor)}
+                            Vendor:
+                            ${escapeHTML(vendor)}
                         </p>
                     `
-                    : ''
+                    : ""
             }
 
+
             ${
-                category === 'farm-packages' && farmSize
+                category === "farm-packages" &&
+                farmSize
                     ? `
                         <p class="package-farm-size">
-                            🌱 Designed for: 
-                            <strong>${escapeHTML(farmSize)}</strong>
+                            🌱 Designed for:
+                            <strong>
+                                ${escapeHTML(farmSize)}
+                            </strong>
                         </p>
                     `
-                    : ''
+                    : ""
             }
+
 
             ${
                 category
@@ -714,8 +1134,9 @@ function createProductCard(
                             ${highlightedCategory}
                         </p>
                     `
-                    : ''
+                    : ""
             }
+
 
             ${
                 description
@@ -724,10 +1145,12 @@ function createProductCard(
                             ${highlightedDescription}
                         </p>
                     `
-                    : ''
+                    : ""
             }
 
+
             ${packageContents}
+
 
             <div class="price">
                 ${formatPrice(price)}
@@ -735,15 +1158,93 @@ function createProductCard(
 
         </a>
 
+
         <button
-            onclick="event.stopPropagation(); addCart('${id}')"
+            type="button"
+            class="add-to-cart-btn"
+            data-add-product="${escapeAttribute(id)}"
         >
             Add to cart
         </button>
     `;
 
+
+    /*
+       Add-to-cart button
+    */
+
+    const addButton =
+        newProduct.querySelector(
+            "[data-add-product]"
+        );
+
+
+    if (addButton) {
+
+        addButton.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                addCart(id);
+
+            }
+        );
+    }
+
+
     return newProduct;
 }
+
+
+/* =========================================================
+   🖼 CARD IMAGE
+========================================================= */
+
+function getCardImage(image) {
+
+    if (!image) {
+        return "/images/logo.png";
+    }
+
+
+    const imagePath =
+        String(image).trim();
+
+
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("/")
+    ) {
+
+        return imagePath;
+    }
+
+
+    if (
+        imagePath.startsWith("../images/")
+    ) {
+
+        return "/" +
+            imagePath.replace("../", "");
+    }
+
+
+    if (
+        imagePath.startsWith("images/")
+    ) {
+
+        return "/" + imagePath;
+    }
+
+
+    return "/images/" + imagePath;
+}
+
 
 /* =========================================================
    🎨 DISPLAY PRODUCTS
@@ -751,15 +1252,27 @@ function createProductCard(
 
 function addDataToHTML(
     productList = products,
-    highlight = ''
+    highlight = ""
 ) {
 
+    /*
+       IMPORTANT:
+       Do not use the relatedProducts container
+       as the main product listing.
+    */
+
     const listProductHTML =
-        document.querySelector('.listProduct');
+        document.querySelector(
+            ".listProduct:not(#relatedProducts)"
+        );
 
-    if (!listProductHTML) return;
 
-    listProductHTML.innerHTML = '';
+    if (!listProductHTML) {
+        return;
+    }
+
+
+    listProductHTML.innerHTML = "";
 
 
     if (
@@ -769,53 +1282,71 @@ function addDataToHTML(
 
         listProductHTML.innerHTML = `
 
-            <p>
-                No results found
+            <div class="search-no-results">
+
+                <p>
+                    No results found
+
+                    ${
+                        highlight
+                            ? `
+                                for
+                                "<strong>
+                                    ${escapeHTML(highlight)}
+                                </strong>"
+                            `
+                            : ""
+                    }.
+                </p>
+
                 ${
                     highlight
-                        ? `for "<strong>${escapeHTML(highlight)}</strong>"`
-                        : ''
-                }.
-            </p>
+                        ? `
+                            <button
+                                type="button"
+                                id="showAllBtn"
+                            >
+                                Show All Products
+                            </button>
+                        `
+                        : ""
+                }
 
-            ${
-                highlight
-                    ? '<button id="showAllBtn">Show All Products</button>'
-                    : ''
-            }
-
+            </div>
         `;
 
 
-        const btn =
+        const button =
             document.getElementById(
-                'showAllBtn'
+                "showAllBtn"
             );
 
 
-        if (btn) {
+        if (button) {
 
-            btn.addEventListener(
-                'click',
+            button.addEventListener(
+                "click",
                 () => {
 
-                    addDataToHTML(products);
+                    addDataToHTML(
+                        getProductsForCurrentPage()
+                    );
+
 
                     const input =
                         document.getElementById(
-                            'searchInput'
+                            "searchInput"
                         );
 
+
                     if (input) {
-
-                        input.value = '';
-
+                        input.value = "";
                     }
 
                 }
             );
-
         }
+
 
         return;
     }
@@ -823,15 +1354,23 @@ function addDataToHTML(
 
     productList.forEach(product => {
 
-        listProductHTML.appendChild(
+        const card =
             createProductCard(
                 product,
                 highlight
-            )
-        );
+            );
+
+
+        if (card) {
+
+            listProductHTML.appendChild(
+                card
+            );
+        }
 
     });
 }
+
 
 /* =========================================================
    🌱 FARM PACKAGES HOMEPAGE
@@ -840,48 +1379,67 @@ function addDataToHTML(
 function renderFarmPackages() {
 
     const container =
-        document.getElementById('farmPackagesList');
+        document.getElementById(
+            "farmPackagesList"
+        );
 
-    if (!container) return;
+
+    if (!container) {
+        return;
+    }
+
 
     const farmPackages =
         products.filter(
             product =>
-                product.category === 'farm-packages' &&
+                product.category ===
+                    "farm-packages" &&
                 product.featured === true
         );
 
-    container.innerHTML = '';
+
+    container.innerHTML = "";
+
 
     if (!farmPackages.length) {
 
         container.innerHTML = `
+
             <p class="no-packages">
                 Farm packages coming soon.
             </p>
+
         `;
 
         return;
     }
+
 
     farmPackages.forEach(product => {
 
         const card =
             createProductCard(product);
 
+
         if (card) {
+
             container.appendChild(card);
         }
 
     });
 }
+
+
 /* =========================================================
-   🏷️ CATEGORY FILTER
+   🏷️ CATEGORY
 ========================================================= */
 
 function getPageCategory() {
 
-    return document.body.dataset.category || '';
+    return (
+        document.body.dataset.category ||
+        ""
+    );
 }
 
 
@@ -895,34 +1453,33 @@ function getProductsForCurrentPage() {
         getPageCategory();
 
 
-    /* =====================================================
+    /*
        CATEGORY PAGE
-       Show ALL products in that category
-       featured true OR false
-    ===================================================== */
+       Show all products in category
+    */
 
     if (category) {
 
         return products.filter(
             product =>
-                String(product.category || '')
-                    .toLowerCase() ===
+
+                String(
+                    product.category || ""
+                ).toLowerCase() ===
                 category.toLowerCase()
         );
-
     }
 
 
-    /* =====================================================
+    /*
        HOMEPAGE
-       Show ONLY FEATURED products
-    ===================================================== */
+       Show only featured products
+    */
 
     return products.filter(
         product =>
             product.featured === true
     );
-
 }
 
 
@@ -930,70 +1487,106 @@ function getProductsForCurrentPage() {
    📦 LOAD CENTRAL PRODUCT CATALOGUE
 ========================================================= */
 
-function loadProducts() {
+async function loadProducts() {
 
-    fetch('/product.json', {
-        cache: 'no-store'
-    })
+    try {
 
-    .then(response => {
+        const response =
+            await fetch(
+                "/product.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
 
         if (!response.ok) {
 
             throw new Error(
                 `HTTP error ${response.status}`
             );
-
         }
 
-        return response.json();
 
-    })
+        const data =
+            await response.json();
 
-    .then(data => {
 
         if (!Array.isArray(data)) {
 
             throw new Error(
-                'product.json must contain an array'
+                "product.json must contain an array."
             );
-
         }
+
 
         products = data;
 
-if (typeof initializeProductPage === 'function') {
-    initializeProductPage();
-}
-      const pageProducts =
-    getProductsForCurrentPage();
 
-addDataToHTML(
-    pageProducts
-);
+        /*
+           If this is the product page,
+           initialize it from the same catalogue.
+        */
 
-/* Render Farm Packages on homepage */
-renderFarmPackages();
+        if (
+            document.getElementById(
+                "productName"
+            )
+        ) {
 
-renderCartItems();
+            initializeProductPage();
+        }
+
+
+        /*
+           Normal homepage/category products
+        */
+
+        if (
+            !document.getElementById(
+                "productName"
+            )
+        ) {
+
+            const pageProducts =
+                getProductsForCurrentPage();
+
+
+            addDataToHTML(
+                pageProducts
+            );
+
+
+            renderFarmPackages();
+        }
+
+
+        /*
+           Cart can render on every page.
+        */
+
+        renderCartItems();
 
         updateCartCounter();
 
         calculateCheckoutTotal();
 
-    })
 
-    .catch(error => {
+        console.log(
+            `✅ Wittyfare: ${products.length} products loaded.`
+        );
+
+    } catch (error) {
 
         console.error(
-            'Product load error:',
+            "Product load error:",
             error
         );
 
 
         const listProductHTML =
             document.querySelector(
-                '.listProduct'
+                ".listProduct"
             );
 
 
@@ -1001,1416 +1594,107 @@ renderCartItems();
 
             listProductHTML.innerHTML = `
 
-                <p>
-                    Unable to load products.
-                    Please refresh the page.
-                </p>
+                <div class="search-no-results">
+
+                    <h3>
+                        Unable to load products
+                    </h3>
+
+                    <p>
+                        Please refresh the page
+                        and try again.
+                    </p>
+
+                </div>
 
             `;
-
         }
 
-    });
-}
-
-/* =========================================================
-   🔎 INDIVIDUAL PRODUCT PAGE + GOOGLE SEO
-========================================================= */
-
-function initializeProductPage() {
-
-    // Only run on the individual product page
-    if (!window.location.pathname.includes('/product')) {
-        return;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-
-    const productId = params.get('id');
-    const productSlug = params.get('slug');
-
-    if (!productId && !productSlug) {
-        console.warn('No product ID or slug found in URL.');
-        return;
-    }
-
-    const product = products.find(item =>
-        String(item.id) === String(productId) ||
-        String(item.slug) === String(productSlug)
-    );
-
-    if (!product) {
-        console.warn('Product not found:', productId || productSlug);
-        return;
-    }
-
-    /* -----------------------------------------
-       PRODUCT INFORMATION
-    ----------------------------------------- */
-
-    const name = product.name || 'Wittyfare Product';
-    const description =
-        product.description ||
-        `Buy ${name} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
-
-    const category = product.category || 'Agrovet Products';
-    const price = Number(product.price) || 0;
-
-    const image = product.image
-        ? new URL(product.image, window.location.origin).href
-        : `${window.location.origin}/images/logo.png`;
-
-    const productURL =
-        `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
-
-
-    /* -----------------------------------------
-       PAGE TITLE
-    ----------------------------------------- */
-
-    document.title =
-        `${name} | Wittyfare Agrovet & Farms Abuja`;
-
-
-    /* -----------------------------------------
-       META DESCRIPTION
-    ----------------------------------------- */
-
-    let descriptionTag =
-        document.querySelector('meta[name="description"]');
-
-    if (!descriptionTag) {
-
-        descriptionTag =
-            document.createElement('meta');
-
-        descriptionTag.name = 'description';
-
-        document.head.appendChild(descriptionTag);
-    }
-
-    descriptionTag.setAttribute(
-        'content',
-        description
-    );
-
-
-    /* -----------------------------------------
-       CANONICAL URL
-    ----------------------------------------- */
-
-    let canonical =
-        document.querySelector('link[rel="canonical"]');
-
-    if (!canonical) {
-
-        canonical =
-            document.createElement('link');
-
-        canonical.rel = 'canonical';
-
-        document.head.appendChild(canonical);
-    }
-
-    canonical.href = productURL;
-
-
-    /* -----------------------------------------
-       PRODUCT CONTENT
-    ----------------------------------------- */
-
-    const nameElement =
-        document.getElementById('productName');
-
-    const categoryElement =
-        document.getElementById('productCategory');
-
-    const priceElement =
-        document.getElementById('productPrice');
-
-    const descriptionElement =
-        document.getElementById('productDescription');
-
-    const imageElement =
-        document.getElementById('productImage');
-
-    const detailsElement =
-        document.getElementById('productDetails');
-
-
-    if (nameElement) {
-        nameElement.textContent = name;
-    }
-
-    if (categoryElement) {
-        categoryElement.textContent =
-            category.toUpperCase();
-    }
-
-    if (priceElement) {
-
-        priceElement.textContent =
-            `₦${price.toLocaleString('en-NG')}`;
-    }
-
-    if (descriptionElement) {
-        descriptionElement.textContent =
-            description;
-    }
-
-    if (imageElement) {
-
-        imageElement.src = image;
-
-        imageElement.alt =
-            `${name} - Wittyfare Agrovet & Farms Abuja`;
-
-        imageElement.loading = 'eager';
-    }
-
-    if (detailsElement) {
-
-        detailsElement.innerHTML = `
-            <p><strong>Product:</strong> ${name}</p>
-            <p><strong>Category:</strong> ${category}</p>
-            <p><strong>Price:</strong> ₦${price.toLocaleString('en-NG')}</p>
-            <p>
-                Buy ${name} from Wittyfare Agrovet & Farms,
-                serving farmers and customers in Abuja, Nigeria.
-            </p>
-        `;
-    }
-
-
-    /* -----------------------------------------
-       ADD TO CART
-    ----------------------------------------- */
-
-    const cartButton =
-        document.getElementById('addProductToCart');
-
-    if (cartButton) {
-
-        cartButton.onclick = function () {
-
-            addCart(product.id);
-
-        };
-    }
-
-
-    /* -----------------------------------------
-       GOOGLE PRODUCT STRUCTURED DATA
-    ----------------------------------------- */
-
-    const oldSchema =
-        document.getElementById('product-schema');
-
-    if (oldSchema) {
-        oldSchema.remove();
-    }
-
-    const schema =
-        document.createElement('script');
-
-    schema.type = 'application/ld+json';
-
-    schema.id = 'product-schema';
-
-    schema.textContent =
-        JSON.stringify({
-
-            "@context": "https://schema.org",
-
-            "@type": "Product",
-
-            "name": name,
-
-            "description": description,
-
-            "image": [
-                image
-            ],
-
-            "sku": String(product.id),
-
-            "category": category,
-
-            "brand": {
-                "@type": "Brand",
-                "name": "Wittyfare"
-            },
-
-            "offers": {
-
-                "@type": "Offer",
-
-                "url": productURL,
-
-                "priceCurrency": "NGN",
-
-                "price": price.toFixed(2),
-
-                "availability":
-                    "https://schema.org/InStock",
-
-                "seller": {
-
-                    "@type": "Organization",
-
-                    "name":
-                        "Wittyfare Agrovet & Farms Ltd"
-
-                }
-
-            }
-
-        });
-
-    document.head.appendChild(schema);
-
-
-    /* -----------------------------------------
-       OPEN GRAPH
-    ----------------------------------------- */
-
-    setProductMeta(
-        'og:title',
-        name
-    );
-
-    setProductMeta(
-        'og:description',
-        description
-    );
-
-    setProductMeta(
-        'og:image',
-        image
-    );
-
-    setProductMeta(
-        'og:url',
-        productURL
-    );
-
-    setProductMeta(
-        'og:type',
-        'product'
-    );
-
-
-    console.log(
-        'SEO product page initialized:',
-        name
-    );
-}
-
-
-/* =========================================================
-   META TAG HELPER
-========================================================= */
-
-function setProductMeta(property, content) {
-
-    let meta =
-        document.querySelector(
-            `meta[property="${property}"]`
-        );
-
-    if (!meta) {
-
-        meta =
-            document.createElement('meta');
-
-        meta.setAttribute(
-            'property',
-            property
-        );
-
-        document.head.appendChild(meta);
-    }
-
-    meta.setAttribute(
-        'content',
-        content
-    );
-}
-/* =========================================================
-   🔍 SEARCH ENGINE
-========================================================= */
-
-function performSearch(query) {
-    const searchTerm = String(query || '').trim();
-
-    // If search box is empty, show the normal products for the page
-    if (!searchTerm) {
-        const pageProducts = getProductsForCurrentPage();
-        addDataToHTML(pageProducts);
-        return;
-    }
-
-    const pageCategory = getPageCategory();
-
-    // =========================================================
-    // SEARCH SCOPE
-    // =========================================================
-    // Category page:
-    // Search ALL products inside that category.
-    //
-    // Homepage:
-    // Search ALL products, including featured and non-featured.
-    // =========================================================
-
-    let searchableProducts;
-
-    if (pageCategory) {
-        searchableProducts = products.filter(product =>
-            String(product.category || '').toLowerCase() ===
-            pageCategory.toLowerCase()
-        );
-    } else {
-        // Homepage search = ALL products
-        searchableProducts = products;
-    }
-
-    // =========================================================
-    // SEARCH ALL IMPORTANT PRODUCT INFORMATION
-    // =========================================================
-
-    const normalizedQuery = normalizeText(searchTerm);
-
-    const results = searchableProducts.filter(product => {
-
-        const searchableText = [
-            product.name,
-            product.description,
-            product.category,
-            product.slug,
-            product.vendor,
-            product.farmSize,
-            product.packageType,
-
-            // Farm package contents
-            Array.isArray(product.includes)
-                ? product.includes.join(' ')
-                : product.includes
-
-        ]
-            .filter(Boolean)
-            .join(' ');
-
-        return normalizeText(searchableText).includes(normalizedQuery);
-    });
-
-    // =========================================================
-    // DISPLAY SEARCH RESULTS
-    // =========================================================
-
-    const listProduct = document.querySelector('.listProduct');
-
-    if (!listProduct) return;
-
-    listProduct.innerHTML = '';
-
-    if (!results.length) {
-        listProduct.innerHTML = `
-            <div class="search-no-results">
-                <h3>No products found</h3>
-                <p>
-                    We couldn't find any product matching
-                    "<strong>${escapeHTML(searchTerm)}</strong>".
-                </p>
-            </div>
-        `;
-        return;
-    }
-
-    results.forEach(product => {
-        const card = createProductCard(product, searchTerm);
-
-        if (card) {
-            listProduct.appendChild(card);
-        }
-    });
-}
-
-
-/* =========================================================
-   🔍 SEARCH EVENTS
-========================================================= */
-
-function setupSearch() {
-
-    const searchInput =
-        document.getElementById('searchInput');
-
-    const searchBtn =
-        document.querySelector('.search-button');
-
-
-    if (searchInput) {
-
-        // Search as user types
-        searchInput.addEventListener('input', function () {
-
-            performSearch(this.value);
-
-        });
-
-
-        // Search when Enter is pressed
-        searchInput.addEventListener('keypress', function (e) {
-
-            if (e.key === 'Enter') {
-
-                e.preventDefault();
-
-                performSearch(this.value);
-
-            }
-
-        });
-
-    }
-
-
-    if (searchBtn) {
-
-        searchBtn.addEventListener('click', function (e) {
-
-            e.preventDefault();
-
-            if (searchInput) {
-
-                performSearch(searchInput.value);
-
-            }
-
-        });
-
-    }
-
-}
-
-
-/*
-   Keep compatibility with your homepage
-   if it calls searchProducts()
-*/
-
-window.searchProducts = function () {
-
-    const searchInput =
-        document.getElementById('searchInput');
-
-    if (searchInput) {
-
-        performSearch(searchInput.value);
-
-    }
-
-};
-
-/* =========================================================
-   🛒 CART OPEN / CLOSE
-========================================================= */
-
-function setupCart() {
-
-    const iconCart =
-        document.querySelector(
-            '.iconCart'
-        );
-
-
-    const cart =
-        document.querySelector(
-            '.cart'
-        );
-
-
-    const container =
-        document.querySelector(
-            '.container'
-        );
-
-
-    const close =
-        document.querySelector(
-            '.close'
-        );
-
-
-    let isCartOpen = false;
-
-
-    function openCart() {
-
-        if (!cart) return;
-
-
-        cart.style.transition =
-            'right 0.5s ease';
-
-        cart.style.right = '0';
-
-
-        if (container) {
-
-            container.style.transition =
-                'transform 0.5s ease';
-
-            container.style.transform =
-                'translateX(-400px)';
-
-        }
-
-
-        isCartOpen = true;
-
-    }
-
-
-    function closeCart() {
-
-        if (!cart) return;
-
-
-        cart.style.transition =
-            'right 0.5s ease';
-
-        cart.style.right =
-            '-100%';
-
-
-        if (container) {
-
-            container.style.transition =
-                'transform 0.5s ease';
-
-            container.style.transform =
-                'translateX(0)';
-
-        }
-
-
-        isCartOpen = false;
-
-    }
-
-
-    if (iconCart) {
-
-        iconCart.addEventListener(
-            'click',
-            () => {
-
-                if (isCartOpen) {
-
-                    closeCart();
-
-                } else {
-
-                    openCart();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    if (close) {
-
-        close.addEventListener(
-            'click',
-            closeCart
-        );
-
-    }
-
-}
-
-/* =========================================================
-   🚀 INITIALIZE
-========================================================= */
-
-document.addEventListener(
-    'DOMContentLoaded',
-    () => {
-
-        loadCart();
-
-        updateCartCounter();
-
-        renderCartItems();
-
-        calculateCheckoutTotal();
-
-        setupCart();
-
-        setupSearch();
-
-        loadProducts();
-
-    }
-);
-
-/* =========================================================
-   CENTRAL PRODUCT PAGE SYSTEM
-   ========================================================= */
-
-async function initializeProductPage() {
-
-    const productName = document.getElementById("productName");
-
-    if (!productName) {
-        return;
-    }
-
-    try {
-
-        const response = await fetch("../product.json", {
-            cache: "no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("Unable to load product data.");
-        }
-
-        const data = await response.json();
-
-        products = Array.isArray(data) ? data : [];
-
-        const params = new URLSearchParams(window.location.search);
-
-        const productId = params.get("id");
-
-        if (!productId) {
-
-            showProductPageError(
-                "Product not found",
-                "No product was selected."
-            );
-
-            return;
-        }
-
-        const product = products.find(
-            item => String(item.id) === String(productId)
-        );
-
-        if (!product) {
-
-            showProductPageError(
-                "Product not found",
-                "The product you are looking for could not be found."
-            );
-
-            return;
-        }
-
-        renderSingleProduct(product);
-
-        renderRelatedProducts(product);
-
-        updateProductSEO(product);
-
-    } catch (error) {
-
-        console.error("Product page error:", error);
 
         showProductPageError(
             "Unable to load product",
             "Please refresh the page and try again."
         );
-
     }
-
 }
 
 
 /* =========================================================
-   RENDER SINGLE PRODUCT
-========================================================= */
-
-/* =========================================================
-   RENDER SINGLE PRODUCT
-========================================================= */
-
-function renderSingleProduct(product) {
-
-    const nameElement =
-        document.getElementById("productName");
-
-    const imageElement =
-        document.getElementById("productImage");
-
-    const priceElement =
-        document.getElementById("productPrice");
-
-    const descriptionElement =
-        document.getElementById("productDescription");
-
-    const categoryElement =
-        document.getElementById("productCategory");
-
-    const detailsElement =
-        document.getElementById("productDetails");
-
-    const addButton =
-        document.getElementById("addProductToCart");
-
-
-    /* =====================================================
-       NAME
-    ===================================================== */
-
-    if (nameElement) {
-
-        nameElement.textContent =
-            product.name || "Product";
-
-    }
-
-
-    /* =====================================================
-       IMAGE
-    ===================================================== */
-
-    if (imageElement) {
-
-        imageElement.src =
-            getProductImage(product.image);
-
-        imageElement.alt =
-            product.name ||
-            "Wittyfare product";
-
-    }
-
-
-    /* =====================================================
-       PRICE
-    ===================================================== */
-
-    if (priceElement) {
-
-        priceElement.textContent =
-            formatPrice(product.price);
-
-    }
-
-
-    /* =====================================================
-       DESCRIPTION
-    ===================================================== */
-
-    if (descriptionElement) {
-
-        descriptionElement.textContent =
-            product.description ||
-            `Buy ${product.name || "this product"} from Wittyfare Agrovet & Farms.`;
-
-    }
-
-
-    /* =====================================================
-       CATEGORY
-    ===================================================== */
-
-    if (categoryElement) {
-
-        categoryElement.textContent =
-            product.category ||
-            "Product";
-
-    }
-
-
-    /* =====================================================
-       DETAILS
-    ===================================================== */
-
-    if (detailsElement) {
-
-        /* FARM PACKAGE */
-
-        if (
-            product.category === "farm-packages"
-        ) {
-
-            let packageHTML = `
-                <div class="farm-package-details">
-
-                    <h3>
-                        🌱 Farm Package Details
-                    </h3>
-            `;
-
-            if (product.farmSize) {
-
-                packageHTML += `
-                    <p>
-                        <strong>Designed for:</strong>
-                        ${escapeHTML(product.farmSize)}
-                    </p>
-                `;
-
-            }
-
-            if (product.packageType) {
-
-                packageHTML += `
-                    <p>
-                        <strong>Package type:</strong>
-                        ${escapeHTML(product.packageType)}
-                    </p>
-                `;
-
-            }
-
-            if (
-                Array.isArray(product.includes) &&
-                product.includes.length
-            ) {
-
-                packageHTML += `
-                    <h3>
-                        What's Included
-                    </h3>
-
-                    <ul class="package-details-list">
-                        ${product.includes
-                            .map(item => `
-                                <li>
-                                    ✓ ${escapeHTML(item)}
-                                </li>
-                            `)
-                            .join('')}
-                    </ul>
-                `;
-
-            }
-
-            if (product.vendor) {
-
-                packageHTML += `
-                    <p class="package-vendor">
-                        <strong>Vendor:</strong>
-                        ${escapeHTML(product.vendor)}
-                    </p>
-                `;
-
-            }
-
-            packageHTML += `
-                </div>
-            `;
-
-            detailsElement.innerHTML =
-                packageHTML;
-
-        }
-
-        /* NORMAL PRODUCT */
-
-        else {
-
-            let details = "";
-
-            if (product.description) {
-
-                details +=
-                    product.description;
-
-            }
-
-            if (product.category) {
-
-                if (details) {
-                    details += "\n\n";
-                }
-
-                details +=
-                    `Category: ${product.category}`;
-
-            }
-
-            if (product.vendor) {
-
-                if (details) {
-                    details += "\n\n";
-                }
-
-                details +=
-                    `Vendor: ${product.vendor}`;
-
-            }
-
-            if (!details) {
-
-                details =
-                    `Quality ${
-                        product.name ||
-                        "agricultural product"
-                    } available from Wittyfare Agrovet & Farms.`;
-
-            }
-
-            detailsElement.textContent =
-                details;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       ADD TO CART
-    ===================================================== */
-
-    if (addButton) {
-
-        addButton.onclick =
-            function () {
-
-                addProductPageItem(
-                    product
-                );
-
-            };
-
-    }
-}
-
-/* =========================================================
-   PRODUCT IMAGE PATH
-========================================================= */
-
-function getProductImage(image) {
-
-    if (!image) {
-
-        return "../images/logo.png";
-
-    }
-
-    let imagePath = String(image);
-
-    /*
-       Master product.json is in the root.
-
-       Existing category JSON files sometimes used:
-
-       ../images/example.png
-
-       Because the product page is one level deeper,
-       convert that to:
-
-       ../images/example.png
-    */
-
-    if (imagePath.startsWith("../images/")) {
-
-        return imagePath;
-
-    }
-
-    if (imagePath.startsWith("images/")) {
-
-        return "../" + imagePath;
-
-    }
-
-    if (imagePath.startsWith("/")) {
-
-        return imagePath;
-
-    }
-
-    return "../images/" + imagePath;
-
-}
-
-
-function addProductPageItem(product) {
-
-    if (!product) {
-        return;
-    }
-
-    const existing = listCart.find(
-        item =>
-            String(item.id) ===
-            String(product.id)
-    );
-
-    if (existing) {
-
-        existing.quantity =
-            Number(existing.quantity || 0) + 1;
-
-    } else {
-
-        listCart.push({
-            id: product.id,
-            name: product.name,
-            price: Number(product.price) || 0,
-            image: product.image,
-            quantity: 1
-        });
-    }
-
-    /* Save */
-    saveCart();
-
-    /* Refresh cart */
-    updateCartCounter();
-    renderCartItems();
-    calculateCheckoutTotal();
-
-    /* Notification */
-    showToast(
-        "Added to cart",
-        product.name || "Product",
-        getProductImage(product.image)
-    );
-
-    /* Open cart */
-    const cart =
-        document.querySelector(".cart");
-
-    const container =
-        document.querySelector(".container");
-
-    if (cart) {
-        cart.style.transition =
-            "right 0.5s ease";
-        cart.style.right = "0";
-    }
-
-    if (container) {
-        container.style.transition =
-            "transform 0.5s ease";
-        container.style.transform =
-            "translateX(-400px)";
-    }
-}
-/* =========================================================
-   🔗 RELATED PRODUCTS
-========================================================= */
-
-function renderRelatedProducts(currentProduct) {
-
-    const container =
-        document.getElementById("relatedProducts");
-
-    if (!container) {
-        return;
-    }
-
-    let related = [];
-
-    /* -----------------------------------------------------
-       1. First find products from the same category
-    ----------------------------------------------------- */
-
-    if (currentProduct.category) {
-
-        related = products.filter(product =>
-
-            String(product.id) !==
-            String(currentProduct.id)
-
-            &&
-
-            normalizeText(product.category) ===
-            normalizeText(currentProduct.category)
-
-        );
-    }
-
-
-    /* -----------------------------------------------------
-       2. If fewer than 4, add other products
-    ----------------------------------------------------- */
-
-    if (related.length < 4) {
-
-        const additional =
-            products.filter(product =>
-
-                String(product.id) !==
-                String(currentProduct.id)
-
-                &&
-
-                !related.some(
-                    item =>
-                        String(item.id) ===
-                        String(product.id)
-                )
-            );
-
-        related = related.concat(additional);
-    }
-
-
-    /* -----------------------------------------------------
-       3. Maximum 4 related products
-    ----------------------------------------------------- */
-
-    related = related.slice(0, 4);
-
-
-    /* -----------------------------------------------------
-       4. Nothing found
-    ----------------------------------------------------- */
-
-    if (!related.length) {
-
-        container.innerHTML = "";
-        return;
-    }
-
-
-    /* -----------------------------------------------------
-       5. IMPORTANT:
-          createProductCard() returns a DOM element.
-          DO NOT use .map().join("") here.
-    ----------------------------------------------------- */
-
-    container.innerHTML = "";
-
-    related.forEach(product => {
-
-        const productCard =
-            createProductCard(product);
-
-        if (productCard) {
-            container.appendChild(productCard);
-        }
-
-    });
-}
-
-/* =========================================================
-   PRODUCT SEO
-========================================================= */
-
-function updateProductSEO(product) {
-
-    const name =
-        product.name || "Product";
-
-    const category =
-        product.category || "Agrovet Product";
-
-
-    document.title =
-        `${name} | ${category} | Wittyfare`;
-
-
-    const description =
-        product.description
-        ? String(product.description).substring(0, 155)
-        : `Buy ${name} from Wittyfare Agrovet & Farms in Abuja.`;
-
-
-    setMetaDescription(description);
-
-
-    /*
-       Canonical product URL currently uses ?id=
-    */
-
-    const canonical =
-        document.querySelector(
-            'link[rel="canonical"]'
-        );
-
-
-    if (canonical) {
-
-        canonical.href =
-            `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
-
-    }
-
-}
-
-
-function openChat() {
-    if (typeof Tawk_API === "undefined") return;
-
-    if (chatOpen) {
-        Tawk_API.minimize();
-        chatOpen = false;
-    } else {
-        Tawk_API.showWidget();
-        Tawk_API.maximize();
-        chatOpen = true;
-    }
-}
-
-/* =========================================================
-   META DESCRIPTION
-========================================================= */
-
-function setMetaDescription(description) {
-
-    let meta =
-        document.querySelector(
-            'meta[name="description"]'
-        );
-
-
-    if (!meta) {
-
-        meta =
-            document.createElement("meta");
-
-        meta.name = "description";
-
-        document.head.appendChild(meta);
-
-    }
-
-
-    meta.content =
-        String(description).substring(0, 160);
-
-}
-
-
-/* =========================================================
-   PRODUCT ERROR
-========================================================= */
-
-function showProductPageError(title, message) {
-
-    const nameElement =
-        document.getElementById("productName");
-
-    const descriptionElement =
-        document.getElementById("productDescription");
-
-
-    if (nameElement) {
-
-        nameElement.textContent = title;
-
-    }
-
-
-    if (descriptionElement) {
-
-        descriptionElement.textContent = message;
-
-    }
-
-
-    const addButton =
-        document.getElementById("addProductToCart");
-
-
-    if (addButton) {
-
-        addButton.style.display = "none";
-
-    }
-
-}
-
-/* =========================================================
-   🚀 WITTYFARE PRODUCT PAGE + SEO SYSTEM
+   🔗 GET PRODUCT FROM URL
 ========================================================= */
 
 function getProductFromURL() {
 
-    const params = new URLSearchParams(window.location.search);
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-    const id = params.get("id");
-    const slug = params.get("slug");
+
+    const id =
+        params.get("id");
+
+
+    const slug =
+        params.get("slug");
+
 
     if (!id && !slug) {
+
         return null;
     }
 
-    return products.find(product =>
-        String(product.id) === String(id) ||
-        String(product.slug || "") === String(slug)
+
+    return products.find(
+        product =>
+
+            (
+                id &&
+                String(product.id) ===
+                String(id)
+            )
+
+            ||
+
+            (
+                slug &&
+                String(product.slug || "") ===
+                String(slug)
+            )
     );
 }
 
 
 /* =========================================================
-   SEO HELPER
-========================================================= */
-
-function setMetaTag(name, content) {
-
-    let tag = document.querySelector(`meta[name="${name}"]`);
-
-    if (!tag) {
-
-        tag = document.createElement("meta");
-
-        tag.setAttribute("name", name);
-
-        document.head.appendChild(tag);
-    }
-
-    tag.setAttribute("content", content);
-}
-
-
-/* =========================================================
-   JSON-LD HELPER
-========================================================= */
-
-function addStructuredData(data, id) {
-
-    const oldSchema =
-        document.getElementById(id);
-
-    if (oldSchema) {
-        oldSchema.remove();
-    }
-
-    const script =
-        document.createElement("script");
-
-    script.type =
-        "application/ld+json";
-
-    script.id = id;
-
-    script.textContent =
-        JSON.stringify(data);
-
-    document.head.appendChild(script);
-}
-
-
-/* =========================================================
-   PRODUCT PAGE
+   🖼️ PRODUCT PAGE
 ========================================================= */
 
 function initializeProductPage() {
 
     /*
-       Wait until product.json has finished loading.
+       Only run if this is actually the
+       individual product page.
     */
 
-    if (!Array.isArray(products) || products.length === 0) {
+    const productNameElement =
+        document.getElementById(
+            "productName"
+        );
 
-        setTimeout(
-            initializeProductPage,
-            100
+
+    if (!productNameElement) {
+
+        return;
+    }
+
+
+    if (
+        !Array.isArray(products) ||
+        products.length === 0
+    ) {
+
+        console.warn(
+            "Wittyfare: Product catalogue is empty."
         );
 
         return;
@@ -2423,83 +1707,571 @@ function initializeProductPage() {
 
     if (!product) {
 
-        console.warn(
-            "Wittyfare: Product not found."
+        showProductPageError(
+            "Product not found",
+            "The product you are looking for could not be found."
         );
-
-        const name =
-            document.getElementById("productName");
-
-        if (name) {
-            name.textContent =
-                "Product not found";
-        }
 
         return;
     }
 
 
-    /* =====================================================
-       PRODUCT VALUES
-    ===================================================== */
+    /*
+       Render product
+    */
+
+    renderSingleProduct(
+        product
+    );
+
+
+    /*
+       Related products
+    */
+
+    renderRelatedProducts(
+        product
+    );
+
+
+    /*
+       SEO
+    */
+
+    updateProductSEO(
+        product
+    );
+
+
+    console.log(
+        "✅ Wittyfare product page loaded:",
+        product.name
+    );
+}
+
+
+/* =========================================================
+   🛍 RENDER SINGLE PRODUCT
+========================================================= */
+
+function renderSingleProduct(product) {
+
+    if (!product) {
+        return;
+    }
+
+
+    const nameElement =
+        document.getElementById(
+            "productName"
+        );
+
+
+    const imageElement =
+        document.getElementById(
+            "productImage"
+        );
+
+
+    const priceElement =
+        document.getElementById(
+            "productPrice"
+        );
+
+
+    const descriptionElement =
+        document.getElementById(
+            "productDescription"
+        );
+
+
+    const categoryElement =
+        document.getElementById(
+            "productCategory"
+        );
+
+
+    const detailsElement =
+        document.getElementById(
+            "productDetails"
+        );
+
+
+    const addButton =
+        document.getElementById(
+            "addProductToCart"
+        );
+
+
+    /*
+       NAME
+    */
+
+    if (nameElement) {
+
+        nameElement.textContent =
+            product.name ||
+            "Product";
+    }
+
+
+    /*
+       IMAGE
+    */
+
+    if (imageElement) {
+
+        imageElement.src =
+            getProductImage(
+                product.image
+            );
+
+
+        imageElement.alt =
+            product.name ||
+            "Wittyfare product";
+
+
+        imageElement.loading =
+            "eager";
+    }
+
+
+    /*
+       PRICE
+    */
+
+    if (priceElement) {
+
+        priceElement.textContent =
+            formatPrice(
+                product.price
+            );
+    }
+
+
+    /*
+       DESCRIPTION
+    */
+
+    const description =
+        product.description ||
+        `Buy ${product.name || "this product"} from Wittyfare Agrovet & Farms.`;
+
+
+    if (descriptionElement) {
+
+        descriptionElement.textContent =
+            description;
+    }
+
+
+    /*
+       CATEGORY
+    */
+
+    if (categoryElement) {
+
+        categoryElement.textContent =
+            product.category ||
+            "Product";
+    }
+
+
+    /*
+       DETAILS
+    */
+
+    if (detailsElement) {
+
+        let detailsHTML = "";
+
+
+        /*
+           Farm package
+        */
+
+        if (
+            product.category ===
+            "farm-packages"
+        ) {
+
+            detailsHTML += `
+
+                <div class="farm-package-details">
+
+                    <h3>
+                        🌱 Farm Package Details
+                    </h3>
+
+            `;
+
+
+            if (product.farmSize) {
+
+                detailsHTML += `
+
+                    <p>
+
+                        <strong>
+                            Designed for:
+                        </strong>
+
+                        ${escapeHTML(
+                            product.farmSize
+                        )}
+
+                    </p>
+
+                `;
+            }
+
+
+            if (product.packageType) {
+
+                detailsHTML += `
+
+                    <p>
+
+                        <strong>
+                            Package Type:
+                        </strong>
+
+                        ${escapeHTML(
+                            product.packageType
+                        )}
+
+                    </p>
+
+                `;
+            }
+
+
+            if (
+                Array.isArray(
+                    product.includes
+                ) &&
+                product.includes.length
+            ) {
+
+                detailsHTML += `
+
+                    <h3>
+                        What's Included
+                    </h3>
+
+                    <ul class="package-details-list">
+
+                        ${
+                            product.includes
+                                .map(
+                                    item => `
+                                        <li>
+                                            ✓
+                                            ${escapeHTML(item)}
+                                        </li>
+                                    `
+                                )
+                                .join("")
+                        }
+
+                    </ul>
+
+                `;
+            }
+
+
+            if (product.vendor) {
+
+                detailsHTML += `
+
+                    <p class="package-vendor">
+
+                        <strong>
+                            Vendor:
+                        </strong>
+
+                        ${escapeHTML(
+                            product.vendor
+                        )}
+
+                    </p>
+
+                `;
+            }
+
+
+            detailsHTML += `
+                </div>
+            `;
+
+
+            detailsElement.innerHTML =
+                detailsHTML;
+        }
+
+
+        /*
+           Normal product
+        */
+
+        else {
+
+            if (product.vendor) {
+
+                detailsHTML += `
+
+                    <p>
+
+                        <strong>
+                            Vendor:
+                        </strong>
+
+                        ${escapeHTML(
+                            product.vendor
+                        )}
+
+                    </p>
+
+                `;
+            }
+
+
+            if (product.category) {
+
+                detailsHTML += `
+
+                    <p>
+
+                        <strong>
+                            Category:
+                        </strong>
+
+                        ${escapeHTML(
+                            product.category
+                        )}
+
+                    </p>
+
+                `;
+            }
+
+
+            detailsHTML += `
+
+                <p>
+                    ${escapeHTML(description)}
+                </p>
+
+            `;
+
+
+            detailsElement.innerHTML =
+                detailsHTML;
+        }
+    }
+
+
+    /*
+       ADD TO CART
+    */
+
+    if (addButton) {
+
+        addButton.type =
+            "button";
+
+
+        addButton.onclick =
+            function () {
+
+                addCart(
+                    product.id
+                );
+
+            };
+    }
+}
+
+
+/* =========================================================
+   🔗 RELATED PRODUCTS
+========================================================= */
+
+function renderRelatedProducts(
+    currentProduct
+) {
+
+    const container =
+        document.getElementById(
+            "relatedProducts"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    let related = [];
+
+
+    /*
+       First:
+       Same category
+    */
+
+    if (
+        currentProduct.category
+    ) {
+
+        related =
+            products.filter(
+                product =>
+
+                    String(product.id) !==
+                    String(currentProduct.id)
+
+                    &&
+
+                    normalizeText(
+                        product.category
+                    ) ===
+                    normalizeText(
+                        currentProduct.category
+                    )
+            );
+    }
+
+
+    /*
+       If fewer than 4,
+       add other products.
+    */
+
+    if (
+        related.length < 4
+    ) {
+
+        const additional =
+            products.filter(
+                product =>
+
+                    String(product.id) !==
+                    String(currentProduct.id)
+
+                    &&
+
+                    !related.some(
+                        item =>
+                            String(item.id) ===
+                            String(product.id)
+                    )
+            );
+
+
+        related =
+            related.concat(
+                additional
+            );
+    }
+
+
+    /*
+       Maximum 4
+    */
+
+    related =
+        related.slice(0, 4);
+
+
+    container.innerHTML =
+        "";
+
+
+    if (!related.length) {
+        return;
+    }
+
+
+    related.forEach(product => {
+
+        const card =
+            createProductCard(
+                product
+            );
+
+
+        if (card) {
+
+            container.appendChild(
+                card
+            );
+        }
+
+    });
+}
+
+
+/* =========================================================
+   🔍 PRODUCT SEO
+========================================================= */
+
+function updateProductSEO(product) {
+
+    if (!product) {
+        return;
+    }
+
 
     const productName =
         product.name ||
         "Wittyfare Product";
 
-    const description =
-        product.description ||
-        `Buy ${productName} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
-
-    const price =
-        Number(product.price || 0);
 
     const category =
         product.category ||
-        "Farm Products";
-
-    const image =
-        product.image ||
-        "/images/logo.png";
-
-    const slug =
-        product.slug ||
-        String(product.id)
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/^-|-$/g, "");
+        "Agrovet Product";
 
 
-    /* =====================================================
-       PRODUCT URL
-    ===================================================== */
+    const description =
+        product.description
+            ? String(
+                product.description
+            ).substring(0, 155)
+
+            : `Buy ${productName} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
+
+
+    /*
+       Product URL
+    */
 
     const productURL =
-        `https://www.wittyfare.com/product/?id=${encodeURIComponent(product.id)}`;
+        `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
 
 
-    /* =====================================================
-       PAGE TITLE
-    ===================================================== */
+    /*
+       TITLE
+    */
 
     document.title =
-        `${productName} | Wittyfare Agrovet & Farms`;
+        `${productName} | ${category} | Wittyfare`;
 
 
-    /* =====================================================
-       META DESCRIPTION
-    ===================================================== */
+    /*
+       DESCRIPTION
+    */
 
     setMetaTag(
         "description",
-        `${productName} available at Wittyfare Agrovet & Farms in Abuja, Nigeria. ${description}`
-            .substring(0, 160)
+        description
     );
 
 
-    /* =====================================================
+    /*
        KEYWORDS
-    ===================================================== */
+    */
 
     setMetaTag(
         "keywords",
@@ -2507,203 +2279,98 @@ function initializeProductPage() {
     );
 
 
-    /* =====================================================
+    /*
        CANONICAL
-    ===================================================== */
+    */
 
     let canonical =
-        document.getElementById("canonicalUrl");
+        document.querySelector(
+            'link[rel="canonical"]'
+        );
+
 
     if (!canonical) {
 
         canonical =
-            document.createElement("link");
-
-        canonical.id =
-            "canonicalUrl";
+            document.createElement(
+                "link"
+            );
 
         canonical.rel =
             "canonical";
 
-        document.head.appendChild(canonical);
+        document.head.appendChild(
+            canonical
+        );
     }
+
 
     canonical.href =
         productURL;
 
 
-    /* =====================================================
+    /*
        PRODUCT IMAGE
-    ===================================================== */
+    */
 
-    const productImage =
-        document.getElementById("productImage");
-
-    if (productImage) {
-
-        productImage.src =
-            image;
-
-        productImage.alt =
-            `${productName} - Wittyfare Agrovet & Farms`;
-
-        productImage.loading =
-            "eager";
-    }
-
-
-    /* =====================================================
-       PRODUCT NAME
-    ===================================================== */
-
-    const productNameElement =
-        document.getElementById("productName");
-
-    if (productNameElement) {
-
-        productNameElement.textContent =
-            productName;
-    }
-
-
-    /* =====================================================
-       CATEGORY
-    ===================================================== */
-
-    const productCategory =
-        document.getElementById("productCategory");
-
-    if (productCategory) {
-
-        productCategory.textContent =
-            category;
-    }
-
-
-    /* =====================================================
-       PRICE
-    ===================================================== */
-
-    const productPrice =
-        document.getElementById("productPrice");
-
-    if (productPrice) {
-
-        productPrice.textContent =
-            `₦${price.toLocaleString()}`;
-    }
-
-
-    /* =====================================================
-       DESCRIPTION
-    ===================================================== */
-
-    const productDescription =
-        document.getElementById("productDescription");
-
-    if (productDescription) {
-
-        productDescription.textContent =
-            description;
-    }
-
-
-    /* =====================================================
-       PRODUCT DETAILS
-    ===================================================== */
-
-    const productDetails =
-        document.getElementById("productDetails");
-
-    if (productDetails) {
-
-        let detailsHTML = "";
-
-        if (product.vendor) {
-
-            detailsHTML += `
-                <p>
-                    <strong>Vendor:</strong>
-                    ${product.vendor}
-                </p>
-            `;
-        }
-
-        if (product.farmSize) {
-
-            detailsHTML += `
-                <p>
-                    <strong>Farm Size:</strong>
-                    ${product.farmSize}
-                </p>
-            `;
-        }
-
-        if (product.packageType) {
-
-            detailsHTML += `
-                <p>
-                    <strong>Package Type:</strong>
-                    ${product.packageType}
-                </p>
-            `;
-        }
-
-        if (
-            Array.isArray(product.includes) &&
-            product.includes.length
-        ) {
-
-            detailsHTML += `
-                <h3>Package Includes</h3>
-                <ul>
-                    ${product.includes.map(item =>
-                        `<li>${item}</li>`
-                    ).join("")}
-                </ul>
-            `;
-        }
-
-        if (!detailsHTML) {
-
-            detailsHTML =
-                `<p>${description}</p>`;
-        }
-
-        productDetails.innerHTML =
-            detailsHTML;
-    }
-
-
-    /* =====================================================
-       ADD TO CART
-    ===================================================== */
-
-    const addButton =
-        document.getElementById(
-            "addProductToCart"
+    const imagePath =
+        getProductImage(
+            product.image
         );
 
-    if (addButton) {
-
-        addButton.onclick =
-            function () {
-
-                addCart(product.id);
-
-            };
-    }
-
-
-    /* =====================================================
-       PRODUCT STRUCTURED DATA
-    ===================================================== */
 
     const absoluteImage =
-        image.startsWith("http")
-            ? image
-            : `https://www.wittyfare.com${image}`;
+        imagePath.startsWith("http")
+            ? imagePath
+            : new URL(
+                imagePath,
+                window.location.href
+            ).href;
 
+
+    /*
+       OPEN GRAPH
+    */
+
+    setProductMeta(
+        "og:title",
+        productName
+    );
+
+
+    setProductMeta(
+        "og:description",
+        description
+    );
+
+
+    setProductMeta(
+        "og:image",
+        absoluteImage
+    );
+
+
+    setProductMeta(
+        "og:url",
+        productURL
+    );
+
+
+    setProductMeta(
+        "og:type",
+        "product"
+    );
+
+
+    setProductMeta(
+        "og:site_name",
+        "Wittyfare"
+    );
+
+
+    /*
+       PRODUCT SCHEMA
+    */
 
     const productSchema = {
 
@@ -2729,6 +2396,9 @@ function initializeProductPage() {
         "url":
             productURL,
 
+        "category":
+            category,
+
         "brand": {
 
             "@type":
@@ -2736,7 +2406,6 @@ function initializeProductPage() {
 
             "name":
                 "Wittyfare"
-
         },
 
         "offers": {
@@ -2751,7 +2420,9 @@ function initializeProductPage() {
                 "NGN",
 
             "price":
-                price.toString(),
+                Number(
+                    product.price || 0
+                ).toFixed(2),
 
             "availability":
                 "https://schema.org/InStock",
@@ -2763,11 +2434,8 @@ function initializeProductPage() {
 
                 "name":
                     "Wittyfare Agrovet & Farms"
-
             }
-
         }
-
     };
 
 
@@ -2777,9 +2445,22 @@ function initializeProductPage() {
     );
 
 
-    /* =====================================================
+    /*
        BREADCRUMB SCHEMA
-    ===================================================== */
+    */
+
+    const categorySlug =
+        String(category)
+            .toLowerCase()
+            .trim()
+            .replace(
+                /[^a-z0-9]+/g,
+                "-"
+            )
+            .replace(
+                /^-+|-+$/g,
+                "");
+
 
     const breadcrumbSchema = {
 
@@ -2803,9 +2484,9 @@ function initializeProductPage() {
                     "Home",
 
                 "item":
-                    "https://www.wittyfare.com/"
-
+                    `${window.location.origin}/`
             },
+
 
             {
 
@@ -2819,9 +2500,9 @@ function initializeProductPage() {
                     category,
 
                 "item":
-                    `https://www.wittyfare.com/category/${category}/`
-
+                    `${window.location.origin}/category/${encodeURIComponent(categorySlug)}/`
             },
+
 
             {
 
@@ -2836,11 +2517,9 @@ function initializeProductPage() {
 
                 "item":
                     productURL
-
             }
 
         ]
-
     };
 
 
@@ -2848,96 +2527,919 @@ function initializeProductPage() {
         breadcrumbSchema,
         "wittyfare-breadcrumb-schema"
     );
+}
 
 
-    /* =====================================================
-       RELATED PRODUCTS
-    ===================================================== */
+/* =========================================================
+   🏷️ META TAG HELPER
+========================================================= */
 
-    renderRelatedProducts(product);
+function setMetaTag(
+    name,
+    content
+) {
+
+    let tag =
+        document.querySelector(
+            `meta[name="${name}"]`
+        );
 
 
-    console.log(
-        "✅ Wittyfare SEO loaded:",
-        productName
+    if (!tag) {
+
+        tag =
+            document.createElement(
+                "meta"
+            );
+
+        tag.setAttribute(
+            "name",
+            name
+        );
+
+        document.head.appendChild(
+            tag
+        );
+    }
+
+
+    tag.setAttribute(
+        "content",
+        String(content || "")
     );
 }
 
 
 /* =========================================================
-   RELATED PRODUCTS
+   🌐 OPEN GRAPH META HELPER
 ========================================================= */
 
-function renderRelatedProducts(currentProduct) {
+function setProductMeta(
+    property,
+    content
+) {
 
-    const container =
-        document.getElementById(
-            "relatedProducts"
+    let meta =
+        document.querySelector(
+            `meta[property="${property}"]`
         );
 
-    if (!container) return;
+
+    if (!meta) {
+
+        meta =
+            document.createElement(
+                "meta"
+            );
+
+        meta.setAttribute(
+            "property",
+            property
+        );
+
+        document.head.appendChild(
+            meta
+        );
+    }
 
 
-    const related =
-        products
-            .filter(product =>
-                product.id !== currentProduct.id &&
-                product.category === currentProduct.category
-            )
-            .slice(0, 6);
+    meta.setAttribute(
+        "content",
+        String(content || "")
+    );
+}
 
 
-    container.innerHTML = "";
+/* =========================================================
+   🧾 STRUCTURED DATA HELPER
+========================================================= */
+
+function addStructuredData(
+    data,
+    id
+) {
+
+    const oldSchema =
+        document.getElementById(id);
 
 
-    related.forEach(product => {
+    if (oldSchema) {
 
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "item";
+        oldSchema.remove();
+    }
 
 
-        const productURL =
-            `/product/?id=${encodeURIComponent(product.id)}`;
+    const script =
+        document.createElement(
+            "script"
+        );
 
 
-        card.innerHTML = `
+    script.type =
+        "application/ld+json";
 
-            <a
-                href="${productURL}"
-                style="text-decoration:none;color:inherit;"
-            >
 
-                <img
-                    src="${product.image || '/images/logo.png'}"
-                    alt="${product.name}"
-                    loading="lazy"
-                >
+    script.id =
+        id;
 
-                <h2>
-                    ${product.name}
-                </h2>
 
-            </a>
+    script.textContent =
+        JSON.stringify(data);
 
-            <div class="price">
-                ₦${Number(product.price || 0).toLocaleString()}
+
+    document.head.appendChild(
+        script
+    );
+}
+
+
+/* =========================================================
+   🔍 SEARCH ENGINE
+========================================================= */
+
+function performSearch(query) {
+
+    const searchTerm =
+        String(query || "")
+            .trim();
+
+
+    /*
+       Empty search
+    */
+
+    if (!searchTerm) {
+
+        const pageProducts =
+            getProductsForCurrentPage();
+
+
+        addDataToHTML(
+            pageProducts
+        );
+
+
+        return;
+    }
+
+
+    const pageCategory =
+        getPageCategory();
+
+
+    let searchableProducts;
+
+
+    /*
+       Category page:
+       Search only that category.
+    */
+
+    if (pageCategory) {
+
+        searchableProducts =
+            products.filter(
+                product =>
+
+                    String(
+                        product.category || ""
+                    ).toLowerCase() ===
+                    pageCategory.toLowerCase()
+            );
+
+    }
+
+
+    /*
+       Homepage:
+       Search ALL products.
+    */
+
+    else {
+
+        searchableProducts =
+            products;
+    }
+
+
+    const normalizedQuery =
+        normalizeText(
+            searchTerm
+        );
+
+
+    const results =
+        searchableProducts.filter(
+            product => {
+
+                const searchableText = [
+
+                    product.name,
+
+                    product.description,
+
+                    product.category,
+
+                    product.slug,
+
+                    product.vendor,
+
+                    product.farmSize,
+
+                    product.packageType,
+
+                    Array.isArray(
+                        product.includes
+                    )
+                        ? product.includes.join(" ")
+                        : product.includes
+
+                ]
+                    .filter(Boolean)
+                    .join(" ");
+
+
+                return normalizeText(
+                    searchableText
+                ).includes(
+                    normalizedQuery
+                );
+
+            }
+        );
+
+
+    const listProduct =
+        document.querySelector(
+            ".listProduct:not(#relatedProducts)"
+        );
+
+
+    if (!listProduct) {
+        return;
+    }
+
+
+    listProduct.innerHTML =
+        "";
+
+
+    if (!results.length) {
+
+        listProduct.innerHTML = `
+
+            <div class="search-no-results">
+
+                <h3>
+                    No products found
+                </h3>
+
+                <p>
+
+                    We couldn't find any product
+                    matching
+
+                    "<strong>
+                        ${escapeHTML(searchTerm)}
+                    </strong>".
+
+                </p>
+
             </div>
-
-            <button
-                type="button"
-                onclick="addCart('${product.id}')"
-            >
-                Add to cart
-            </button>
 
         `;
 
+        return;
+    }
 
-        container.appendChild(card);
+
+    results.forEach(product => {
+
+        const card =
+            createProductCard(
+                product,
+                searchTerm
+            );
+
+
+        if (card) {
+
+            listProduct.appendChild(
+                card
+            );
+        }
 
     });
-
 }
+
+
+/* =========================================================
+   🔍 SEARCH EVENTS
+========================================================= */
+
+function setupSearch() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchBtn =
+        document.querySelector(
+            ".search-button"
+        );
+
+
+    if (searchInput) {
+
+        /*
+           Search while typing
+        */
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                performSearch(
+                    this.value
+                );
+
+            }
+        );
+
+
+        /*
+           Enter key
+        */
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    performSearch(
+                        this.value
+                    );
+                }
+
+            }
+        );
+    }
+
+
+    if (searchBtn) {
+
+        searchBtn.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                if (searchInput) {
+
+                    performSearch(
+                        searchInput.value
+                    );
+                }
+
+            }
+        );
+    }
+}
+
+
+/*
+   Compatibility with homepage
+   if it calls searchProducts()
+*/
+
+window.searchProducts =
+    function () {
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+
+        if (searchInput) {
+
+            performSearch(
+                searchInput.value
+            );
+        }
+    };
+
+
+/* =========================================================
+   🛒 CART OPEN / CLOSE
+========================================================= */
+
+function setupCart() {
+
+    const iconCart =
+        document.querySelector(
+            ".iconCart"
+        );
+
+
+    /*
+       NEW CART SYSTEM
+    */
+
+    const cartTab =
+        document.querySelector(
+            ".cartTab"
+        );
+
+
+    const cartOverlay =
+        document.querySelector(
+            ".cart-overlay"
+        );
+
+
+    const closeCartButton =
+        document.querySelector(
+            ".closeCart"
+        );
+
+
+    /*
+       OLD CART SYSTEM
+    */
+
+    const oldCart =
+        document.querySelector(
+            ".cart"
+        );
+
+
+    const container =
+        document.querySelector(
+            ".container"
+        );
+
+
+    const oldClose =
+        document.querySelector(
+            ".close"
+        );
+
+
+    let isCartOpen = false;
+
+
+    /*
+       NEW OPEN
+    */
+
+    function openCart() {
+
+        isCartOpen = true;
+
+
+        if (cartTab) {
+
+            cartTab.classList.add(
+                "active"
+            );
+        }
+
+
+        if (cartOverlay) {
+
+            cartOverlay.classList.add(
+                "active"
+            );
+        }
+
+
+        /*
+           OLD cart fallback
+        */
+
+        if (
+            oldCart &&
+            !cartTab
+        ) {
+
+            oldCart.style.right =
+                "0";
+        }
+
+
+        if (
+            container &&
+            oldCart &&
+            !cartTab
+        ) {
+
+            container.style.transform =
+                "translateX(-400px)";
+        }
+    }
+
+
+    /*
+       CLOSE
+    */
+
+    function closeCart() {
+
+        isCartOpen = false;
+
+
+        if (cartTab) {
+
+            cartTab.classList.remove(
+                "active"
+            );
+        }
+
+
+        if (cartOverlay) {
+
+            cartOverlay.classList.remove(
+                "active"
+            );
+        }
+
+
+        /*
+           OLD cart fallback
+        */
+
+        if (
+            oldCart &&
+            !cartTab
+        ) {
+
+            oldCart.style.right =
+                "-100%";
+        }
+
+
+        if (
+            container &&
+            oldCart &&
+            !cartTab
+        ) {
+
+            container.style.transform =
+                "translateX(0)";
+        }
+    }
+
+
+    /*
+       Make global close function
+    */
+
+    window.closeCart =
+        closeCart;
+
+
+    /*
+       Cart icon
+    */
+
+    if (iconCart) {
+
+        iconCart.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                if (isCartOpen) {
+
+                    closeCart();
+
+                } else {
+
+                    openCart();
+
+                }
+
+            }
+        );
+    }
+
+
+    /*
+       New close button
+    */
+
+    if (closeCartButton) {
+
+        closeCartButton.addEventListener(
+            "click",
+            closeCart
+        );
+    }
+
+
+    /*
+       Cart overlay
+    */
+
+    if (cartOverlay) {
+
+        cartOverlay.addEventListener(
+            "click",
+            closeCart
+        );
+    }
+
+
+    /*
+       Old close button
+    */
+
+    if (oldClose) {
+
+        oldClose.addEventListener(
+            "click",
+            closeCart
+        );
+    }
+
+
+    /*
+       Allow HTML onclick="hideCart()"
+    */
+
+    window.hideCart =
+        closeCart;
+}
+
+
+/* =========================================================
+   💬 CHAT
+========================================================= */
+
+window.openChat = function () {
+
+    try {
+
+        if (
+            typeof Tawk_API ===
+            "undefined"
+        ) {
+
+            console.warn(
+                "Tawk.to is not ready yet."
+            );
+
+            return;
+        }
+
+
+        if (chatOpen) {
+
+            Tawk_API.minimize();
+
+            chatOpen = false;
+
+        } else {
+
+            Tawk_API.showWidget();
+
+            Tawk_API.maximize();
+
+            chatOpen = true;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Chat error:",
+            error
+        );
+    }
+};
+
+
+/* =========================================================
+   🚨 PRODUCT PAGE ERROR
+========================================================= */
+
+function showProductPageError(
+    title,
+    message
+) {
+
+    const nameElement =
+        document.getElementById(
+            "productName"
+        );
+
+
+    const descriptionElement =
+        document.getElementById(
+            "productDescription"
+        );
+
+
+    if (nameElement) {
+
+        nameElement.textContent =
+            title;
+    }
+
+
+    if (descriptionElement) {
+
+        descriptionElement.textContent =
+            message;
+    }
+
+
+    const addButton =
+        document.getElementById(
+            "addProductToCart"
+        );
+
+
+    if (addButton) {
+
+        addButton.style.display =
+            "none";
+    }
+}
+
+
+/* =========================================================
+   🛒 PRODUCT PAGE CART COMPATIBILITY
+========================================================= */
+
+function addProductPageItem(product) {
+
+    /*
+       Keep this function only for compatibility
+       with any old product page code.
+
+       It now uses the ONE central cart system.
+    */
+
+    if (!product) {
+        return;
+    }
+
+
+    addCart(
+        product.id
+    );
+}
+
+
+/* =========================================================
+   ⏳ WAIT FOR TAWK
+========================================================= */
+
+window.addEventListener(
+    "tawkLoad",
+    () => {
+
+        console.log(
+            "Tawk.to loaded."
+        );
+
+    }
+);
+
+
+/* =========================================================
+   🚀 INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        /*
+           CART
+        */
+
+        loadCart();
+
+        updateCartCounter();
+
+        renderCartItems();
+
+        calculateCheckoutTotal();
+
+
+        /*
+           MENU OVERLAY
+        */
+
+        const menuOverlay =
+            document.getElementById(
+                "menuOverlay"
+            );
+
+
+        if (menuOverlay) {
+
+            menuOverlay.addEventListener(
+                "click",
+                () => {
+
+                    closeMenu();
+
+                }
+            );
+        }
+
+
+        /*
+           ESCAPE KEY
+        */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeMenu();
+
+                    if (
+                        typeof window.closeCart ===
+                        "function"
+                    ) {
+
+                        window.closeCart();
+                    }
+                }
+
+            }
+        );
+
+
+        /*
+           CART
+        */
+
+        setupCart();
+
+
+        /*
+           SEARCH
+        */
+
+        setupSearch();
+
+
+        /*
+           PRODUCTS
+        */
+
+        loadProducts();
+
+    }
+);
+
+
+/* =========================================================
+   🔄 STORAGE EVENT
+   Keep cart synchronized if another tab changes it.
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    event => {
+
+        if (
+            event.key ===
+            "listCart"
+        ) {
+
+            loadCart();
+
+            updateCartCounter();
+
+            renderCartItems();
+
+            calculateCheckoutTotal();
+        }
+    }
+);
+
+
+/* =========================================================
+   ✅ END OF WITTYFARE APP.JS
+========================================================= */

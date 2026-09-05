@@ -224,4 +224,11 @@
         <priority>1.0</priority>
     </url>
     
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?id=test-seo-product-123</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
 </urlset>
