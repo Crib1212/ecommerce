@@ -7,7 +7,7 @@
     "slug": "agrited-broiler-chicks",
     "image": "/images/agriteddoc.webp",
     "description": "Agrited day-old broiler chicks for poultry farmers.",
-     "featured": true
+    "featured": true
   },
   {
     "id": "day-old-sayed-broiler-chicks",
@@ -38,14 +38,14 @@
   },
 
   {
-    "id": "feed-ultima-finisher",
+    "id": "feed-ultima-finisher-22950",
     "name": "Ultima Finisher",
     "price": 22950,
     "category": "feed",
-    "slug": "ultima-finisher 25kg",
+    "slug": "ultima-finisher-22950",
     "image": "/images/Ultima_finisher.png",
-    "description": "ultima finisher poultry feed in a 25kg bag.",
-     "featured": true
+    "description": "Ultima finisher poultry feed in a 25kg bag.",
+    "featured": true
   },
   {
     "id": "feed-breedwell-psc-25kg",
@@ -141,8 +141,7 @@
     "description": "Paper crate for poultry and farm handling.",
     "featured": true
   },
-
-   {
+  {
     "id": "juvenile-fish",
     "name": "Juvenile Fish",
     "price": 100,
@@ -161,7 +160,6 @@
     "image": "/images/15.png",
     "description": "15 litre pulse sprayer for farm applications."
   },
-
   {
     "id": "drugs-tylodox-extra-100g",
     "name": "Tylodox Extra 100g",
@@ -171,7 +169,6 @@
     "image": "/images/26.png",
     "description": "Tylodox Extra 100g veterinary product."
   },
-
   {
     "id": "vaccines-dhlpp",
     "name": "DHLPP",
@@ -226,5 +223,152 @@
     "slug": "blue-crown-9mm",
     "image": "/images/Bluecrown-9mm-59.png",
     "description": "Blue Crown fish feed in 9mm size."
+  },
+
+  {
+    "id": "farm-package-50-broiler-starter",
+    "name": "50 Broiler Starter Package",
+    "vendor": "Wittyfare",
+    "price": 149900,
+    "category": "farm-packages",
+    "slug": "50-broiler-starter-package",
+    "image": "/images/farm-packages/50-broiler.jpg",
+    "description": "Starter package for farmers beginning with 50 broiler chicks. Includes chicks, starter feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
+    "featured": true,
+    "packageType": "poultry",
+    "farmSize": "50 broilers",
+    "includes": [
+      "50 day-old broiler chicks",
+      "2 × 25kg poultry feed",
+      "2 feeders",
+      "2 drinkers",
+      "Vitamins",
+      "Disinfectant",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-100-broiler-starter",
+    "name": "100 Broiler Starter Package",
+    "vendor": "Wittyfare",
+    "price": 289900,
+    "category": "farm-packages",
+    "slug": "100-broiler-starter-package",
+    "image": "/images/farm-packages/100-broiler.jpg",
+    "description": "Starter package for farmers beginning with 100 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
+    "featured": true,
+    "packageType": "poultry",
+    "farmSize": "100 broilers",
+    "includes": [
+      "100 day-old broiler chicks",
+      "4 × 25kg poultry feed",
+      "4 feeders",
+      "4 drinkers",
+      "Vitamins",
+      "Disinfectant",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-100-catfish-starter",
+    "name": "100 Catfish Starter Package",
+    "vendor": "Wittyfare",
+    "price": 34900,
+    "category": "farm-packages",
+    "slug": "100-catfish-starter-package",
+    "image": "/images/farm-packages/100-catfish.jpg",
+    "description": "Starter package for farmers beginning with 100 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "featured": true,
+    "packageType": "fish",
+    "farmSize": "100 catfish",
+    "includes": [
+      "100 catfish fingerlings",
+      "1 × 25kg fish feed",
+      "Vitamins/treatment",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-500-catfish-starter",
+    "name": "500 Catfish Starter Package",
+    "vendor": "Wittyfare",
+    "price": 109900,
+    "category": "farm-packages",
+    "slug": "500-catfish-starter-package",
+    "image": "/images/farm-packages/500-catfish.jpg",
+    "description": "Starter package for farmers beginning with 500 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "featured": true,
+    "packageType": "fish",
+    "farmSize": "500 catfish",
+    "includes": [
+      "500 catfish fingerlings",
+      "3 × 25kg fish feed",
+      "Vitamins/treatment",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-1000-catfish-commercial",
+    "name": "1,000 Catfish Commercial Package",
+    "vendor": "Wittyfare",
+    "price": 219900,
+    "category": "farm-packages",
+    "slug": "1000-catfish-commercial-package",
+    "image": "/images/farm-packages/1000-catfish.jpg",
+    "description": "Commercial starter package for farmers stocking 1,000 catfish. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "featured": true,
+    "packageType": "fish",
+    "farmSize": "1,000 catfish",
+    "includes": [
+      "1,000 catfish fingerlings",
+      "6 × 25kg fish feed",
+      "Vitamins/treatment",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-poultry-restock",
+    "name": "Poultry Restock Package",
+    "vendor": "Wittyfare",
+    "price": 49900,
+    "category": "farm-packages",
+    "slug": "poultry-restock-package",
+    "image": "/images/farm-packages/poultry-restock.jpg",
+    "description": "A convenient restock package for existing poultry farmers who need feed, vitamins, disinfectant and basic farm supplies.",
+    "featured": true,
+    "packageType": "poultry-restock",
+    "farmSize": "Existing poultry farm",
+    "includes": [
+      "2 × 25kg poultry feed",
+      "Vitamins",
+      "Disinfectant",
+      "Basic farm supplies"
+    ]
+  },
+
+  {
+    "id": "farm-package-small-equipment",
+    "name": "Small Farm Equipment Package",
+    "vendor": "Wittyfare",
+    "price": 39900,
+    "category": "farm-packages",
+    "slug": "small-farm-equipment-package",
+    "image": "/images/farm-packages/small-equipment.jpg",
+    "description": "A practical equipment package for small poultry and farm operations.",
+    "featured": true,
+    "packageType": "equipment",
+    "farmSize": "Small farm",
+    "includes": [
+      "1 sprayer",
+      "2 feeders",
+      "2 drinkers",
+      "1 paper crate",
+      "Other farm supplies"
+    ]
   }
 ]

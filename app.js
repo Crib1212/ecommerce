@@ -591,11 +591,14 @@ function getProductPageURL(id) {
    🛍 PRODUCT CARD
 ========================================================= */
 
+/* =========================================================
+   🛍 PRODUCT CARD
+========================================================= */
+
 function createProductCard(
     product,
     highlight = ''
 ) {
-
     const {
         name = '',
         category = '',
@@ -603,9 +606,11 @@ function createProductCard(
         vendor = '',
         image = '',
         price = 0,
-        id
+        id,
+        farmSize = '',
+        includes = [],
+        packageType = ''
     } = product;
-
 
     const highlightedName =
         highlightText(
@@ -613,13 +618,11 @@ function createProductCard(
             highlight
         );
 
-
     const highlightedCategory =
         highlightText(
             category,
             highlight
         );
-
 
     const highlightedDescription =
         highlightText(
@@ -627,67 +630,120 @@ function createProductCard(
             highlight
         );
 
-
     const newProduct =
         document.createElement('div');
 
     newProduct.classList.add('item');
 
+    /* Add special class to farm packages */
+    if (category === 'farm-packages') {
+        newProduct.classList.add('farm-package-card');
+    }
 
- newProduct.innerHTML = `
-    <a
-        href="${getProductPageURL(id)}"
-        class="product-page-link"
-    >
+    /* Package contents */
+    let packageContents = '';
 
-        <img
-            src="${image}"
-            alt="${escapeHTML(name)}"
-            loading="lazy"
+    if (
+        category === 'farm-packages' &&
+        Array.isArray(includes) &&
+        includes.length
+    ) {
+        packageContents = `
+            <div class="package-includes">
+                <strong>Includes:</strong>
+                <ul>
+                    ${includes
+                        .slice(0, 4)
+                        .map(item => `
+                            <li>${escapeHTML(item)}</li>
+                        `)
+                        .join('')}
+                </ul>
+
+                ${
+                    includes.length > 4
+                        ? `<small>+ ${includes.length - 4} more items</small>`
+                        : ''
+                }
+            </div>
+        `;
+    }
+
+    newProduct.innerHTML = `
+        <a
+            href="${getProductPageURL(id)}"
+            class="product-page-link"
         >
 
-        <h2>
-            ${highlightedName}
-        </h2>
-${vendor ? `<p class="vendor">Vendor: ${escapeHTML(vendor)}</p>` : ''}
-        ${
-            category
-                ? `
-                    <p class="category">
-                        Category:
-                        ${highlightedCategory}
-                    </p>
-                  `
-                : ''
-        }
+            <img
+                src="${image}"
+                alt="${escapeHTML(name)}"
+                loading="lazy"
+            >
 
-        ${
-            description
-                ? `
-                    <p class="desc">
-                        ${highlightedDescription}
-                    </p>
-                  `
-                : ''
-        }
+            <h2>
+                ${highlightedName}
+            </h2>
 
-        <div class="price">
-            ${formatPrice(price)}
-        </div>
+            ${
+                vendor
+                    ? `
+                        <p class="vendor">
+                            Vendor: ${escapeHTML(vendor)}
+                        </p>
+                    `
+                    : ''
+            }
 
-    </a>
+            ${
+                category === 'farm-packages' && farmSize
+                    ? `
+                        <p class="package-farm-size">
+                            🌱 Designed for: 
+                            <strong>${escapeHTML(farmSize)}</strong>
+                        </p>
+                    `
+                    : ''
+            }
 
-    <button
-        onclick="event.stopPropagation(); addCart('${id}')"
-    >
-        Add to cart
-    </button>
-`;
+            ${
+                category
+                    ? `
+                        <p class="category">
+                            Category:
+                            ${highlightedCategory}
+                        </p>
+                    `
+                    : ''
+            }
 
+            ${
+                description
+                    ? `
+                        <p class="desc">
+                            ${highlightedDescription}
+                        </p>
+                    `
+                    : ''
+            }
+
+            ${packageContents}
+
+            <div class="price">
+                ${formatPrice(price)}
+            </div>
+
+        </a>
+
+        <button
+            onclick="event.stopPropagation(); addCart('${id}')"
+        >
+            Add to cart
+        </button>
+    `;
 
     return newProduct;
 }
-
 
 /* =========================================================
    🎨 DISPLAY PRODUCTS
@@ -777,7 +833,48 @@ function addDataToHTML(
     });
 }
 
+/* =========================================================
+   🌱 FARM PACKAGES HOMEPAGE
+========================================================= */
 
+function renderFarmPackages() {
+
+    const container =
+        document.getElementById('farmPackagesList');
+
+    if (!container) return;
+
+    const farmPackages =
+        products.filter(
+            product =>
+                product.category === 'farm-packages' &&
+                product.featured === true
+        );
+
+    container.innerHTML = '';
+
+    if (!farmPackages.length) {
+
+        container.innerHTML = `
+            <p class="no-packages">
+                Farm packages coming soon.
+            </p>
+        `;
+
+        return;
+    }
+
+    farmPackages.forEach(product => {
+
+        const card =
+            createProductCard(product);
+
+        if (card) {
+            container.appendChild(card);
+        }
+
+    });
+}
 /* =========================================================
    🏷️ CATEGORY FILTER
 ========================================================= */
@@ -866,16 +963,17 @@ function loadProducts() {
         products = data;
 
 
-        const pageProducts =
-            getProductsForCurrentPage();
+      const pageProducts =
+    getProductsForCurrentPage();
 
+addDataToHTML(
+    pageProducts
+);
 
-        addDataToHTML(
-            pageProducts
-        );
+/* Render Farm Packages on homepage */
+renderFarmPackages();
 
-
-        renderCartItems();
+renderCartItems();
 
         updateCartCounter();
 
@@ -918,125 +1016,99 @@ function loadProducts() {
    🔍 SEARCH ENGINE
 ========================================================= */
 
-function performSearch() {
+function performSearch(query) {
+    const searchTerm = String(query || '').trim();
 
-    if (!products.length) return;
-
-
-    const searchInput =
-        document.getElementById(
-            'searchInput'
-        );
-
-
-    if (!searchInput) return;
-
-
-    const rawSearch =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-
-    const pageCategory =
-        getPageCategory();
-
-
-    let searchableProducts =
-        products;
-
-
-    /*
-       If we're inside a category,
-       search only that category.
-    */
-
-    if (pageCategory) {
-
-        searchableProducts =
-            products.filter(
-                product =>
-                    String(
-                        product.category || ''
-                    ).toLowerCase() ===
-                    pageCategory.toLowerCase()
-            );
-
-    }
-
-
-    if (!rawSearch) {
-
-        addDataToHTML(
-            searchableProducts
-        );
-
+    // If search box is empty, show the normal products for the page
+    if (!searchTerm) {
+        const pageProducts = getProductsForCurrentPage();
+        addDataToHTML(pageProducts);
         return;
     }
 
+    const pageCategory = getPageCategory();
 
-    const normalizedSearch =
-        normalizeText(
-            rawSearch
+    // =========================================================
+    // SEARCH SCOPE
+    // =========================================================
+    // Category page:
+    // Search ALL products inside that category.
+    //
+    // Homepage:
+    // Search ALL products, including featured and non-featured.
+    // =========================================================
+
+    let searchableProducts;
+
+    if (pageCategory) {
+        searchableProducts = products.filter(product =>
+            String(product.category || '').toLowerCase() ===
+            pageCategory.toLowerCase()
         );
+    } else {
+        // Homepage search = ALL products
+        searchableProducts = products;
+    }
 
+    // =========================================================
+    // SEARCH ALL IMPORTANT PRODUCT INFORMATION
+    // =========================================================
 
-    const filtered =
-        searchableProducts.filter(
-            product => {
+    const normalizedQuery = normalizeText(searchTerm);
 
-                const name =
-                    normalizeText(
-                        product.name
-                    );
+    const results = searchableProducts.filter(product => {
 
+        const searchableText = [
+            product.name,
+            product.description,
+            product.category,
+            product.slug,
+            product.vendor,
+            product.farmSize,
+            product.packageType,
 
-                const desc =
-                    normalizeText(
-                        product.description
-                    );
+            // Farm package contents
+            Array.isArray(product.includes)
+                ? product.includes.join(' ')
+                : product.includes
 
+        ]
+            .filter(Boolean)
+            .join(' ');
 
-                const category =
-                    normalizeText(
-                        product.category
-                    );
+        return normalizeText(searchableText).includes(normalizedQuery);
+    });
 
+    // =========================================================
+    // DISPLAY SEARCH RESULTS
+    // =========================================================
 
-                const slug =
-                    normalizeText(
-                        product.slug
-                    );
+    const listProduct = document.querySelector('.listProduct');
 
+    if (!listProduct) return;
 
-                return (
+    listProduct.innerHTML = '';
 
-                    name.includes(
-                        normalizedSearch
-                    ) ||
+    if (!results.length) {
+        listProduct.innerHTML = `
+            <div class="search-no-results">
+                <h3>No products found</h3>
+                <p>
+                    We couldn't find any product matching
+                    "<strong>${escapeHTML(searchTerm)}</strong>".
+                </p>
+            </div>
+        `;
+        return;
+    }
 
-                    desc.includes(
-                        normalizedSearch
-                    ) ||
+    results.forEach(product => {
+        const card = createProductCard(product, searchTerm);
 
-                    category.includes(
-                        normalizedSearch
-                    ) ||
-
-                    slug.includes(
-                        normalizedSearch
-                    )
-
-                );
-
-            }
-        );
-
-
-    addDataToHTML(
-        filtered,
-        rawSearch
-    );
+        if (card) {
+            listProduct.appendChild(card);
+        }
+    });
 }
 
 
@@ -1047,57 +1119,54 @@ function performSearch() {
 function setupSearch() {
 
     const searchInput =
-        document.getElementById(
-            'searchInput'
-        );
-
+        document.getElementById('searchInput');
 
     const searchBtn =
-        document.querySelector(
-            '.search-button'
-        );
+        document.querySelector('.search-button');
 
 
     if (searchInput) {
 
-        searchInput.addEventListener(
-            'input',
-            performSearch
-        );
+        // Search as user types
+        searchInput.addEventListener('input', function () {
+
+            performSearch(this.value);
+
+        });
 
 
-        searchInput.addEventListener(
-            'keypress',
-            e => {
+        // Search when Enter is pressed
+        searchInput.addEventListener('keypress', function (e) {
 
-                if (e.key === 'Enter') {
+            if (e.key === 'Enter') {
 
-                    e.preventDefault();
+                e.preventDefault();
 
-                    performSearch();
-
-                }
+                performSearch(this.value);
 
             }
-        );
+
+        });
 
     }
 
 
     if (searchBtn) {
 
-        searchBtn.addEventListener(
-            'click',
-            e => {
+        searchBtn.addEventListener('click', function (e) {
 
-                e.preventDefault();
+            e.preventDefault();
 
-                performSearch();
+            if (searchInput) {
+
+                performSearch(searchInput.value);
 
             }
-        );
+
+        });
 
     }
+
 }
 
 
@@ -1106,13 +1175,18 @@ function setupSearch() {
    if it calls searchProducts()
 */
 
-window.searchProducts =
-    function () {
+window.searchProducts = function () {
 
-        performSearch();
+    const searchInput =
+        document.getElementById('searchInput');
 
-    };
+    if (searchInput) {
 
+        performSearch(searchInput.value);
+
+    }
+
+};
 
 /* =========================================================
    🛒 CART OPEN / CLOSE
@@ -1338,6 +1412,10 @@ async function initializeProductPage() {
    RENDER SINGLE PRODUCT
 ========================================================= */
 
+/* =========================================================
+   RENDER SINGLE PRODUCT
+========================================================= */
+
 function renderSingleProduct(product) {
 
     const nameElement =
@@ -1362,6 +1440,10 @@ function renderSingleProduct(product) {
         document.getElementById("addProductToCart");
 
 
+    /* =====================================================
+       NAME
+    ===================================================== */
+
     if (nameElement) {
 
         nameElement.textContent =
@@ -1370,16 +1452,25 @@ function renderSingleProduct(product) {
     }
 
 
+    /* =====================================================
+       IMAGE
+    ===================================================== */
+
     if (imageElement) {
 
         imageElement.src =
             getProductImage(product.image);
 
         imageElement.alt =
-            product.name || "Wittyfare product";
+            product.name ||
+            "Wittyfare product";
 
     }
 
+
+    /* =====================================================
+       PRICE
+    ===================================================== */
 
     if (priceElement) {
 
@@ -1388,6 +1479,10 @@ function renderSingleProduct(product) {
 
     }
 
+
+    /* =====================================================
+       DESCRIPTION
+    ===================================================== */
 
     if (descriptionElement) {
 
@@ -1398,59 +1493,174 @@ function renderSingleProduct(product) {
     }
 
 
+    /* =====================================================
+       CATEGORY
+    ===================================================== */
+
     if (categoryElement) {
 
         categoryElement.textContent =
-            product.category || "Product";
+            product.category ||
+            "Product";
 
     }
 
+
+    /* =====================================================
+       DETAILS
+    ===================================================== */
 
     if (detailsElement) {
 
-        let details = "";
+        /* FARM PACKAGE */
 
-        if (product.description) {
+        if (
+            product.category === "farm-packages"
+        ) {
 
-            details += product.description;
+            let packageHTML = `
+                <div class="farm-package-details">
 
-        }
+                    <h3>
+                        🌱 Farm Package Details
+                    </h3>
+            `;
 
-        if (product.category) {
+            if (product.farmSize) {
 
-            if (details) {
-                details += "\n\n";
+                packageHTML += `
+                    <p>
+                        <strong>Designed for:</strong>
+                        ${escapeHTML(product.farmSize)}
+                    </p>
+                `;
+
             }
 
-            details +=
-                `Category: ${product.category}`;
+            if (product.packageType) {
+
+                packageHTML += `
+                    <p>
+                        <strong>Package type:</strong>
+                        ${escapeHTML(product.packageType)}
+                    </p>
+                `;
+
+            }
+
+            if (
+                Array.isArray(product.includes) &&
+                product.includes.length
+            ) {
+
+                packageHTML += `
+                    <h3>
+                        What's Included
+                    </h3>
+
+                    <ul class="package-details-list">
+                        ${product.includes
+                            .map(item => `
+                                <li>
+                                    ✓ ${escapeHTML(item)}
+                                </li>
+                            `)
+                            .join('')}
+                    </ul>
+                `;
+
+            }
+
+            if (product.vendor) {
+
+                packageHTML += `
+                    <p class="package-vendor">
+                        <strong>Vendor:</strong>
+                        ${escapeHTML(product.vendor)}
+                    </p>
+                `;
+
+            }
+
+            packageHTML += `
+                </div>
+            `;
+
+            detailsElement.innerHTML =
+                packageHTML;
 
         }
 
-        if (!details) {
+        /* NORMAL PRODUCT */
 
-            details =
-                `Quality ${product.name || "agricultural product"} available from Wittyfare Agrovet & Farms.`;
+        else {
+
+            let details = "";
+
+            if (product.description) {
+
+                details +=
+                    product.description;
+
+            }
+
+            if (product.category) {
+
+                if (details) {
+                    details += "\n\n";
+                }
+
+                details +=
+                    `Category: ${product.category}`;
+
+            }
+
+            if (product.vendor) {
+
+                if (details) {
+                    details += "\n\n";
+                }
+
+                details +=
+                    `Vendor: ${product.vendor}`;
+
+            }
+
+            if (!details) {
+
+                details =
+                    `Quality ${
+                        product.name ||
+                        "agricultural product"
+                    } available from Wittyfare Agrovet & Farms.`;
+
+            }
+
+            detailsElement.textContent =
+                details;
 
         }
-
-        detailsElement.textContent = details;
 
     }
 
+
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
 
     if (addButton) {
 
-        addButton.onclick = function () {
+        addButton.onclick =
+            function () {
 
-            addProductPageItem(product);
+                addProductPageItem(
+                    product
+                );
 
-        };
+            };
 
     }
-
 }
-
 
 /* =========================================================
    PRODUCT IMAGE PATH
