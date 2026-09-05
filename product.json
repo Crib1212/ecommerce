@@ -370,5 +370,12 @@
       "1 paper crate",
       "Other farm supplies"
     ]
-  }
+  },
+  {
+  "id": "test-seo-product-123",
+  "name": "Test SEO Product Abuja",
+  "price": 10000,
+  "category": "feed",
+  "description": "Test product for checking automatic sitemap generation."
+}
 ]
