@@ -962,7 +962,9 @@ function loadProducts() {
 
         products = data;
 
-
+if (typeof initializeProductPage === 'function') {
+    initializeProductPage();
+}
       const pageProducts =
     getProductsForCurrentPage();
 
@@ -1011,7 +1013,329 @@ renderCartItems();
     });
 }
 
+/* =========================================================
+   🔎 INDIVIDUAL PRODUCT PAGE + GOOGLE SEO
+========================================================= */
 
+function initializeProductPage() {
+
+    // Only run on the individual product page
+    if (!window.location.pathname.includes('/product')) {
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+
+    const productId = params.get('id');
+    const productSlug = params.get('slug');
+
+    if (!productId && !productSlug) {
+        console.warn('No product ID or slug found in URL.');
+        return;
+    }
+
+    const product = products.find(item =>
+        String(item.id) === String(productId) ||
+        String(item.slug) === String(productSlug)
+    );
+
+    if (!product) {
+        console.warn('Product not found:', productId || productSlug);
+        return;
+    }
+
+    /* -----------------------------------------
+       PRODUCT INFORMATION
+    ----------------------------------------- */
+
+    const name = product.name || 'Wittyfare Product';
+    const description =
+        product.description ||
+        `Buy ${name} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
+
+    const category = product.category || 'Agrovet Products';
+    const price = Number(product.price) || 0;
+
+    const image = product.image
+        ? new URL(product.image, window.location.origin).href
+        : `${window.location.origin}/images/logo.png`;
+
+    const productURL =
+        `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
+
+
+    /* -----------------------------------------
+       PAGE TITLE
+    ----------------------------------------- */
+
+    document.title =
+        `${name} | Wittyfare Agrovet & Farms Abuja`;
+
+
+    /* -----------------------------------------
+       META DESCRIPTION
+    ----------------------------------------- */
+
+    let descriptionTag =
+        document.querySelector('meta[name="description"]');
+
+    if (!descriptionTag) {
+
+        descriptionTag =
+            document.createElement('meta');
+
+        descriptionTag.name = 'description';
+
+        document.head.appendChild(descriptionTag);
+    }
+
+    descriptionTag.setAttribute(
+        'content',
+        description
+    );
+
+
+    /* -----------------------------------------
+       CANONICAL URL
+    ----------------------------------------- */
+
+    let canonical =
+        document.querySelector('link[rel="canonical"]');
+
+    if (!canonical) {
+
+        canonical =
+            document.createElement('link');
+
+        canonical.rel = 'canonical';
+
+        document.head.appendChild(canonical);
+    }
+
+    canonical.href = productURL;
+
+
+    /* -----------------------------------------
+       PRODUCT CONTENT
+    ----------------------------------------- */
+
+    const nameElement =
+        document.getElementById('productName');
+
+    const categoryElement =
+        document.getElementById('productCategory');
+
+    const priceElement =
+        document.getElementById('productPrice');
+
+    const descriptionElement =
+        document.getElementById('productDescription');
+
+    const imageElement =
+        document.getElementById('productImage');
+
+    const detailsElement =
+        document.getElementById('productDetails');
+
+
+    if (nameElement) {
+        nameElement.textContent = name;
+    }
+
+    if (categoryElement) {
+        categoryElement.textContent =
+            category.toUpperCase();
+    }
+
+    if (priceElement) {
+
+        priceElement.textContent =
+            `₦${price.toLocaleString('en-NG')}`;
+    }
+
+    if (descriptionElement) {
+        descriptionElement.textContent =
+            description;
+    }
+
+    if (imageElement) {
+
+        imageElement.src = image;
+
+        imageElement.alt =
+            `${name} - Wittyfare Agrovet & Farms Abuja`;
+
+        imageElement.loading = 'eager';
+    }
+
+    if (detailsElement) {
+
+        detailsElement.innerHTML = `
+            <p><strong>Product:</strong> ${name}</p>
+            <p><strong>Category:</strong> ${category}</p>
+            <p><strong>Price:</strong> ₦${price.toLocaleString('en-NG')}</p>
+            <p>
+                Buy ${name} from Wittyfare Agrovet & Farms,
+                serving farmers and customers in Abuja, Nigeria.
+            </p>
+        `;
+    }
+
+
+    /* -----------------------------------------
+       ADD TO CART
+    ----------------------------------------- */
+
+    const cartButton =
+        document.getElementById('addProductToCart');
+
+    if (cartButton) {
+
+        cartButton.onclick = function () {
+
+            addCart(product.id);
+
+        };
+    }
+
+
+    /* -----------------------------------------
+       GOOGLE PRODUCT STRUCTURED DATA
+    ----------------------------------------- */
+
+    const oldSchema =
+        document.getElementById('product-schema');
+
+    if (oldSchema) {
+        oldSchema.remove();
+    }
+
+    const schema =
+        document.createElement('script');
+
+    schema.type = 'application/ld+json';
+
+    schema.id = 'product-schema';
+
+    schema.textContent =
+        JSON.stringify({
+
+            "@context": "https://schema.org",
+
+            "@type": "Product",
+
+            "name": name,
+
+            "description": description,
+
+            "image": [
+                image
+            ],
+
+            "sku": String(product.id),
+
+            "category": category,
+
+            "brand": {
+                "@type": "Brand",
+                "name": "Wittyfare"
+            },
+
+            "offers": {
+
+                "@type": "Offer",
+
+                "url": productURL,
+
+                "priceCurrency": "NGN",
+
+                "price": price.toFixed(2),
+
+                "availability":
+                    "https://schema.org/InStock",
+
+                "seller": {
+
+                    "@type": "Organization",
+
+                    "name":
+                        "Wittyfare Agrovet & Farms Ltd"
+
+                }
+
+            }
+
+        });
+
+    document.head.appendChild(schema);
+
+
+    /* -----------------------------------------
+       OPEN GRAPH
+    ----------------------------------------- */
+
+    setProductMeta(
+        'og:title',
+        name
+    );
+
+    setProductMeta(
+        'og:description',
+        description
+    );
+
+    setProductMeta(
+        'og:image',
+        image
+    );
+
+    setProductMeta(
+        'og:url',
+        productURL
+    );
+
+    setProductMeta(
+        'og:type',
+        'product'
+    );
+
+
+    console.log(
+        'SEO product page initialized:',
+        name
+    );
+}
+
+
+/* =========================================================
+   META TAG HELPER
+========================================================= */
+
+function setProductMeta(property, content) {
+
+    let meta =
+        document.querySelector(
+            `meta[property="${property}"]`
+        );
+
+    if (!meta) {
+
+        meta =
+            document.createElement('meta');
+
+        meta.setAttribute(
+            'property',
+            property
+        );
+
+        document.head.appendChild(meta);
+    }
+
+    meta.setAttribute(
+        'content',
+        content
+    );
+}
 /* =========================================================
    🔍 SEARCH ENGINE
 ========================================================= */
@@ -1998,5 +2322,622 @@ function showProductPageError(title, message) {
         addButton.style.display = "none";
 
     }
+
+}
+
+/* =========================================================
+   🚀 WITTYFARE PRODUCT PAGE + SEO SYSTEM
+========================================================= */
+
+function getProductFromURL() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const id = params.get("id");
+    const slug = params.get("slug");
+
+    if (!id && !slug) {
+        return null;
+    }
+
+    return products.find(product =>
+        String(product.id) === String(id) ||
+        String(product.slug || "") === String(slug)
+    );
+}
+
+
+/* =========================================================
+   SEO HELPER
+========================================================= */
+
+function setMetaTag(name, content) {
+
+    let tag = document.querySelector(`meta[name="${name}"]`);
+
+    if (!tag) {
+
+        tag = document.createElement("meta");
+
+        tag.setAttribute("name", name);
+
+        document.head.appendChild(tag);
+    }
+
+    tag.setAttribute("content", content);
+}
+
+
+/* =========================================================
+   JSON-LD HELPER
+========================================================= */
+
+function addStructuredData(data, id) {
+
+    const oldSchema =
+        document.getElementById(id);
+
+    if (oldSchema) {
+        oldSchema.remove();
+    }
+
+    const script =
+        document.createElement("script");
+
+    script.type =
+        "application/ld+json";
+
+    script.id = id;
+
+    script.textContent =
+        JSON.stringify(data);
+
+    document.head.appendChild(script);
+}
+
+
+/* =========================================================
+   PRODUCT PAGE
+========================================================= */
+
+function initializeProductPage() {
+
+    /*
+       Wait until product.json has finished loading.
+    */
+
+    if (!Array.isArray(products) || products.length === 0) {
+
+        setTimeout(
+            initializeProductPage,
+            100
+        );
+
+        return;
+    }
+
+
+    const product =
+        getProductFromURL();
+
+
+    if (!product) {
+
+        console.warn(
+            "Wittyfare: Product not found."
+        );
+
+        const name =
+            document.getElementById("productName");
+
+        if (name) {
+            name.textContent =
+                "Product not found";
+        }
+
+        return;
+    }
+
+
+    /* =====================================================
+       PRODUCT VALUES
+    ===================================================== */
+
+    const productName =
+        product.name ||
+        "Wittyfare Product";
+
+    const description =
+        product.description ||
+        `Buy ${productName} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
+
+    const price =
+        Number(product.price || 0);
+
+    const category =
+        product.category ||
+        "Farm Products";
+
+    const image =
+        product.image ||
+        "/images/logo.png";
+
+    const slug =
+        product.slug ||
+        String(product.id)
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "");
+
+
+    /* =====================================================
+       PRODUCT URL
+    ===================================================== */
+
+    const productURL =
+        `https://www.wittyfare.com/product/?id=${encodeURIComponent(product.id)}`;
+
+
+    /* =====================================================
+       PAGE TITLE
+    ===================================================== */
+
+    document.title =
+        `${productName} | Wittyfare Agrovet & Farms`;
+
+
+    /* =====================================================
+       META DESCRIPTION
+    ===================================================== */
+
+    setMetaTag(
+        "description",
+        `${productName} available at Wittyfare Agrovet & Farms in Abuja, Nigeria. ${description}`
+            .substring(0, 160)
+    );
+
+
+    /* =====================================================
+       KEYWORDS
+    ===================================================== */
+
+    setMetaTag(
+        "keywords",
+        `${productName}, ${category}, agrovet products Abuja, farm products Nigeria, Wittyfare`
+    );
+
+
+    /* =====================================================
+       CANONICAL
+    ===================================================== */
+
+    let canonical =
+        document.getElementById("canonicalUrl");
+
+    if (!canonical) {
+
+        canonical =
+            document.createElement("link");
+
+        canonical.id =
+            "canonicalUrl";
+
+        canonical.rel =
+            "canonical";
+
+        document.head.appendChild(canonical);
+    }
+
+    canonical.href =
+        productURL;
+
+
+    /* =====================================================
+       PRODUCT IMAGE
+    ===================================================== */
+
+    const productImage =
+        document.getElementById("productImage");
+
+    if (productImage) {
+
+        productImage.src =
+            image;
+
+        productImage.alt =
+            `${productName} - Wittyfare Agrovet & Farms`;
+
+        productImage.loading =
+            "eager";
+    }
+
+
+    /* =====================================================
+       PRODUCT NAME
+    ===================================================== */
+
+    const productNameElement =
+        document.getElementById("productName");
+
+    if (productNameElement) {
+
+        productNameElement.textContent =
+            productName;
+    }
+
+
+    /* =====================================================
+       CATEGORY
+    ===================================================== */
+
+    const productCategory =
+        document.getElementById("productCategory");
+
+    if (productCategory) {
+
+        productCategory.textContent =
+            category;
+    }
+
+
+    /* =====================================================
+       PRICE
+    ===================================================== */
+
+    const productPrice =
+        document.getElementById("productPrice");
+
+    if (productPrice) {
+
+        productPrice.textContent =
+            `₦${price.toLocaleString()}`;
+    }
+
+
+    /* =====================================================
+       DESCRIPTION
+    ===================================================== */
+
+    const productDescription =
+        document.getElementById("productDescription");
+
+    if (productDescription) {
+
+        productDescription.textContent =
+            description;
+    }
+
+
+    /* =====================================================
+       PRODUCT DETAILS
+    ===================================================== */
+
+    const productDetails =
+        document.getElementById("productDetails");
+
+    if (productDetails) {
+
+        let detailsHTML = "";
+
+        if (product.vendor) {
+
+            detailsHTML += `
+                <p>
+                    <strong>Vendor:</strong>
+                    ${product.vendor}
+                </p>
+            `;
+        }
+
+        if (product.farmSize) {
+
+            detailsHTML += `
+                <p>
+                    <strong>Farm Size:</strong>
+                    ${product.farmSize}
+                </p>
+            `;
+        }
+
+        if (product.packageType) {
+
+            detailsHTML += `
+                <p>
+                    <strong>Package Type:</strong>
+                    ${product.packageType}
+                </p>
+            `;
+        }
+
+        if (
+            Array.isArray(product.includes) &&
+            product.includes.length
+        ) {
+
+            detailsHTML += `
+                <h3>Package Includes</h3>
+                <ul>
+                    ${product.includes.map(item =>
+                        `<li>${item}</li>`
+                    ).join("")}
+                </ul>
+            `;
+        }
+
+        if (!detailsHTML) {
+
+            detailsHTML =
+                `<p>${description}</p>`;
+        }
+
+        productDetails.innerHTML =
+            detailsHTML;
+    }
+
+
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
+
+    const addButton =
+        document.getElementById(
+            "addProductToCart"
+        );
+
+    if (addButton) {
+
+        addButton.onclick =
+            function () {
+
+                addCart(product.id);
+
+            };
+    }
+
+
+    /* =====================================================
+       PRODUCT STRUCTURED DATA
+    ===================================================== */
+
+    const absoluteImage =
+        image.startsWith("http")
+            ? image
+            : `https://www.wittyfare.com${image}`;
+
+
+    const productSchema = {
+
+        "@context":
+            "https://schema.org",
+
+        "@type":
+            "Product",
+
+        "name":
+            productName,
+
+        "description":
+            description,
+
+        "image": [
+            absoluteImage
+        ],
+
+        "sku":
+            String(product.id),
+
+        "url":
+            productURL,
+
+        "brand": {
+
+            "@type":
+                "Brand",
+
+            "name":
+                "Wittyfare"
+
+        },
+
+        "offers": {
+
+            "@type":
+                "Offer",
+
+            "url":
+                productURL,
+
+            "priceCurrency":
+                "NGN",
+
+            "price":
+                price.toString(),
+
+            "availability":
+                "https://schema.org/InStock",
+
+            "seller": {
+
+                "@type":
+                    "Organization",
+
+                "name":
+                    "Wittyfare Agrovet & Farms"
+
+            }
+
+        }
+
+    };
+
+
+    addStructuredData(
+        productSchema,
+        "wittyfare-product-schema"
+    );
+
+
+    /* =====================================================
+       BREADCRUMB SCHEMA
+    ===================================================== */
+
+    const breadcrumbSchema = {
+
+        "@context":
+            "https://schema.org",
+
+        "@type":
+            "BreadcrumbList",
+
+        "itemListElement": [
+
+            {
+
+                "@type":
+                    "ListItem",
+
+                "position":
+                    1,
+
+                "name":
+                    "Home",
+
+                "item":
+                    "https://www.wittyfare.com/"
+
+            },
+
+            {
+
+                "@type":
+                    "ListItem",
+
+                "position":
+                    2,
+
+                "name":
+                    category,
+
+                "item":
+                    `https://www.wittyfare.com/category/${category}/`
+
+            },
+
+            {
+
+                "@type":
+                    "ListItem",
+
+                "position":
+                    3,
+
+                "name":
+                    productName,
+
+                "item":
+                    productURL
+
+            }
+
+        ]
+
+    };
+
+
+    addStructuredData(
+        breadcrumbSchema,
+        "wittyfare-breadcrumb-schema"
+    );
+
+
+    /* =====================================================
+       RELATED PRODUCTS
+    ===================================================== */
+
+    renderRelatedProducts(product);
+
+
+    console.log(
+        "✅ Wittyfare SEO loaded:",
+        productName
+    );
+}
+
+
+/* =========================================================
+   RELATED PRODUCTS
+========================================================= */
+
+function renderRelatedProducts(currentProduct) {
+
+    const container =
+        document.getElementById(
+            "relatedProducts"
+        );
+
+    if (!container) return;
+
+
+    const related =
+        products
+            .filter(product =>
+                product.id !== currentProduct.id &&
+                product.category === currentProduct.category
+            )
+            .slice(0, 6);
+
+
+    container.innerHTML = "";
+
+
+    related.forEach(product => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "item";
+
+
+        const productURL =
+            `/product/?id=${encodeURIComponent(product.id)}`;
+
+
+        card.innerHTML = `
+
+            <a
+                href="${productURL}"
+                style="text-decoration:none;color:inherit;"
+            >
+
+                <img
+                    src="${product.image || '/images/logo.png'}"
+                    alt="${product.name}"
+                    loading="lazy"
+                >
+
+                <h2>
+                    ${product.name}
+                </h2>
+
+            </a>
+
+            <div class="price">
+                ₦${Number(product.price || 0).toLocaleString()}
+            </div>
+
+            <button
+                type="button"
+                onclick="addCart('${product.id}')"
+            >
+                Add to cart
+            </button>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
 
 }
