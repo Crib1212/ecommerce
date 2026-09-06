@@ -165,9 +165,49 @@
     "name": "Tylodox Extra 100g",
     "price": 9500,
     "category": "drugs",
+    "subcategory": "antibiotics",
     "slug": "tylodox-extra-100g",
     "image": "/images/26.png",
     "description": "Tylodox Extra 100g veterinary product."
+  },
+   {
+    "id": "drugs-doxygen-100g",
+    "name": "Doxygen 100g",
+    "price": 9500,
+    "category": "drugs",
+    "subcategory": "others",
+    "slug": "doxygen-100g",
+    "image": "/images/doxygen.png",
+    "description": "Doxygen 100g veterinary product."
+  },
+   {
+    "id": "drugs-chick_on_1L",
+    "name": "Chick on 1L",
+    "price": 4300,
+    "category": "drugs",
+    "slug": "chick_on_1L",
+    "image": "/images/chick_on_1L.png",
+    "description": "Chick on 1L veterinary product."
+  },
+   {
+    "id": "otc",
+    "name": "otc",
+    "price": 2500,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "otc",
+    "image": "/images/otc.jpg",
+    "description": "otc veterinary product."
+  },
+   {
+    "id": "drugs-medecol-1L",
+    "name": "Medecol 1L",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "medecol-1L",
+    "image": "/images/medecol_1L.png",
+    "description": "Medecol 1L veterinary product."
   },
   {
     "id": "vaccines-dhlpp",

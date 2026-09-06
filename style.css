@@ -3346,3 +3346,34 @@ footer {
     }
 
 }
+.subcategory-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.subcategory-card {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.subcategory-card:hover {
+    transform: translateY(-5px);
+}
+
+.subcategory-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.subcategory-card h3 {
+    padding: 10px;
+    margin: 0;
+}

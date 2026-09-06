@@ -921,7 +921,7 @@ function getProductPageURL(id) {
     ) {
 
         return (
-            "../../product/index.html?id=" +
+            "/product/index.html?id=" +
             encodeURIComponent(id)
         );
     }
@@ -1450,38 +1450,117 @@ function getPageCategory() {
 function getProductsForCurrentPage() {
 
     const category =
-        getPageCategory();
+        document.body.dataset.category || "";
+
+    const subcategory =
+        document.body.dataset.subcategory || "";
+
+    const pageType =
+        document.body.dataset.pageType || "";
 
 
-    /*
-       CATEGORY PAGE
-       Show all products in category
-    */
+    /* =====================================
+       SUBCATEGORY LIST PAGE
+       Example: /category/drugs/
+       Do not display products
+    ===================================== */
 
-    if (category) {
-
-        return products.filter(
-            product =>
-
-                String(
-                    product.category || ""
-                ).toLowerCase() ===
-                category.toLowerCase()
-        );
+    if (pageType === "subcategory-list") {
+        return [];
     }
 
 
-    /*
+   /* =====================================
+   OTHERS PAGE
+   Products without subcategory
+===================================== */
+
+if (
+    category &&
+    subcategory === "others"
+) {
+    return products.filter(product => {
+
+        const productCategory =
+            String(
+                product.category || ""
+            ).toLowerCase();
+
+        const productSubcategory =
+            String(
+                product.subcategory || ""
+            ).toLowerCase();
+
+        return (
+            productCategory ===
+            category.toLowerCase()
+            &&
+            (
+                !productSubcategory ||
+                productSubcategory === "others"
+            )
+        );
+    });
+}
+
+
+/* =====================================
+   SUBCATEGORY PAGE
+   Example: /drugs/antibiotics/
+===================================== */
+
+if (category && subcategory) {
+    return products.filter(product => {
+
+        const productCategory =
+            String(
+                product.category || ""
+            ).toLowerCase();
+
+        const productSubcategory =
+            String(
+                product.subcategory || ""
+            ).toLowerCase();
+
+        return (
+            productCategory ===
+            category.toLowerCase()
+            &&
+            productSubcategory ===
+            subcategory.toLowerCase()
+        );
+    });
+}
+
+
+    /* =====================================
+       NORMAL CATEGORY PAGE
+    ===================================== */
+
+    if (category) {
+
+        return products.filter(product =>
+
+            String(
+                product.category || ""
+            ).toLowerCase() ===
+            category.toLowerCase()
+
+        );
+
+    }
+
+
+    /* =====================================
        HOMEPAGE
-       Show only featured products
-    */
+    ===================================== */
 
     return products.filter(
         product =>
             product.featured === true
     );
-}
 
+}
 
 /* =========================================================
    📦 LOAD CENTRAL PRODUCT CATALOGUE
