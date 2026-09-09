@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">WittyFare</string>
+    <string name="title_activity_main">WittyFare</string>
+    <string name="package_name">com.wittyfare.app</string>
+    <string name="custom_url_scheme">com.wittyfare.app</string>
+</resources>
