@@ -5,8 +5,28 @@
     "price": 1830,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
-    "image": "/images/agriteddoc.webp",
+    "image": "/images/dayold/agriteddoc.webp",
     "description": "Agrited day-old broiler chicks for poultry farmers.",
+    "featured": true
+  },
+   {
+    "id": "ddforce-1l",
+    "name": "DDforce 1L",
+    "price": 13000,
+    "category": "chemical",
+    "slug": "insecticide",
+    "image": "/images/chemical/ddforce.jpg",
+    "description": "agro chemical.",
+    "featured": true
+  },
+   {
+    "id": "gobara1l",
+    "name": "Gobara1l",
+    "price": 4500,
+    "category": "chemical",
+    "slug": "herbicide",
+    "image": "/images/chemical/Gobara_1L.png",
+    "description": "agro chemical.",
     "featured": true
   },
   {
@@ -15,7 +35,7 @@
     "price": 1300,
     "category": "day-old",
     "slug": "sayed-day-old-broiler-chicks",
-    "image": "/images/sayed-dayold-broiler.png",
+    "image": "/images/dayold/sayed-dayold-broiler.png",
     "description": "Sayed day-old broiler chicks for poultry farming."
   },
   {
@@ -24,7 +44,7 @@
     "price": 1250,
     "category": "day-old",
     "slug": "tosam-broiler-chicks",
-    "image": "/images/tosam-chicks.png",
+    "image": "/images/dayold/tosam-chicks.png",
     "description": "Tosam day-old broiler chicks for poultry production."
   },
   {
@@ -33,7 +53,7 @@
     "price": 1100,
     "category": "day-old",
     "slug": "olam-broiler-chicks",
-    "image": "/images/olam-broiler-chicks.png",
+    "image": "/images/dayold/olam-broiler-chicks.png",
     "description": "Olam day-old broiler chicks for poultry farmers."
   },
 
@@ -43,7 +63,7 @@
     "price": 22950,
     "category": "feed",
     "slug": "ultima-finisher-22950",
-    "image": "/images/Ultima_finisher.png",
+    "image": "/images/poultryfeed/Ultima_finisher.png",
     "description": "Ultima finisher poultry feed in a 25kg bag.",
     "featured": true
   },
@@ -53,7 +73,7 @@
     "price": 22950,
     "category": "feed",
     "slug": "breedwell-psc-25kg",
-    "image": "/images/Breed_well_psc_25kg.png",
+    "image": "/images/poultryfeed/Breed_well_psc_25kg.png",
     "description": "Breedwell PSC poultry feed in a 25kg bag."
   },
   {
@@ -62,7 +82,7 @@
     "price": 12200,
     "category": "feed",
     "slug": "hybrid-grower-mash-25kg",
-    "image": "/images/Hybrid_grower_mash-2.png",
+    "image": "/images/poultryfeed/Hybrid_grower_mash-2.png",
     "description": "Hybrid grower mash 25kg for growing poultry."
   },
   {
@@ -71,7 +91,7 @@
     "price": 13000,
     "category": "feed",
     "slug": "hybrid-layer-mash-25kg",
-    "image": "/images/Hybrid_layer_mash-3.png",
+    "image": "/images/poultryfeed/Hybrid_layer_mash-3.png",
     "description": "Hybrid layer mash 25kg for laying birds."
   },
   {
@@ -80,7 +100,7 @@
     "price": 20300,
     "category": "feed",
     "slug": "hybrid-3-in-1-special",
-    "image": "/images/Hybrid_3_in_1_Special-4.png",
+    "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
     "description": "Hybrid 3 in 1 special poultry feed."
   },
   {
@@ -89,7 +109,7 @@
     "price": 22000,
     "category": "feed",
     "slug": "breedwell-finisher-25kg",
-    "image": "/images/Breedwell-Broiler-Finisher-pellet.png",
+    "image": "/images/poultryfeed/Breedwell-Broiler-Finisher-pellet.png",
     "description": "Breedwell broiler finisher feed in a 25kg bag."
   },
   {
@@ -98,7 +118,7 @@
     "price": 19750,
     "category": "feed",
     "slug": "hybrid-base1-super-starter-25kg",
-    "image": "/images/Hybrid_base1_Starter-25kg-6.png",
+    "image": "/images/poultryfeed/Hybrid_base1_Starter-25kg-6.png",
     "description": "Hybrid Base1 super starter poultry feed."
   },
   {
@@ -107,7 +127,7 @@
     "price": 16700,
     "category": "feed",
     "slug": "hybrid-finisher-pellet-25kg",
-    "image": "/images/Hybrid_finisher_pellet_25kg-7.png",
+    "image": "/images/poultryfeed/Hybrid_finisher_pellet_25kg-7.png",
     "description": "Hybrid finisher pellet feed in a 25kg bag."
   },
   {
@@ -116,16 +136,16 @@
     "price": 20150,
     "category": "feed",
     "slug": "ultima-finisher",
-    "image": "/images/Ultima_finisher.png",
+    "image": "/images/poultryfeed/Ultima_finisher.png",
     "description": "Ultima finisher feed for poultry."
   },
   {
-    "id": "feed-booster",
+    "id": "booster",
     "name": "Booster",
     "price": 1750,
-    "category": "feed",
+    "category": "pet-store",
     "slug": "booster",
-    "image": "/images/Booster.png",
+    "image": "/images/pet/Booster.png",
     "description": "Booster poultry feed product.",
     "featured": true
   },
@@ -137,7 +157,7 @@
     "price": 12000,
     "category": "equipment",
     "slug": "paper-crate",
-    "image": "/images/14.png",
+    "image": "/images/equipment/paper_crate.png",
     "description": "Paper crate for poultry and farm handling.",
     "featured": true
   },
@@ -147,7 +167,7 @@
     "price": 100,
     "category": "fish",
     "slug": "juvenile-fish",
-    "image": "/images/juvefish.jpg",
+    "image": "/images/fish/juvefish.jpg",
     "description": "Juvenile fish.",
     "featured": true
   },
@@ -157,7 +177,7 @@
     "price": 17500,
     "category": "equipment",
     "slug": "pulse-sprayer-15l",
-    "image": "/images/15.png",
+    "image": "/images/equipment/Pulse_sprayer_15L.png",
     "description": "15 litre pulse sprayer for farm applications."
   },
   {
@@ -167,7 +187,7 @@
     "category": "drugs",
     "subcategory": "antibiotics",
     "slug": "tylodox-extra-100g",
-    "image": "/images/26.png",
+    "image": "/images/drugs/26.png",
     "description": "Tylodox Extra 100g veterinary product."
   },
    {
@@ -175,9 +195,9 @@
     "name": "Doxygen 100g",
     "price": 9500,
     "category": "drugs",
-    "subcategory": "others",
+    "subcategory": "antibiotics",
     "slug": "doxygen-100g",
-    "image": "/images/doxygen.png",
+    "image": "/images/drugs/doxygen.png",
     "description": "Doxygen 100g veterinary product."
   },
    {
@@ -185,8 +205,9 @@
     "name": "Chick on 1L",
     "price": 4300,
     "category": "drugs",
+    "subcategory": "Organic",
     "slug": "chick_on_1L",
-    "image": "/images/chick_on_1L.png",
+    "image": "/images/drugs/chick_on_1L.png",
     "description": "Chick on 1L veterinary product."
   },
    {
@@ -196,17 +217,44 @@
     "category": "drugs",
     "subcategory": "antibiotics",
     "slug": "otc",
-    "image": "/images/OTC.jpg",
+    "image": "/images/drugs/OTC.jpg",
     "description": "otc veterinary product."
+  },
+    {
+    "id": "animalcarelayermash25kg",
+    "name": "animalcarelayermash25kg",
+    "price": 9500,
+    "category": "feed",
+    "slug": "animalcarelayer",
+    "image": "/images/poultryfeed/animalcarelayermash25kg.png",
+    "description": "feed veterinary product."
+  },
+     {
+    "id": "3_in_1_drinker",
+    "name": "3-in-1 Drinker",
+    "price": 1000,
+    "category": "equipment",
+    "slug": "3-in-1-drinker",
+    "image": "/images/equipment/3_in_1_drinker.png",
+    "description": "3-in-1 Drinker veterinary product."
+  },
+       {
+    "id": "3_in_1_EDS",
+    "name": "3-in-1 EDS",
+    "price": 1000,
+    "category": "vaccines",
+    "slug": "3-in-1-eds",
+    "image": "/images/vaccine/3_in_1_EDS.png",
+    "description": "3-in-1 EDS veterinary product."
   },
    {
     "id": "drugs-medecol-1L",
     "name": "Medecol 1L",
     "price": 4300,
     "category": "drugs",
-    "subcategory": "antibiotics",
+    "subcategory": "Organic",
     "slug": "Medecol-1L",
-    "image": "/images/Medecol_1L.png",
+    "image": "/images/drugs/Medecol_1L.png",
     "description": "Medecol 1L veterinary product."
   },
   {
@@ -215,7 +263,7 @@
     "price": 5000,
     "category": "vaccines",
     "slug": "dhlpp",
-    "image": "/images/DHLPP.png",
+    "image": "/images/vaccine/DHLPP.png",
     "description": "DHLPP vaccine product for animal health."
   },
 
@@ -225,7 +273,7 @@
     "price": 23000,
     "category": "feed",
     "slug": "blue-crown-2mm",
-    "image": "/images/Blue_crown_2mm.png",
+    "image": "/images/fishfeed/Blue_crown_2mm.png",
     "description": "Blue Crown fish feed in 2mm size."
   },
   {
@@ -234,7 +282,7 @@
     "price": 22000,
     "category": "feed",
     "slug": "blue-crown-3mm",
-    "image": "/images/Bluecrown-3mm-53.png",
+    "image": "/images/fishfeed/Bluecrown-3mm-53.png",
     "description": "Blue Crown fish feed in 3mm size."
   },
   {
@@ -243,7 +291,7 @@
     "price": 18500,
     "category": "feed",
     "slug": "blue-crown-4mm",
-    "image": "/images/Bluecrown-4mm-54.png",
+    "image": "/images/fishfeed/Bluecrown-4mm-54.png",
     "description": "Blue Crown fish feed in 4mm size."
   },
   {
@@ -252,7 +300,7 @@
     "price": 18000,
     "category": "feed",
     "slug": "blue-crown-6mm",
-    "image": "/images/Bluecrown-6mm-56.png",
+    "image": "/images/fishfeed/Bluecrown-6mm-56.png",
     "description": "Blue Crown fish feed in 6mm size."
   },
   {
@@ -261,7 +309,7 @@
     "price": 18000,
     "category": "feed",
     "slug": "blue-crown-9mm",
-    "image": "/images/Bluecrown-9mm-59.png",
+    "image": "/images/fishfeed/Bluecrown-9mm-59.png",
     "description": "Blue Crown fish feed in 9mm size."
   },
 
@@ -410,12 +458,5 @@
       "1 paper crate",
       "Other farm supplies"
     ]
-  },
-  {
-  "id": "test-seo-product-123",
-  "name": "Test SEO Product Abuja",
-  "price": 10000,
-  "category": "feed",
-  "description": "Test product for checking automatic sitemap generation."
-}
+  }
 ]
