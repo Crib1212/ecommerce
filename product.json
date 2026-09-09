@@ -15,7 +15,7 @@
     "price": 13000,
     "category": "chemical",
     "slug": "insecticide",
-    "image": "/images/chemical/ddforce.png",
+    "image": "/images/chemical/DDforce.png",
     "description": "agro chemical.",
     "featured": true
   },
