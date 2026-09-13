@@ -2,14 +2,20 @@ const fs = require('fs');
 const path = require('path');
 
 const productsPath = path.join(__dirname, 'product.json');
+const templatePath = path.join(__dirname, 'product', 'index.html');
 const sitemapPath = path.join(__dirname, 'sitemap.xml');
-const productPagesPath = path.join(__dirname, 'product');
+const productDirectory = path.join(__dirname, 'product');
+
+const baseURL = 'https://www.wittyfare.com';
 
 const products = JSON.parse(
     fs.readFileSync(productsPath, 'utf8')
 );
 
-const baseURL = 'https://www.wittyfare.com';
+const template = fs.readFileSync(
+    templatePath,
+    'utf8'
+);
 
 const urls = [];
 
@@ -28,12 +34,20 @@ function escapeHtml(value) {
 }
 
 
-function cleanDescription(product) {
-    const description =
-        product.description ||
-        `Buy ${product.name || 'quality farm product'} from Wittyfare Agrovet & Farms.`;
+function escapeJson(value) {
+    return JSON.stringify(value)
+        .replace(/</g, '\\u003c')
+        .replace(/>/g, '\\u003e')
+        .replace(/&/g, '\\u0026');
+}
 
-    return String(description)
+
+function getDescription(product) {
+
+    return String(
+        product.description ||
+        `Buy ${product.name || 'quality agrovet product'} from Wittyfare Agrovet & Farms.`
+    )
         .replace(/\s+/g, ' ')
         .trim()
         .substring(0, 160);
@@ -48,7 +62,10 @@ function getImageURL(product) {
 
     const image = String(product.image);
 
-    if (image.startsWith('http://') || image.startsWith('https://')) {
+    if (
+        image.startsWith('http://') ||
+        image.startsWith('https://')
+    ) {
         return image;
     }
 
@@ -71,15 +88,15 @@ function getPrice(product) {
         product.amount ??
         0;
 
-    const numericPrice = String(rawPrice)
-        .replace(/[^\d.]/g, '');
-
-    return numericPrice || '0';
+    return String(rawPrice)
+        .replace(/[^\d.]/g, '') || '0';
 }
 
 
 function getProductURL(product) {
+
     return `${baseURL}/product/${encodeURIComponent(product.slug)}/`;
+
 }
 
 
@@ -97,7 +114,7 @@ urls.push(`
 
 
 /* =========================================================
-   GENERATE INDIVIDUAL PRODUCT PAGES
+   GENERATE PRODUCT PAGES
 ========================================================= */
 
 products.forEach(product => {
@@ -116,7 +133,7 @@ products.forEach(product => {
         'Agrovet Product';
 
     const description =
-        cleanDescription(product);
+        getDescription(product);
 
     const imageURL =
         getImageURL(product);
@@ -128,29 +145,14 @@ products.forEach(product => {
         getProductURL(product);
 
 
-    /* -----------------------------------------------------
-       Product directory
-    ----------------------------------------------------- */
-
-    const productDirectory =
-        path.join(
-            productPagesPath,
-            product.slug
-        );
-
-
-    fs.mkdirSync(
-        productDirectory,
-        { recursive: true }
-    );
-
-
-    /* -----------------------------------------------------
-       Product structured data
-    ----------------------------------------------------- */
+    /* =====================================================
+       PRODUCT SCHEMA
+    ===================================================== */
 
     const productSchema = {
+
         "@context": "https://schema.org",
+
         "@type": "Product",
 
         "name": productName,
@@ -178,6 +180,7 @@ products.forEach(product => {
         },
 
         "offers": {
+
             "@type": "Offer",
 
             "url": productURL,
@@ -190,190 +193,282 @@ products.forEach(product => {
                 "https://schema.org/InStock",
 
             "seller": {
+
                 "@type": "Organization",
-                "name": "Wittyfare Agrovet & Farms"
+
+                "name":
+                    "Wittyfare Agrovet & Farms"
+
             }
+
         }
+
     };
 
 
-    /* -----------------------------------------------------
-       Static HTML
-    ----------------------------------------------------- */
+    /* =====================================================
+       BREADCRUMB SCHEMA
+    ===================================================== */
 
-    const html = `<!DOCTYPE html>
-<html lang="en">
+    const breadcrumbSchema = {
 
-<head>
+        "@context": "https://schema.org",
 
-    <meta charset="UTF-8">
+        "@type": "BreadcrumbList",
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        "itemListElement": [
 
-    <title>
-        ${escapeHtml(productName)}
-        | ${escapeHtml(category)}
-        | Wittyfare Agrovet & Farms
-    </title>
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": `${baseURL}/`
+            },
 
-    <meta
-        name="description"
-        content="${escapeHtml(description)}"
-    >
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": category,
+                "item":
+                    `${baseURL}/category/${encodeURIComponent(category)}/`
+            },
 
-    <meta
-        name="robots"
-        content="index, follow"
-    >
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": productName,
+                "item": productURL
+            }
 
-    <link
-        rel="canonical"
-        href="${escapeHtml(productURL)}"
-    >
+        ]
 
-
-    <!-- Open Graph -->
-
-    <meta
-        property="og:type"
-        content="product"
-    >
-
-    <meta
-        property="og:title"
-        content="${escapeHtml(productName)} | Wittyfare Agrovet & Farms"
-    >
-
-    <meta
-        property="og:description"
-        content="${escapeHtml(description)}"
-    >
-
-    <meta
-        property="og:image"
-        content="${escapeHtml(imageURL)}"
-    >
-
-    <meta
-        property="og:url"
-        content="${escapeHtml(productURL)}"
-    >
-
-    <meta
-        property="og:site_name"
-        content="Wittyfare Agrovet & Farms"
-    >
+    };
 
 
-    <!-- Product structured data -->
+    /* =====================================================
+       START WITH YOUR REAL PRODUCT PAGE TEMPLATE
+    ===================================================== */
 
-    <script type="application/ld+json">
-${JSON.stringify(productSchema, null, 4)}
-    </script>
-
-
-    <link
-        rel="stylesheet"
-        href="/styles.css"
-    >
-
-</head>
+    let html = template;
 
 
-<body>
+    /* =====================================================
+       FIX ROOT-RELATIVE PATHS
+    ===================================================== */
 
-    <main class="product-page">
-
-        <div class="product-image">
-
-            <img
-                src="${escapeHtml(imageURL)}"
-                alt="${escapeHtml(productName)}"
-                id="productImage"
-            >
-
-        </div>
+    html = html
+        .replaceAll('../style.css', '/style.css')
+        .replaceAll('../app.js', '/app.js')
+        .replaceAll('../images/', '/images/')
+        .replaceAll('../index.html', '/')
+        .replaceAll('../checkout.html', '/checkout.html')
+        .replaceAll('../category/', '/category/');
 
 
-        <div class="product-information">
+    /* =====================================================
+       TITLE
+    ===================================================== */
 
-            <span id="productCategory">
+    html = html.replace(
+        /<title>[\s\S]*?<\/title>/,
+        `<title>${escapeHtml(productName)} | ${escapeHtml(category)} | Wittyfare Agrovet & Farms</title>`
+    );
+
+
+    /* =====================================================
+       META DESCRIPTION
+    ===================================================== */
+
+    html = html.replace(
+        /<meta id="metaDescription"[\s\S]*?>/,
+        `<meta id="metaDescription"
+      name="description"
+      content="${escapeHtml(description)}">`
+    );
+
+
+    /* =====================================================
+       KEYWORDS
+    ===================================================== */
+
+    const keywords =
+        `${productName}, ${category}, agrovet products Abuja, farm products Abuja, Wittyfare Agrovet`;
+
+    html = html.replace(
+        /<meta id="metaKeywords"[\s\S]*?>/,
+        `<meta id="metaKeywords"
+      name="keywords"
+      content="${escapeHtml(keywords)}">`
+    );
+
+
+    /* =====================================================
+       CANONICAL
+    ===================================================== */
+
+    html = html.replace(
+        /<link id="canonicalUrl"[\s\S]*?>/,
+        `<link id="canonicalUrl"
+      rel="canonical"
+      href="${escapeHtml(productURL)}">`
+    );
+
+
+    /* =====================================================
+       PRODUCT IMAGE
+    ===================================================== */
+
+    html = html.replace(
+        /<img id="productImage"[\s\S]*?>/,
+        `<img id="productImage"
+             src="${escapeHtml(imageURL)}"
+             alt="${escapeHtml(productName)}"
+             loading="lazy">`
+    );
+
+
+    /* =====================================================
+       CATEGORY
+    ===================================================== */
+
+    html = html.replace(
+        /<span id="productCategory"[\s\S]*?>[\s\S]*?<\/span>/,
+        `<span id="productCategory"
+              class="product-category">
+
                 ${escapeHtml(category)}
-            </span>
+
+            </span>`
+    );
 
 
-            <h1 id="productName">
+    /* =====================================================
+       PRODUCT NAME
+    ===================================================== */
+
+    html = html.replace(
+        /<h1 id="productName">[\s\S]*?<\/h1>/,
+        `<h1 id="productName">
+
                 ${escapeHtml(productName)}
-            </h1>
+
+            </h1>`
+    );
 
 
-            <div id="productPrice">
+    /* =====================================================
+       PRICE
+    ===================================================== */
+
+    html = html.replace(
+        /<div id="productPrice"[\s\S]*?>[\s\S]*?<\/div>/,
+        `<div id="productPrice"
+             class="product-page-price">
+
                 ₦${escapeHtml(price)}
-            </div>
+
+            </div>`
+    );
 
 
-            <p id="productDescription">
+    /* =====================================================
+       DESCRIPTION
+    ===================================================== */
+
+    html = html.replace(
+        /<p id="productDescription"[\s\S]*?>[\s\S]*?<\/p>/,
+        `<p id="productDescription"
+               class="product-page-description">
+
                 ${escapeHtml(description)}
-            </p>
+
+            </p>`
+    );
 
 
-            <button
-                id="addProductToCart"
-                type="button"
-            >
-                Add to Cart
-            </button>
+    /* =====================================================
+       PRODUCT DETAILS
+    ===================================================== */
+
+    const details =
+        product.details ||
+        product.description ||
+        description;
+
+    html = html.replace(
+        /<div id="productDetails">[\s\S]*?<\/div>/,
+        `<div id="productDetails">
+
+                ${escapeHtml(details)}
+
+            </div>`
+    );
 
 
-            <div id="productDetails">
+    /* =====================================================
+       REMOVE OLD PRODUCT-PAGE STARTUP
+       
+       app.js already handles product initialization
+       after product.json has loaded.
+    ===================================================== */
 
-                ${escapeHtml(
-                    product.details ||
-                    product.description ||
-                    ''
-                )}
-
-            </div>
-
-        </div>
-
-    </main>
+    html = html.replace(
+        /<!-- =====================================================\s*PRODUCT PAGE STARTUP[\s\S]*?<\/script>\s*<\/body>/,
+        '</body>'
+    );
 
 
-    <div id="relatedProducts"></div>
+    /* =====================================================
+       ADD PRODUCT JSON-LD
+    ===================================================== */
+
+    const structuredData = `
+<script type="application/ld+json">
+${escapeJson(productSchema)}
+</script>
+
+<script type="application/ld+json">
+${escapeJson(breadcrumbSchema)}
+</script>
+`;
 
 
-    <script src="/app.js"></script>
+    html = html.replace(
+        '</head>',
+        `${structuredData}\n</head>`
+    );
 
-</body>
 
-</html>`;
+    /* =====================================================
+       CREATE PRODUCT DIRECTORY
+    ===================================================== */
 
-
-    /* -----------------------------------------------------
-       Write product HTML
-    ----------------------------------------------------- */
-
-    const productHTMLPath =
+    const productPath =
         path.join(
             productDirectory,
-            'index.html'
+            product.slug
         );
 
+    fs.mkdirSync(
+        productPath,
+        { recursive: true }
+    );
+
+
+    /* =====================================================
+       WRITE PRODUCT PAGE
+    ===================================================== */
 
     fs.writeFileSync(
-        productHTMLPath,
+        path.join(productPath, 'index.html'),
         html,
         'utf8'
     );
 
 
-    /* -----------------------------------------------------
-       Add product to sitemap
-    ----------------------------------------------------- */
+    /* =====================================================
+       ADD TO SITEMAP
+    ===================================================== */
 
     urls.push(`
     <url>
@@ -395,9 +490,7 @@ ${JSON.stringify(productSchema, null, 4)}
 ========================================================= */
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join('\n')}
 </urlset>
 `;
@@ -411,9 +504,11 @@ fs.writeFileSync(
 
 
 console.log(
-    `Generated ${products.filter(p => p.slug).length} product pages`
+    `Generated ${
+        products.filter(product => product.slug).length
+    } product pages`
 );
 
 console.log(
-    `Sitemap generated successfully`
+    'Sitemap generated successfully'
 );
