@@ -1659,44 +1659,84 @@ async function loadProducts() {
 function getProductFromURL() {
 
     const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
+        new URLSearchParams(window.location.search);
 
     const id =
         params.get("id");
-
 
     const slug =
         params.get("slug");
 
 
-    if (!id && !slug) {
+    /* -----------------------------------------------------
+       CLEAN PRODUCT URL
 
-        return null;
+       Example:
+       /product/aerator6outlet/
+    ----------------------------------------------------- */
+
+    if (!slug) {
+
+        const pathname =
+            window.location.pathname;
+
+        const match =
+            pathname.match(
+                /^\/product\/([^/]+)\/?$/
+            );
+
+        if (match) {
+
+            const cleanSlug =
+                decodeURIComponent(match[1]);
+
+            const product =
+                products.find(
+                    product =>
+                        product.slug === cleanSlug
+                );
+
+            if (product) {
+                return product;
+            }
+        }
     }
 
 
-    return products.find(
-        product =>
+    /* -----------------------------------------------------
+       OLD SLUG URL
 
-            (
-                id &&
-                String(product.id) ===
-                String(id)
-            )
+       Example:
+       /product/?slug=aerator6outlet
+    ----------------------------------------------------- */
 
-            ||
+    if (slug) {
 
-            (
-                slug &&
-                String(product.slug || "") ===
-                String(slug)
-            )
-    );
+        return products.find(
+            product =>
+                product.slug === slug
+        );
+    }
+
+
+    /* -----------------------------------------------------
+       OLD ID URL
+
+       Example:
+       /product/?id=123
+    ----------------------------------------------------- */
+
+    if (id) {
+
+        return products.find(
+            product =>
+                String(product.id) === String(id)
+        );
+    }
+
+
+    return null;
 }
-
 
 /* =========================================================
    🖼️ PRODUCT PAGE
