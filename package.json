@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Free code HTML CSS Javascript and Free learning web developer",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "build": "node generate-sitemap.js",
+  "test": "echo \"Error: no test specified\""
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

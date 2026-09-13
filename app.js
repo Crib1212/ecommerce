@@ -904,9 +904,8 @@ function highlightText(text, keyword) {
 function getProductPageURL(slug) {
     if (!slug) return "#";
 
-    return `/product/?slug=${encodeURIComponent(slug)}`;
+    return `/product/${encodeURIComponent(slug)}/`;
 }
-
 /* =========================================================
    🛍 PRODUCT CARD
 ========================================================= */
@@ -2257,45 +2256,59 @@ function updateProductSEO(product) {
         return;
     }
 
-
     const productName =
-        product.name ||
-        "Wittyfare Product";
-
+        String(product.name || "Wittyfare Product").trim();
 
     const category =
-        product.category ||
-        "Agrovet Product";
+        String(product.category || "Agrovet Product").trim();
 
-
-    const description =
+    const rawDescription =
         product.description
-            ? String(
-                product.description
-            ).substring(0, 155)
-
+            ? String(product.description).trim()
             : `Buy ${productName} from Wittyfare Agrovet & Farms in Abuja, Nigeria.`;
 
-
     /*
-       Product URL
+       Keep meta description within a useful SEO length.
     */
-
-    const productURL = product.slug
-    ? `${window.location.origin}/product/?slug=${encodeURIComponent(product.slug)}`
-    : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
-
+    const description =
+        rawDescription.substring(0, 155);
 
     /*
-       TITLE
+       PRODUCT URL
+    */
+    const productURL =
+        product.slug
+            ? `${window.location.origin}/product/?slug=${encodeURIComponent(product.slug)}`
+            : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
+
+    /*
+       PRODUCT IMAGE
+    */
+    const imagePath =
+        getProductImage(product.image);
+
+    const absoluteImage =
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://")
+            ? imagePath
+            : new URL(
+                imagePath,
+                window.location.origin
+            ).href;
+
+    /*
+       =====================================================
+       PAGE TITLE
+       =====================================================
     */
 
     document.title =
-        `${productName} | ${category} | Wittyfare`;
-
+        `${productName} | ${category} | Wittyfare Agrovet & Farms`;
 
     /*
-       DESCRIPTION
+       =====================================================
+       META DESCRIPTION
+       =====================================================
     */
 
     setMetaTag(
@@ -2303,19 +2316,29 @@ function updateProductSEO(product) {
         description
     );
 
-
     /*
+       =====================================================
        KEYWORDS
+       =====================================================
     */
 
     setMetaTag(
         "keywords",
-        `${productName}, ${category}, agrovet products Abuja, farm products Nigeria, Wittyfare`
+        [
+            productName,
+            category,
+            `${productName} Nigeria`,
+            `${productName} Abuja`,
+            "agrovet products Abuja",
+            "farm equipment Nigeria",
+            "Wittyfare Agrovet"
+        ].join(", ")
     );
 
-
     /*
+       =====================================================
        CANONICAL
+       =====================================================
     */
 
     let canonical =
@@ -2323,13 +2346,10 @@ function updateProductSEO(product) {
             'link[rel="canonical"]'
         );
 
-
     if (!canonical) {
 
         canonical =
-            document.createElement(
-                "link"
-            );
+            document.createElement("link");
 
         canonical.rel =
             "canonical";
@@ -2339,72 +2359,49 @@ function updateProductSEO(product) {
         );
     }
 
-
     canonical.href =
         productURL;
 
-
     /*
-       PRODUCT IMAGE
-    */
-
-    const imagePath =
-        getProductImage(
-            product.image
-        );
-
-
-    const absoluteImage =
-        imagePath.startsWith("http")
-            ? imagePath
-            : new URL(
-                imagePath,
-                window.location.href
-            ).href;
-
-
-    /*
+       =====================================================
        OPEN GRAPH
+       =====================================================
     */
 
     setProductMeta(
         "og:title",
-        productName
+        `${productName} | Wittyfare Agrovet & Farms`
     );
-
 
     setProductMeta(
         "og:description",
         description
     );
 
-
     setProductMeta(
         "og:image",
         absoluteImage
     );
-
 
     setProductMeta(
         "og:url",
         productURL
     );
 
-
     setProductMeta(
         "og:type",
         "product"
     );
 
-
     setProductMeta(
         "og:site_name",
-        "Wittyfare"
+        "Wittyfare Agrovet & Farms"
     );
 
-
     /*
-       PRODUCT SCHEMA
+       =====================================================
+       PRODUCT STRUCTURED DATA
+       =====================================================
     */
 
     const productSchema = {
@@ -2425,11 +2422,13 @@ function updateProductSEO(product) {
             absoluteImage
         ],
 
-        "sku":
-            String(product.id),
-
         "url":
             productURL,
+
+        "sku":
+            String(
+                product.id || product.slug || productName
+            ),
 
         "category":
             category,
@@ -2441,6 +2440,7 @@ function updateProductSEO(product) {
 
             "name":
                 "Wittyfare"
+
         },
 
         "offers": {
@@ -2469,19 +2469,22 @@ function updateProductSEO(product) {
 
                 "name":
                     "Wittyfare Agrovet & Farms"
-            }
-        }
-    };
 
+            }
+
+        }
+
+    };
 
     addStructuredData(
         productSchema,
         "wittyfare-product-schema"
     );
 
-
     /*
-       BREADCRUMB SCHEMA
+       =====================================================
+       BREADCRUMB STRUCTURED DATA
+       =====================================================
     */
 
     const categorySlug =
@@ -2494,8 +2497,8 @@ function updateProductSEO(product) {
             )
             .replace(
                 /^-+|-+$/g,
-                "");
-
+                ""
+            );
 
     const breadcrumbSchema = {
 
@@ -2520,8 +2523,8 @@ function updateProductSEO(product) {
 
                 "item":
                     `${window.location.origin}/`
-            },
 
+            },
 
             {
 
@@ -2536,8 +2539,8 @@ function updateProductSEO(product) {
 
                 "item":
                     `${window.location.origin}/category/${encodeURIComponent(categorySlug)}/`
-            },
 
+            },
 
             {
 
@@ -2552,19 +2555,40 @@ function updateProductSEO(product) {
 
                 "item":
                     productURL
+
             }
 
         ]
-    };
 
+    };
 
     addStructuredData(
         breadcrumbSchema,
         "wittyfare-breadcrumb-schema"
     );
+
+    /*
+       =====================================================
+       DEBUG
+       =====================================================
+    */
+
+    console.log(
+        "✅ SEO updated for:",
+        productName
+    );
+
+    console.log(
+        "SEO URL:",
+        productURL
+    );
+
+    console.log(
+        "SEO title:",
+        document.title
+    );
+
 }
-
-
 /* =========================================================
    🏷️ META TAG HELPER
 ========================================================= */
