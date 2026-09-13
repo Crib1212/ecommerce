@@ -29,6 +29,25 @@
     "description": "agro chemical.",
     "featured": true
   },
+   {
+    "id": "aerator6outlet",
+    "name": "aerator6outlet",
+    "price": 85000,
+    "category": "equipment",
+    "slug": "aerator6outlet",
+    "image": "/images/equipment/aerator.webp",
+    "description": "aerator for fish farming.",
+    "featured": true
+  },
+    {
+    "id": "automaticdrinker",
+    "name": "automaticdrinker",
+    "price": 85000,
+    "category": "equipment",
+    "slug": "automaticdrinker",
+    "image": "/images/equipment/automatic_drinker.png",
+    "description": "automatic poultry drinker for farming."
+  },
   {
     "id": "day-old-sayed-broiler-chicks",
     "name": "Sayed Day-old Broiler Chicks",

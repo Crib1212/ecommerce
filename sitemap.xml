@@ -9,226 +9,296 @@
 
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=day-old-agrited-broiler-chicks</loc>
+        <loc>https://www.wittyfare.com/product/?slug=agrited-broiler-chicks</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=day-old-sayed-broiler-chicks</loc>
+        <loc>https://www.wittyfare.com/product/?slug=insecticide</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=day-old-tosam-broiler-chicks</loc>
+        <loc>https://www.wittyfare.com/product/?slug=herbicide</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=day-old-olam-broiler-chicks</loc>
+        <loc>https://www.wittyfare.com/product/?slug=aerator6outlet</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-ultima-finisher-22950</loc>
+        <loc>https://www.wittyfare.com/product/?slug=automaticdrinker</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-breedwell-psc-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=sayed-day-old-broiler-chicks</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-hybrid-grower-mash-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=tosam-broiler-chicks</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-hybrid-layer-mash-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=olam-broiler-chicks</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-hybrid-3-in-1-special</loc>
+        <loc>https://www.wittyfare.com/product/?slug=ultima-finisher-22950</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-breedwell-finisher-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=breedwell-psc-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-hybrid-base1-super-starter-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=hybrid-grower-mash-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-hybrid-finisher-pellet-25kg</loc>
+        <loc>https://www.wittyfare.com/product/?slug=hybrid-layer-mash-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-ultima-finisher</loc>
+        <loc>https://www.wittyfare.com/product/?slug=hybrid-3-in-1-special</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-booster</loc>
+        <loc>https://www.wittyfare.com/product/?slug=breedwell-finisher-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=equipment-paper-crate</loc>
+        <loc>https://www.wittyfare.com/product/?slug=hybrid-base1-super-starter-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=juvenile-fish</loc>
+        <loc>https://www.wittyfare.com/product/?slug=hybrid-finisher-pellet-25kg</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=equipment-pulse-sprayer-15l</loc>
+        <loc>https://www.wittyfare.com/product/?slug=ultima-finisher</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=drugs-tylodox-extra-100g</loc>
+        <loc>https://www.wittyfare.com/product/?slug=booster</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=vaccines-dhlpp</loc>
+        <loc>https://www.wittyfare.com/product/?slug=paper-crate</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-blue-crown-2mm</loc>
+        <loc>https://www.wittyfare.com/product/?slug=juvenile-fish</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-blue-crown-3mm</loc>
+        <loc>https://www.wittyfare.com/product/?slug=pulse-sprayer-15l</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-blue-crown-4mm</loc>
+        <loc>https://www.wittyfare.com/product/?slug=tylodox-extra-100g</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-blue-crown-6mm</loc>
+        <loc>https://www.wittyfare.com/product/?slug=doxygen-100g</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=feed-blue-crown-9mm</loc>
+        <loc>https://www.wittyfare.com/product/?slug=chick_on_1L</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-50-broiler-starter</loc>
+        <loc>https://www.wittyfare.com/product/?slug=otc</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=animalcarelayer</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=3-in-1-drinker</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=3-in-1-eds</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=Medecol-1L</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=dhlpp</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=blue-crown-2mm</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=blue-crown-3mm</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=blue-crown-4mm</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=blue-crown-6mm</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=blue-crown-9mm</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+
+    <url>
+        <loc>https://www.wittyfare.com/product/?slug=50-broiler-starter-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-100-broiler-starter</loc>
+        <loc>https://www.wittyfare.com/product/?slug=100-broiler-starter-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-100-catfish-starter</loc>
+        <loc>https://www.wittyfare.com/product/?slug=100-catfish-starter-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-500-catfish-starter</loc>
+        <loc>https://www.wittyfare.com/product/?slug=500-catfish-starter-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-1000-catfish-commercial</loc>
+        <loc>https://www.wittyfare.com/product/?slug=1000-catfish-commercial-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-poultry-restock</loc>
+        <loc>https://www.wittyfare.com/product/?slug=poultry-restock-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
 
     <url>
-        <loc>https://www.wittyfare.com/product/?id=farm-package-small-equipment</loc>
+        <loc>https://www.wittyfare.com/product/?slug=small-farm-equipment-package</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
-    </url>
-    
-
-    <url>
-        <loc>https://www.wittyfare.com/product/?id=test-seo-product-123</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
     </url>
     
 </urlset>

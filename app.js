@@ -897,61 +897,15 @@ function highlightText(text, keyword) {
     );
 }
 
-
 /* =========================================================
    🔗 PRODUCT PAGE URL
 ========================================================= */
 
-function getProductPageURL(id) {
+function getProductPageURL(slug) {
+    if (!slug) return "#";
 
-    const path =
-        window.location.pathname;
-
-
-    /*
-       Category pages:
-       /category/feed/index.html
-
-       Product page:
-       /product/index.html
-    */
-
-    if (
-        path.includes("/category/")
-    ) {
-
-        return (
-            "/product/index.html?id=" +
-            encodeURIComponent(id)
-        );
-    }
-
-
-    /*
-       Product page itself
-    */
-
-    if (
-        path.includes("/product/")
-    ) {
-
-        return (
-            "./index.html?id=" +
-            encodeURIComponent(id)
-        );
-    }
-
-
-    /*
-       Homepage/root
-    */
-
-    return (
-        "product/index.html?id=" +
-        encodeURIComponent(id)
-    );
+    return `/product/?slug=${encodeURIComponent(slug)}`;
 }
-
 
 /* =========================================================
    🛍 PRODUCT CARD
@@ -968,17 +922,18 @@ function createProductCard(
 
 
     const {
-        name = "",
-        category = "",
-        description = "",
-        vendor = "",
-        image = "",
-        price = 0,
-        id,
-        farmSize = "",
-        includes = [],
-        packageType = ""
-    } = product;
+    name = "",
+    category = "",
+    description = "",
+    vendor = "",
+    image = "",
+    price = 0,
+    id,
+    slug,
+    farmSize = "",
+    includes = [],
+    packageType = ""
+} = product;
 
 
     const highlightedName =
@@ -1074,7 +1029,7 @@ function createProductCard(
 
 
     const productURL =
-        getProductPageURL(id);
+    getProductPageURL(slug);
 
 
     const productImage =
@@ -2326,8 +2281,9 @@ function updateProductSEO(product) {
        Product URL
     */
 
-    const productURL =
-        `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
+    const productURL = product.slug
+    ? `${window.location.origin}/product/?slug=${encodeURIComponent(product.slug)}`
+    : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
 
 
     /*

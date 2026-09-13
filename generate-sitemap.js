@@ -24,11 +24,11 @@ urls.push(`
 /* Individual products */
 products.forEach(product => {
 
-    if (!product.id) return;
+    if (!product.slug) return;
 
     urls.push(`
     <url>
-        <loc>${baseURL}/product/?id=${encodeURIComponent(product.id)}</loc>
+        <loc>${baseURL}/product/?slug=${encodeURIComponent(product.slug)}</loc>
         <changefreq>weekly</changefreq>
         <priority>${
             product.category === 'farm-packages'
