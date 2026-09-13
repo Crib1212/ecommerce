@@ -14,7 +14,7 @@
     "name": "DDforce 1L",
     "price": 13000,
     "category": "chemical",
-    "slug": "insecticide",
+    "slug": "ddforce-1l",
     "image": "/images/chemical/DDforce.png",
     "description": "agro chemical.",
     "featured": true
@@ -24,7 +24,7 @@
     "name": "Gobara1l",
     "price": 4500,
     "category": "chemical",
-    "slug": "herbicide",
+    "slug": "gobara1l",
     "image": "/images/chemical/Gobara_1L.png",
     "description": "agro chemical.",
     "featured": true
