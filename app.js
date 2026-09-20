@@ -1,4 +1,4 @@
-/* =========================================================
+    /* =========================================================
     WITTYFARE CENTRAL APP.JS
     One product catalogue + one cart system
     ========================================================= */
@@ -897,19 +897,15 @@
         );
     }
 
-
     /* =========================================================
     🔗 PRODUCT PAGE URL
     ========================================================= */
 
     function getProductPageURL(slug) {
-
         if (!slug) return "#";
 
         return `/product/${encodeURIComponent(slug)}/`;
     }
-
-
     /* =========================================================
     🛍 PRODUCT CARD
     ========================================================= */
@@ -925,18 +921,18 @@
 
 
         const {
-            name = "",
-            category = "",
-            description = "",
-            vendor = "",
-            image = "",
-            price = 0,
-            id,
-            slug,
-            farmSize = "",
-            includes = [],
-            packageType = ""
-        } = product;
+        name = "",
+        category = "",
+        description = "",
+        vendor = "",
+        image = "",
+        price = 0,
+        id,
+        slug,
+        farmSize = "",
+        includes = [],
+        packageType = ""
+    } = product;
 
 
         const highlightedName =
@@ -1031,14 +1027,8 @@
         }
 
 
-        /*
-        IMPORTANT:
-        All product cards now use the same clean
-        permanent product URL.
-        */
-
         const productURL =
-            getProductPageURL(slug);
+        getProductPageURL(slug);
 
 
         const productImage =
@@ -1434,69 +1424,67 @@
         }
 
 
-        /* =====================================
-        OTHERS PAGE
-        Products without subcategory
-        ===================================== */
+    /* =====================================
+    OTHERS PAGE
+    Products without subcategory
+    ===================================== */
 
-        if (
-            category &&
-            subcategory === "others"
-        ) {
+    if (
+        category &&
+        subcategory === "others"
+    ) {
+        return products.filter(product => {
 
-            return products.filter(product => {
+            const productCategory =
+                String(
+                    product.category || ""
+                ).toLowerCase();
 
-                const productCategory =
-                    String(
-                        product.category || ""
-                    ).toLowerCase();
+            const productSubcategory =
+                String(
+                    product.subcategory || ""
+                ).toLowerCase();
 
-                const productSubcategory =
-                    String(
-                        product.subcategory || ""
-                    ).toLowerCase();
-
-                return (
-                    productCategory ===
-                    category.toLowerCase()
-                    &&
-                    (
-                        !productSubcategory ||
-                        productSubcategory === "others"
-                    )
-                );
-            });
-        }
+            return (
+                productCategory ===
+                category.toLowerCase()
+                &&
+                (
+                    !productSubcategory ||
+                    productSubcategory === "others"
+                )
+            );
+        });
+    }
 
 
-        /* =====================================
-        SUBCATEGORY PAGE
-        Example: /drugs/antibiotics/
-        ===================================== */
+    /* =====================================
+    SUBCATEGORY PAGE
+    Example: /drugs/antibiotics/
+    ===================================== */
 
-        if (category && subcategory) {
+    if (category && subcategory) {
+        return products.filter(product => {
 
-            return products.filter(product => {
+            const productCategory =
+                String(
+                    product.category || ""
+                ).toLowerCase();
 
-                const productCategory =
-                    String(
-                        product.category || ""
-                    ).toLowerCase();
+            const productSubcategory =
+                String(
+                    product.subcategory || ""
+                ).toLowerCase();
 
-                const productSubcategory =
-                    String(
-                        product.subcategory || ""
-                    ).toLowerCase();
-
-                return (
-                    productCategory ===
-                    category.toLowerCase()
-                    &&
-                    productSubcategory ===
-                    subcategory.toLowerCase()
-                );
-            });
-        }
+            return (
+                productCategory ===
+                category.toLowerCase()
+                &&
+                productSubcategory ===
+                subcategory.toLowerCase()
+            );
+        });
+    }
 
 
         /* =====================================
@@ -1513,6 +1501,7 @@
                 category.toLowerCase()
 
             );
+
         }
 
 
@@ -1526,7 +1515,6 @@
         );
 
     }
-
 
     /* =========================================================
     📦 LOAD CENTRAL PRODUCT CATALOGUE
@@ -1717,7 +1705,7 @@
 
         /* -----------------------------------------------------
         OLD SLUG URL
-        Keep compatibility with existing links.
+
         Example:
         /product/?slug=aerator6outlet
         ----------------------------------------------------- */
@@ -1733,7 +1721,7 @@
 
         /* -----------------------------------------------------
         OLD ID URL
-        Keep compatibility with existing links.
+
         Example:
         /product/?id=123
         ----------------------------------------------------- */
@@ -1749,7 +1737,6 @@
 
         return null;
     }
-
 
     /* =========================================================
     🖼️ PRODUCT PAGE
@@ -2323,50 +2310,20 @@
         /*
         Keep meta description within a useful SEO length.
         */
-
         const description =
             rawDescription.substring(0, 155);
 
-
         /*
-        =====================================================
         PRODUCT URL
-        =====================================================
-
-        IMPORTANT SEO CHANGE:
-
-        Product pages now use ONE permanent clean URL:
-
-        /product/product-slug/
-
-        Example:
-
-        /product/tylodox-extra-100g/
-
-        This replaces the old:
-
-        /product/?slug=tylodox-extra-100g
-
-        The same clean URL is now used for:
-
-        - Canonical
-        - Open Graph
-        - Product structured data
-        - Offer structured data
         */
-
         const productURL =
             product.slug
-                ? `${window.location.origin}/product/${encodeURIComponent(product.slug)}/`
+                ? `${window.location.origin}/product/?slug=${encodeURIComponent(product.slug)}`
                 : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
 
-
         /*
-        =====================================================
         PRODUCT IMAGE
-        =====================================================
         */
-
         const imagePath =
             getProductImage(product.image);
 
@@ -2379,7 +2336,6 @@
                     window.location.origin
                 ).href;
 
-
         /*
         =====================================================
         PAGE TITLE
@@ -2388,7 +2344,6 @@
 
         document.title =
             `${productName} | ${category} | Wittyfare Agrovet & Farms`;
-
 
         /*
         =====================================================
@@ -2400,7 +2355,6 @@
             "description",
             description
         );
-
 
         /*
         =====================================================
@@ -2420,7 +2374,6 @@
                 "Wittyfare Agrovet"
             ].join(", ")
         );
-
 
         /*
         =====================================================
@@ -2448,7 +2401,6 @@
 
         canonical.href =
             productURL;
-
 
         /*
         =====================================================
@@ -2485,7 +2437,6 @@
             "og:site_name",
             "Wittyfare Agrovet & Farms"
         );
-
 
         /*
         =====================================================
@@ -2565,12 +2516,10 @@
 
         };
 
-
         addStructuredData(
             productSchema,
             "wittyfare-product-schema"
         );
-
 
         /*
         =====================================================
@@ -2590,7 +2539,6 @@
                     /^-+|-+$/g,
                     ""
                 );
-
 
         const breadcrumbSchema = {
 
@@ -2654,12 +2602,10 @@
 
         };
 
-
         addStructuredData(
             breadcrumbSchema,
             "wittyfare-breadcrumb-schema"
         );
-
 
         /*
         =====================================================
@@ -2683,8 +2629,6 @@
         );
 
     }
-
-
     /* =========================================================
     🏷️ META TAG HELPER
     ========================================================= */
