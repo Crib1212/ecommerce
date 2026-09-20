@@ -1,183 +1,195 @@
 [
   {
     "id": "day-old-agrited-broiler-chicks",
-    "name": "Agrited Broiler Chicks",
+    "name": "Agrited Day-Old Broiler Chicks",
     "price": 1830,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/dayold/agriteddoc.webp",
-    "description": "Agrited day-old broiler chicks for poultry farmers.",
+    "description": "Agrited day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
-   {
+  {
     "id": "ddforce-1l",
     "name": "DDforce 1L",
     "price": 13000,
     "category": "chemical",
+    "subcategory": "agrochemicals",
     "slug": "ddforce-1l",
     "image": "/images/chemical/DDforce.png",
-    "description": "agro chemical.",
+    "description": "DDforce 1L agrochemical product for farm and agricultural use.",
     "featured": true
   },
-   {
-    "id": "gobara1l",
-    "name": "Gobara1l",
+  {
+    "id": "gobara-1l",
+    "name": "Gobara 1L",
     "price": 4500,
     "category": "chemical",
-    "slug": "gobara1l",
+    "subcategory": "agrochemicals",
+    "slug": "gobara-1l",
     "image": "/images/chemical/Gobara_1L.png",
-    "description": "agro chemical.",
+    "description": "Gobara 1L agricultural chemical product for farm use.",
     "featured": true
   },
-   {
-    "id": "aerator6outlet",
-    "name": "aerator6outlet",
+  {
+    "id": "aerator-6-outlet",
+    "name": "6-Outlet Fish Pond Aerator",
     "price": 85000,
     "category": "equipment",
-    "slug": "aerator6outlet",
+    "subcategory": "fish-farming-equipment",
+    "slug": "6-outlet-fish-pond-aerator",
     "image": "/images/equipment/aerator.webp",
-    "description": "aerator for fish farming.",
+    "description": "6-outlet aerator for fish farming and pond aeration systems.",
     "featured": true
   },
-    {
-    "id": "automaticdrinker",
-    "name": "automaticdrinker",
+  {
+    "id": "automatic-poultry-drinker",
+    "name": "Automatic Poultry Drinker",
     "price": 85000,
     "category": "equipment",
-    "slug": "automaticdrinker",
+    "subcategory": "poultry-equipment",
+    "slug": "automatic-poultry-drinker",
     "image": "/images/equipment/automatic_drinker.png",
-    "description": "automatic poultry drinker for farming."
+    "description": "Automatic poultry drinking equipment for efficient water supply in poultry farms."
   },
   {
     "id": "day-old-sayed-broiler-chicks",
-    "name": "Sayed Day-old Broiler Chicks",
+    "name": "Sayed Day-Old Broiler Chicks",
     "price": 1300,
     "category": "day-old",
     "slug": "sayed-day-old-broiler-chicks",
     "image": "/images/dayold/sayed-dayold-broiler.png",
-    "description": "Sayed day-old broiler chicks for poultry farming."
+    "description": "Sayed day-old broiler chicks for poultry farmers and broiler production."
   },
   {
     "id": "day-old-tosam-broiler-chicks",
-    "name": "Tosam Broiler Chicks",
+    "name": "Tosam Day-Old Broiler Chicks",
     "price": 1250,
     "category": "day-old",
-    "slug": "tosam-broiler-chicks",
+    "slug": "tosam-day-old-broiler-chicks",
     "image": "/images/dayold/tosam-chicks.png",
-    "description": "Tosam day-old broiler chicks for poultry production."
+    "description": "Tosam day-old broiler chicks for poultry farming and broiler production."
   },
   {
     "id": "day-old-olam-broiler-chicks",
-    "name": "Olam Broiler Chicks",
+    "name": "Olam Day-Old Broiler Chicks",
     "price": 1100,
     "category": "day-old",
-    "slug": "olam-broiler-chicks",
+    "slug": "olam-day-old-broiler-chicks",
     "image": "/images/dayold/olam-broiler-chicks.png",
-    "description": "Olam day-old broiler chicks for poultry farmers."
+    "description": "Olam day-old broiler chicks for poultry farmers and broiler production."
   },
-
   {
     "id": "feed-ultima-finisher-22950",
-    "name": "Ultima Finisher",
+    "name": "Ultima Finisher 25kg",
     "price": 22950,
     "category": "feed",
-    "slug": "ultima-finisher-22950",
+    "subcategory": "poultry-feed",
+    "slug": "ultima-finisher-25kg-22950",
     "image": "/images/poultryfeed/Ultima_finisher.png",
-    "description": "Ultima finisher poultry feed in a 25kg bag.",
-    "featured": true
+    "description": "Ultima finisher poultry feed in a 25kg bag for broiler finishing."
   },
   {
     "id": "feed-breedwell-psc-25kg",
     "name": "Breedwell PSC 25kg",
     "price": 22950,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "breedwell-psc-25kg",
     "image": "/images/poultryfeed/Breed_well_psc_25kg.png",
-    "description": "Breedwell PSC poultry feed in a 25kg bag."
+    "description": "Breedwell PSC poultry feed in a 25kg bag for poultry farming."
   },
   {
     "id": "feed-hybrid-grower-mash-25kg",
     "name": "Hybrid Grower Mash 25kg",
     "price": 12200,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "hybrid-grower-mash-25kg",
     "image": "/images/poultryfeed/Hybrid_grower_mash-2.png",
-    "description": "Hybrid grower mash 25kg for growing poultry."
+    "description": "Hybrid Grower Mash 25kg poultry feed for growing birds."
   },
   {
     "id": "feed-hybrid-layer-mash-25kg",
     "name": "Hybrid Layer Mash 25kg",
     "price": 13000,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "hybrid-layer-mash-25kg",
     "image": "/images/poultryfeed/Hybrid_layer_mash-3.png",
-    "description": "Hybrid layer mash 25kg for laying birds."
+    "description": "Hybrid Layer Mash 25kg poultry feed for laying birds."
   },
   {
     "id": "feed-hybrid-3-in-1-special",
-    "name": "Hybrid 3 in 1 Special",
+    "name": "Hybrid 3-in-1 Special",
     "price": 20300,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "hybrid-3-in-1-special",
     "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
-    "description": "Hybrid 3 in 1 special poultry feed."
+    "description": "Hybrid 3-in-1 Special poultry feed for poultry farming."
   },
   {
     "id": "feed-breedwell-finisher-25kg",
     "name": "Breedwell Finisher 25kg",
     "price": 22000,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "breedwell-finisher-25kg",
     "image": "/images/poultryfeed/Breedwell-Broiler-Finisher-pellet.png",
-    "description": "Breedwell broiler finisher feed in a 25kg bag."
+    "description": "Breedwell broiler finisher feed in a 25kg bag for poultry production."
   },
   {
     "id": "feed-hybrid-base1-super-starter-25kg",
     "name": "Hybrid Base1 Super Starter 25kg",
     "price": 19750,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "hybrid-base1-super-starter-25kg",
     "image": "/images/poultryfeed/Hybrid_base1_Starter-25kg-6.png",
-    "description": "Hybrid Base1 super starter poultry feed."
+    "description": "Hybrid Base1 Super Starter poultry feed in a 25kg bag."
   },
   {
     "id": "feed-hybrid-finisher-pellet-25kg",
     "name": "Hybrid Finisher Pellet 25kg",
     "price": 16700,
     "category": "feed",
+    "subcategory": "poultry-feed",
     "slug": "hybrid-finisher-pellet-25kg",
     "image": "/images/poultryfeed/Hybrid_finisher_pellet_25kg-7.png",
-    "description": "Hybrid finisher pellet feed in a 25kg bag."
+    "description": "Hybrid Finisher Pellet 25kg poultry feed for broiler finishing."
   },
   {
     "id": "feed-ultima-finisher",
     "name": "Ultima Finisher",
     "price": 20150,
     "category": "feed",
-    "slug": "ultima-finisher",
+    "subcategory": "poultry-feed",
+    "slug": "ultima-finisher-20150",
     "image": "/images/poultryfeed/Ultima_finisher.png",
-    "description": "Ultima finisher feed for poultry."
+    "description": "Ultima finisher poultry feed for broiler finishing and poultry production."
   },
   {
     "id": "booster",
-    "name": "Booster",
+    "name": "Booster Poultry Feed",
     "price": 1750,
     "category": "pet-store",
-    "slug": "booster",
+    "subcategory": "poultry-products",
+    "slug": "booster-poultry-feed",
     "image": "/images/pet/Booster.png",
-    "description": "Booster poultry feed product.",
+    "description": "Booster poultry feed product for poultry farming.",
     "featured": true
   },
-
   {
     "id": "equipment-paper-crate",
     "name": "Paper Crate",
     "vendor": "kingstonagrovet",
     "price": 12000,
     "category": "equipment",
+    "subcategory": "poultry-equipment",
     "slug": "paper-crate",
     "image": "/images/equipment/Paper_crate.png",
-    "description": "Paper crate for poultry and farm handling.",
+    "description": "Paper crate for poultry handling, transportation and farm operations.",
     "featured": true
   },
   {
@@ -185,9 +197,10 @@
     "name": "Juvenile Fish",
     "price": 100,
     "category": "fish",
+    "subcategory": "fish-stock",
     "slug": "juvenile-fish",
     "image": "/images/fish/juvefish.jpg",
-    "description": "Juvenile fish.",
+    "description": "Juvenile fish for fish farmers and aquaculture production.",
     "featured": true
   },
   {
@@ -195,9 +208,10 @@
     "name": "Pulse Sprayer 15L",
     "price": 17500,
     "category": "equipment",
+    "subcategory": "farm-equipment",
     "slug": "pulse-sprayer-15l",
     "image": "/images/equipment/Pulse_sprayer_15L.png",
-    "description": "15 litre pulse sprayer for farm applications."
+    "description": "15 litre pulse sprayer for agricultural and farm applications."
   },
   {
     "id": "drugs-tylodox-extra-100g",
@@ -207,9 +221,9 @@
     "subcategory": "antibiotics",
     "slug": "tylodox-extra-100g",
     "image": "/images/drugs/26.png",
-    "description": "Tylodox Extra 100g veterinary product."
+    "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
   },
-   {
+  {
     "id": "drugs-doxygen-100g",
     "name": "Doxygen 100g",
     "price": 9500,
@@ -217,126 +231,133 @@
     "subcategory": "antibiotics",
     "slug": "doxygen-100g",
     "image": "/images/drugs/doxygen.png",
-    "description": "Doxygen 100g veterinary product."
+    "description": "Doxygen 100g veterinary medicine product for animal health management."
   },
-   {
-    "id": "drugs-chick_on_1L",
-    "name": "Chick on 1L",
+  {
+    "id": "drugs-chick-on-1l",
+    "name": "Chick-On 1L",
     "price": 4300,
     "category": "drugs",
-    "subcategory": "Organic",
-    "slug": "chick_on_1L",
+    "subcategory": "organic",
+    "slug": "chick-on-1l",
     "image": "/images/drugs/chick_on_1L.png",
-    "description": "Chick on 1L veterinary product."
+    "description": "Chick-On 1L veterinary product for poultry and farm animal management."
   },
-   {
-    "id": "otc",
-    "name": "otc",
+  {
+    "id": "drugs-otc",
+    "name": "OTC Veterinary Product",
     "price": 2300,
     "category": "drugs",
     "subcategory": "antibiotics",
-    "slug": "otc",
+    "slug": "otc-veterinary-product",
     "image": "/images/drugs/OTC.jpg",
-    "description": "otc veterinary product."
+    "description": "OTC veterinary product available for poultry and livestock health management."
   },
-    {
-    "id": "animalcarelayermash25kg",
-    "name": "animalcarelayermash25kg",
+  {
+    "id": "feed-animalcare-layer-mash-25kg",
+    "name": "Animalcare Layer Mash 25kg",
     "price": 9500,
     "category": "feed",
-    "slug": "animalcarelayer",
+    "subcategory": "poultry-feed",
+    "slug": "animalcare-layer-mash-25kg",
     "image": "/images/poultryfeed/animalcarelayermash25kg.png",
-    "description": "feed veterinary product."
+    "description": "Animalcare Layer Mash 25kg poultry feed for laying birds."
   },
-     {
-    "id": "3_in_1_drinker",
+  {
+    "id": "equipment-3-in-1-drinker",
     "name": "3-in-1 Drinker",
     "price": 1000,
     "category": "equipment",
+    "subcategory": "poultry-equipment",
     "slug": "3-in-1-drinker",
     "image": "/images/equipment/3_in_1_drinker.png",
-    "description": "3-in-1 Drinker veterinary product."
+    "description": "3-in-1 poultry drinker for farm water supply and poultry management."
   },
-       {
-    "id": "3_in_1_EDS",
-    "name": "3-in-1 EDS",
+  {
+    "id": "vaccines-3-in-1-eds",
+    "name": "3-in-1 EDS Vaccine",
     "price": 1000,
     "category": "vaccines",
+    "subcategory": "poultry-vaccines",
     "slug": "3-in-1-eds",
     "image": "/images/vaccine/3_in_1_EDS.png",
-    "description": "3-in-1 EDS veterinary product."
+    "description": "3-in-1 EDS veterinary vaccine product for poultry health management."
   },
-   {
-    "id": "drugs-medecol-1L",
+  {
+    "id": "drugs-medecol-1l",
     "name": "Medecol 1L",
     "price": 4300,
     "category": "drugs",
-    "subcategory": "Organic",
-    "slug": "Medecol-1L",
+    "subcategory": "organic",
+    "slug": "medecol-1l",
     "image": "/images/drugs/Medecol_1L.png",
-    "description": "Medecol 1L veterinary product."
+    "description": "Medecol 1L veterinary product for poultry and farm animal management."
   },
   {
     "id": "vaccines-dhlpp",
-    "name": "DHLPP",
+    "name": "DHLPP Vaccine",
     "price": 5000,
     "category": "vaccines",
-    "slug": "dhlpp",
+    "subcategory": "animal-vaccines",
+    "slug": "dhlpp-vaccine",
     "image": "/images/vaccine/DHLPP.png",
-    "description": "DHLPP vaccine product for animal health."
+    "description": "DHLPP vaccine product for animal health management."
   },
-
   {
     "id": "feed-blue-crown-2mm",
-    "name": "Blue Crown 2mm",
+    "name": "Blue Crown Fish Feed 2mm",
     "price": 31150,
     "category": "feed",
-    "slug": "blue-crown-2mm",
+    "subcategory": "fish-feed",
+    "slug": "blue-crown-fish-feed-2mm",
     "image": "/images/fishfeed/Blue_crown_2mm.png",
-    "description": "Blue Crown fish feed in 2mm size.",
+    "description": "Blue Crown fish feed in 2mm size for fish farming and aquaculture.",
     "featured": true
   },
   {
     "id": "feed-blue-crown-3mm",
-    "name": "Blue Crown 3mm",
+    "name": "Blue Crown Fish Feed 3mm",
     "price": 26900,
     "category": "feed",
-    "slug": "blue-crown-3mm",
+    "subcategory": "fish-feed",
+    "slug": "blue-crown-fish-feed-3mm",
     "image": "/images/fishfeed/Bluecrown-3mm-53.png",
-    "description": "Blue Crown fish feed in 3mm size.",
+    "description": "Blue Crown fish feed in 3mm size for fish farming and aquaculture.",
     "featured": true
   },
   {
     "id": "feed-blue-crown-4mm",
-    "name": "Blue Crown 4mm",
+    "name": "Blue Crown Fish Feed 4mm",
     "price": 25950,
     "category": "feed",
-    "slug": "blue-crown-4mm",
+    "subcategory": "fish-feed",
+    "slug": "blue-crown-fish-feed-4mm",
     "image": "/images/fishfeed/Bluecrown-4mm-54.png",
-    "description": "Blue Crown fish feed in 4mm size.",
+    "description": "Blue Crown fish feed in 4mm size for fish farming and aquaculture.",
     "featured": true
   },
   {
     "id": "feed-blue-crown-6mm",
-    "name": "Blue Crown 6mm",
+    "name": "Blue Crown Fish Feed 6mm",
     "price": 23950,
     "category": "feed",
-    "slug": "blue-crown-6mm",
+    "subcategory": "fish-feed",
+    "slug": "blue-crown-fish-feed-6mm",
     "image": "/images/fishfeed/Bluecrown-6mm-56.png",
-    "description": "Blue Crown fish feed in 6mm size.",
+    "description": "Blue Crown fish feed in 6mm size for fish farming and aquaculture.",
     "featured": true
   },
   {
     "id": "feed-blue-crown-9mm",
-    "name": "Blue Crown 9mm",
+    "name": "Blue Crown Fish Feed 9mm",
     "price": 22650,
     "category": "feed",
-    "slug": "blue-crown-9mm",
+    "subcategory": "fish-feed",
+    "slug": "blue-crown-fish-feed-9mm",
     "image": "/images/fishfeed/Bluecrown-9mm-59.png",
-    "description": "Blue Crown fish feed in 9mm size.",
+    "description": "Blue Crown fish feed in 9mm size for fish farming and aquaculture.",
     "featured": true
   },
-
   {
     "id": "farm-package-50-broiler-starter",
     "name": "50 Broiler Starter Package",
@@ -345,7 +366,7 @@
     "category": "farm-packages",
     "slug": "50-broiler-starter-package",
     "image": "/images/farm-packages/50-broiler.jpg",
-    "description": "Starter package for farmers beginning with 50 broiler chicks. Includes chicks, starter feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
+    "description": "Starter farm package for farmers beginning with 50 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
     "featured": true,
     "packageType": "poultry",
     "farmSize": "50 broilers",
@@ -359,7 +380,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-100-broiler-starter",
     "name": "100 Broiler Starter Package",
@@ -368,7 +388,7 @@
     "category": "farm-packages",
     "slug": "100-broiler-starter-package",
     "image": "/images/farm-packages/100-broiler.jpg",
-    "description": "Starter package for farmers beginning with 100 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
+    "description": "Starter farm package for farmers beginning with 100 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
     "featured": true,
     "packageType": "poultry",
     "farmSize": "100 broilers",
@@ -382,7 +402,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-100-catfish-starter",
     "name": "100 Catfish Starter Package",
@@ -391,7 +410,7 @@
     "category": "farm-packages",
     "slug": "100-catfish-starter-package",
     "image": "/images/farm-packages/100-catfish.jpg",
-    "description": "Starter package for farmers beginning with 100 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "description": "Starter fish farming package for farmers beginning with 100 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
     "featured": true,
     "packageType": "fish",
     "farmSize": "100 catfish",
@@ -402,7 +421,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-500-catfish-starter",
     "name": "500 Catfish Starter Package",
@@ -411,7 +429,7 @@
     "category": "farm-packages",
     "slug": "500-catfish-starter-package",
     "image": "/images/farm-packages/500-catfish.jpg",
-    "description": "Starter package for farmers beginning with 500 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "description": "Starter fish farming package for farmers beginning with 500 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
     "featured": true,
     "packageType": "fish",
     "farmSize": "500 catfish",
@@ -422,7 +440,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-1000-catfish-commercial",
     "name": "1,000 Catfish Commercial Package",
@@ -431,7 +448,7 @@
     "category": "farm-packages",
     "slug": "1000-catfish-commercial-package",
     "image": "/images/farm-packages/1000-catfish.jpg",
-    "description": "Commercial starter package for farmers stocking 1,000 catfish. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
+    "description": "Commercial fish farming package for farmers stocking 1,000 catfish. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
     "featured": true,
     "packageType": "fish",
     "farmSize": "1,000 catfish",
@@ -442,7 +459,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-poultry-restock",
     "name": "Poultry Restock Package",
@@ -451,7 +467,7 @@
     "category": "farm-packages",
     "slug": "poultry-restock-package",
     "image": "/images/farm-packages/poultry-restock.jpg",
-    "description": "A convenient restock package for existing poultry farmers who need feed, vitamins, disinfectant and basic farm supplies.",
+    "description": "Poultry restock package for existing farmers who need poultry feed, vitamins, disinfectant and basic farm supplies.",
     "featured": true,
     "packageType": "poultry-restock",
     "farmSize": "Existing poultry farm",
@@ -462,7 +478,6 @@
       "Basic farm supplies"
     ]
   },
-
   {
     "id": "farm-package-small-equipment",
     "name": "Small Farm Equipment Package",
@@ -471,7 +486,7 @@
     "category": "farm-packages",
     "slug": "small-farm-equipment-package",
     "image": "/images/farm-packages/small-equipment.jpg",
-    "description": "A practical equipment package for small poultry and farm operations.",
+    "description": "Practical farm equipment package for small poultry and agricultural operations.",
     "featured": true,
     "packageType": "equipment",
     "farmSize": "Small farm",
