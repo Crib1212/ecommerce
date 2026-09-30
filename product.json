@@ -224,16 +224,6 @@
     "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
   },
   {
-    "id": "drugs-doxygen-100g",
-    "name": "Doxygen 100g",
-    "price": 9500,
-    "category": "drugs",
-    "subcategory": "antibiotics",
-    "slug": "doxygen-100g",
-    "image": "/images/drugs/Doxygen_100g.png",
-    "description": "Doxygen 100g veterinary medicine product for animal health management."
-  },
-  {
     "id": "drugs-chick-on-1l",
     "name": "Chick-On 1L",
     "price": 4300,

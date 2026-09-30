@@ -2303,6 +2303,35 @@
     🔍 PRODUCT SEO
     ========================================================= */
 
+
+    /* =========================================================
+    🔗 SEO CATEGORY / SUBCATEGORY URL HELPERS
+    ========================================================= */
+
+    function slugify(value) {
+        return String(value || "")
+            .toLowerCase()
+            .trim()
+            .replace(/&/g, "and")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+    }
+
+    function getProductCategoryURL(product) {
+        if (!product) return "/";
+
+        const category = slugify(product.category);
+        const subcategory = slugify(product.subcategory);
+
+        if (!category) return "/";
+
+        if (subcategory) {
+            return `/category/${category}/${subcategory}/`;
+        }
+
+        return `/category/${category}/`;
+    }
+
     function updateProductSEO(product) {
 
         if (!product) {
@@ -2578,80 +2607,47 @@
         =====================================================
         */
 
-        const categorySlug =
-            String(category)
-                .toLowerCase()
-                .trim()
-                .replace(
-                    /[^a-z0-9]+/g,
-                    "-"
-                )
-                .replace(
-                    /^-+|-+$/g,
-                    ""
-                );
+        const categoryURL =
+            getProductCategoryURL(product);
 
+
+        const breadcrumbItems = [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": `${window.location.origin}/`
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": category,
+                "item": `${window.location.origin}/category/${slugify(category)}/`
+            }
+        ];
+
+        if (product.subcategory) {
+            breadcrumbItems.push({
+                "@type": "ListItem",
+                "position": 3,
+                "name": String(product.subcategory)
+                    .replace(/-/g, " ")
+                    .replace(/\w/g, c => c.toUpperCase()),
+                "item": `${window.location.origin}${categoryURL}`
+            });
+        }
+
+        breadcrumbItems.push({
+            "@type": "ListItem",
+            "position": breadcrumbItems.length + 1,
+            "name": productName,
+            "item": productURL
+        });
 
         const breadcrumbSchema = {
-
-            "@context":
-                "https://schema.org",
-
-            "@type":
-                "BreadcrumbList",
-
-            "itemListElement": [
-
-                {
-
-                    "@type":
-                        "ListItem",
-
-                    "position":
-                        1,
-
-                    "name":
-                        "Home",
-
-                    "item":
-                        `${window.location.origin}/`
-
-                },
-
-                {
-
-                    "@type":
-                        "ListItem",
-
-                    "position":
-                        2,
-
-                    "name":
-                        category,
-
-                    "item":
-                        `${window.location.origin}/category/${encodeURIComponent(categorySlug)}/`
-
-                },
-
-                {
-
-                    "@type":
-                        "ListItem",
-
-                    "position":
-                        3,
-
-                    "name":
-                        productName,
-
-                    "item":
-                        productURL
-
-                }
-
-            ]
-
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": breadcrumbItems
         };
 
 
