@@ -233,15 +233,15 @@
     "image": "/images/drugs/Doxygen.png",
     "description": "Doxygen 100g veterinary medicine product for animal health management."
   },
-    {
-    "id": "neufuraseryl-100g",
-    "name": "Neufuraseryl 100g",
-    "price": 2000,
-    "category": "drugs",
-    "subcategory": "antibiotics",
-    "slug": "neufuraseryl",
-    "image": "/images/drugs/neufuraseryl_plus.png",
-    "description": "neofuraseryl 100g veterinary medicine product for animal health management."
+   {
+    "id": "odour_out",
+    "name": "Odour Out",
+    "price": 9500,
+    "category": "chemical",
+    "subcategory": "agrochemicals",
+    "slug": "odour-out",
+    "image": "/images/chemical/Odour_Out.png",
+    "description": "Odour Out veterinary medicine product for animal health management."
   },
   {
     "id": "drugs-chick-on-1l",
@@ -251,6 +251,15 @@
     "subcategory": "organic",
     "slug": "chick-on-1l",
     "image": "/images/drugs/chick_on_1L.png",
+    "description": "Chick-On 1L veterinary product for poultry and farm animal management."
+  },
+    {
+    "id": "Quail_feeder",
+    "name": "Quail_feeder",
+    "price": 1500,
+    "category": "equipment",
+    "slug": "Quiailfeeder",
+    "image": "/images/equipment/Quail_feeder.png",
     "description": "Chick-On 1L veterinary product for poultry and farm animal management."
   },
   {
