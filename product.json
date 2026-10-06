@@ -233,6 +233,16 @@
     "image": "/images/drugs/Doxygen.png",
     "description": "Doxygen 100g veterinary medicine product for animal health management."
   },
+    {
+    "id": "neufuraseryl-100g",
+    "name": "Neufuraseryl 100g",
+    "price": 2000,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "neufuraseryl",
+    "image": "/images/drugs/neufuraseryl_plus.png",
+    "description": "neofuraseryl 100g veterinary medicine product for animal health management."
+  },
   {
     "id": "drugs-chick-on-1l",
     "name": "Chick-On 1L",

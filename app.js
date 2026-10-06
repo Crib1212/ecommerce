@@ -122,66 +122,92 @@
 
 
     /* =========================================================
-    🖼 PRODUCT IMAGE PATH
-    ========================================================= */
+🖼 PRODUCT IMAGE PATH — OLD VERSION
+========================================================= */
 
-    function getProductImage(image) {
+/*
+function getProductImage(image) {
 
-        if (!image) {
-            return "../images/logo.png";
-        }
-
-        const imagePath = String(image).trim();
-
-        /*
-        Absolute URL
-        */
-
-        if (
-            imagePath.startsWith("http://") ||
-            imagePath.startsWith("https://") ||
-            imagePath.startsWith("data:")
-        ) {
-            return imagePath;
-        }
-
-        /*
-        Root-relative image
-        Example:
-        /images/feed.png
-        */
-
-        if (imagePath.startsWith("/")) {
-            return imagePath;
-        }
-
-        /*
-        Product JSON normally stores:
-        images/feed.png
-
-        Product page is:
-        /product/index.html
-
-        Therefore:
-        ../images/feed.png
-        */
-
-        if (imagePath.startsWith("../")) {
-            return imagePath;
-        }
-
-        if (imagePath.startsWith("./")) {
-            return "../" + imagePath.substring(2);
-        }
-
-        if (imagePath.startsWith("images/")) {
-            return "../" + imagePath;
-        }
-
-        return "../images/" + imagePath;
+    if (!image) {
+        return "../images/logo.png";
     }
 
+    const imagePath = String(image).trim();
 
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("data:")
+    ) {
+        return imagePath;
+    }
+
+    if (imagePath.startsWith("/")) {
+        return imagePath;
+    }
+
+    if (imagePath.startsWith("../")) {
+        return imagePath;
+    }
+
+    if (imagePath.startsWith("./")) {
+        return "../" + imagePath.substring(2);
+    }
+
+    if (imagePath.startsWith("images/")) {
+        return "../" + imagePath;
+    }
+
+    return "../images/" + imagePath;
+}
+*/
+
+
+/* =========================================================
+🖼 PRODUCT IMAGE PATH — NEW VERSION
+========================================================= */
+
+function getProductImage(image) {
+
+    if (!image) {
+        return "/images/logo.png";
+    }
+
+    const imagePath = String(image).trim();
+
+    // Absolute URL
+    if (
+        imagePath.startsWith("http://") ||
+        imagePath.startsWith("https://") ||
+        imagePath.startsWith("data:")
+    ) {
+        return imagePath;
+    }
+
+    // Root-relative path
+    // Example: /images/equipment/aerator.webp
+    if (imagePath.startsWith("/")) {
+        return imagePath;
+    }
+
+    // Handle images/...
+    if (imagePath.startsWith("images/")) {
+        return "/" + imagePath;
+    }
+
+    // Handle ./images/...
+    if (imagePath.startsWith("./images/")) {
+        return "/" + imagePath.substring(2);
+    }
+
+    // Handle ../images/...
+    if (imagePath.startsWith("../images/")) {
+        return "/" + imagePath.substring(3);
+    }
+
+    // Filename only
+    return "/images/" + imagePath;
+}
     /* =========================================================
     🛒 CART STORAGE
     ========================================================= */
