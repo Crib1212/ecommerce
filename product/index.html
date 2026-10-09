@@ -1,156 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title id="productPageTitle">Product | Wittyfare</title>
-    <meta name="description" content="Buy farm products from Wittyfare Agrovet & Farms">
-    <link rel="shortcut icon" href="../images/logo.png">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <meta name="description"
+        content="Buy farm products from Wittyfare Agrovet & Farms in Abuja, Nigeria.">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    <link rel="stylesheet" href="/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-57VJ7F9MX9"></script>
+
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
         gtag('config', 'G-57VJ7F9MX9');
     </script>
+
     <style>
-        /* Product page specific spacing */
-       .product-page-wrapper { padding-top: 110px; padding: 20px; max-width: 1200px; margin: 110px auto 20px; }
-       .product-detail-card { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        #productImage { width: 100%; max-height: 500px; object-fit: contain; }
-        #productName { font-size: 28px; margin-bottom: 10px; }
-        #productPrice { font-size: 24px; color: #2e7d32; font-weight: bold; margin: 15px 0; }
-        #addProductToCart { background: #2e7d32; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; }
-        #addProductToCart:hover { background: #1b5e20; }
-        @media (max-width: 768px) {.product-detail-card { grid-template-columns: 1fr; }.product-page-wrapper { margin-top: 90px; } }
+        .product-page-wrapper {
+            padding-top: 110px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 110px auto 20px;
+        }
+
+        .product-detail-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #productImage {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        #productName {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        #productPrice {
+            font-size: 24px;
+            color: #2e7d32;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        #addProductToCart {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #addProductToCart:hover {
+            background: #1b5e20;
+        }
+
+        @media (max-width: 768px) {
+
+            .product-detail-card {
+                grid-template-columns: 1fr;
+            }
+
+            .product-page-wrapper {
+                margin-top: 90px;
+            }
+        }
     </style>
 </head>
+
 <body class="home-page">
 
-<!-- HEADER - SAME ID AS HOMEPAGE -->
-<header class="header-sticky">
-    <div id="logo">
-        <h2 class="logo-title"><a href="../index.html" class="logo-link">Wittyfare</a></h2>
-    </div>
-    <div class="home-icon" onclick="goHome()" title="Home">🏠</div>
-    <div class="menu-icon" onclick="toggleMenu()" title="Menu">☰</div>
-    <div class="chat-icon" onclick="openChat()" title="Chat">💬</div>
-    <div class="social-media">
-        <a href="https://web.facebook.com/wittyfare" target="_blank"><img src="../images/facebook-icon.png" alt="Facebook"></a>
-        <a href="http://www.linkedin.com/in/wittyfare-online-788390328" target="_blank"><img src="../images/linkedin-icon.png" alt="LinkedIn"></a>
-        <a href="https://www.instagram.com/wittyfare?igsh=Ym55MGdtMnhkMmZo" target="_blank"><img src="../images/instagram-icon.png" alt="Instagram"></a>
-        <a href="https://www.tiktok.com/@wittyfare_online" target="_blank"><img src="../images/Tiktok-icon.png" alt="TikTok"></a>
-        <a href="https://www.x.com/wittyfare" target="_blank"><img src="../images/x-icon.png" alt="X"></a>
-        <a href="https://www.youtube.com/@wittyfare?si=alGNdohR_egZwZJS" target="_blank"><img src="../images/youtube-icon.png" alt="YouTube"></a>
-    </div>
-    <div class="iconCart">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="totalQuantity">0</span>
-    </div>
-</header>
+    <!-- HEADER -->
+    <header class="header-sticky">
 
-<!-- SIDE MENU - SAME ID AS HOMEPAGE -->
-<div id="menu" class="menu">
-    <ul>
-        <li><a href="../category/farm-packages/index.html">FARM PACKAGES</a></li>
-        <li><a href="../category/chemical/index.html">CHEMICAL</a></li>
-        <li><a href="../category/day-old/index.html">DAY-OLD CHICK</a></li>
-        <li><a href="../category/drugs/index.html">DRUGS</a></li>
-        <li><a href="../category/equipment/index.html">EQUIPMENT</a></li>
-        <li><a href="../category/feed/index.html">FEED</a></li>
-        <li><a href="../category/Fish/index.html">FISH BOOKING</a></li>
-        <li><a href="../category/pet-store/index.html">PET-ACCESSORIES</a></li>
-        <li><a href="../category/Vaccines/index.html">VACCINE</a></li>
-    </ul>
-</div>
-<div id="menuOverlay" class="menu-overlay"></div>
-
-<!-- PHONE CONTACT - SAME AS HOMEPAGE -->
-<div class="phone-contact">
-<a href="https://wa.me/2347062987941" target="_blank"><i class="fab fa-whatsapp"></i><span class="phone-number">WhatsApp</span></a>
-<a href="tel:+2347062987941"><i class="fas fa-phone-alt"></i><span class="phone-number">Phone</span></a>
-<a href="../return-policy/about.html"><i class="fas fa-info-circle"></i><span class="phone-number">About Us</span></a>
-<a href="../return-policy/contact.html"><i class="fas fa-envelope"></i><span class="phone-number">Contact</span></a>
-</div>
-
-<!-- NOTIFICATION - SAME ID -->
-<div class="notification-toast" data-toast>
-    <div class="toast-banner"><img src="../images/Hybrid_3_in_1_Special-4.png" alt="Product" width="80" height="70"></div>
-    <div class="toast-detail">
-        <button class="toast-close-btn" onclick="closeToast()">✕</button>
-        <p class="toast-message">Someone just bought</p>
-        <p class="toast-title">Hybrid Special 3 in 1 - 25kg</p>
-        <p class="toast-meta"><time datetime="PT2M">2 Minutes</time> ago</p>
-    </div>
-</div>
-
-<!-- SEO MARQUEE -->
-<div class="seo-marquee"><span>Affordable Agrovet and Farm Products in Abuja!</span></div>
-
-<!-- SEARCH - SAME ID AS HOMEPAGE -->
-<div class="search-container">
-    <input type="search" id="searchInput" placeholder="Search products...">
-    <button class="search-button" onclick="searchProducts()">Search</button>
-</div>
-
-<!-- PRODUCT DETAIL - THIS IS NEW -->
-<div class="product-page-wrapper">
-    <div class="product-detail-card">
-        <img id="productImage" src="../images/logo.png" alt="Product">
-        <div>
-            <h1 id="productName">Loading...</h1>
-            <p id="productCategory" style="color:#888;"></p>
-            <div id="productPrice">₦0</div>
-            <p id="productDescription"></p>
-            <div id="productDetails"></div>
-            <button id="addProductToCart">Add to cart</button>
+        <div id="logo">
+            <h2 class="logo-title">
+                <a href="/" class="logo-link">Wittyfare</a>
+            </h2>
         </div>
+
+        <div class="home-icon"
+            onclick="goHome()"
+            title="Home">
+            🏠
+        </div>
+
+        <div class="menu-icon"
+            onclick="toggleMenu()"
+            title="Menu">
+            ☰
+        </div>
+
+        <div class="chat-icon"
+            onclick="openChat()"
+            title="Chat">
+            💬
+        </div>
+
+        <div class="social-media">
+
+            <a href="https://web.facebook.com/wittyfare"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/facebook-icon.png"
+                    alt="Wittyfare Facebook">
+            </a>
+
+            <a href="http://www.linkedin.com/in/wittyfare-online-788390328"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/linkedin-icon.png"
+                    alt="Wittyfare LinkedIn">
+            </a>
+
+            <a href="https://www.instagram.com/wittyfare?igsh=Ym55MGdtMnhkMmZo"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/instagram-icon.png"
+                    alt="Wittyfare Instagram">
+            </a>
+
+            <a href="https://www.tiktok.com/@wittyfare_online"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/Tiktok-icon.png"
+                    alt="Wittyfare TikTok">
+            </a>
+
+            <a href="https://www.x.com/wittyfare"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/x-icon.png"
+                    alt="Wittyfare X">
+            </a>
+
+            <a href="https://www.youtube.com/@wittyfare?si=alGNdohR_egZwZJS"
+                target="_blank"
+                rel="noopener">
+                <img src="/images/youtube-icon.png"
+                    alt="Wittyfare YouTube">
+            </a>
+
+        </div>
+
+        <div class="iconCart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="totalQuantity">0</span>
+        </div>
+
+    </header>
+
+
+    <!-- MENU -->
+    <div id="menu" class="menu">
+
+        <ul>
+
+            <li>
+                <a href="/category/farm-packages/index.html">
+                    FARM PACKAGES
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/chemical/index.html">
+                    CHEMICAL
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/day-old/index.html">
+                    DAY-OLD CHICK
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/drugs/index.html">
+                    DRUGS
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/equipment/index.html">
+                    EQUIPMENT
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/feed/index.html">
+                    FEED
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/Fish/index.html">
+                    FISH BOOKING
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/pet-store/index.html">
+                    PET-ACCESSORIES
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/Vaccines/index.html">
+                    VACCINE
+                </a>
+            </li>
+
+        </ul>
+
     </div>
 
-    <h2 style="margin-top:40px;">Related Products</h2>
-    <div id="relatedProducts" class="listProduct"></div>
-</div>
+    <div id="menuOverlay" class="menu-overlay"></div>
 
-<!-- CART PANEL - SAME CLASS/ID AS HOMEPAGE -->
-<div class="cart">
-    <h2>ORDER</h2>
-    <div class="listCart"></div>
-    <div class="buttons">
-        <div class="close">CLOSE</div>
-        <div class="checkout"><a href="../checkout.html">CHECKOUT</a></div>
+
+    <!-- PHONE / CONTACT -->
+    <div class="phone-contact">
+
+        <a href="https://wa.me/2347062987941"
+            target="_blank"
+            rel="noopener">
+
+            <i class="fab fa-whatsapp"></i>
+            <span class="phone-number">WhatsApp</span>
+
+        </a>
+
+        <a href="tel:+2347062987941">
+
+            <i class="fas fa-phone-alt"></i>
+            <span class="phone-number">Phone</span>
+
+        </a>
+
+        <a href="/return-policy/about.html">
+
+            <i class="fas fa-info-circle"></i>
+            <span class="phone-number">About Us</span>
+
+        </a>
+
+        <a href="/return-policy/contact.html">
+
+            <i class="fas fa-envelope"></i>
+            <span class="phone-number">Contact</span>
+
+        </a>
+
     </div>
-</div>
-<div id="cartOverlay" class="cart-overlay"></div>
 
-<!-- FOOTER SAME -->
-<footer>
-    <div class="footer-section"><h3>About Us</h3><ul><li><a href="#">Company Info</a></li><li><a href="#">Careers</a></li><li><a href="#">Blog</a></li></ul></div>
-    <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Service</a></li><li><a href="#">Shipping Info</a></li><li><a href="#">Returns</a></li></ul></div>
-    <div class="footer-section"><h3>Equipment</h3><ul><li><a href="#">Egg Crate</a></li><li><a href="#">Feeder</a></li><li><a href="#">Drinker</a></li></ul></div>
-    <div class="footer-section"><h3>Feed</h3><ul><li><a href="#">Starter</a></li><li><a href="#">Finisher</a></li><li><a href="#">Layer Mash</a></li></ul></div>
-</footer>
 
-<script src="../app.js"></script>
-<script>
-    function goHome(){ window.location.href = "../index.html"; }
-    function openChat(){ if(typeof Tawk_API!== "undefined") Tawk_API.maximize(); }
-    // toggleMenu, closeMenu, showCart, hideCart are now in app.js
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector(".iconCart")?.addEventListener("click", () => showCart());
-        document.querySelector(".cart.close")?.addEventListener("click", () => hideCart());
-        document.getElementById("cartOverlay")?.addEventListener("click", () => hideCart());
-        document.getElementById("menuOverlay")?.addEventListener("click", () => closeMenu());
-    });
-</script>
+    <!-- PURCHASE NOTIFICATION -->
+    <div class="notification-toast" data-toast>
 
-<!-- TAWK -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
-(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true; s1.src='https://embed.tawk.to/67067ceccec6d0125df3f3b6/1i9olfvdc'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0);})();
-</script>
+        <div class="toast-banner">
+
+            <img src="/images/Hybrid_3_in_1_Special-4.png"
+                alt="Product"
+                width="80"
+                height="70">
+
+        </div>
+
+        <div class="toast-detail">
+
+            <button class="toast-close-btn"
+                onclick="closeToast()">
+                ✕
+            </button>
+
+            <p class="toast-message">
+                Someone just bought
+            </p>
+
+            <p class="toast-title">
+                Hybrid Special 3 in 1 - 25kg
+            </p>
+
+            <p class="toast-meta">
+
+                <time datetime="PT2M">
+                    2 Minutes
+                </time>
+
+                ago
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEO MARQUEE -->
+    <div class="seo-marquee">
+
+        <span>
+            Affordable Agrovet and Farm Products in Abuja!
+        </span>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="search-container">
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Search products...">
+
+        <button
+            class="search-button"
+            onclick="searchProducts()">
+
+            Search
+
+        </button>
+
+    </div>
+
+
+    <!-- PRODUCT -->
+    <div class="product-page-wrapper">
+
+        <div class="product-detail-card">
+
+            <img
+                id="productImage"
+                src="/images/logo.png"
+                alt="Product">
+
+            <div>
+
+                <h1 id="productName">
+                    Loading...
+                </h1>
+
+                <p
+                    id="productCategory"
+                    style="color:#888;">
+                </p>
+
+                <div id="productPrice">
+                    ₦0
+                </div>
+
+                <p id="productDescription">
+                </p>
+
+                <div id="productDetails">
+                </div>
+
+                <button id="addProductToCart">
+                    Add to cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RELATED PRODUCTS -->
+        <h2 style="margin-top:40px;">
+            Related Products
+        </h2>
+
+        <div
+            id="relatedProducts"
+            class="listProduct">
+        </div>
+
+    </div>
+
+
+    <!-- CART -->
+    <div class="cart">
+
+        <h2>
+            ORDER
+        </h2>
+
+        <div class="listCart">
+        </div>
+
+        <div class="buttons">
+
+            <div class="close">
+                CLOSE
+            </div>
+
+            <div class="checkout">
+
+                <a href="/checkout.html">
+                    CHECKOUT
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="cartOverlay"
+        class="cart-overlay">
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-section">
+
+            <h3>
+                About Us
+            </h3>
+
+            <ul>
+
+                <li>
+                    <a href="#">
+                        Company Info
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Careers
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Blog
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer-section">
+
+            <h3>
+                Help
+            </h3>
+
+            <ul>
+
+                <li>
+                    <a href="#">
+                        Customer Service
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Shipping Info
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Returns
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer-section">
+
+            <h3>
+                Equipment
+            </h3>
+
+            <ul>
+
+                <li>
+                    <a href="#">
+                        Egg Crate
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Feeder
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Drinker
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer-section">
+
+            <h3>
+                Feed
+            </h3>
+
+            <ul>
+
+                <li>
+                    <a href="#">
+                        Starter
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Finisher
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Layer Mash
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </footer>
+
+
+    <!-- MAIN APP.JS -->
+    <script src="/app.js"></script>
+
+
+    <!-- TAWK CHAT -->
+    <script type="text/javascript">
+
+        var Tawk_API = Tawk_API || {};
+        var Tawk_LoadStart = new Date();
+
+        Tawk_API.onLoad = function () {
+            Tawk_API.hideWidget();
+        };
+
+        (function () {
+
+            var s1 = document.createElement("script");
+            var s0 = document.getElementsByTagName("script")[0];
+
+            s1.async = true;
+
+            s1.src =
+                'https://embed.tawk.to/67067ceccec6d0125df3f3b6/1i9olfvdc';
+
+            s1.charset = 'UTF-8';
+
+            s1.setAttribute(
+                'crossorigin',
+                '*'
+            );
+
+            s0.parentNode.insertBefore(
+                s1,
+                s0
+            );
+
+        })();
+
+    </script>
+
 </body>
+
 </html>
