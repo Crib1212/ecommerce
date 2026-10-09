@@ -14,15 +14,35 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    box-sizing: border-box;
 }
 
-body {
-    font-family: "Open Sans", sans-serif;
-    overflow-x: hidden;
-    background: #fff;
-    color: #333;
+/* HOMEPAGE - stays up */
+body.home, 
+body.page-template-front-page,
+body.home.page {
+    padding-top: 80px !important;
 }
 
+/* PRODUCT PAGE ONLY - goes down */
+body.single-product,
+body.single,
+body.post-type-archive-product,
+body.woocommerce {
+    padding-top: 130px !important; /* increase to 150px, 170px if you want more down */
+}
+
+/* Extra push for product image on product page only */
+body.single-product .product-section,
+body.single-product .woocommerce-product-gallery,
+body.single-product main {
+    margin-top: 25px !important;
+}
+
+/* HOMEPAGE product grid - stays up */
+body.home .product-section {
+    margin-top: 10px !important; /* homepage low */
+}
 a {
     text-decoration: none;
 }
