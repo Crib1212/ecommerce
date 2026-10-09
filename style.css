@@ -12,7 +12,7 @@
 html,
 body {
     margin: 0;
-    padding: 90px;
+    padding: 0;
     width: 100%;
 }
 
@@ -55,7 +55,7 @@ header {
     background-color: #65db80;
     width: 100%;
     min-height: 80px;
-    border-radius: 0 0 10px 10px; /* only round bottom, not top */
+    border-radius: 10px;
     padding: 15px 20px;
     position: fixed;
     top: 0;
@@ -3398,8 +3398,8 @@ main .product {
 
 @media screen and (max-width: 480px) {
   body {
-  padding-top: 80px !important; /* THIS pushes all images down */
-}
+    padding-top: 65px !important;
+  }
   header {
     min-height: 65px;
   }
