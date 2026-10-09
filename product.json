@@ -353,16 +353,6 @@
     "image": "/images/drugs/oxytet_1kg.png",
     "description": "Oxytetracycline 1kg veterinary medicine product for animal health management."
   },
-   {
-    "id": "drugs-tylodox-extra-100g",
-    "name": "Tylodox Extra 100g",
-    "price": 9500,
-    "category": "drugs",
-    "subcategory": "antibiotics",
-    "slug": "tylodox-extra-100g",
-    "image": "/images/drugs/Tylo-dox_Extra.png",
-    "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
-  },
   {
     "id": "drugs-doxygen-100g",
     "name": "Doxygen 100g",
