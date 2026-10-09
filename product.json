@@ -233,6 +233,66 @@
     "image": "/images/drugs/Aquaceryl.png",
     "description": "Aquaceryl veterinary medicine product for animal health management."
   },
+  {
+    "id": "drugs-diclamax",
+    "name": "Diclamax",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "others",
+    "slug": "diclamax",
+    "image": "/images/drugs/diclamax.png",
+    "description": "Diclamax veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-neoxymore",
+    "name": "Neoxymore",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "neoxymore",
+    "image": "/images/drugs/Neoxymore.png",
+    "description": "Neoxymore veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-mintocare",
+    "name": "Mintocare",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "others",
+    "slug": "mintocare",
+    "image": "/images/drugs/mintocare_1l.png",
+    "description": "Mintocare veterinary product for poultry and farm animal management."
+  },
+   {
+    "id": "drugs-mintocare",
+    "name": "Mintocare",
+    "price": 2300,
+    "category": "drugs",
+    "subcategory": "others",
+    "slug": "mintocare",
+    "image": "/images/drugs/mintocare_100ml.png",
+    "description": "Mintocare veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-kachflox",
+    "name": "Kachflox",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "kachflox",
+    "image": "/images/drugs/kachflox_100ml.png",
+    "description": "Kachflox veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-kachflox",
+    "name": "Kachflox",
+    "price": 2700,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "kachflox",
+    "image": "/images/drugs/kachflox_100ml.png",
+    "description": "Kachflox veterinary product for poultry and farm animal management."
+  },
    {
     "id": "drugs-Aquaflox",
     "name": "Aquaflox",
@@ -242,6 +302,56 @@
     "slug": "aquaflox",
     "image": "/images/drugs/Aquaflox.png",
     "description": "Aquaflox veterinary medicine product for animal health management."
+  },
+  {
+    "id": "drugs-maxiboost",
+    "name": "Maxiboost",
+    "price": 2800,
+    "category": "drugs",
+    "subcategory": "multivitamins",
+    "slug": "maxiboost",
+    "image": "/images/drugs/maxi-boost.png",
+    "description": "Maxiboost veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-medecol_200ml",
+    "name": "Medecol 200ml",
+    "price": 1200,
+    "category": "drugs",
+    "subcategory": "organic",
+    "slug": "medecol_200ml",
+    "image": "/images/drugs/medecol_200ml.png",
+    "description": "Medecol 200ml veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-neotreat",
+    "name": "Neotreat",
+    "price": 4000,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "neotreat",
+    "image": "/images/drugs/neotreat.png",
+    "description": "Neotreat veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-promin",
+    "name": "Promin",
+    "price": 13000,
+    "category": "drugs",
+    "subcategory": "multivitamins",
+    "slug": "promin",
+    "image": "/images/drugs/promin_1l.png",
+    "description": "Promin veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-oxytet",
+    "name": "oxytet_1kg",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "Oxytetracycline-1kg",
+    "image": "/images/drugs/oxytet_1kg.png",
+    "description": "Oxytetracycline 1kg veterinary medicine product for animal health management."
   },
    {
     "id": "drugs-tylodox-extra-100g",
@@ -283,15 +393,46 @@
     "image": "/images/drugs/Chick_on_1L.png",
     "description": "Chick-On 1L veterinary product for poultry and farm animal management."
   },
+  {
+    "id": "drugs-chick-on-200ml",
+    "name": "Chick-On 200ml",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "organic",
+    "slug": "chick-on-200ml",
+    "image": "/images/drugs/Chick_on_200ml.png",
+    "description": "Chick-On 200ml veterinary product for poultry and farm animal management."
+  },
     {
     "id": "Quail_feeder",
     "name": "Quail_feeder",
     "price": 1500,
     "category": "equipment",
-    "slug": "Quiailfeeder",
+    "slug": "Quailfeeder",
     "image": "/images/equipment/Quail_feeder.png",
     "description": "Chick-On 1L veterinary product for poultry and farm animal management."
   },
+  {
+    "id": "drugs-coffefin-1l",
+    "name": "Coffefin 1L",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "organic",
+    "slug": "coffefin-1l",
+    "image": "/images/drugs/Coffefin_1L.png",
+    "description": "Coffefin 1L veterinary product for poultry and farm animal management."
+  },
+  {
+    "id": "drugs-coffefin-200ml",
+    "name": "Coffefin 200ml",
+    "price": 4300,
+    "category": "drugs",
+    "subcategory": "organic",
+    "slug": "coffefin-200ml",
+    "image": "/images/drugs/Coffefin_200ml.png",
+    "description": "Coffefin 200ml veterinary product for poultry and farm animal management."
+  },
+  
   {
     "id": "drugs-otc",
     "name": "OTC Veterinary Product",
