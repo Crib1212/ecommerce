@@ -14,35 +14,15 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    box-sizing: border-box;
 }
 
-/* HOMEPAGE - stays up */
-body.home, 
-body.page-template-front-page,
-body.home.page {
-    padding-top: 80px !important;
+body {
+    font-family: "Open Sans", sans-serif;
+    overflow-x: hidden;
+    background: #fff;
+    color: #333;
 }
 
-/* PRODUCT PAGE ONLY - goes down */
-body.single-product,
-body.single,
-body.post-type-archive-product,
-body.woocommerce {
-    padding-top: 130px !important; /* increase to 150px, 170px if you want more down */
-}
-
-/* Extra push for product image on product page only */
-body.single-product .product-section,
-body.single-product .woocommerce-product-gallery,
-body.single-product main {
-    margin-top: 25px !important;
-}
-
-/* HOMEPAGE product grid - stays up */
-body.home .product-section {
-    margin-top: 10px !important; /* homepage low */
-}
 a {
     text-decoration: none;
 }
@@ -3396,31 +3376,4 @@ footer {
 .subcategory-card h3 {
     padding: 10px;
     margin: 0;
-}
-
-/* Product page image extra push */
-.single-product .product,
-.product-page-link,
-.woocommerce-product-gallery,
-main .product {
-    margin-top: 20px !important;
-    padding-top: 10px !important;
-}
-
-@media screen and (max-width: 768px) {
-  body {
-    padding-top: 70px !important; /* smaller header on mobile */
-  }
-  header {
-    min-height: 70px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  body {
-    padding-top: 65px !important;
-  }
-  header {
-    min-height: 65px;
-  }
 }
