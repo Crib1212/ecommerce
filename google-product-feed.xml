@@ -214,11 +214,11 @@ Automatic poultry drinking equipment for efficient water supply in poultry farms
 <link>https://www.wittyfare.com/product/?slug=automatic-poultry-drinker</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/equipment/automatic_drinker.png
+https://www.wittyfare.com/images/equipment/Automatic_drinker.png
 </g:image_link>
 
 <g:price>
-85000.00 NGN
+15000.00 NGN
 </g:price>
 
 <g:availability>
@@ -957,7 +957,7 @@ Tylodox Extra 100g veterinary medicine product for animal health management.
 <link>https://www.wittyfare.com/product/?slug=tylodox-extra-100g</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/drugs/Tylo-dox_Extra.png
+https://www.wittyfare.com/images/drugs/Tylo-dox_extra.png
 </g:image_link>
 
 <g:price>
@@ -1430,7 +1430,7 @@ Neotreat veterinary product for poultry and farm animal management.
 <link>https://www.wittyfare.com/product/?slug=neotreat</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/drugs/neotreat.png
+https://www.wittyfare.com/images/drugs/Neotreat.png
 </g:image_link>
 
 <g:price>
@@ -1645,7 +1645,7 @@ Odour Out veterinary medicine product for animal health management.
 <link>https://www.wittyfare.com/product/?slug=odour-out</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/chemical/Odour_Out.png
+https://www.wittyfare.com/images/chemical/Odour_out.png
 </g:image_link>
 
 <g:price>
@@ -1928,49 +1928,6 @@ no
 
 <g:product_type>
 drugs &gt; antibiotics
-</g:product_type>
-
-
-</item>
-
-<item>
-
-<g:id>drugs-coxlin</g:id>
-
-<title>coxlin Veterinary Product</title>
-
-<description>
-coxlin veterinary product available for poultry and livestock health management.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=coxlin-veterinary-product</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/drugs/Coxlin.jpg
-</g:image_link>
-
-<g:price>
-2300.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-drugs &gt; anticoccidiosis
 </g:product_type>
 
 

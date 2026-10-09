@@ -45,11 +45,11 @@
   {
     "id": "automatic-poultry-drinker",
     "name": "Automatic Poultry Drinker",
-    "price": 85000,
+    "price": 15000,
     "category": "equipment",
     "subcategory": "poultry-equipment",
     "slug": "automatic-poultry-drinker",
-    "image": "/images/equipment/automatic_drinker.png",
+    "image": "/images/equipment/Automatic_drinker.png",
     "description": "Automatic poultry drinking equipment for efficient water supply in poultry farms."
   },
   {
@@ -220,7 +220,7 @@
     "category": "drugs",
     "subcategory": "antibiotics",
     "slug": "tylodox-extra-100g",
-    "image": "/images/drugs/Tylo-dox_Extra.png",
+    "image": "/images/drugs/Tylo-dox_extra.png",
     "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
   },
    {
@@ -330,7 +330,7 @@
     "category": "drugs",
     "subcategory": "antibiotics",
     "slug": "neotreat",
-    "image": "/images/drugs/neotreat.png",
+    "image": "/images/drugs/Neotreat.png",
     "description": "Neotreat veterinary product for poultry and farm animal management."
   },
   {
@@ -380,7 +380,7 @@
     "category": "chemical",
     "subcategory": "agrochemicals",
     "slug": "odour-out",
-    "image": "/images/chemical/Odour_Out.png",
+    "image": "/images/chemical/Odour_out.png",
     "description": "Odour Out veterinary medicine product for animal health management."
   },
   {
@@ -442,16 +442,6 @@
     "slug": "otc-veterinary-product",
     "image": "/images/drugs/OTC.jpg",
     "description": "OTC veterinary product available for poultry and livestock health management."
-  },
-   {
-    "id": "drugs-coxlin",
-    "name": "coxlin Veterinary Product",
-    "price": 2300,
-    "category": "drugs",
-    "subcategory": "anticoccidiosis",
-    "slug": "coxlin-veterinary-product",
-    "image": "/images/drugs/Coxlin.jpg",
-    "description": "coxlin veterinary product available for poultry and livestock health management."
   },
   {
     "id": "feed-animalcare-layer-mash-25kg",
