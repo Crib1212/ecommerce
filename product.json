@@ -120,14 +120,14 @@
     "description": "Hybrid Layer Mash 25kg poultry feed for laying birds."
   },
   {
-    "id": "feed-hybrid-3-in-1-special",
-    "name": "Hybrid 3-in-1 Special",
-    "price": 20300,
+    "id": "feed-ultima_stater-25kg",
+    "name": "Ultima Starter 25kg",
+    "price": 21000,
     "category": "feed",
     "subcategory": "poultry-feed",
-    "slug": "hybrid-3-in-1-special",
-    "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
-    "description": "Hybrid 3-in-1 Special poultry feed for poultry farming."
+    "slug": "ultima-starter-25kg",
+    "image": "/images/poultryfeed/Ultima_starter.png",
+    "description": "Ultima Starter 25kg poultry feed for starter birds."
   },
   {
     "id": "feed-breedwell-finisher-25kg",
