@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WittyFare Google Product Feed Generator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+        h1 {
+            color: #16833b;
+        }
+
+        button {
+            background: #16833b;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #10652d;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef8f0;
+            border-radius: 7px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>WittyFare Google Product Feed</h1>
+
+    <p>
+        Generate the Google Merchant Center XML feed from
+        <strong>product.json</strong>.
+    </p>
+
+    <button onclick="generateFeed()">
+        Generate Google Product Feed
+    </button>
+
+    <div id="status">
+        Ready.
+    </div>
+
+    <textarea id="feedOutput" placeholder="Your XML feed will appear here..."></textarea>
+
+    <br><br>
+
+    <button onclick="downloadFeed()">
+        Download google-product-feed.xml
+    </button>
+
+</div>
+
+<script>
+
+const WEBSITE = "https://www.wittyfare.com";
+
+let generatedXML = "";
+
+function escapeXML(value) {
+
+    if (value === undefined || value === null) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+}
+
+
+async function generateFeed() {
+
+    const status = document.getElementById("status");
+    const output = document.getElementById("feedOutput");
+
+    status.innerHTML = "Loading products...";
+
+    try {
+
+        const response = await fetch("product.json");
+
+        if (!response.ok) {
+            throw new Error("Could not load product.json");
+        }
+
+        const products = await response.json();
+
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0"
+xmlns:g="http://base.google.com/ns/1.0">
+
+<channel>
+
+<title>WittyFare Agrovet &amp; Farms</title>
+
+<link>${WEBSITE}</link>
+
+<description>
+WittyFare Agrovet &amp; Farms product feed
+</description>
+`;
+
+        const usedIDs = {};
+
+        products.forEach((product) => {
+
+            let baseID =
+                product.id ||
+                product.slug ||
+                product.name ||
+                "product";
+
+            baseID = String(baseID);
+
+            if (!usedIDs[baseID]) {
+                usedIDs[baseID] = 1;
+            } else {
+                usedIDs[baseID]++;
+            }
+
+            let productID = baseID;
+
+            if (usedIDs[baseID] > 1) {
+                productID =
+                    baseID + "-" + usedIDs[baseID];
+            }
+
+            const slug =
+                product.slug ||
+                product.id;
+
+            const productURL =
+                WEBSITE +
+                "/product/?slug=" +
+                encodeURIComponent(slug);
+
+            let imageURL =
+                product.image || "";
+
+            if (imageURL.startsWith("/")) {
+                imageURL =
+                    WEBSITE + imageURL;
+            }
+
+            let productType =
+                product.category || "";
+
+            if (product.subcategory) {
+                productType +=
+                    " > " +
+                    product.subcategory;
+            }
+
+            xml += `
+<item>
+
+<g:id>${escapeXML(productID)}</g:id>
+
+<title>${escapeXML(product.name)}</title>
+
+<description>
+${escapeXML(product.description || product.name)}
+</description>
+
+<link>${escapeXML(productURL)}</link>
+
+<g:image_link>
+${escapeXML(imageURL)}
+</g:image_link>
+
+<g:price>
+${Number(product.price || 0).toFixed(2)} NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+${escapeXML(productType)}
+</g:product_type>
+
+`;
+
+            if (product.featured === true) {
+
+                xml += `
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+`;
+
+            }
+
+            if (product.packageType) {
+
+                xml += `
+<g:custom_label_1>
+${escapeXML(product.packageType)}
+</g:custom_label_1>
+`;
+
+            }
+
+            if (product.farmSize) {
+
+                xml += `
+<g:custom_label_2>
+${escapeXML(product.farmSize)}
+</g:custom_label_2>
+`;
+
+            }
+
+            xml += `
+</item>
+`;
+        });
+
+        xml += `
+</channel>
+
+</rss>
+`;
+
+        generatedXML = xml;
+
+        output.value = xml;
+
+        status.innerHTML =
+            "✅ Feed generated successfully: " +
+            products.length +
+            " products.";
+
+    } catch (error) {
+
+        status.innerHTML =
+            "❌ Error: " +
+            error.message;
+
+    }
+
+}
+
+
+function downloadFeed() {
+
+    if (!generatedXML) {
+
+        alert(
+            "Generate the feed first."
+        );
+
+        return;
+    }
+
+    const blob =
+        new Blob(
+            [generatedXML],
+            {
+                type: "application/xml"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "google-product-feed.xml";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
