@@ -223,6 +223,36 @@
     "image": "/images/drugs/Tylo-dox_Extra.png",
     "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
   },
+   {
+    "id": "drugs-Aquaceryl",
+    "name": "Aquaceryl",
+    "price": 2000,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "aquaceryl",
+    "image": "/images/drugs/Aquaceryl.png",
+    "description": "Aquaceryl veterinary medicine product for animal health management."
+  },
+   {
+    "id": "drugs-Aquaflox",
+    "name": "Aquaflox",
+    "price": 2300,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "aquaflox",
+    "image": "/images/drugs/Aquaflox.png",
+    "description": "Aquaflox veterinary medicine product for animal health management."
+  },
+   {
+    "id": "drugs-tylodox-extra-100g",
+    "name": "Tylodox Extra 100g",
+    "price": 9500,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "tylodox-extra-100g",
+    "image": "/images/drugs/Tylo-dox_Extra.png",
+    "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
+  },
   {
     "id": "drugs-doxygen-100g",
     "name": "Doxygen 100g",
@@ -271,6 +301,16 @@
     "slug": "otc-veterinary-product",
     "image": "/images/drugs/OTC.jpg",
     "description": "OTC veterinary product available for poultry and livestock health management."
+  },
+   {
+    "id": "drugs-coxlin",
+    "name": "coxlin Veterinary Product",
+    "price": 2300,
+    "category": "drugs",
+    "subcategory": "anticoccidiosis",
+    "slug": "coxlin-veterinary-product",
+    "image": "/images/drugs/Coxlin.jpg",
+    "description": "coxlin veterinary product available for poultry and livestock health management."
   },
   {
     "id": "feed-animalcare-layer-mash-25kg",
