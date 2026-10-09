@@ -1,0 +1,1017 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Contact WittyFare Agrovet & Farms | Abuja
+    </title>
+
+    <meta name="description"
+          content="Contact WittyFare Agrovet & Farms in Abuja for agrovet products, poultry supplies, livestock products, fish farming equipment and agricultural products.">
+
+    <link rel="icon" href="images/logo.png">
+
+    <style>
+
+        :root {
+            --witty-green: #198754;
+            --dark-green: #126b3f;
+            --light-green: #eaf7ef;
+            --cream: #fffdf7;
+            --dark: #183b2a;
+            --text: #444;
+            --white: #ffffff;
+            --border: #d9eadf;
+            --shadow: 0 8px 25px rgba(25,135,84,0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+
+        /* HEADER */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            z-index: 5000;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 78px;
+            margin: auto;
+            padding: 0 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand img {
+            width: 125px;
+            display: block;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .desktop-nav a {
+            position: relative;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 29px 0;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--witty-green);
+        }
+
+        .desktop-nav a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 19px;
+            height: 3px;
+            background: var(--witty-green);
+            border-radius: 5px;
+        }
+
+
+        /* MOBILE */
+
+        .mobile-menu-button {
+            display: none;
+            width: 45px;
+            height: 45px;
+            padding: 9px;
+            border: none;
+            border-radius: 8px;
+            background: var(--light-green);
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mobile-menu-button span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background: var(--dark-green);
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 4998;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .mobile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-navigation {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(88%,380px);
+            height: 100vh;
+            background: white;
+            z-index: 4999;
+            transform: translateX(100%);
+            transition: transform 0.35s ease;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.15);
+            overflow-y: auto;
+        }
+
+        .mobile-navigation.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-header {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-brand img {
+            width: 120px;
+        }
+
+        .mobile-close {
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: var(--light-green);
+            color: var(--dark-green);
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            padding: 12px 18px;
+        }
+
+        .mobile-nav-links a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 58px;
+            padding: 0 15px;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #edf3ef;
+        }
+
+        .mobile-nav-links a:hover {
+            background: var(--light-green);
+            color: var(--witty-green);
+        }
+
+        .mobile-nav-links a.mobile-active {
+            color: white;
+            background: var(--witty-green);
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .nav-arrow {
+            font-size: 24px;
+        }
+
+        .mobile-nav-contact {
+            margin: 25px 18px;
+            padding: 20px;
+            border-radius: 12px;
+            background: var(--light-green);
+            border: 1px solid var(--border);
+        }
+
+        .mobile-nav-contact p {
+            margin: 0 0 10px;
+        }
+
+        .mobile-nav-contact a {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 7px;
+            background: var(--witty-green);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+
+        /* HERO */
+
+        .contact-hero {
+            background: linear-gradient(
+                135deg,
+                var(--dark-green),
+                var(--witty-green)
+            );
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .contact-hero h1 {
+            margin: 0 0 12px;
+            font-size: 40px;
+        }
+
+        .contact-hero p {
+            margin: 0;
+            font-size: 17px;
+        }
+
+
+        /* CONTACT AREA */
+
+        .contact-container {
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-card h2 {
+            color: var(--dark-green);
+            border-left: 5px solid var(--witty-green);
+            padding-left: 14px;
+            margin-top: 0;
+        }
+
+        .contact-card p {
+            line-height: 1.7;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            margin: 22px 0;
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contact-item strong {
+            display: block;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+
+        .contact-item a {
+            color: var(--witty-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* FORM */
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font: inherit;
+            outline: none;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--witty-green);
+            box-shadow: 0 0 0 3px rgba(25,135,84,0.10);
+        }
+
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .contact-submit {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 20px;
+            background: var(--witty-green);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .contact-submit:hover {
+            background: var(--dark-green);
+        }
+
+
+        /* WHATSAPP */
+
+        .whatsapp-box {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            background: var(--light-green);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .whatsapp-box h3 {
+            color: var(--dark-green);
+            margin-top: 0;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            background: var(--witty-green);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        footer a {
+            color: #9be7b7;
+            text-decoration: none;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .nav-container {
+                height: 68px;
+                padding: 0 18px;
+            }
+
+            .brand img {
+                width: 115px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .contact-hero {
+                padding: 50px 20px;
+            }
+
+            .contact-hero h1 {
+                font-size: 30px;
+            }
+
+            .contact-card {
+                padding: 25px 20px;
+            }
+
+            .mobile-navigation {
+                width: 92%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+            <img
+                src="../images/logo.png"
+                alt="WittyFare Agrovet & Farms"
+            >
+        </a>
+
+        <nav class="desktop-nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="farm-packages.html">
+                Farm Packages
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+            <a href="contact.html" class="active">
+                Contact
+            </a>
+
+            <a href="return-policy.html">
+                Returns
+            </a>
+
+        </nav>
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+
+    <div
+        class="mobile-overlay"
+        id="mobileOverlay"
+    ></div>
+
+
+    <nav
+        class="mobile-navigation"
+        id="mobileNavigation"
+        aria-hidden="true"
+    >
+
+        <div class="mobile-nav-header">
+
+            <a href="index.html" class="mobile-brand">
+
+                <img
+                    src="images/logo.png"
+                    alt="WittyFare Agrovet & Farms"
+                >
+
+            </a>
+
+            <button
+                class="mobile-close"
+                id="mobileClose"
+                type="button"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <div class="mobile-nav-links">
+
+            <a href="index.html">
+                <span>Home</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+            <a href="shop.html">
+                <span>Shop</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+            <a href="farm-packages.html">
+                <span>Farm Packages</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+            <a href="about.html">
+                <span>About Us</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+            <a
+                href="contact.html"
+                class="mobile-active"
+            >
+                <span>Contact</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+            <a href="return-policy.html">
+                <span>Returns & Refunds</span>
+                <span class="nav-arrow">›</span>
+            </a>
+
+        </div>
+
+
+        <div class="mobile-nav-contact">
+
+            <p>
+                Need help with an order?
+            </p>
+
+            <a href="#contact-form">
+                Send a Message
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<section class="contact-hero">
+
+    <h1>
+        Contact WittyFare
+    </h1>
+
+    <p>
+        We're here to help with your agricultural product needs.
+    </p>
+
+</section>
+
+
+<main class="contact-container">
+
+    <div class="contact-grid">
+
+
+        <!-- CONTACT DETAILS -->
+
+        <section class="contact-card">
+
+            <h2>
+                Get In Touch
+            </h2>
+
+            <p>
+
+                Have a question about a product, an order,
+                delivery or farming supplies?
+
+                Contact WittyFare and we'll be happy to assist.
+
+            </p>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <strong>
+                        Location
+                    </strong>
+
+                    Abuja, Nigeria
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <strong>
+                        Phone
+                    </strong>
+
+                    <a href="tel:YOUR_PHONE_NUMBER">
+                        YOUR PHONE NUMBER
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    ✉️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Email
+                    </strong>
+
+                    <a href="mailto:YOUR_EMAIL_ADDRESS">
+                        YOUR EMAIL ADDRESS
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    🌐
+                </div>
+
+                <div>
+
+                    <strong>
+                        Website
+                    </strong>
+
+                    <a href="https://www.wittyfare.com">
+                        www.wittyfare.com
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="whatsapp-box">
+
+                <h3>
+                    Chat With Us
+                </h3>
+
+                <p>
+                    For quick questions and orders,
+                    contact us through WhatsApp.
+                </p>
+
+                <a
+                    href="https://wa.me/YOUR_WHATSAPP_NUMBER"
+                    class="whatsapp-button"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Chat on WhatsApp
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTACT FORM -->
+
+        <section
+            class="contact-card"
+            id="contact-form"
+        >
+
+            <h2>
+                Send Us a Message
+            </h2>
+
+            <form
+                class="contact-form"
+                action="#"
+                method="post"
+            >
+
+                <div>
+
+                    <label for="name">
+                        Your Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="How can we help you?"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+                    Send Message
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        &copy; 2026 WittyFare Agrovet & Farms.
+        All rights reserved.
+    </p>
+
+    <p>
+
+        <a href="return-policy.html">
+            Return & Refund Policy
+        </a>
+
+    </p>
+
+</footer>
+
+
+<script>
+
+const menuButton =
+    document.getElementById("mobileMenuButton");
+
+const mobileNavigation =
+    document.getElementById("mobileNavigation");
+
+const mobileOverlay =
+    document.getElementById("mobileOverlay");
+
+const mobileClose =
+    document.getElementById("mobileClose");
+
+
+function openMobileMenu() {
+
+    mobileNavigation.classList.add("open");
+
+    mobileOverlay.classList.add("show");
+
+    menuButton.classList.add("active");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
+    mobileNavigation.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.classList.add("menu-open");
+
+}
+
+
+function closeMobileMenu() {
+
+    mobileNavigation.classList.remove("open");
+
+    mobileOverlay.classList.remove("show");
+
+    menuButton.classList.remove("active");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    mobileNavigation.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove("menu-open");
+
+}
+
+
+menuButton.addEventListener(
+    "click",
+    openMobileMenu
+);
+
+mobileClose.addEventListener(
+    "click",
+    closeMobileMenu
+);
+
+mobileOverlay.addEventListener(
+    "click",
+    closeMobileMenu
+);
+
+
+document
+    .querySelectorAll(".mobile-nav-links a")
+    .forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            closeMobileMenu
+        );
+
+    });
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+            closeMobileMenu();
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
+```
