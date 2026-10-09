@@ -160,53 +160,37 @@ function getProductImage(image) {
 
     return "../images/" + imagePath;
 }
-*/
-
 
 /* =========================================================
 🖼 PRODUCT IMAGE PATH — NEW VERSION
 ========================================================= */
 
 function getProductImage(image) {
-
     if (!image) {
-        return "/images/logo.png";
+        return "../images/logo.png";
     }
-
     const imagePath = String(image).trim();
 
-    // Absolute URL
-    if (
-        imagePath.startsWith("http://") ||
-        imagePath.startsWith("https://") ||
-        imagePath.startsWith("data:")
-    ) {
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://") || imagePath.startsWith("data:")) {
         return imagePath;
     }
 
-    // Root-relative path
-    // Example: /images/equipment/aerator.webp
-    if (imagePath.startsWith("/")) {
-        return imagePath;
+    // Already correct
+    if (imagePath.startsWith("../images/") || imagePath.startsWith("/images/") || imagePath.startsWith("images/")) {
+        // if we are in /product/ folder, we need ../images/
+        const isInProductFolder = window.location.pathname.includes("/product/");
+        let clean = imagePath.replace("../", "").replace(/^\//, "");
+        if (!clean.startsWith("images/")) clean = "images/" + clean.split("/").pop();
+        
+        // For homepage it's images/...
+        // For product page it's ../images/...
+        if (isInProductFolder) {
+            return "../" + clean;
+        }
+        return clean.startsWith("/") ? clean : "/" + clean;
     }
 
-    // Handle images/...
-    if (imagePath.startsWith("images/")) {
-        return "/" + imagePath;
-    }
-
-    // Handle ./images/...
-    if (imagePath.startsWith("./images/")) {
-        return "/" + imagePath.substring(2);
-    }
-
-    // Handle ../images/...
-    if (imagePath.startsWith("../images/")) {
-        return "/" + imagePath.substring(3);
-    }
-
-    // Filename only
-    return "/images/" + imagePath;
+    return "../images/" + imagePath.replace(/^\/+/, "");
 }
     /* =========================================================
     🛒 CART STORAGE
@@ -928,14 +912,11 @@ function getProductImage(image) {
     🔗 PRODUCT PAGE URL
     ========================================================= */
 
-    function getProductPageURL(slug) {
-
-        if (!slug) return "#";
-
-        return `/product/${encodeURIComponent(slug)}/`;
-    }
-
-
+  function getProductPageURL(slug) {
+    if (!slug) return "#";
+    // For static hosting without htaccess, use?slug=
+    return `/product/?slug=${encodeURIComponent(slug)}`;
+}
     /* =========================================================
     🛍 PRODUCT CARD
     ========================================================= */
@@ -1562,14 +1543,18 @@ function getProductImage(image) {
 
         try {
 
-            const response =
-                await fetch(
-                    "/product.json",
-                    {
-                        cache: "no-store"
-                    }
-                );
-
+           let response;
+try {
+    response = await fetch("/product.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("fail");
+} catch(e) {
+    try {
+        response = await fetch("../product.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("fail2");
+    } catch(e2) {
+        response = await fetch("./product.json", { cache: "no-store" });
+    }
+}
 
             if (!response.ok) {
 
@@ -3616,6 +3601,14 @@ function getProductImage(image) {
         }
     );
 
+    window.showCart = function(){
+    document.querySelector(".cart")?.classList.add("active");
+    document.getElementById("cartOverlay")?.classList.add("active");
+}
+window.hideCart = function(){
+    document.querySelector(".cart")?.classList.remove("active");
+    document.getElementById("cartOverlay")?.classList.remove("active");
+}
 
     /* =========================================================
     ✅ END OF WITTYFARE APP.JS
