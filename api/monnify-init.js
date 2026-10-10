@@ -1,122 +1,202 @@
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+const crypto = require("crypto");
+const products = require("../product.json");
 
-  try {
+module.exports = async function handler(req, res) {
+    if (req.method !== "POST") {
+        res.setHeader("Allow", "POST");
+        return res.status(405).json({
+            success: false,
+            message: "Method not allowed."
+        });
+    }
+
     const {
-      amount,
-      customerName,
-      customerEmail
+        items,
+        customerName,
+        customerEmail
     } = req.body || {};
 
-    // Basic validation. Validate prices against your real
-    // product catalogue before using this in production.
     if (
-      !Number.isFinite(Number(amount)) ||
-      Number(amount) < 20 ||
-      !customerEmail ||
-      !customerName
+        !Array.isArray(items) ||
+        items.length === 0 ||
+        items.length > 100 ||
+        typeof customerName !== "string" ||
+        !customerName.trim() ||
+        typeof customerEmail !== "string" ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim())
     ) {
-      return res.status(400).json({
-        error: "Enter a valid amount, name and email."
-      });
+        return res.status(400).json({
+            success: false,
+            message: "Please provide valid order items, name and email."
+        });
     }
 
-    const apiKey = process.env.MONNIFY_API_KEY;
-    const secretKey = process.env.MONNIFY_SECRET_KEY;
-    const contractCode = process.env.MONNIFY_CONTRACT_CODE;
-    const baseUrl =
-      process.env.MONNIFY_BASE_URL ||
-      "https://sandbox.monnify.com";
-
-    if (!apiKey || !secretKey || !contractCode) {
-      return res.status(500).json({
-        error: "Monnify environment variables are missing."
-      });
+    if (
+        !process.env.MONNIFY_API_KEY ||
+        !process.env.MONNIFY_SECRET_KEY ||
+        !process.env.MONNIFY_CONTRACT_CODE
+    ) {
+        return res.status(500).json({
+            success: false,
+            message: "Payment service is not configured."
+        });
     }
 
-    // Get Monnify access token
-    const credentials = Buffer.from(
-      `${apiKey}:${secretKey}`
-    ).toString("base64");
+    try {
+        // Match cart items against the trusted product catalogue.
+        const catalogue = new Map(
+            products.map(product => [String(product.id), product])
+        );
 
-    const authResponse = await fetch(
-      `${baseUrl}/api/v1/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${credentials}`,
-          "Content-Type": "application/json"
+        const seenIds = new Set();
+        let amount = 0;
+        const orderItems = [];
+
+        for (const item of items) {
+            const id = String(item.id || "");
+            const quantity = Number(item.quantity);
+            const product = catalogue.get(id);
+
+            if (
+                !product ||
+                seenIds.has(id) ||
+                !Number.isSafeInteger(quantity) ||
+                quantity < 1 ||
+                quantity > 100 ||
+                !Number.isFinite(Number(product.price)) ||
+                Number(product.price) <= 0
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: "An order item is invalid. Please refresh your cart."
+                });
+            }
+
+            seenIds.add(id);
+
+            const price = Number(product.price);
+            amount += price * quantity;
+
+            orderItems.push({
+                id,
+                name: product.name,
+                price,
+                quantity
+            });
         }
-      }
-    );
 
-    const authData = await authResponse.json();
+        if (!Number.isSafeInteger(amount) || amount <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "The order total is invalid."
+            });
+        }
 
-    if (
-      !authResponse.ok ||
-      !authData.requestSuccessful ||
-      !authData.responseBody?.accessToken
-    ) {
-      console.error("Monnify authentication failed");
-      return res.status(502).json({
-        error: "Could not authenticate with Monnify."
-      });
+        // Keep this endpoint on the sandbox unless you deliberately
+        // change the Vercel environment variable.
+        const baseUrl = (
+            process.env.MONNIFY_BASE_URL ||
+            "https://sandbox.monnify.com"
+        ).replace(/\/+$/, "");
+
+        if (
+            !["https://sandbox.monnify.com", "https://api.monnify.com"]
+                .includes(baseUrl)
+        ) {
+            throw new Error("Invalid payment service configuration.");
+        }
+
+        const siteUrl = (
+            process.env.SITE_URL ||
+            "https://www.wittyfare.com"
+        ).replace(/\/+$/, "");
+
+        if (siteUrl !== "https://www.wittyfare.com") {
+            throw new Error("Invalid site URL configuration.");
+        }
+
+        // Get a Monnify access token.
+        const credentials = Buffer.from(
+            `${process.env.MONNIFY_API_KEY}:${process.env.MONNIFY_SECRET_KEY}`
+        ).toString("base64");
+
+        const authResponse = await fetch(
+            `${baseUrl}/api/v1/auth/login`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Basic ${credentials}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const authData = await authResponse.json();
+
+        if (
+            !authResponse.ok ||
+            authData.requestSuccessful !== true ||
+            !authData.responseBody?.accessToken
+        ) {
+            console.error("Monnify authentication failed.");
+            return res.status(502).json({
+                success: false,
+                message: "Unable to connect to the payment service."
+            });
+        }
+
+        const paymentReference =
+            `WF-${Date.now()}-${crypto.randomBytes(5).toString("hex")}`;
+
+        const paymentResponse = await fetch(
+            `${baseUrl}/api/v1/merchant/transactions/init-transaction`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        `Bearer ${authData.responseBody.accessToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    amount,
+                    customerName: customerName.trim(),
+                    customerEmail: customerEmail.trim(),
+                    paymentReference,
+                    paymentDescription: "WittyFare product order",
+                    currencyCode: "NGN",
+                    contractCode: process.env.MONNIFY_CONTRACT_CODE,
+                    redirectUrl:
+                        `${siteUrl}/confirmation.html?payment=monnify`
+                })
+            }
+        );
+
+        const paymentData = await paymentResponse.json();
+
+        if (
+            !paymentResponse.ok ||
+            paymentData.requestSuccessful !== true ||
+            !paymentData.responseBody?.checkoutUrl
+        ) {
+            console.error("Monnify checkout initialization failed.");
+            return res.status(502).json({
+                success: false,
+                message: "Could not start payment. Please try again."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            checkoutUrl: paymentData.responseBody.checkoutUrl,
+            paymentReference
+        });
+    } catch (error) {
+        console.error("Payment initialization error:", error.message);
+
+        return res.status(500).json({
+            success: false,
+            message: "Payment could not be started. Please try again."
+        });
     }
-
-    // Create a unique payment reference
-    const paymentReference =
-      `WF-${Date.now()}-${crypto.randomUUID()}`;
-
-    const paymentResponse = await fetch(
-      `${baseUrl}/api/v1/merchant/transactions/init-transaction`,
-      {
-        method: "POST",
-        headers: {
-          Authorization:
-            `Bearer ${authData.responseBody.accessToken}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          amount: Number(amount),
-          customerName,
-          customerEmail,
-          paymentReference,
-          paymentDescription: "WittyFare order",
-          currencyCode: "NGN",
-          contractCode,
-          redirectUrl:
-            "https://www.wittyfare.com/payment-callback.html",
-          paymentMethods: ["CARD", "ACCOUNT_TRANSFER"]
-        })
-      }
-    );
-
-    const paymentData = await paymentResponse.json();
-
-    if (
-      !paymentResponse.ok ||
-      !paymentData.requestSuccessful ||
-      !paymentData.responseBody?.checkoutUrl
-    ) {
-      console.error("Monnify initialization failed");
-      return res.status(502).json({
-        error: "Monnify could not start the payment."
-      });
-    }
-
-    return res.status(200).json({
-      checkoutUrl: paymentData.responseBody.checkoutUrl,
-      paymentReference,
-      transactionReference:
-        paymentData.responseBody.transactionReference
-    });
-  } catch (error) {
-    console.error("Payment initialization error:", error);
-    return res.status(500).json({
-      error: "Unable to start payment. Please try again."
-    });
-  }
-}
+};
