@@ -165,32 +165,32 @@ function getProductImage(image) {
 🖼 PRODUCT IMAGE PATH — NEW VERSION
 ========================================================= */
 
+function getImageURL(image) {
+    if (!image) return "/images/logo.png";
+
+    const value = String(image).trim();
+    if (!value) return "/images/logo.png";
+
+    // Keep absolute URLs and embedded images unchanged.
+    if (/^(https?:|data:|blob:|\/\/)/i.test(value)) return value;
+
+    // Normalize local paths so they work on the homepage, category pages,
+    // and nested clean product URLs such as /product/aerator6outlet/.
+    const clean = value
+        .replace(/\\/g, "/")
+        .replace(/^(\.\/)+/, "")
+        .replace(/^(\.\.\/)+/, "")
+        .replace(/^\/+/, "");
+
+    if (clean.startsWith("images/")) return `/${clean}`;
+    if (clean.startsWith("assets/")) return `/${clean}`;
+
+    // Product catalogue image filenames are stored in /images/.
+    return `/images/${clean}`;
+}
+
 function getProductImage(image) {
-    if (!image) {
-        return "../images/logo.png";
-    }
-    const imagePath = String(image).trim();
-
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://") || imagePath.startsWith("data:")) {
-        return imagePath;
-    }
-
-    // Already correct
-    if (imagePath.startsWith("../images/") || imagePath.startsWith("/images/") || imagePath.startsWith("images/")) {
-        // if we are in /product/ folder, we need ../images/
-        const isInProductFolder = window.location.pathname.includes("/product/");
-        let clean = imagePath.replace("../", "").replace(/^\//, "");
-        if (!clean.startsWith("images/")) clean = "images/" + clean.split("/").pop();
-        
-        // For homepage it's images/...
-        // For product page it's ../images/...
-        if (isInProductFolder) {
-            return "../" + clean;
-        }
-        return clean.startsWith("/") ? clean : "/" + clean;
-    }
-
-    return "../images/" + imagePath.replace(/^\/+/, "");
+    return getImageURL(image);
 }
     /* =========================================================
     🛒 CART STORAGE
@@ -413,41 +413,7 @@ function getProductImage(image) {
     ========================================================= */
 
     function getToastImage(image) {
-
-        if (!image) {
-
-            return "/images/logo.png";
-        }
-
-        const imagePath = String(image);
-
-        if (
-            imagePath.startsWith("http://") ||
-            imagePath.startsWith("https://") ||
-            imagePath.startsWith("/")
-        ) {
-
-            return imagePath;
-        }
-
-        /*
-        On root/category pages the image from product.json
-        normally points to images/...
-        */
-
-        if (imagePath.startsWith("../images/")) {
-
-            return "/" +
-                imagePath.replace("../", "");
-
-        }
-
-        if (imagePath.startsWith("images/")) {
-
-            return "/" + imagePath;
-        }
-
-        return "/images/" + imagePath;
+        return getImageURL(image);
     }
 
 
@@ -787,39 +753,7 @@ function getProductImage(image) {
     ========================================================= */
 
     function getCartImage(image) {
-
-        if (!image) {
-            return "/images/logo.png";
-        }
-
-        const imagePath =
-            String(image).trim();
-
-
-        if (
-            imagePath.startsWith("http://") ||
-            imagePath.startsWith("https://") ||
-            imagePath.startsWith("/")
-        ) {
-
-            return imagePath;
-        }
-
-
-        if (imagePath.startsWith("../images/")) {
-
-            return "/" +
-                imagePath.replace("../", "");
-        }
-
-
-        if (imagePath.startsWith("images/")) {
-
-            return "/" + imagePath;
-        }
-
-
-        return "/images/" + imagePath;
+        return getImageURL(image);
     }
 
 
@@ -1196,44 +1130,7 @@ function slugify(value) {
     ========================================================= */
 
     function getCardImage(image) {
-
-        if (!image) {
-            return "/images/logo.png";
-        }
-
-
-        const imagePath =
-            String(image).trim();
-
-
-        if (
-            imagePath.startsWith("http://") ||
-            imagePath.startsWith("https://") ||
-            imagePath.startsWith("/")
-        ) {
-
-            return imagePath;
-        }
-
-
-        if (
-            imagePath.startsWith("../images/")
-        ) {
-
-            return "/" +
-                imagePath.replace("../", "");
-        }
-
-
-        if (
-            imagePath.startsWith("images/")
-        ) {
-
-            return "/" + imagePath;
-        }
-
-
-        return "/images/" + imagePath;
+        return getImageURL(image);
     }
 
 
@@ -1736,7 +1633,7 @@ try {
                 const product =
                     products.find(
                         product =>
-                            product.slug === cleanSlug
+                            slugify(product.slug) === slugify(cleanSlug)
                     );
 
                 if (product) {
@@ -1757,7 +1654,7 @@ try {
 
             return products.find(
                 product =>
-                    product.slug === slug
+                    slugify(product.slug) === slugify(slug)
             );
         }
 
@@ -2339,14 +2236,6 @@ try {
     🔗 SEO CATEGORY / SUBCATEGORY URL HELPERS
     ========================================================= */
 
-    function slugify(value) {
-        return String(value || "")
-            .toLowerCase()
-            .trim()
-            .replace(/&/g, "and")
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/^-+|-+$/g, "");
-    }
 
     function getProductCategoryURL(product) {
         if (!product) return "/";
@@ -2417,7 +2306,7 @@ try {
 
         const productURL =
             product.slug
-                ? `${window.location.origin}/product/${encodeURIComponent(product.slug)}/`
+                ? `${window.location.origin}${getProductPageURL(product.slug)}`
                 : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
 
 
@@ -3632,4 +3521,4 @@ window.hideCart = function(){
 
     /* =========================================================
     ✅ END OF WITTYFARE APP.JS
-    ========================================================= */
+    ==================================
