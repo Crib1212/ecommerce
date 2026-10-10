@@ -890,7 +890,7 @@ function getProductImage(image) {
     /* =========================================================
     🔗 PRODUCT PAGE URL
     ========================================================= */
-
+// for online product view
 function getProductPageURL(slug) {
     if (!slug) return "#";
     return `/product/${encodeURIComponent(slug)}/`;
