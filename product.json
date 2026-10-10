@@ -119,6 +119,56 @@
     "image": "/images/poultryfeed/Hybrid_layer_mash-3.png",
     "description": "Hybrid Layer Mash 25kg poultry feed for laying birds."
   },
+    {
+    "id": "feed-chikun-gower-pellet",
+    "name": "Chikun grower pellet",
+    "price": 13000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "chikun-grower-pellet-25kg",
+    "image": "/images/poultryfeed/Chikun_grower_pellet.png",
+    "description": "Chikun Grower Pellet 25kg poultry feed for growing birds."
+  },
+    {
+    "id": "feed-dcp-25kg",
+    "name": "DCP 25kg",
+    "price": 105000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "dcp-25kg",
+    "image": "/images/poultryfeed/DCP_25kg.png",
+    "description": "DCP 25kg poultry feed for laying birds."
+  },
+    {
+    "id": "feed-fish_meal-25kg",
+    "name": "Fish Meal 25kg",
+    "price": 90000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "fish-meal-25kg",
+    "image": "/images/poultryfeed/Fish_Meal_25kg.png",
+    "description": "Fish Meal 25kg poultry feed for laying birds."
+  },
+    {
+    "id": "feed-hybrid-3-in-1-25kg",
+    "name": "Hybrid 3-in-1 25kg",
+    "price": 20000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-3-in-1-25kg",
+    "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
+    "description": "Hybrid 3-in-1 25kg poultry feed for laying birds."
+  },
+    {
+    "id": "feed-top_line_grower_mash-25kg",
+    "name": "Top Line Grower Mash 25kg",
+    "price": 13000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "top-line-grower-mash-25kg",
+    "image": "/images/poultryfeed/Top_Line_Grower_Mash.png",
+    "description": "Top Line Grower Mash 25kg poultry feed for growing birds."
+  },
   {
     "id": "feed-ultima_stater-25kg",
     "name": "Ultima Starter 25kg",
@@ -128,6 +178,36 @@
     "slug": "ultima-starter-25kg",
     "image": "/images/poultryfeed/Ultima_starter.png",
     "description": "Ultima Starter 25kg poultry feed for starter birds."
+  },
+    {
+    "id": "feed-Nutria-25kg",
+    "name": "Nutria 25kg",
+    "price": 19000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "nutria-25kg",
+    "image": "/images/poultryfeed/Nutria_starter.png",
+    "description": "Nutria 25kg poultry feed for starter birds."
+  },
+    {
+    "id": "feed-vita_feed_finisher-25kg",
+    "name": "Vita Feed Finisher 25kg",
+    "price": 18600,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "vita-feed-finisher-25kg",
+    "image": "/images/poultryfeed/Vital_feed_finisher.png",
+    "description": "Vita Feed Finisher 25kg poultry feed for finishing birds."
+  },
+    {
+    "id": "feed-vita_feed_starter-25kg",
+    "name": "Vita Feed Starter 25kg",
+    "price": 17000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "vita-feed-starter-25kg",
+    "image": "/images/poultryfeed/Vital_feed_starter.png",
+    "description": "Vita Feed Starter 25kg poultry feed for starter birds."
   },
   {
     "id": "feed-breedwell-finisher-25kg",
@@ -320,7 +400,7 @@
     "category": "drugs",
     "subcategory": "organic",
     "slug": "medecol_200ml",
-    "image": "/images/drugs/medecol_200ml.png",
+    "image": "/images/drugs/Medecol_200ml.png",
     "description": "Medecol 200ml veterinary product for poultry and farm animal management."
   },
   {
