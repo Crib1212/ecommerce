@@ -1,60 +1,227 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>WittyFare Sitemap Generator</title>
+<meta name="robots" content="noindex, nofollow">
+
 <style>
-    body { font-family: Arial, sans-serif; background: #f4f7f4; margin: 0; padding: 30px; }
-    .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,.08); }
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7f4;
+        margin: 0;
+        padding: 20px;
+        color: #243328;
+    }
+
+    .container {
+        max-width: 950px;
+        margin: auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
     h1 { color: #16833b; }
-    button { background: #16833b; color: #fff; border: none; padding: 14px 22px; border-radius: 7px; cursor: pointer; font-size: 16px; margin-right: 8px; }
+
+    .notice {
+        padding: 12px;
+        background: #eef8f0;
+        border-radius: 7px;
+        line-height: 1.6;
+    }
+
+    label {
+        display: block;
+        margin: 12px 0;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    select, input[type="url"] {
+        width: 100%;
+        padding: 11px;
+        margin-top: 7px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    button {
+        background: #16833b;
+        color: white;
+        border: none;
+        padding: 13px 17px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 15px;
+        margin: 5px 5px 5px 0;
+    }
+
     button:hover { background: #10652d; }
-    .options { margin: 18px 0; }
-    .options label { display: block; margin: 8px 0; }
-    #status { margin-top: 20px; padding: 15px; background: #eef8f0; border-radius: 7px; line-height: 1.6; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+
+    #status {
+        margin-top: 18px;
+        padding: 15px;
+        background: #eef8f0;
+        border-radius: 7px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+    }
+
     #status.warn { background: #fff6e0; }
-    textarea { width: 100%; height: 400px; margin-top: 20px; font-family: monospace; font-size: 13px; box-sizing: border-box; }
+    #status.error { background: #ffeded; }
+
+    textarea {
+        width: 100%;
+        min-height: 420px;
+        margin-top: 18px;
+        padding: 12px;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.5;
+        resize: vertical;
+    }
+
+    .small {
+        color: #5d685f;
+        font-size: 13px;
+        line-height: 1.6;
+    }
 </style>
 </head>
+
 <body>
 <div class="container">
 
     <h1>WittyFare Sitemap Generator</h1>
-    <p>Generates <strong>sitemap.xml</strong> from <strong>product.json</strong>.</p>
 
-    <div class="options">
+    <p>
+        Generate a sitemap for
+        <strong>https://www.wittyfare.com</strong>
+        using product.json and your actual category URLs.
+    </p>
+
+    <div class="notice">
+        <strong>Important:</strong> This tool generates sitemap.xml.
+        It does not submit it to Google or guarantee that a URL is indexed.
+    </div>
+
+    <div>
         <label>
             <input type="checkbox" id="optCategories" checked>
-            Include category and subcategory pages
+            Include WittyFare category and subcategory pages
         </label>
+
+        <label>
+            <input type="checkbox" id="optProducts" checked>
+            Include product pages from product.json
+        </label>
+
+        <label>
+            Product URL format
+            <select id="optStyle">
+                <option value="clean">
+                    Clean URLs: /product/slug/
+                </option>
+                <option value="query">
+                    Query URLs: /product/?slug=slug
+                </option>
+            </select>
+        </label>
+
         <label>
             <input type="checkbox" id="optLastmod" checked>
-            Add today's date as lastmod
-        </label>
-        <label>
-            URL style for products:
-            <select id="optStyle">
-                <option value="clean">Clean: /product/slug/ (live site, recommended)</option>
-                <option value="query">Old: /product/?slug=slug</option>
-            </select>
+            Include lastmod only when a real modification date exists
         </label>
     </div>
 
-    <button onclick="generateSitemap()">Generate Sitemap</button>
-    <button onclick="downloadSitemap()">Download sitemap.xml</button>
+    <p class="small">
+        Use the URL format that actually works on your live website.
+        The clean format is recommended only if your server supports
+        these product routes.
+    </p>
 
-    <div id="status">Ready.</div>
+    <button id="generateBtn" onclick="generateSitemap()">
+        Generate Sitemap
+    </button>
 
-    <textarea id="output" placeholder="Your sitemap XML will appear here..."></textarea>
+    <button onclick="downloadSitemap()">
+        Download sitemap.xml
+    </button>
+
+    <button onclick="copySitemap()">
+        Copy XML
+    </button>
+
+    <div id="status" role="status" aria-live="polite">
+        Ready. Generate your sitemap when you are ready.
+    </div>
+
+    <textarea
+        id="output"
+        spellcheck="false"
+        placeholder="Your generated sitemap XML will appear here..."
+        aria-label="Generated sitemap XML"
+    ></textarea>
+
+    <h2>Before publishing</h2>
+    <ul class="small">
+        <li>Check that each product slug matches its working product URL.</li>
+        <li>Check that every included category page exists.</li>
+        <li>Check that product pages return a successful HTTP response.</li>
+        <li>Ensure product pages have correct canonical URLs.</li>
+        <li>Save the downloaded file as sitemap.xml in your public website root.</li>
+        <li>Submit https://www.wittyfare.com/sitemap.xml in Google Search Console.</li>
+    </ul>
 
 </div>
 
 <script>
-/* Must match your canonical domain exactly (www or no www) */
+"use strict";
+
+/* Your canonical website domain */
 const WEBSITE = "https://www.wittyfare.com";
 
+/*
+ * Keep this list synchronized with real category pages on WittyFare.
+ * Only include paths that actually exist on your website.
+ */
+const CATEGORY_PATHS = [
+    "/category/chemical/",
+    "/category/chemical/agrochemicals/",
+    "/category/day-old/",
+    "/category/drugs/",
+    "/category/drugs/antibiotics/",
+    "/category/drugs/multivitamins/",
+    "/category/drugs/organic/",
+    "/category/drugs/others/",
+    "/category/equipment/",
+    "/category/equipment/farm-equipment/",
+    "/category/equipment/fish-farming-equipment/",
+    "/category/equipment/poultry-equipment/",
+    "/category/farm-packages/",
+    "/category/feed/",
+    "/category/feed/fish-feed/",
+    "/category/feed/poultry-feed/",
+    "/category/fish/",
+    "/category/fish/fish-stock/",
+    "/category/pet-store/",
+    "/category/vaccines/",
+    "/category/vaccines/animal-vaccines/",
+    "/category/vaccines/poultry-vaccines/"
+];
+
 let generatedXML = "";
+let generatedURLs = [];
 
 function escapeXML(value) {
     return String(value ?? "")
@@ -65,132 +232,327 @@ function escapeXML(value) {
         .replace(/'/g, "&apos;");
 }
 
-/* Same logic as slugify() in app.js */
-function slugify(value) {
-    return String(value || "")
-        .toLowerCase()
-        .trim()
-        .replace(/&/g, "and")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+/*
+ * Validate a date supplied by product.json.
+ * Accepted fields below are checked only if they exist.
+ * No current or future date is invented.
+ */
+function getRealLastmod(product) {
+    const candidates = [
+        product.updatedAt,
+        product.updated_at,
+        product.lastmod,
+        product.lastModified
+    ];
+
+    for (const candidate of candidates) {
+        if (typeof candidate !== "string") continue;
+
+        const value = candidate.trim();
+
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) continue;
+
+        const parsed = new Date(value + "T00:00:00Z");
+
+        if (
+            !Number.isNaN(parsed.getTime()) &&
+            parsed.toISOString().slice(0, 10) === value &&
+            value <= new Date().toISOString().slice(0, 10)
+        ) {
+            return value;
+        }
+    }
+
+    return "";
+}
+
+/*
+ * Encode a slug as a URL path segment.
+ * Preserve its case to avoid silently changing an existing URL.
+ */
+function productURL(slug, style) {
+    const encodedSlug = encodeURIComponent(slug);
+
+    if (style === "query") {
+        return WEBSITE + "/product/?slug=" + encodedSlug;
+    }
+
+    return WEBSITE + "/product/" + encodedSlug + "/";
+}
+
+function setStatus(message, type = "") {
+    const status = document.getElementById("status");
+
+    status.className = type;
+
+    // Use textContent rather than inserting untrusted HTML.
+    status.textContent = message;
 }
 
 async function generateSitemap() {
-    const status = document.getElementById("status");
+    const button = document.getElementById("generateBtn");
     const output = document.getElementById("output");
-    const includeCategories = document.getElementById("optCategories").checked;
-    const includeLastmod = document.getElementById("optLastmod").checked;
+
+    const includeCategories =
+        document.getElementById("optCategories").checked;
+
+    const includeProducts =
+        document.getElementById("optProducts").checked;
+
+    const includeLastmod =
+        document.getElementById("optLastmod").checked;
+
     const style = document.getElementById("optStyle").value;
 
-    status.className = "";
-    status.innerHTML = "Loading products...";
+    if (!includeCategories && !includeProducts) {
+        setStatus(
+            "Select categories, products, or both before generating.",
+            "warn"
+        );
+        return;
+    }
+
+    button.disabled = true;
+    generatedXML = "";
+    generatedURLs = [];
+    output.value = "";
+
+    setStatus(
+        "Loading product.json. Make sure this tool is served from your project."
+    );
 
     try {
-        const response = await fetch("product.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("Could not load product.json");
+        const response = await fetch(
+            "./product.json",
+            { cache: "no-store" }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "Could not load product.json. HTTP " + response.status
+            );
+        }
 
         const products = await response.json();
-        if (!Array.isArray(products)) throw new Error("product.json must contain an array.");
 
-        const today = new Date().toISOString().split("T")[0];
-        const lastmod = includeLastmod ? `<lastmod>${today}</lastmod>` : "";
+        if (!Array.isArray(products)) {
+            throw new Error("product.json must contain a JSON array.");
+        }
 
-        const urls = [];
         const warnings = [];
+        const urlMap = new Map();
 
-        /* Homepage */
-        urls.push({ loc: `${WEBSITE}/`, priority: "1.0", freq: "daily" });
+        function addURL(url, lastmod = "") {
+            if (urlMap.has(url)) {
+                warnings.push("Duplicate URL skipped: " + url);
+                return;
+            }
 
-        /* Categories + subcategories */
-        if (includeCategories) {
-            const cats = new Set();
-            products.forEach(p => {
-                const c = slugify(p.category);
-                const s = slugify(p.subcategory);
-                if (c) cats.add(`/category/${c}/`);
-                if (c && s) cats.add(`/category/${c}/${s}/`);
-            });
-            [...cats].sort().forEach(path => {
-                urls.push({ loc: WEBSITE + path, priority: "0.8", freq: "weekly" });
+            urlMap.set(url, {
+                loc: url,
+                lastmod
             });
         }
 
-        /* Products */
-        const seen = new Set();
+        // Homepage
+        addURL(WEBSITE + "/");
+
+        // Known category URLs
+        if (includeCategories) {
+            for (const path of CATEGORY_PATHS) {
+                addURL(WEBSITE + path);
+            }
+        }
+
+        // Product pages
         let productCount = 0;
+        let skippedCount = 0;
 
-        products.forEach(p => {
-            if (!p.slug) {
-                warnings.push(`Skipped "${p.name || p.id}": no slug.`);
-                return;
+        if (includeProducts) {
+            const seenSlugs = new Set();
+
+            for (const product of products) {
+                if (
+                    !product ||
+                    typeof product !== "object" ||
+                    Array.isArray(product)
+                ) {
+                    warnings.push("Skipped invalid product record.");
+                    skippedCount++;
+                    continue;
+                }
+
+                if (
+                    typeof product.slug !== "string" ||
+                    !product.slug.trim()
+                ) {
+                    warnings.push(
+                        "Skipped product without a slug: " +
+                        String(product.name || product.id || "Unknown")
+                    );
+
+                    skippedCount++;
+                    continue;
+                }
+
+                const slug = product.slug.trim();
+
+                /*
+                 * Reject path separators, query characters and fragments.
+                 * A product slug should be a single URL path segment.
+                 */
+                if (
+                    slug === "." ||
+                    slug === ".." ||
+                    /[/\\?#\s]/.test(slug)
+                ) {
+                    warnings.push(
+                        "Skipped invalid slug: " + slug
+                    );
+
+                    skippedCount++;
+                    continue;
+                }
+
+                if (seenSlugs.has(slug)) {
+                    warnings.push(
+                        "Duplicate product slug skipped: " + slug
+                    );
+
+                    skippedCount++;
+                    continue;
+                }
+
+                seenSlugs.add(slug);
+
+                if (
+                    slug !== slug.toLowerCase() ||
+                    /[^a-z0-9-]/.test(slug)
+                ) {
+                    warnings.push(
+                        "Check slug case or characters against the live URL: " +
+                        slug
+                    );
+                }
+
+                const url = productURL(slug, style);
+
+                const lastmod = includeLastmod
+                    ? getRealLastmod(product)
+                    : "";
+
+                addURL(url, lastmod);
+                productCount++;
+            }
+        }
+
+        const urls = Array.from(urlMap.values());
+
+        let xml =
+            '<?xml version="1.0" encoding="UTF-8"?>\n' +
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+        for (const item of urls) {
+            xml += "  <url>\n";
+            xml += "    <loc>" + escapeXML(item.loc) + "</loc>\n";
+
+            if (item.lastmod) {
+                xml += "    <lastmod>" +
+                    escapeXML(item.lastmod) +
+                    "</lastmod>\n";
             }
 
-            const slug = String(p.slug);
+            // Google ignores changefreq and priority.
+            // They are intentionally omitted.
 
-            if (seen.has(slug)) {
-                warnings.push(`Duplicate slug skipped: "${slug}" (give each product its own slug).`);
-                return;
-            }
-            seen.add(slug);
+            xml += "  </url>\n";
+        }
 
-            if (slug !== slug.toLowerCase() || /[^a-zA-Z0-9-]/.test(slug)) {
-                warnings.push(`Slug "${slug}" has capitals, underscores or special characters. Use lowercase-with-hyphens.`);
-            }
-
-            const loc = style === "clean"
-                ? `${WEBSITE}/product/${encodeURIComponent(slug)}/`
-                : `${WEBSITE}/product/?slug=${encodeURIComponent(slug)}`;
-
-            urls.push({ loc, priority: p.featured === true ? "0.9" : "0.7", freq: "weekly" });
-            productCount++;
-        });
-
-        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-        xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
-        urls.forEach(u => {
-            xml += `  <url>\n`;
-            xml += `    <loc>${escapeXML(u.loc)}</loc>\n`;
-            if (lastmod) xml += `    ${lastmod}\n`;
-            xml += `    <changefreq>${u.freq}</changefreq>\n`;
-            xml += `    <priority>${u.priority}</priority>\n`;
-            xml += `  </url>\n`;
-        });
-
-        xml += `</urlset>\n`;
+        xml += "</urlset>\n";
 
         generatedXML = xml;
+        generatedURLs = urls;
         output.value = xml;
 
-        let msg = `✅ Sitemap generated: ${urls.length} URLs (${productCount} products).`;
+        let message =
+            "Sitemap generated successfully.\n" +
+            "Total URLs: " + urls.length + "\n" +
+            "Product records included: " + productCount + "\n" +
+            "Product records skipped: " + skippedCount + "\n" +
+            "Warnings: " + warnings.length + "\n\n" +
+            "This is a generated URL list, not a live URL verification.";
+
         if (warnings.length) {
-            status.className = "warn";
-            msg += `<br>⚠️ ${warnings.length} warning(s):<br>` +
-                   warnings.map(w => "• " + escapeXML(w)).join("<br>");
+            message += "\n\nReview these warnings:\n- " +
+                warnings.join("\n- ");
+
+            setStatus(message, "warn");
+        } else {
+            setStatus(message);
         }
-        status.innerHTML = msg;
 
     } catch (error) {
-        status.innerHTML = "❌ Error: " + escapeXML(error.message);
+        setStatus(
+            "Generation failed: " + error.message +
+            "\nCheck that product.json exists beside this HTML file " +
+            "and that you are using a local web server.",
+            "error"
+        );
+    } finally {
+        button.disabled = false;
     }
 }
 
 function downloadSitemap() {
     if (!generatedXML) {
-        alert("Generate the sitemap first.");
+        setStatus(
+            "Generate the sitemap before downloading it.",
+            "warn"
+        );
         return;
     }
 
-    const blob = new Blob([generatedXML], { type: "application/xml" });
+    const blob = new Blob(
+        [generatedXML],
+        { type: "application/xml;charset=utf-8" }
+    );
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
+
     link.href = url;
     link.download = "sitemap.xml";
+
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function copySitemap() {
+    if (!generatedXML) {
+        setStatus(
+            "Generate the sitemap before copying it.",
+            "warn"
+        );
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(generatedXML);
+        setStatus("Sitemap XML copied to clipboard.");
+    } catch {
+        const output = document.getElementById("output");
+        output.focus();
+        output.select();
+
+        setStatus(
+            "XML selected. Press Ctrl+C to copy it."
+        );
+    }
 }
 </script>
+
 </body>
 </html>
