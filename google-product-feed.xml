@@ -547,22 +547,366 @@ feed &gt; poultry-feed
 
 <item>
 
-<g:id>feed-hybrid-3-in-1-special</g:id>
+<g:id>feed-chikun-gower-pellet</g:id>
 
-<title>Hybrid 3-in-1 Special</title>
+<title>Chikun grower pellet</title>
 
 <description>
-Hybrid 3-in-1 Special poultry feed for poultry farming.
+Chikun Grower Pellet 25kg poultry feed for growing birds.
 </description>
 
-<link>https://www.wittyfare.com/product/?slug=hybrid-3-in-1-special</link>
+<link>https://www.wittyfare.com/product/?slug=chikun-grower-pellet-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Chikun_grower_pellet.png
+</g:image_link>
+
+<g:price>
+13000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-dcp-25kg</g:id>
+
+<title>DCP 25kg</title>
+
+<description>
+DCP 25kg poultry feed for laying birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=dcp-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/DCP_25kg.png
+</g:image_link>
+
+<g:price>
+105000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-fish_meal-25kg</g:id>
+
+<title>Fish Meal 25kg</title>
+
+<description>
+Fish Meal 25kg poultry feed for laying birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=fish-meal-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Fish_meal_25kg.png
+</g:image_link>
+
+<g:price>
+90000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-hybrid-3-in-1-25kg</g:id>
+
+<title>Hybrid 3-in-1 25kg</title>
+
+<description>
+Hybrid 3-in-1 25kg poultry feed for laying birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=hybrid-3-in-1-25kg</link>
 
 <g:image_link>
 https://www.wittyfare.com/images/poultryfeed/Hybrid_3_in_1_Special-4.png
 </g:image_link>
 
 <g:price>
-20300.00 NGN
+20000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-top_line_grower_mash-25kg</g:id>
+
+<title>Top Line Grower Mash 25kg</title>
+
+<description>
+Top Line Grower Mash 25kg poultry feed for growing birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=top-line-grower-mash-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Top_line_grower_mash.png
+</g:image_link>
+
+<g:price>
+13000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-ultima_stater-25kg</g:id>
+
+<title>Ultima Starter 25kg</title>
+
+<description>
+Ultima Starter 25kg poultry feed for starter birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=ultima-starter-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Ultima_starter.png
+</g:image_link>
+
+<g:price>
+21000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-Nutria-25kg</g:id>
+
+<title>Nutria 25kg</title>
+
+<description>
+Nutria 25kg poultry feed for starter birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=nutria-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Nutria_starter.png
+</g:image_link>
+
+<g:price>
+19000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-vita_feed_finisher-25kg</g:id>
+
+<title>Vita Feed Finisher 25kg</title>
+
+<description>
+Vita Feed Finisher 25kg poultry feed for finishing birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=vita-feed-finisher-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Vital_feed_finisher.png
+</g:image_link>
+
+<g:price>
+18600.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>feed-vita_feed_starter-25kg</g:id>
+
+<title>Vita Feed Starter 25kg</title>
+
+<description>
+Vita Feed Starter 25kg poultry feed for starter birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=vita-feed-starter-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/Vital_feed_starter.png
+</g:image_link>
+
+<g:price>
+17000.00 NGN
 </g:price>
 
 <g:availability>
@@ -762,15 +1106,15 @@ feed &gt; poultry-feed
 
 <item>
 
-<g:id>booster</g:id>
+<g:id>pet-booster_can</g:id>
 
-<title>Booster Poultry Feed</title>
+<title>Booster dog Feed</title>
 
 <description>
-Booster poultry feed product for poultry farming.
+Booster poultry feed product for dog care.
 </description>
 
-<link>https://www.wittyfare.com/product/?slug=booster-poultry-feed</link>
+<link>https://www.wittyfare.com/product/?slug=booster-dog-feed</link>
 
 <g:image_link>
 https://www.wittyfare.com/images/pet/Booster.png
@@ -797,13 +1141,330 @@ no
 </g:identifier_exists>
 
 <g:product_type>
-pet-store &gt; poultry-products
+pet-store
 </g:product_type>
 
 
 <g:custom_label_0>
 featured
 </g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>pet-optimax_10kg</g:id>
+
+<title>Optimax dog Feed 10kg</title>
+
+<description>
+Optimax dog feed product for dog care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=optimax-dog-feed-10kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/optimax_10kg.jpg
+</g:image_link>
+
+<g:price>
+17500.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>pet-booster_4kg</g:id>
+
+<title>Booster dog Feed 4kg</title>
+
+<description>
+Booster poultry feed product for dog care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=booster-dog-feed-4kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/booster_4kg.png
+</g:image_link>
+
+<g:price>
+17000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>pet-balance_5kg</g:id>
+
+<title>Balance 5kg dog Feed</title>
+
+<description>
+Balance 5kg dog feed product for dog care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=balance-5kg-dog-feed</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/balance_5kg.jpg
+</g:image_link>
+
+<g:price>
+17800.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>pet-optimax-can</g:id>
+
+<title>Optimax Can dog Feed</title>
+
+<description>
+Optimax Can dog feed product for dog care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=optimax-can-dog-feed</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/Optimax_can.png
+</g:image_link>
+
+<g:price>
+1750.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>pet-reflex_5kg</g:id>
+
+<title>Reflex 5kg cat Feed</title>
+
+<description>
+Reflex 5kg cat feed product for cat care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=reflex-5kg-cat-feed</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/reflex_cat_food.jpg
+</g:image_link>
+
+<g:price>
+17800.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>pet-tick-off-spray-250ml</g:id>
+
+<title>Tick Off Spray 250ml</title>
+
+<description>
+Tick Off Spray 250ml for pet care.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=tick-off-spray-250ml</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/tick_off_spray_250ml.png
+</g:image_link>
+
+<g:price>
+3500.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
+
+</item>
+
+<item>
+
+<g:id>pet_toy_bone</g:id>
+
+<title>Toy Bone</title>
+
+<description>
+Toy bone for pet play and entertainment.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=toy-bone</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/pet/pet_toy_bone.png
+</g:image_link>
+
+<g:price>
+3500.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+pet-store
+</g:product_type>
+
 
 </item>
 
@@ -1387,7 +2048,7 @@ Medecol 200ml veterinary product for poultry and farm animal management.
 <link>https://www.wittyfare.com/product/?slug=medecol_200ml</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/drugs/medecol_200ml.png
+https://www.wittyfare.com/images/drugs/Medecol_200ml.png
 </g:image_link>
 
 <g:price>
@@ -1521,49 +2182,6 @@ https://www.wittyfare.com/images/drugs/oxytet_1kg.png
 
 <g:price>
 4300.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-drugs &gt; antibiotics
-</g:product_type>
-
-
-</item>
-
-<item>
-
-<g:id>drugs-tylodox-extra-100g-2</g:id>
-
-<title>Tylodox Extra 100g</title>
-
-<description>
-Tylodox Extra 100g veterinary medicine product for animal health management.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=tylodox-extra-100g</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/drugs/Tylo-dox_Extra.png
-</g:image_link>
-
-<g:price>
-9500.00 NGN
 </g:price>
 
 <g:availability>
