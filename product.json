@@ -400,22 +400,22 @@
     "description": "Neoxymore veterinary product for poultry and farm animal management."
   },
   {
-    "id": "drugs-mintocare",
+    "id": "drugs-mintocare-1l",
     "name": "Mintocare",
     "price": 4300,
     "category": "drugs",
     "subcategory": "others",
-    "slug": "mintocare",
+    "slug": "mintocare-1l",
     "image": "/images/drugs/mintocare_1l.png",
     "description": "Mintocare veterinary product for poultry and farm animal management."
   },
    {
-    "id": "drugs-mintocare",
+    "id": "drugs-mintocare-100ml",
     "name": "Mintocare",
     "price": 2300,
     "category": "drugs",
     "subcategory": "others",
-    "slug": "mintocare",
+    "slug": "mintocare-100ml",
     "image": "/images/drugs/mintocare_100ml.png",
     "description": "Mintocare veterinary product for poultry and farm animal management."
   },
