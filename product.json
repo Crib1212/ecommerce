@@ -250,15 +250,81 @@
     "description": "Ultima finisher poultry feed for broiler finishing and poultry production."
   },
   {
-    "id": "booster",
-    "name": "Booster Poultry Feed",
+    "id": "pet-booster_can",
+    "name": "Booster dog Feed",
     "price": 1750,
     "category": "pet-store",
-    "subcategory": "poultry-products",
-    "slug": "booster-poultry-feed",
+    "slug": "booster-dog-feed",
     "image": "/images/pet/Booster.png",
-    "description": "Booster poultry feed product for poultry farming.",
+    "description": "Booster poultry feed product for dog care.",
     "featured": true
+  },
+    {
+    "id": "pet-optimax_10kg",
+    "name": "Optimax dog Feed",
+    "price": 17500,
+    "category": "pet-store",
+    "slug": "optimax-dog-feed",
+    "image": "/images/pet/Optimax_10kg.jpg",
+    "description": "Optimax dog feed product for dog care.",
+    "featured": true
+  },
+   {
+    "id": "pet-booster_4kg",
+    "name": "Booster dog Feed",
+    "price": 17000,
+    "category": "pet-store",
+    "slug": "booster-dog-feed-4kg",
+    "image": "/images/pet/Booster_4kg.png",
+    "description": "Booster poultry feed product for dog care.",
+    "featured": true
+  },
+    {
+    "id": "pet-balance_5kg",
+    "name": "Balance 5kg dog Feed",
+    "price": 17800,
+    "category": "pet-store",
+    "slug": "balance-5kg-dog-feed",
+    "image": "/images/pet/balance_5kg.jpg",
+    "description": "Balance 5kg dog feed product for dog care.",
+    "featured": true
+  },
+     {
+    "id": "pet-optimax-can",
+    "name": "Optimax Can dog Feed",
+    "price": 1750,
+    "category": "pet-store",
+    "slug": "optimax-can-dog-feed",
+    "image": "/images/pet/Optimax_can.png",
+    "description": "Optimax Can dog feed product for dog care.",
+    "featured": true
+  },
+   {
+    "id": "pet-reflex_5kg",
+    "name": "Reflex 5kg cat Feed",
+    "price": 17800,
+    "category": "pet-store",
+    "slug": "reflex-5kg-cat-feed",
+    "image": "/images/pet/reflex_cat_food.jpg",
+    "description": "Reflex 5kg cat feed product for cat care."
+  },
+     {
+    "id": "pet-tick-off-spray-250ml",
+    "name": "Tick Off Spray 250ml",
+    "price": 3500,
+    "category": "pet-store",
+    "slug": "tick-off-spray-250ml",
+    "image": "/images/pet/tick_off_spray_250ml.png",
+    "description": "Tick Off Spray 250ml for pet care."
+  },
+     {
+    "id": "pet_toy_bone",
+    "name": "Toy Bone",
+    "price": 3500,
+    "category": "pet-store",
+    "slug": "toy-bone",
+    "image": "/images/pet/pet_toy_bone.png",
+    "description": "Toy bone for pet play and entertainment."
   },
   {
     "id": "equipment-paper-crate",

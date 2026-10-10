@@ -912,11 +912,31 @@ function getProductImage(image) {
     🔗 PRODUCT PAGE URL
     ========================================================= */
 
-  function getProductPageURL(slug) {
+/* =========================================================
+🔗 PRODUCT PAGE URL - SEO FIXED VERSION
+========================================================= */
+//this code supports seo friendly url for product page
+function getProductPageURL(slug) {
     if (!slug) return "#";
-    // For static hosting without htaccess, use?slug=
-    return `/product/?slug=${encodeURIComponent(slug)}`;
+    const cleanSlug = slugify(slug);
+    return `/product/${cleanSlug}/`;
 }
+
+function slugify(value) {
+    return String(value || "")
+        .toLowerCase()
+        .trim()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+//this code nis used to view the product page but doesn't support seo url
+//function getProductPageURL(slug) {
+//   if (!slug) return "#";
+//   // For static hosting without htaccess, use?slug=
+//   return `/product/?slug=${encodeURIComponent(slug)}`;
+// }
+
     /* =========================================================
     🛍 PRODUCT CARD
     ========================================================= */
