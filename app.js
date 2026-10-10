@@ -166,31 +166,10 @@ function getProductImage(image) {
 ========================================================= */
 
 function getProductImage(image) {
-    if (!image) {
-        return "../images/logo.png";
-    }
-    const imagePath = String(image).trim();
-
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://") || imagePath.startsWith("data:")) {
-        return imagePath;
-    }
-
-    // Already correct
-    if (imagePath.startsWith("../images/") || imagePath.startsWith("/images/") || imagePath.startsWith("images/")) {
-        // if we are in /product/ folder, we need ../images/
-        const isInProductFolder = window.location.pathname.includes("/product/");
-        let clean = imagePath.replace("../", "").replace(/^\//, "");
-        if (!clean.startsWith("images/")) clean = "images/" + clean.split("/").pop();
-        
-        // For homepage it's images/...
-        // For product page it's ../images/...
-        if (isInProductFolder) {
-            return "../" + clean;
-        }
-        return clean.startsWith("/") ? clean : "/" + clean;
-    }
-
-    return "../images/" + imagePath.replace(/^\/+/, "");
+    if (!image) return "/images/logo.png";
+    const p = String(image).trim();
+    if (/^(https?:|data:)/.test(p)) return p;
+    return "/images/" + p.replace(/^(\.\.\/|\.\/|\/)?(images\/)?/, "");
 }
     /* =========================================================
     🛒 CART STORAGE
@@ -912,10 +891,9 @@ function getProductImage(image) {
     🔗 PRODUCT PAGE URL
     ========================================================= */
 
-  function getProductPageURL(slug) {
+function getProductPageURL(slug) {
     if (!slug) return "#";
-    // For static hosting without htaccess, use?slug=
-    return `/product/?slug=${encodeURIComponent(slug)}`;
+    return `/product/${encodeURIComponent(slug)}/`;
 }
     /* =========================================================
     🛍 PRODUCT CARD
@@ -1784,7 +1762,9 @@ try {
             return;
         }
 
-
+if (location.search && product.slug) {
+    history.replaceState(null, "", `/product/${encodeURIComponent(product.slug)}/`);
+}
         if (
             !Array.isArray(products) ||
             products.length === 0
