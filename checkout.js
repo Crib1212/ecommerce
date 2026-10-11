@@ -1435,53 +1435,53 @@ function setupCheckoutForm() {
         }
 
         try {
-            if (paymentMethod === "online") {
-                if (!userDetails.name || !userDetails.email) {
-                    alert("Please enter your name and email for online payment.");
-                    return;
-                }
+           
+if (paymentMethod === "online" || paymentMethod === "transfer") {
+    if (!userDetails.name || !userDetails.email) {
+        alert("Please enter your name and email for payment.");
+        return;
+    }
 
-                if (submitButton) {
-                    if (submitButton.tagName === "INPUT") {
-                        submitButton.value = "Connecting to Monnify...";
-                    } else {
-                        submitButton.textContent = "Connecting to Monnify...";
-                    }
-                }
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Connecting to Monnify...";
+    }
 
-                const response = await fetch("/api/monnify-init", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        customerName: userDetails.name,
-                        customerEmail: userDetails.email,
-                        items: listCart.map(item => ({
-                            id: item.id,
-                            quantity: Number(item.quantity)
-                        }))
-                    })
-                });
+    const response = await fetch("/api/monnify-init", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            customerName: userDetails.name,
+            customerEmail: userDetails.email,
+            items: listCart.map(item => ({
+                id: item.id,
+                quantity: Number(item.quantity)
+            }))
+        })
+    });
 
-                const result = await response.json();
+    const result = await response.json();
 
-                if (!response.ok || !result.success || !result.checkoutUrl) {
-                    throw new Error(
-                        result.message || "Unable to start online payment."
-                    );
-                }
+    if (!response.ok || !result.success || !result.checkoutUrl) {
+        throw new Error(
+            result.message || "Unable to start Monnify payment."
+        );
+    }
 
-                sessionStorage.setItem(
-                    "monnifyPaymentReference",
-                    result.paymentReference
-                );
+    sessionStorage.setItem(
+        "monnifyPaymentReference",
+        result.paymentReference
+    );
 
-                window.location.href = result.checkoutUrl;
-                return;
-            }
+    window.location.href = result.checkoutUrl;
+    return;
+}
 
-            window.location.href = "confirmation.html";
+// Keep pay-on-delivery working as before.
+window.location.href = "confirmation.html";
+
 
         } catch (error) {
             console.error("Checkout error:", error);
