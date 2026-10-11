@@ -1364,179 +1364,135 @@ function setupPaymentOptions() {
 ========================================================= */
 
 function setupCheckoutForm() {
+    const form = document.getElementById("checkoutForm");
 
-    const form =
-        document.getElementById(
-            "checkoutForm"
+    if (!form) return;
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (!Array.isArray(listCart) || listCart.length === 0) {
+            alert("Your cart is empty. Please add a product first.");
+            return;
+        }
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const formData = new FormData(form);
+        const userDetails = Object.fromEntries(formData.entries());
+
+        const selectedPayment = form.querySelector(
+            'input[name="paymentMethod"]:checked'
         );
 
-
-    if (!form)
-        return;
-
-
-    form.addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
-
-
-            /* ---------------------------------------------
-               CHECK CART
-            --------------------------------------------- */
-
-            if (
-                !Array.isArray(listCart) ||
-                listCart.length === 0
-            ) {
-
-                alert(
-                    "Your cart is empty. Please add a product before checking out."
-                );
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               VALIDATE FORM
-            --------------------------------------------- */
-
-            if (!form.checkValidity()) {
-
-                form.reportValidity();
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               NORMALIZE CART
-            --------------------------------------------- */
-
-            listCart =
-                listCart.map(
-                    normalizeProduct
-                );
-
-
-            /* ---------------------------------------------
-               CALCULATE TOTALS
-            --------------------------------------------- */
-
-            const totals =
-                getCartTotals();
-
-
-            const totalQuantity =
-                totals.totalQuantity;
-
-
-            const totalPrice =
-                totals.totalPrice;
-
-
-            /* ---------------------------------------------
-               GET CUSTOMER INFORMATION
-            --------------------------------------------- */
-
-            const formData =
-                new FormData(form);
-
-
-            const userDetails =
-                Object.fromEntries(
-                    formData.entries()
-                );
-
-
-            userDetails.totalQuantity =
-                totalQuantity;
-
-
-            userDetails.totalPrice =
-                totalPrice.toFixed(2);
-
-
-            /* ---------------------------------------------
-               SAVE CUSTOMER DETAILS
-            --------------------------------------------- */
-
-            sessionStorage.setItem(
-                "userDetails",
-                JSON.stringify(
-                    userDetails
-                )
-            );
-
-
-            /* ---------------------------------------------
-               SAVE CART
-            --------------------------------------------- */
-
-            sessionStorage.setItem(
-                "checkoutCart",
-                JSON.stringify(
-                    listCart
-                )
-            );
-
-
-            /* ---------------------------------------------
-               CREATE ORDER SNAPSHOT
-            --------------------------------------------- */
-
-            const orderSnapshot = {
-
-                customer:
-                    userDetails,
-
-                products:
-                    listCart,
-
-                totalQuantity:
-                    totalQuantity,
-
-                totalPrice:
-                    totalPrice,
-
-                createdAt:
-                    new Date().toISOString()
-
-            };
-
-
-            /* ---------------------------------------------
-               SAVE ORDER
-            --------------------------------------------- */
-
-            sessionStorage.setItem(
-                "currentOrder",
-                JSON.stringify(
-                    orderSnapshot
-                )
-            );
-
-
-            console.log(
-                "✅ Order saved:",
-                orderSnapshot
-            );
-
-
-            /* ---------------------------------------------
-               GO TO CONFIRMATION
-            --------------------------------------------- */
-
-            window.location.href =
-                "confirmation.html";
-
+        if (!selectedPayment) {
+            alert("Please select a payment method.");
+            return;
         }
-    );
 
+        const paymentMethod = selectedPayment.value;
+
+        listCart = listCart.map(normalizeProduct);
+
+        if (listCart.some(item =>
+            !item.id ||
+            !Number.isSafeInteger(Number(item.quantity)) ||
+            Number(item.quantity) < 1
+        )) {
+            alert("A cart item is invalid. Please refresh your cart.");
+            return;
+        }
+
+        const totals = getCartTotals();
+
+        userDetails.totalQuantity = totals.totalQuantity;
+        userDetails.totalPrice = totals.totalPrice.toFixed(2);
+
+        sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
+        sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
+
+        const orderSnapshot = {
+            customer: userDetails,
+            products: listCart,
+            totalQuantity: totals.totalQuantity,
+            totalPrice: totals.totalPrice,
+            paymentMethod: paymentMethod,
+            paymentStatus: "pending",
+            createdAt: new Date().toISOString()
+        };
+
+        sessionStorage.setItem("currentOrder", JSON.stringify(orderSnapshot));
+
+        const submitButton = form.querySelector(
+            'button[type="submit"], input[type="submit"]'
+        );
+
+        if (submitButton) {
+            submitButton.disabled = true;
+        }
+
+        try {
+            if (paymentMethod === "online") {
+                if (!userDetails.name || !userDetails.email) {
+                    alert("Please enter your name and email for online payment.");
+                    return;
+                }
+
+                if (submitButton) {
+                    if (submitButton.tagName === "INPUT") {
+                        submitButton.value = "Connecting to Monnify...";
+                    } else {
+                        submitButton.textContent = "Connecting to Monnify...";
+                    }
+                }
+
+                const response = await fetch("/api/monnify-init", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        customerName: userDetails.name,
+                        customerEmail: userDetails.email,
+                        items: listCart.map(item => ({
+                            id: item.id,
+                            quantity: Number(item.quantity)
+                        }))
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success || !result.checkoutUrl) {
+                    throw new Error(
+                        result.message || "Unable to start online payment."
+                    );
+                }
+
+                sessionStorage.setItem(
+                    "monnifyPaymentReference",
+                    result.paymentReference
+                );
+
+                window.location.href = result.checkoutUrl;
+                return;
+            }
+
+            window.location.href = "confirmation.html";
+
+        } catch (error) {
+            console.error("Checkout error:", error);
+            alert(error.message || "Checkout could not be started. Please try again.");
+
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+        }
+    });
 }
 
 
