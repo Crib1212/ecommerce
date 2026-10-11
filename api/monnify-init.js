@@ -1,3 +1,5 @@
+// api/monnify-init.js
+// Wittyfare Monnify Payment Initialization
 
 const crypto = require("crypto");
 const products = require("../product.json");
@@ -23,6 +25,7 @@ module.exports = async function handler(req, res) {
         items.length > 100 ||
         typeof customerName !== "string" ||
         !customerName.trim() ||
+        customerName.trim().length > 100 ||
         typeof customerEmail !== "string" ||
         !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim())
     ) {
@@ -44,7 +47,6 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        // Match cart items against the trusted product catalogue.
         const catalogue = new Map(
             products.map(product => [String(product.id), product])
         );
@@ -86,15 +88,13 @@ module.exports = async function handler(req, res) {
             });
         }
 
-        if (!Number.isSafeInteger(amount) || amount <= 0) {
+        if (!Number.isSafeInteger(amount) || amount <= 0 || amount > 5000000) {
             return res.status(400).json({
                 success: false,
                 message: "The order total is invalid."
             });
         }
 
-        // Keep this endpoint on the sandbox unless you deliberately
-        // change the Vercel environment variable.
         const baseUrl = (
             process.env.MONNIFY_BASE_URL ||
             "https://sandbox.monnify.com"
@@ -112,11 +112,15 @@ module.exports = async function handler(req, res) {
             "https://www.wittyfare.com"
         ).replace(/\/+$/, "");
 
-        if (siteUrl !== "https://www.wittyfare.com") {
+        if (
+            ![
+                "https://www.wittyfare.com",
+                "https://wittyfare.com"
+            ].includes(siteUrl)
+        ) {
             throw new Error("Invalid site URL configuration.");
         }
 
-        // Get a Monnify access token.
         const credentials = Buffer.from(
             `${process.env.MONNIFY_API_KEY}:${process.env.MONNIFY_SECRET_KEY}`
         ).toString("base64");
@@ -167,7 +171,7 @@ module.exports = async function handler(req, res) {
                     currencyCode: "NGN",
                     contractCode: process.env.MONNIFY_CONTRACT_CODE,
                     redirectUrl:
-                        `${siteUrl}/confirmation.html?payment=monnify`
+                        `${siteUrl}/confirmation.html?payment=monnify&ref=${paymentReference}`
                 })
             }
         );
@@ -179,7 +183,7 @@ module.exports = async function handler(req, res) {
             paymentData.requestSuccessful !== true ||
             !paymentData.responseBody?.checkoutUrl
         ) {
-            console.error("Monnify checkout initialization failed.");
+            console.error("Monnify checkout initialization failed:", paymentData);
             return res.status(502).json({
                 success: false,
                 message: "Could not start payment. Please try again."
@@ -189,7 +193,9 @@ module.exports = async function handler(req, res) {
         return res.status(200).json({
             success: true,
             checkoutUrl: paymentData.responseBody.checkoutUrl,
-            paymentReference
+            paymentReference,
+            amount,
+            items: orderItems
         });
     } catch (error) {
         console.error("Payment initialization error:", error.message);
