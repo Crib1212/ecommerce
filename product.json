@@ -9,6 +9,36 @@
     "description": "Agrited day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
+   {
+    "id": "day-old-sayed-broiler-chicks",
+    "name": "Sayed Day-Old Broiler Chicks",
+    "price": 1990,
+    "category": "day-old",
+    "slug": "sayed-broiler-chicks",
+    "image": "/images/dayold/sayed-dayold-broiler.png",
+    "description": "Sayed day-old broiler chicks for poultry farmers starting or expanding broiler production.",
+    "featured": true
+  },
+   {
+    "id": "day-old-olam-broiler-chicks",
+    "name": "Olam Day-Old Broiler Chicks",
+    "price": 1990,
+    "category": "day-old",
+    "slug": "olam-broiler-chicks",
+    "image": "/images/dayold/olam-broiler-chicks.png",
+    "description": "Olam day-old broiler chicks for poultry farmers starting or expanding broiler production.",
+    "featured": true
+  },
+   {
+    "id": "day-old-tosam-broiler-chicks",
+    "name": "Tosam Day-Old Broiler Chicks",
+    "price": 1990,
+    "category": "day-old",
+    "slug": "tosam-broiler-chicks",
+    "image": "/images/dayold/tosam-chicks.png",
+    "description": "Tosam day-old broiler chicks for poultry farmers starting or expanding broiler production.",
+    "featured": true
+  },
   {
     "id": "ddforce-1l",
     "name": "DDforce 1L",
@@ -312,6 +342,7 @@
     "id": "pet-tick-off-spray-250ml",
     "name": "Tick Off Spray 250ml",
     "price": 3500,
+    "vendor": "Diamond Agrovet",
     "category": "pet-store",
     "slug": "tick-off-spray-250ml",
     "image": "/images/pet/tick_off_spray_250ml.png",
@@ -592,17 +623,41 @@
   {
     "id": "equipment-3-in-1-drinker",
     "name": "3-in-1 Drinker",
-    "price": 1000,
+    "price": 2200,
+    "vendor": "Diamond Agrovet",
     "category": "equipment",
     "subcategory": "poultry-equipment",
     "slug": "3-in-1-drinker",
     "image": "/images/equipment/3_in_1_drinker.png",
     "description": "3-in-1 poultry drinker for farm water supply and poultry management."
   },
+    {
+    "id": "equipment-small-drinker",
+    "name": "Small Drinker",
+    "price": 1300,
+    "vendor": "Diamond Agrovet",
+    "category": "equipment",
+    "subcategory": "poultry-equipment",
+    "slug": "small-drinker",
+    "image": "/images/equipment/smalldrinker.jpg",
+    "description": "Small poultry drinker for farm water supply and poultry management."
+  },
+   {
+    "id": "equipment-big-drinker",
+    "name": "Big Drinker",
+    "price": 3000,
+    "vendor": "Diamond Agrovet",
+    "category": "equipment",
+    "subcategory": "poultry-equipment",
+    "slug": "big-drinker",
+    "image": "/images/equipment/bigdrinker.jpg",
+    "description": "Big poultry drinker for farm water supply and poultry management."
+  },
   {
     "id": "vaccines-3-in-1-eds",
     "name": "3-in-1 EDS Vaccine",
-    "price": 1000,
+    "price": 70000,
+    "vendor": "Diamond Agrovet",
     "category": "vaccines",
     "subcategory": "poultry-vaccines",
     "slug": "3-in-1-eds",
@@ -638,6 +693,28 @@
     "slug": "blue-crown-fish-feed-2mm",
     "image": "/images/fishfeed/Blue_crown_2mm.png",
     "description": "Blue Crown fish feed in 2mm size for fish farming and aquaculture.",
+    "featured": true
+  },
+    {
+    "id": "feed-Aller_aqua_2mm",
+    "name": "Aller Aqua Fish Feed 2mm",
+    "price": 62500,
+    "category": "feed",
+    "subcategory": "fish-feed",
+    "slug": "aller-aqua-fish-feed-2mm",
+    "image": "/images/fishfeed/ALLERAQUA.jpg",
+    "description": "Aller Aqua fish feed in 2mm size for fish farming and aquaculture.",
+    "featured": true
+  },
+  {
+    "id": "feed-Aller_aqua_crumb_0.9-1.5",
+    "name": "Aller Aqua crumble 0.9-1.5mm",
+    "price": 55500,
+    "category": "feed",
+    "subcategory": "fish-feed",
+    "slug": "aller-aqua-fish-feed-0.9-1.5mm",
+    "image": "/images/fishfeed/Alleraquacrumb.png",
+    "description": "Aller Aqua fish feed in 0.9-1.5mm size for fish farming and aquaculture.",
     "featured": true
   },
   {
