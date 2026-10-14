@@ -2,7 +2,7 @@
   {
     "id": "day-old-agrited-broiler-chicks",
     "name": "Agrited Day-Old Broiler Chicks",
-    "price": 1990,
+    "price": 2250,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/dayold/agriteddoc.webp",
@@ -12,7 +12,7 @@
    {
     "id": "day-old-sayed-broiler-chicks",
     "name": "Sayed Day-Old Broiler Chicks",
-    "price": 1990,
+    "price": 2250,
     "category": "day-old",
     "slug": "sayed-broiler-chicks",
     "image": "/images/dayold/sayed-dayold-broiler.png",
@@ -22,7 +22,7 @@
    {
     "id": "day-old-olam-broiler-chicks",
     "name": "Olam Day-Old Broiler Chicks",
-    "price": 1990,
+    "price": 2000,
     "category": "day-old",
     "slug": "olam-broiler-chicks",
     "image": "/images/dayold/olam-broiler-chicks.png",
@@ -32,11 +32,21 @@
    {
     "id": "day-old-tosam-broiler-chicks",
     "name": "Tosam Day-Old Broiler Chicks",
-    "price": 1990,
+    "price": 2000,
     "category": "day-old",
     "slug": "tosam-broiler-chicks",
     "image": "/images/dayold/tosam-chicks.png",
     "description": "Tosam day-old broiler chicks for poultry farmers starting or expanding broiler production.",
+    "featured": true
+  },
+   {
+    "id": "two-weeks-broiler-",
+    "name": "Two weeks broiler",
+    "price": 4000,
+    "category": "day-old",
+    "slug": "two-weeks-broiler-",
+    "image": "/images/dayold/two-weeks.png",
+    "description": "Two weeks old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
   {
