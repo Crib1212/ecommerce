@@ -16,13 +16,24 @@ export default async function handler(req, res) {
 
   try {
     const body =
-      typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body;
 
-    const { customerName, customerEmail, items } = body || {};
+    const {
+      customerName,
+      customerEmail,
+      customerPhone,
+      items
+    } = body || {};
+
+    const email =
+      typeof customerEmail === "string"
+        ? customerEmail.trim()
+        : "";
 
     if (
-      typeof customerEmail !== "string" ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
       !Array.isArray(items) ||
       items.length === 0 ||
       items.length > 50
@@ -33,14 +44,20 @@ export default async function handler(req, res) {
       });
     }
 
-    // Read the trusted catalogue from the deployed project root.
-    const cataloguePath = path.join(process.cwd(), "product.json");
+    // Read the trusted product catalogue.
+    const cataloguePath = path.join(
+      process.cwd(),
+      "product.json"
+    );
+
     const catalogue = JSON.parse(
       await fs.readFile(cataloguePath, "utf8")
     );
 
     if (!Array.isArray(catalogue)) {
-      throw new Error("Product catalogue format is invalid.");
+      throw new Error(
+        "Product catalogue must be a JSON array."
+      );
     }
 
     let totalNaira = 0;
@@ -80,8 +97,8 @@ export default async function handler(req, res) {
         return res.status(409).json({
           success: false,
           message:
-            `The catalogue has duplicate IDs for ${id}. ` +
-            "Please correct the product catalogue before ordering it."
+            `Duplicate product IDs found for ${id}. ` +
+            "Correct product.json before accepting orders."
         });
       }
 
@@ -107,14 +124,30 @@ export default async function handler(req, res) {
     if (totalNaira <= 0) {
       return res.status(400).json({
         success: false,
-        message: "The order total must be greater than zero."
+        message: "Order total must be greater than zero."
       });
     }
 
-    const publicKey = process.env.OPAY_PUBLIC_KEY?.trim();
-    const merchantId = process.env.OPAY_MERCHANT_ID?.trim();
-    const env = (process.env.OPAY_ENV || "sandbox").trim();
-    const callbackUrl = process.env.OPAY_CALLBACK_URL?.trim();
+    const totalKobo = totalNaira * 100;
+
+    if (!Number.isSafeInteger(totalKobo)) {
+      return res.status(400).json({
+        success: false,
+        message: "Payment amount is too large."
+      });
+    }
+
+    const publicKey =
+      process.env.OPAY_PUBLIC_KEY?.trim();
+
+    const merchantId =
+      process.env.OPAY_MERCHANT_ID?.trim();
+
+    const env =
+      (process.env.OPAY_ENV || "sandbox").trim();
+
+    const callbackUrl =
+      process.env.OPAY_CALLBACK_URL?.trim();
 
     if (
       !publicKey ||
@@ -123,9 +156,28 @@ export default async function handler(req, res) {
       !["sandbox", "production"].includes(env)
     ) {
       console.error("OPay configuration is incomplete.");
+
       return res.status(503).json({
         success: false,
         message: "Online payment is not fully configured yet."
+      });
+    }
+
+    let callback;
+
+    try {
+      callback = new URL(callbackUrl);
+    } catch {
+      return res.status(503).json({
+        success: false,
+        message: "The OPay callback URL is invalid."
+      });
+    }
+
+    if (callback.protocol !== "https:") {
+      return res.status(503).json({
+        success: false,
+        message: "The OPay callback URL must use HTTPS."
       });
     }
 
@@ -136,13 +188,13 @@ export default async function handler(req, res) {
 
     const reference =
       `wittyfare_${Date.now()}_` +
-      Math.random().toString(36).slice(2, 9);
+      cryptoRandomSuffix();
 
     const payload = {
       country: "NG",
       reference,
       amount: {
-        total: totalNaira * 100,
+        total: totalKobo,
         currency: "NGN"
       },
       product: {
@@ -150,15 +202,18 @@ export default async function handler(req, res) {
         description: `${items.length} product type(s)`
       },
       userInfo: {
-        userEmail: customerEmail,
+        userEmail: email,
         userName:
-          typeof customerName === "string" && customerName.trim()
+          typeof customerName === "string" &&
+          customerName.trim()
             ? customerName.trim().slice(0, 100)
             : "Customer"
       },
       callbackUrl,
-      returnUrl: "https://www.wittyfare.com/confirmation.html",
-      cancelUrl: "https://www.wittyfare.com/checkout.html"
+      returnUrl:
+        "https://www.wittyfare.com/confirmation.html",
+      cancelUrl:
+        "https://www.wittyfare.com/checkout.html"
     };
 
     const opayResponse = await fetch(
@@ -175,12 +230,14 @@ export default async function handler(req, res) {
     );
 
     const responseText = await opayResponse.text();
+
     let result;
 
     try {
       result = JSON.parse(responseText);
     } catch {
       console.error("OPay returned a non-JSON response.");
+
       return res.status(502).json({
         success: false,
         message: "The payment provider returned an invalid response."
@@ -191,7 +248,7 @@ export default async function handler(req, res) {
 
     if (
       !opayResponse.ok ||
-      result?.code !== "00000" ||
+      String(result?.code) !== "00000" ||
       typeof checkoutUrl !== "string" ||
       !checkoutUrl.startsWith("https://")
     ) {
@@ -211,12 +268,23 @@ export default async function handler(req, res) {
       checkoutUrl,
       paymentReference: reference
     });
+
   } catch (error) {
-    console.error("OPay initialization error:", error.message);
+    console.error(
+      "OPay initialization error:",
+      error?.message || "Unknown error"
+    );
 
     return res.status(500).json({
       success: false,
       message: "Unable to initialize payment. Please try again."
     });
   }
+}
+
+function cryptoRandomSuffix() {
+  return Array.from(
+    crypto.getRandomValues(new Uint8Array(8)),
+    byte => byte.toString(16).padStart(2, "0")
+  ).join("");
 }
