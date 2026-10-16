@@ -2,7 +2,7 @@
   {
     "id": "day-old-agrited-broiler-chicks",
     "name": "Agrited Day-Old Broiler Chicks",
-    "price": 2250,
+    "price": 2300,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/dayold/agriteddoc.webp",
@@ -12,7 +12,7 @@
    {
     "id": "day-old-sayed-broiler-chicks",
     "name": "Sayed Day-Old Broiler Chicks",
-    "price": 2250,
+    "price": 2300,
     "category": "day-old",
     "slug": "sayed-broiler-chicks",
     "image": "/images/dayold/sayed-dayold-broiler.png",
@@ -22,7 +22,7 @@
    {
     "id": "day-old-olam-broiler-chicks",
     "name": "Olam Day-Old Broiler Chicks",
-    "price": 2000,
+    "price": 2250,
     "category": "day-old",
     "slug": "olam-broiler-chicks",
     "image": "/images/dayold/olam-broiler-chicks.png",
