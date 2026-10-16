@@ -1470,13 +1470,21 @@ function setupCheckoutForm() {
                     })
                 });
 
-                let result;
-                try {
-                    result = await response.json();
-                } catch (_) {
-                    throw new Error("The payment server returned an invalid response. Please try again.");
-                }
+                const responseText = await response.text();
 
+console.log("OPay endpoint status:", response.status);
+console.log("OPay endpoint content type:", response.headers.get("content-type"));
+console.log("OPay endpoint response:", responseText.slice(0, 1000));
+
+let result;
+
+try {
+    result = JSON.parse(responseText);
+} catch (error) {
+    throw new Error(
+        `Payment endpoint returned non-JSON data (HTTP ${response.status}). Check the browser console.`
+    );
+}
                 if (!response.ok || !result || result.success !== true || !result.checkoutUrl) {
                     throw new Error(
                         (result && result.message) ||
