@@ -706,6 +706,17 @@
     "featured": true
   },
     {
+    "id": "feed-koudijs-prestarter",
+    "name": "koudijs-prestarter",
+    "price": 30000,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "koudijs-prestarter",
+    "image": "/images/poultryfeed/koudijs-prestarter.png",
+    "description": "koudijs-prestarter feed for poultry farming.",
+    "featured": true
+  },
+    {
     "id": "feed-Aller_aqua_2mm",
     "name": "Aller Aqua Fish Feed 2mm",
     "price": 62500,
