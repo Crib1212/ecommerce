@@ -1,17 +1,107 @@
+
 /* =========================================================
-   WITTYFARE CHECKOUT
-   Cart → Checkout → Confirmation
+   WITTYFARE AGROVET & FARMS
+   COMPLETE CHECKOUT.JS
+   Cart | Checkout | OPay | Confirmation
 ========================================================= */
 
-let listCart = [];
+"use strict";
 
+let listCart = [];
+let checkoutSubmitting = false;
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const CHECKOUT_CONFIG = {
+    opayEndpoint: "/api/opay-init",
+    confirmationPage: "confirmation.html",
+    currency: "₦"
+};
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function formatNaira(amount) {
+    const value = Number(amount);
+
+    return CHECKOUT_CONFIG.currency +
+        (Number.isFinite(value) ? value : 0).toLocaleString("en-NG", {
+            maximumFractionDigits: 2
+        });
+}
+
+function normalizeProduct(product) {
+    if (!product || typeof product !== "object") {
+        return {
+            id: "",
+            name: "Product",
+            image: "",
+            price: 0,
+            quantity: 1
+        };
+    }
+
+    const rawPrice =
+        product.price ??
+        product.sellingPrice ??
+        product.amount ??
+        0;
+
+    const rawQuantity =
+        product.quantity ??
+        product.qty ??
+        product.count ??
+        1;
+
+    return {
+        id: String(
+            product.id ??
+            product.productId ??
+            ""
+        ).trim(),
+
+        name: String(
+            product.name ??
+            product.title ??
+            product.productName ??
+            "Product"
+        ),
+
+        image: String(
+            product.image ??
+            product.img ??
+            product.imageUrl ??
+            product.productImage ??
+            ""
+        ),
+
+        price: Number(rawPrice),
+
+        quantity: Math.max(
+            1,
+            Math.floor(Number(rawQuantity) || 1)
+        )
+    };
+}
 
 /* =========================================================
    LOAD CART
 ========================================================= */
 
 function loadCart() {
-
     const possibleKeys = [
         "listCart",
         "cart",
@@ -22,9 +112,7 @@ function loadCart() {
     let foundCart = null;
 
     for (const key of possibleKeys) {
-
         try {
-
             const stored = localStorage.getItem(key);
 
             if (!stored) continue;
@@ -32,1332 +120,565 @@ function loadCart() {
             const parsed = JSON.parse(stored);
 
             if (Array.isArray(parsed) && parsed.length > 0) {
-
                 foundCart = parsed;
 
-                console.log(
-                    "Checkout cart loaded from:",
-                    key
-                );
-
+                console.log("Checkout cart loaded from:", key);
                 break;
             }
-
         } catch (error) {
-
-            console.warn(
-                "Could not read cart key:",
-                key,
-                error
-            );
-
+            console.warn("Could not read cart:", key, error);
         }
     }
 
+    listCart = Array.isArray(foundCart)
+        ? foundCart.map(normalizeProduct)
+        : [];
 
-    if (!foundCart) {
-
-        console.warn(
-            "No cart found in localStorage."
-        );
-
-        listCart = [];
-
-        return;
-    }
-
-
-    listCart = foundCart.map(normalizeProduct);
-
-
-    console.log(
-        "Products in checkout:",
-        listCart
+    // Ignore malformed entries. The backend must still validate
+    // product IDs, quantities and prices before taking payment.
+    listCart = listCart.filter(product =>
+        product.id &&
+        Number.isFinite(product.price) &&
+        product.price >= 0 &&
+        Number.isSafeInteger(product.quantity) &&
+        product.quantity >= 1
     );
 
+    saveCart();
+
+    console.log("Checkout products:", listCart);
 }
-
-
-/* =========================================================
-   NORMALIZE PRODUCT
-========================================================= */
-
-function normalizeProduct(product) {
-
-    if (!product || typeof product !== "object") {
-
-        return {
-            id: "",
-            name: "Product",
-            image: "",
-            price: 0,
-            quantity: 1
-        };
-
-    }
-
-
-    return {
-
-        id: String(
-            product.id ??
-            product.productId ??
-            ""
-        ),
-
-        name:
-            product.name ??
-            product.title ??
-            product.productName ??
-            "Product",
-
-        image:
-            product.image ??
-            product.img ??
-            product.imageUrl ??
-            product.productImage ??
-            "",
-
-        price:
-            Number(
-                product.price ??
-                product.sellingPrice ??
-                product.amount ??
-                0
-            ),
-
-        quantity: Math.max(
-            1,
-            Number(
-                product.quantity ??
-                product.qty ??
-                product.count ??
-                1
-            )
-        )
-
-    };
-
-}
-
 
 /* =========================================================
    SAVE CART
 ========================================================= */
 
 function saveCart() {
-
-    localStorage.setItem(
-        "listCart",
-        JSON.stringify(listCart)
-    );
-
+    try {
+        localStorage.setItem("listCart", JSON.stringify(listCart));
+    } catch (error) {
+        console.error("Unable to save cart:", error);
+    }
 }
 
-
 /* =========================================================
-   GET CART TOTALS
+   CART TOTALS
 ========================================================= */
 
 function getCartTotals() {
-
     let totalQuantity = 0;
     let totalPrice = 0;
 
-
-    if (!Array.isArray(listCart)) {
-
-        return {
-            totalQuantity: 0,
-            totalPrice: 0
-        };
-
-    }
-
-
     listCart.forEach(product => {
-
-        const quantity =
-            Number(product.quantity) || 0;
-
-        const price =
-            Number(product.price) || 0;
-
+        const quantity = Number(product.quantity) || 0;
+        const price = Number(product.price) || 0;
 
         totalQuantity += quantity;
-
-        totalPrice +=
-            price * quantity;
-
+        totalPrice += price * quantity;
     });
-
 
     return {
         totalQuantity,
         totalPrice
     };
-
 }
 
-
 /* =========================================================
-   UPDATE ALL CART BADGES
+   CART BADGES
 ========================================================= */
 
 function updateCartBadge() {
+    const totals = getCartTotals();
 
-    const totals =
-        getCartTotals();
+    document.querySelectorAll(
+        ".cart-badge, .iconCart .totalQuantity"
+    ).forEach(element => {
+        element.textContent = totals.totalQuantity;
 
-
-    const badges =
-        document.querySelectorAll(
-            ".cart-badge, .iconCart .totalQuantity"
-        );
-
-
-    badges.forEach(badge => {
-
-        badge.textContent =
-            totals.totalQuantity;
-
-
-        badge.style.display =
-            totals.totalQuantity > 0
-                ? "flex"
-                : "none";
-
+        element.style.display =
+            totals.totalQuantity > 0 ? "flex" : "none";
     });
-
 }
 
-
 /* =========================================================
-   UPDATE ITEMS COUNT
+   ITEMS COUNT
 ========================================================= */
 
 function updateItemsCount(totalQuantity) {
+    const element = document.querySelector(".items-count");
 
-    const itemsCount =
-        document.querySelector(
-            ".items-count"
-        );
-
-
-    if (!itemsCount)
-        return;
-
-
-    itemsCount.textContent =
-        `${totalQuantity} ${
-            totalQuantity === 1
-                ? "Item"
-                : "Items"
-        }`;
-
+    if (element) {
+        element.textContent =
+            `${totalQuantity} ${totalQuantity === 1 ? "Item" : "Items"}`;
+    }
 }
 
-
 /* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        value ?? "";
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================================================
-   RENDER CHECKOUT ORDER SUMMARY
+   RENDER CHECKOUT SUMMARY
 ========================================================= */
 
 function renderCheckoutCart() {
+    const cartContainer = document.querySelector(
+        ".order-summary-card .list"
+    );
 
-    const cartContainer =
-        document.querySelector(
-            ".order-summary-card .list"
-        ) ||
-        document.querySelector(
-            ".returnCart .list"
-        ) ||
-        document.querySelector(
-            ".list"
-        );
+    const quantityElements =
+        document.querySelectorAll(".totalQuantity");
 
+    const priceElements =
+        document.querySelectorAll(".totalPrice");
+
+    const hiddenQuantity =
+        document.getElementById("totalQuantity");
+
+    const hiddenPrice =
+        document.getElementById("totalPrice");
+
+    const buttonTotal =
+        document.querySelector(".checkout-button-total");
 
     if (!cartContainer) {
-
-        console.error(
-            "❌ Checkout product container not found."
-        );
-
+        console.error("Checkout product container not found.");
         return;
     }
 
+    cartContainer.replaceChildren();
 
-    const quantityElements =
-        document.querySelectorAll(
-            ".totalQuantity"
-        );
+    const totals = getCartTotals();
 
+    quantityElements.forEach(element => {
+        element.textContent = totals.totalQuantity.toLocaleString();
+    });
 
-    const priceElements =
-        document.querySelectorAll(
-            ".totalPrice"
-        );
+    priceElements.forEach(element => {
+        element.textContent = formatNaira(totals.totalPrice);
+    });
 
+    if (hiddenQuantity) {
+        hiddenQuantity.value = String(totals.totalQuantity);
+    }
 
-    const hiddenQuantity =
-        document.getElementById(
-            "totalQuantity"
-        );
+    if (hiddenPrice) {
+        hiddenPrice.value = totals.totalPrice.toFixed(2);
+    }
 
+    if (buttonTotal) {
+        buttonTotal.textContent = formatNaira(totals.totalPrice);
+    }
 
-    const hiddenPrice =
-        document.getElementById(
-            "totalPrice"
-        );
+    updateItemsCount(totals.totalQuantity);
+    updateCartBadge();
 
-
-    const buttonTotal =
-        document.querySelector(
-            ".checkout-button-total"
-        );
-
-
-    cartContainer.innerHTML = "";
-
-
-    /* =====================================================
-       EMPTY CART
-    ===================================================== */
-
-    if (
-        !Array.isArray(listCart) ||
-        listCart.length === 0
-    ) {
-
+    if (listCart.length === 0) {
         cartContainer.innerHTML = `
-
             <div class="empty-checkout-cart">
-
                 <div class="empty-cart-icon">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-
                 <h3>Your cart is empty</h3>
-
-                <p>
-                    You haven't added any products yet.
-                </p>
-
-                <a href="index.html">
-                    Browse Products
-                </a>
-
+                <p>You haven't added any products yet.</p>
+                <a href="index.html">Browse Products</a>
             </div>
-
         `;
-
-
-        quantityElements.forEach(element => {
-
-            element.textContent = "0";
-
-        });
-
-
-        priceElements.forEach(element => {
-
-            element.textContent = "₦0";
-
-        });
-
-
-        if (hiddenQuantity) {
-
-            hiddenQuantity.value = "0";
-
-        }
-
-
-        if (hiddenPrice) {
-
-            hiddenPrice.value = "0";
-
-        }
-
-
-        if (buttonTotal) {
-
-            buttonTotal.textContent = "₦0";
-
-        }
-
-
-        updateItemsCount(0);
-
-        updateCartBadge();
-
-        renderSlideCart();
 
         return;
     }
 
-
-    /* =====================================================
-       CALCULATE TOTALS
-    ===================================================== */
-
-    let totalQuantity = 0;
-
-    let totalPrice = 0;
-
-
-    /* =====================================================
-       RENDER PRODUCTS
-    ===================================================== */
-
     listCart.forEach(product => {
+        const quantity = Number(product.quantity);
+        const price = Number(product.price);
+        const subtotal = quantity * price;
 
-        const quantity =
-            Number(product.quantity) || 1;
+        const item = document.createElement("div");
+        item.className = "checkout-product-item";
 
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "checkout-product-image";
 
-        const price =
-            Number(product.price) || 0;
+        if (product.image) {
+            const image = document.createElement("img");
+            image.src = product.image;
+            image.alt = product.name;
+            image.loading = "lazy";
 
+            image.addEventListener("error", function () {
+                imageContainer.replaceChildren();
 
-        const subtotal =
-            price * quantity;
+                const icon = document.createElement("i");
+                icon.className = "fa-solid fa-box";
+                imageContainer.appendChild(icon);
+            }, { once: true });
 
+            imageContainer.appendChild(image);
+        } else {
+            const icon = document.createElement("i");
+            icon.className = "fa-solid fa-box";
+            imageContainer.appendChild(icon);
+        }
 
-        totalQuantity += quantity;
+        const info = document.createElement("div");
+        info.className = "checkout-product-info";
 
-        totalPrice += subtotal;
+        const name = document.createElement("h3");
+        name.textContent = product.name;
 
+        const meta = document.createElement("div");
+        meta.className = "checkout-product-meta";
+        meta.textContent = `${formatNaira(price)} × ${quantity}`;
 
-        const item =
-            document.createElement("div");
+        info.append(name, meta);
 
+        const right = document.createElement("div");
+        right.className = "checkout-product-right";
 
-        item.className =
-            "checkout-product-item";
+        const subtotalElement = document.createElement("strong");
+        subtotalElement.textContent = formatNaira(subtotal);
 
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "delete-btn checkout-delete";
+        removeButton.dataset.id = product.id;
+        removeButton.title = "Remove product";
+        removeButton.setAttribute(
+            "aria-label",
+            `Remove ${product.name}`
+        );
+        removeButton.innerHTML =
+            '<i class="fa-solid fa-trash"></i> Remove';
 
-        item.innerHTML = `
-
-            <div class="checkout-product-image">
-
-                ${
-                    product.image
-
-                    ?
-
-                    `
-                    <img
-                        src="${escapeHTML(product.image)}"
-                        alt="${escapeHTML(product.name)}"
-                        onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-box\\'></i>';"
-                    >
-                    `
-
-                    :
-
-                    `
-                    <i class="fa-solid fa-box"></i>
-                    `
-                }
-
-            </div>
-
-
-            <div class="checkout-product-info">
-
-                <h3>
-                    ${escapeHTML(product.name)}
-                </h3>
-
-
-                <div class="checkout-product-meta">
-
-                    <span>
-                        ₦${price.toLocaleString()}
-                    </span>
-
-                    <span>
-                        × ${quantity}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="checkout-product-right">
-
-                <strong>
-                    ₦${subtotal.toLocaleString()}
-                </strong>
-
-
-                <button
-                    type="button"
-                    class="delete-btn checkout-delete"
-                    data-id="${escapeHTML(product.id)}"
-                    title="Remove product"
-                    aria-label="Remove ${escapeHTML(product.name)}"
-                >
-
-                    <i class="fa-solid fa-trash"></i>
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        `;
-
-
+        right.append(subtotalElement, removeButton);
+        item.append(imageContainer, info, right);
         cartContainer.appendChild(item);
-
     });
-
-
-    /* =====================================================
-       UPDATE TOTAL QUANTITY
-    ===================================================== */
-
-    quantityElements.forEach(element => {
-
-        element.textContent =
-            totalQuantity.toLocaleString();
-
-    });
-
-
-    /* =====================================================
-       UPDATE TOTAL PRICE
-    ===================================================== */
-
-    priceElements.forEach(element => {
-
-        element.textContent =
-            "₦" +
-            totalPrice.toLocaleString();
-
-    });
-
-
-    /* =====================================================
-       UPDATE HIDDEN INPUTS
-    ===================================================== */
-
-    if (hiddenQuantity) {
-
-        hiddenQuantity.value =
-            totalQuantity;
-
-    }
-
-
-    if (hiddenPrice) {
-
-        hiddenPrice.value =
-            totalPrice.toFixed(2);
-
-    }
-
-
-    /* =====================================================
-       UPDATE CHECKOUT BUTTON
-    ===================================================== */
-
-    if (buttonTotal) {
-
-        buttonTotal.textContent =
-            "₦" +
-            totalPrice.toLocaleString();
-
-    }
-
-
-    /* =====================================================
-       UPDATE OTHER CART ELEMENTS
-    ===================================================== */
-
-    updateItemsCount(totalQuantity);
-
-    updateCartBadge();
-
-
-    console.log(
-        "✅ Checkout rendered:",
-        listCart
-    );
-
 }
-
 
 /* =========================================================
    RENDER SLIDE-OUT CART
 ========================================================= */
 
 function renderSlideCart() {
+    const cartContainer = document.querySelector(".listCart");
 
-    const cartContainer =
-        document.querySelector(
-            ".listCart"
-        );
+    if (!cartContainer) return;
 
+    cartContainer.replaceChildren();
 
-    if (!cartContainer)
-        return;
-
-
-    cartContainer.innerHTML = "";
-
-
-    /* =====================================================
-       EMPTY CART
-    ===================================================== */
-
-    if (
-        !Array.isArray(listCart) ||
-        listCart.length === 0
-    ) {
-
+    if (listCart.length === 0) {
         cartContainer.innerHTML = `
-
             <div class="empty-cart">
-
                 <i class="fa-solid fa-cart-shopping"></i>
-
-                <p>
-                    Your cart is empty.
-                </p>
-
+                <p>Your cart is empty.</p>
             </div>
-
         `;
-
         return;
     }
-
-
-    /* =====================================================
-       RENDER PRODUCTS
-    ===================================================== */
 
     listCart.forEach(product => {
+        const item = document.createElement("div");
+        item.className = "item";
 
-        const quantity =
-            Number(product.quantity) || 1;
+        const image = document.createElement("img");
+        image.alt = product.name;
 
+        if (product.image) {
+            image.src = product.image;
+            image.addEventListener("error", () => {
+                image.style.display = "none";
+            }, { once: true });
+        } else {
+            image.style.display = "none";
+        }
 
-        const price =
-            Number(product.price) || 0;
+        const content = document.createElement("div");
+        content.className = "content";
 
+        const name = document.createElement("div");
+        name.className = "name";
+        name.textContent = product.name;
 
-        const subtotal =
-            price * quantity;
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = formatNaira(
+            product.price * product.quantity
+        );
 
+        content.append(name, price);
 
-        const item =
-            document.createElement("div");
+        const controls = document.createElement("div");
+        controls.className = "cartControls";
 
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "deleteBtn slide-cart-delete";
+        remove.dataset.id = product.id;
+        remove.textContent = "🗑";
+        remove.setAttribute("aria-label", `Remove ${product.name}`);
 
-        item.className =
-            "item";
+        const qtyControls = document.createElement("div");
+        qtyControls.className = "verticalQty";
 
+        const plus = document.createElement("button");
+        plus.type = "button";
+        plus.className = "slide-cart-plus";
+        plus.dataset.id = product.id;
+        plus.textContent = "+";
+        plus.setAttribute("aria-label", "Increase quantity");
 
-        item.innerHTML = `
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = "1";
+        input.step = "1";
+        input.value = String(product.quantity);
+        input.className = "slide-cart-qty";
+        input.dataset.id = product.id;
+        input.setAttribute("aria-label", "Quantity");
 
-            <img
-                src="${escapeHTML(product.image)}"
-                alt="${escapeHTML(product.name)}"
-                onerror="this.style.display='none';"
-            >
+        const minus = document.createElement("button");
+        minus.type = "button";
+        minus.className = "slide-cart-minus";
+        minus.dataset.id = product.id;
+        minus.textContent = "−";
+        minus.setAttribute("aria-label", "Decrease quantity");
 
-
-            <div class="content">
-
-                <div class="name">
-                    ${escapeHTML(product.name)}
-                </div>
-
-
-                <div class="price">
-                    ₦${subtotal.toLocaleString()}
-                </div>
-
-            </div>
-
-
-            <div class="cartControls">
-
-                <button
-                    type="button"
-                    class="deleteBtn slide-cart-delete"
-                    data-id="${escapeHTML(product.id)}"
-                    title="Remove product"
-                    aria-label="Remove ${escapeHTML(product.name)}"
-                >
-                    🗑
-                </button>
-
-
-                <div class="verticalQty">
-
-                    <button
-                        type="button"
-                        class="slide-cart-plus"
-                        data-id="${escapeHTML(product.id)}"
-                        aria-label="Increase quantity"
-                    >
-                        +
-                    </button>
-
-
-                    <input
-                        type="number"
-                        min="1"
-                        value="${quantity}"
-                        class="slide-cart-qty"
-                        data-id="${escapeHTML(product.id)}"
-                        aria-label="Quantity"
-                    >
-
-
-                    <button
-                        type="button"
-                        class="slide-cart-minus"
-                        data-id="${escapeHTML(product.id)}"
-                        aria-label="Decrease quantity"
-                    >
-                        −
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
+        qtyControls.append(plus, input, minus);
+        controls.append(remove, qtyControls);
+        item.append(image, content, controls);
 
         cartContainer.appendChild(item);
-
     });
-
 }
 
-
 /* =========================================================
-   OPEN / CLOSE SLIDE CART
+   REFRESH CART UI
 ========================================================= */
 
-function setupCart() {
-
-    const iconCart =
-        document.querySelector(
-            ".iconCart"
-        );
-
-
-    const cart =
-        document.querySelector(
-            ".cart"
-        );
-
-
-    const close =
-        document.querySelector(
-            ".cart .close"
-        );
-
-
-    const container =
-        document.querySelector(
-            ".checkout-container"
-        );
-
-
-    if (!iconCart || !cart) {
-
-        console.warn(
-            "Cart icon or cart panel not found."
-        );
-
-        return;
-    }
-
-
-    let isCartOpen = false;
-
-
-    /* =====================================================
-       OPEN CART
-    ===================================================== */
-
-    function openCart() {
-
-        renderSlideCart();
-
-
-        cart.style.transition =
-            "right 0.5s ease";
-
-
-        cart.style.right =
-            "0";
-
-
-        if (container) {
-
-            container.style.transition =
-                "transform 0.5s ease";
-
-
-            container.style.transform =
-                "translateX(-400px)";
-
-        }
-
-
-        isCartOpen = true;
-
-    }
-
-
-    /* =====================================================
-       CLOSE CART
-    ===================================================== */
-
-    function closeCart() {
-
-        cart.style.transition =
-            "right 0.5s ease";
-
-
-        cart.style.right =
-            "-100%";
-
-
-        if (container) {
-
-            container.style.transition =
-                "transform 0.5s ease";
-
-
-            container.style.transform =
-                "translateX(0)";
-
-        }
-
-
-        isCartOpen = false;
-
-    }
-
-
-    /* =====================================================
-       CART ICON CLICK
-    ===================================================== */
-
-    iconCart.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-
-            if (isCartOpen) {
-
-                closeCart();
-
-            } else {
-
-                openCart();
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       CLOSE BUTTON
-    ===================================================== */
-
-    if (close) {
-
-        close.addEventListener(
-            "click",
-            closeCart
-        );
-
-    }
-
-
-    /* =====================================================
-       MAKE FUNCTIONS AVAILABLE
-    ===================================================== */
-
-    window.openCheckoutCart =
-        openCart;
-
-
-    window.closeCheckoutCart =
-        closeCart;
-
+function refreshCartUI() {
+    saveCart();
+    renderCheckoutCart();
+    renderSlideCart();
+    updateCartBadge();
 }
 
-
 /* =========================================================
-   REMOVE PRODUCT FROM CHECKOUT
+   REMOVE / CHANGE QUANTITY
 ========================================================= */
 
 function removeProduct(productId) {
+    const id = String(productId);
 
-    const id =
-        String(productId);
-
-
-    listCart =
-        listCart.filter(
-            product =>
-                String(product.id) !== id
-        );
-
-
-    saveCart();
-
-
-    renderCheckoutCart();
-
-    renderSlideCart();
-
-    updateCartBadge();
-
-
-    console.log(
-        "🗑 Product removed:",
-        id
+    listCart = listCart.filter(
+        product => String(product.id) !== id
     );
 
+    refreshCartUI();
 }
-
-
-/* =========================================================
-   INCREASE PRODUCT QUANTITY
-========================================================= */
 
 function increaseQuantity(productId) {
+    const product = listCart.find(
+        item => String(item.id) === String(productId)
+    );
 
-    const id =
-        String(productId);
+    if (!product) return;
 
-
-    const product =
-        listCart.find(
-            item =>
-                String(item.id) === id
-        );
-
-
-    if (!product)
+    if (product.quantity >= 999) {
+        alert("The maximum quantity allowed here is 999.");
         return;
+    }
 
-
-    product.quantity =
-        (Number(product.quantity) || 1) + 1;
-
-
-    saveCart();
-
-
-    renderCheckoutCart();
-
-    renderSlideCart();
-
-    updateCartBadge();
-
+    product.quantity += 1;
+    refreshCartUI();
 }
-
-
-/* =========================================================
-   DECREASE PRODUCT QUANTITY
-========================================================= */
 
 function decreaseQuantity(productId) {
+    const product = listCart.find(
+        item => String(item.id) === String(productId)
+    );
 
-    const id =
-        String(productId);
+    if (!product) return;
 
-
-    const product =
-        listCart.find(
-            item =>
-                String(item.id) === id
-        );
-
-
-    if (!product)
+    if (product.quantity <= 1) {
+        removeProduct(productId);
         return;
-
-
-    const newQuantity =
-        (Number(product.quantity) || 1) - 1;
-
-
-    if (newQuantity <= 0) {
-
-        removeProduct(id);
-
-        return;
-
     }
 
-
-    product.quantity =
-        newQuantity;
-
-
-    saveCart();
-
-
-    renderCheckoutCart();
-
-    renderSlideCart();
-
-    updateCartBadge();
-
+    product.quantity -= 1;
+    refreshCartUI();
 }
 
+function setProductQuantity(productId, quantity) {
+    const product = listCart.find(
+        item => String(item.id) === String(productId)
+    );
 
-/* =========================================================
-   SET PRODUCT QUANTITY
-========================================================= */
+    if (!product) return;
 
-function setProductQuantity(
-    productId,
-    quantity
-) {
+    const newQuantity = Number(quantity);
 
-    const id =
-        String(productId);
-
-
-    const product =
-        listCart.find(
-            item =>
-                String(item.id) === id
-        );
-
-
-    if (!product)
+    if (!Number.isSafeInteger(newQuantity) ||
+        newQuantity < 1 ||
+        newQuantity > 999) {
+        alert("Please enter a quantity between 1 and 999.");
+        renderSlideCart();
         return;
-
-
-    let newQuantity =
-        parseInt(
-            quantity,
-            10
-        );
-
-
-    if (
-        isNaN(newQuantity) ||
-        newQuantity <= 0
-    ) {
-
-        removeProduct(id);
-
-        return;
-
     }
 
-
-    product.quantity =
-        newQuantity;
-
-
-    saveCart();
-
-
-    renderCheckoutCart();
-
-    renderSlideCart();
-
-    updateCartBadge();
-
+    product.quantity = newQuantity;
+    refreshCartUI();
 }
 
-
 /* =========================================================
-   CHECKOUT DELETE BUTTONS
+   SET UP SLIDE CART
 ========================================================= */
 
-function setupDeleteButtons() {
+function setupCart() {
+    const iconCart = document.querySelector(".iconCart");
+    const cart = document.querySelector(".cart");
+    const closeButton = document.querySelector(".cart .close");
+    const checkoutContainer =
+        document.querySelector(".checkout-container");
 
-    document.addEventListener(
-        "click",
-        function(event) {
+    if (!iconCart || !cart) return;
 
-            const button =
-                event.target.closest(
-                    ".checkout-delete"
-                );
+    function openCart() {
+        renderSlideCart();
+        cart.style.transition = "right 0.3s ease";
+        cart.style.right = "0";
 
-
-            if (!button)
-                return;
-
-
-            const id =
-                String(
-                    button.dataset.id
-                );
-
-
-            removeProduct(id);
-
+        if (checkoutContainer) {
+            checkoutContainer.style.transform = "translateX(-400px)";
         }
-    );
+    }
 
+    function closeCart() {
+        cart.style.transition = "right 0.3s ease";
+        cart.style.right = "-100%";
+
+        if (checkoutContainer) {
+            checkoutContainer.style.transform = "translateX(0)";
+        }
+    }
+
+    iconCart.addEventListener("click", event => {
+        event.preventDefault();
+
+        const isOpen = cart.style.right === "0px" ||
+            cart.style.right === "0";
+
+        if (isOpen) {
+            closeCart();
+        } else {
+            openCart();
+        }
+    });
+
+    if (closeButton) {
+        closeButton.addEventListener("click", closeCart);
+    }
+
+    window.openCheckoutCart = openCart;
+    window.closeCheckoutCart = closeCart;
 }
 
-
 /* =========================================================
-   CHECKOUT QUANTITY INPUTS
+   CART EVENT HANDLERS
 ========================================================= */
 
-function setupQuantityInputs() {
+function setupCartControls() {
+    document.addEventListener("click", event => {
+        const target = event.target;
 
-    document.addEventListener(
-        "change",
-        function(event) {
+        const removeCheckout = target.closest(".checkout-delete");
+        if (removeCheckout) {
+            removeProduct(removeCheckout.dataset.id);
+            return;
+        }
 
-            const input =
-                event.target.closest(
-                    ".quantity-input"
-                );
+        const removeSlide = target.closest(".slide-cart-delete");
+        if (removeSlide) {
+            removeProduct(removeSlide.dataset.id);
+            return;
+        }
 
+        const plus = target.closest(".slide-cart-plus");
+        if (plus) {
+            increaseQuantity(plus.dataset.id);
+            return;
+        }
 
-            if (!input)
-                return;
+        const minus = target.closest(".slide-cart-minus");
+        if (minus) {
+            decreaseQuantity(minus.dataset.id);
+        }
+    });
 
+    document.addEventListener("change", event => {
+        const input = event.target.closest(".slide-cart-qty");
 
-            const id =
-                String(
-                    input.dataset.id
-                );
+        if (input) {
+            setProductQuantity(input.dataset.id, input.value);
+            return;
+        }
 
+        const checkoutInput = event.target.closest(".quantity-input");
 
+        if (checkoutInput) {
             setProductQuantity(
-                id,
-                input.value
+                checkoutInput.dataset.id,
+                checkoutInput.value
             );
-
         }
-    );
-
+    });
 }
 
-
 /* =========================================================
-   SLIDE CART CONTROLS
-========================================================= */
-
-function setupSlideCartControls() {
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    document.addEventListener(
-        "click",
-        function(event) {
-
-
-            /* ---------------------------------------------
-               DELETE
-            --------------------------------------------- */
-
-            const deleteButton =
-                event.target.closest(
-                    ".slide-cart-delete"
-                );
-
-
-            if (deleteButton) {
-
-                const id =
-                    String(
-                        deleteButton.dataset.id
-                    );
-
-
-                removeProduct(id);
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               PLUS
-            --------------------------------------------- */
-
-            const plusButton =
-                event.target.closest(
-                    ".slide-cart-plus"
-                );
-
-
-            if (plusButton) {
-
-                const id =
-                    String(
-                        plusButton.dataset.id
-                    );
-
-
-                increaseQuantity(id);
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               MINUS
-            --------------------------------------------- */
-
-            const minusButton =
-                event.target.closest(
-                    ".slide-cart-minus"
-                );
-
-
-            if (minusButton) {
-
-                const id =
-                    String(
-                        minusButton.dataset.id
-                    );
-
-
-                decreaseQuantity(id);
-
-                return;
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       MANUAL QUANTITY
-    ===================================================== */
-
-    document.addEventListener(
-        "change",
-        function(event) {
-
-            const input =
-                event.target.closest(
-                    ".slide-cart-qty"
-                );
-
-
-            if (!input)
-                return;
-
-
-            const id =
-                String(
-                    input.dataset.id
-                );
-
-
-            setProductQuantity(
-                id,
-                input.value
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   PAYMENT OPTIONS
+   PAYMENT OPTION STYLING
 ========================================================= */
 
 function setupPaymentOptions() {
-
-    const options =
-        document.querySelectorAll(
-            ".payment-option"
-        );
-
+    const options = document.querySelectorAll(".payment-option");
 
     options.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
 
-        const radio =
-            option.querySelector(
-                'input[type="radio"]'
-            );
+        if (!radio) return;
 
+        radio.addEventListener("change", () => {
+            options.forEach(item => item.classList.remove("selected"));
 
-        if (!radio)
-            return;
-
-
-        radio.addEventListener(
-            "change",
-            function() {
-
-                options.forEach(item => {
-
-                    item.classList.remove(
-                        "selected"
-                    );
-
-                });
-
-
-                if (radio.checked) {
-
-                    option.classList.add(
-                        "selected"
-                    );
-
-                }
-
+            if (radio.checked) {
+                option.classList.add("selected");
             }
-        );
+        });
 
+        if (radio.checked) {
+            option.classList.add("selected");
+        }
     });
-
 }
 
+/* =========================================================
+   SAVE ORDER SNAPSHOT FOR THE EXISTING CONFIRMATION PAGE
+========================================================= */
+
+function saveOrderSnapshot(userDetails, paymentMethod) {
+    const totals = getCartTotals();
+
+    const order = {
+        customer: userDetails,
+        products: listCart.map(product => ({ ...product })),
+        totalQuantity: totals.totalQuantity,
+        totalPrice: totals.totalPrice,
+        paymentMethod,
+        paymentStatus: "pending",
+        createdAt: new Date().toISOString()
+    };
+
+    sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
+    sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
+    sessionStorage.setItem("currentOrder", JSON.stringify(order));
+
+    return order;
+}
 
 /* =========================================================
    CHECKOUT FORM
@@ -1368,10 +689,12 @@ function setupCheckoutForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", async function (event) {
+    form.addEventListener("submit", async event => {
         event.preventDefault();
 
-        if (!Array.isArray(listCart) || listCart.length === 0) {
+        if (checkoutSubmitting) return;
+
+        if (!listCart.length) {
             alert("Your cart is empty. Please add a product first.");
             return;
         }
@@ -1395,15 +718,27 @@ function setupCheckoutForm() {
 
         const paymentMethod = selectedPayment.value;
 
-        listCart = listCart.map(normalizeProduct);
+        // Validate cart structure before sending it to the server.
+        const invalidCart = listCart.some(product =>
+            !product.id ||
+            !Number.isSafeInteger(Number(product.quantity)) ||
+            Number(product.quantity) < 1 ||
+            Number(product.quantity) > 999
+        );
 
-        if (listCart.some(item =>
-            !item.id ||
-            !Number.isSafeInteger(Number(item.quantity)) ||
-            Number(item.quantity) < 1
-        )) {
-            alert("A cart item is invalid. Please refresh your cart.");
+        if (invalidCart) {
+            alert("Your cart contains an invalid item. Please refresh and try again.");
             return;
+        }
+
+        // Online checkout requires an email for the payment request.
+        if (paymentMethod === "online") {
+            if (!userDetails.name?.trim() ||
+                !userDetails.email?.trim() ||
+                !userDetails.phone?.trim()) {
+                alert("Enter your full name, phone number and email address for online payment.");
+                return;
+            }
         }
 
         const totals = getCartTotals();
@@ -1411,177 +746,148 @@ function setupCheckoutForm() {
         userDetails.totalQuantity = totals.totalQuantity;
         userDetails.totalPrice = totals.totalPrice.toFixed(2);
 
-        sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
-        sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
-
-        const orderSnapshot = {
-            customer: userDetails,
-            products: listCart,
-            totalQuantity: totals.totalQuantity,
-            totalPrice: totals.totalPrice,
-            paymentMethod: paymentMethod,
-            paymentStatus: "pending",
-            createdAt: new Date().toISOString()
-        };
-
-        sessionStorage.setItem("currentOrder", JSON.stringify(orderSnapshot));
+        saveOrderSnapshot(userDetails, paymentMethod);
 
         const submitButton = form.querySelector(
             'button[type="submit"], input[type="submit"]'
         );
 
+        const originalButtonHTML = submitButton?.innerHTML;
+
+        checkoutSubmitting = true;
+
         if (submitButton) {
             submitButton.disabled = true;
+            submitButton.textContent =
+                paymentMethod === "online"
+                    ? "Connecting to OPay..."
+                    : "Preparing order...";
         }
 
         try {
-           
-if (paymentMethod === "online" || paymentMethod === "transfer") {
-    if (!userDetails.name || !userDetails.email) {
-        alert("Please enter your name and email for payment.");
-        return;
-    }
+            if (paymentMethod === "online") {
+                /*
+                 * IMPORTANT:
+                 * The server must load product.json and calculate prices
+                 * independently. Never trust browser-submitted prices.
+                 */
+                const response = await fetch(
+                    CHECKOUT_CONFIG.opayEndpoint,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            customerName: userDetails.name.trim(),
+                            customerEmail: userDetails.email.trim(),
+                            customerPhone: userDetails.phone.trim(),
+                            items: listCart.map(product => ({
+                                id: product.id,
+                                quantity: Number(product.quantity)
+                            }))
+                        })
+                    }
+                );
 
-    if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = "Connecting to OPay...";
-    }
+                let result;
 
-    const response = await fetch("/api/opay-init", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            customerName: userDetails.name,
-            customerEmail: userDetails.email,
-            items: listCart.map(item => ({
-                id: item.id,
-                quantity: Number(item.quantity)
-            }))
-        })
-    });
+                try {
+                    result = await response.json();
+                } catch {
+                    throw new Error(
+                        `Payment server returned an invalid response (HTTP ${response.status}).`
+                    );
+                }
 
-    const result = await response.json();
+                if (!response.ok ||
+                    !result ||
+                    result.success !== true ||
+                    typeof result.checkoutUrl !== "string" ||
+                    !result.checkoutUrl) {
+                    throw new Error(
+                        result?.message ||
+                        `Unable to start OPay payment (HTTP ${response.status}).`
+                    );
+                }
 
-    if (!response.ok || !result.success || !result.checkoutUrl) {
-        throw new Error(
-            result.message || "Unable to start OPay payment."
-        );
-    }
+                // Accept only HTTPS checkout URLs from the payment provider.
+                let checkoutURL;
 
-    sessionStorage.setItem(
-        "opayPaymentReference",
-        result.paymentReference
-    );
+                try {
+                    checkoutURL = new URL(result.checkoutUrl);
+                } catch {
+                    throw new Error("The payment server returned an invalid checkout link.");
+                }
 
-    window.location.href = result.checkoutUrl;
-    return;
-}
+                if (checkoutURL.protocol !== "https:") {
+                    throw new Error("The payment server returned an insecure checkout link.");
+                }
 
-// Keep pay-on-delivery working as before.
-window.location.href = "confirmation.html";
+                if (result.paymentReference) {
+                    sessionStorage.setItem(
+                        "opayPaymentReference",
+                        String(result.paymentReference)
+                    );
+                }
 
+                window.location.assign(checkoutURL.href);
+                return;
+            }
+
+            /*
+             * BANK TRANSFER AND PAY ON DELIVERY
+             *
+             * This retains the existing confirmation-page flow.
+             * Make sure confirmation.html handles each method separately.
+             * This redirect does not permanently save the order to a server.
+             */
+            if (paymentMethod === "transfer" ||
+                paymentMethod === "delivery") {
+                window.location.assign(CHECKOUT_CONFIG.confirmationPage);
+                return;
+            }
+
+            throw new Error("Please select a supported payment method.");
 
         } catch (error) {
             console.error("Checkout error:", error);
-            alert(error.message || "Checkout could not be started. Please try again.");
 
-        } finally {
+            alert(
+                error.message ||
+                "Checkout could not be started. Please try again."
+            );
+
+            checkoutSubmitting = false;
+
             if (submitButton) {
                 submitButton.disabled = false;
+
+                if (originalButtonHTML !== undefined) {
+                    submitButton.innerHTML = originalButtonHTML;
+                }
             }
         }
     });
 }
 
-
 /* =========================================================
    INITIALIZE CHECKOUT
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("WITTYFARE CHECKOUT INITIALIZING");
 
-        console.log(
-            "========== WITTYFARE CHECKOUT =========="
-        );
+    loadCart();
+    renderCheckoutCart();
+    renderSlideCart();
 
+    setupCart();
+    setupCartControls();
+    setupPaymentOptions();
+    setupCheckoutForm();
 
-        /* ---------------------------------------------
-           LOAD CART
-        --------------------------------------------- */
+    updateCartBadge();
 
-        loadCart();
-
-
-        /* ---------------------------------------------
-           RENDER ORDER
-        --------------------------------------------- */
-
-        renderCheckoutCart();
-
-
-        /* ---------------------------------------------
-           RENDER SLIDE CART
-        --------------------------------------------- */
-
-        renderSlideCart();
-
-
-        /* ---------------------------------------------
-           SETUP CART
-        --------------------------------------------- */
-
-        setupCart();
-
-
-        /* ---------------------------------------------
-           DELETE
-        --------------------------------------------- */
-
-        setupDeleteButtons();
-
-
-        /* ---------------------------------------------
-           QUANTITY
-        --------------------------------------------- */
-
-        setupQuantityInputs();
-
-
-        /* ---------------------------------------------
-           SLIDE CART CONTROLS
-        --------------------------------------------- */
-
-        setupSlideCartControls();
-
-
-        /* ---------------------------------------------
-           PAYMENT
-        --------------------------------------------- */
-
-        setupPaymentOptions();
-
-
-        /* ---------------------------------------------
-           CHECKOUT FORM
-        --------------------------------------------- */
-
-        setupCheckoutForm();
-
-
-        /* ---------------------------------------------
-           UPDATE BADGE
-        --------------------------------------------- */
-
-        updateCartBadge();
-
-
-        console.log(
-            "✅ WittyFare checkout initialized successfully."
-        );
-
-    }
-);
+    console.log("WittyFare checkout initialized.");
+});
