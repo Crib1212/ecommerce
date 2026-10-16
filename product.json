@@ -9,7 +9,7 @@
     "description": "Agrited day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
-   {
+  {
     "id": "day-old-sayed-broiler-chicks",
     "name": "Sayed Day-Old Broiler Chicks",
     "price": 2300,
@@ -19,7 +19,7 @@
     "description": "Sayed day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
-   {
+  {
     "id": "day-old-olam-broiler-chicks",
     "name": "Olam Day-Old Broiler Chicks",
     "price": 2250,
@@ -29,7 +29,7 @@
     "description": "Olam day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
-   {
+  {
     "id": "day-old-tosam-broiler-chicks",
     "name": "Tosam Day-Old Broiler Chicks",
     "price": 2000,
@@ -39,7 +39,7 @@
     "description": "Tosam day-old broiler chicks for poultry farmers starting or expanding broiler production.",
     "featured": true
   },
-   {
+  {
     "id": "two-weeks-broiler-",
     "name": "Two weeks broiler",
     "price": 4000,
@@ -93,33 +93,6 @@
     "description": "Automatic poultry drinking equipment for efficient water supply in poultry farms."
   },
   {
-    "id": "day-old-sayed-broiler-chicks",
-    "name": "Sayed Day-Old Broiler Chicks",
-    "price": 1990,
-    "category": "day-old",
-    "slug": "sayed-day-old-broiler-chicks",
-    "image": "/images/dayold/sayed-dayold-broiler.png",
-    "description": "Sayed day-old broiler chicks for poultry farmers and broiler production."
-  },
-  {
-    "id": "day-old-tosam-broiler-chicks",
-    "name": "Tosam Day-Old Broiler Chicks",
-    "price": 1900,
-    "category": "day-old",
-    "slug": "tosam-day-old-broiler-chicks",
-    "image": "/images/dayold/tosam-chicks.png",
-    "description": "Tosam day-old broiler chicks for poultry farming and broiler production."
-  },
-  {
-    "id": "day-old-olam-broiler-chicks",
-    "name": "Olam Day-Old Broiler Chicks",
-    "price": 1900,
-    "category": "day-old",
-    "slug": "olam-day-old-broiler-chicks",
-    "image": "/images/dayold/olam-broiler-chicks.png",
-    "description": "Olam day-old broiler chicks for poultry farmers and broiler production."
-  },
-  {
     "id": "feed-ultima-finisher-22950",
     "name": "Ultima Finisher 25kg",
     "price": 22950,
@@ -159,7 +132,7 @@
     "image": "/images/poultryfeed/Hybrid_layer_mash-3.png",
     "description": "Hybrid Layer Mash 25kg poultry feed for laying birds."
   },
-    {
+  {
     "id": "feed-chikun-gower-pellet",
     "name": "Chikun grower pellet",
     "price": 13000,
@@ -169,7 +142,7 @@
     "image": "/images/poultryfeed/Chikun_grower_pellet.png",
     "description": "Chikun Grower Pellet 25kg poultry feed for growing birds."
   },
-    {
+  {
     "id": "feed-dcp-25kg",
     "name": "DCP 25kg",
     "price": 105000,
@@ -179,7 +152,7 @@
     "image": "/images/poultryfeed/DCP_25kg.png",
     "description": "DCP 25kg poultry feed for laying birds."
   },
-    {
+  {
     "id": "feed-fish_meal-25kg",
     "name": "Fish Meal 25kg",
     "price": 90000,
@@ -189,7 +162,7 @@
     "image": "/images/poultryfeed/Fish_meal_25kg.png",
     "description": "Fish Meal 25kg poultry feed for laying birds."
   },
-    {
+  {
     "id": "feed-hybrid-3-in-1-25kg",
     "name": "Hybrid 3-in-1 25kg",
     "price": 20000,
@@ -199,7 +172,7 @@
     "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
     "description": "Hybrid 3-in-1 25kg poultry feed for laying birds."
   },
-    {
+  {
     "id": "feed-top_line_grower_mash-25kg",
     "name": "Top Line Grower Mash 25kg",
     "price": 13000,
@@ -219,7 +192,7 @@
     "image": "/images/poultryfeed/Ultima_starter.png",
     "description": "Ultima Starter 25kg poultry feed for starter birds."
   },
-    {
+  {
     "id": "feed-Nutria-25kg",
     "name": "Nutria 25kg",
     "price": 19000,
@@ -229,7 +202,7 @@
     "image": "/images/poultryfeed/Nutria_starter.png",
     "description": "Nutria 25kg poultry feed for starter birds."
   },
-    {
+  {
     "id": "feed-vita_feed_finisher-25kg",
     "name": "Vita Feed Finisher 25kg",
     "price": 18600,
@@ -239,7 +212,7 @@
     "image": "/images/poultryfeed/Vital_feed_finisher.png",
     "description": "Vita Feed Finisher 25kg poultry feed for finishing birds."
   },
-    {
+  {
     "id": "feed-vita_feed_starter-25kg",
     "name": "Vita Feed Starter 25kg",
     "price": 17000,
@@ -299,7 +272,7 @@
     "description": "Booster poultry feed product for dog care.",
     "featured": true
   },
-    {
+  {
     "id": "pet-optimax_10kg",
     "name": "Optimax dog Feed 10kg",
     "price": 17500,
@@ -309,7 +282,7 @@
     "description": "Optimax dog feed product for dog care.",
     "featured": true
   },
-   {
+  {
     "id": "pet-booster_4kg",
     "name": "Booster dog Feed 4kg",
     "price": 17000,
@@ -319,7 +292,7 @@
     "description": "Booster poultry feed product for dog care.",
     "featured": true
   },
-    {
+  {
     "id": "pet-balance_5kg",
     "name": "Balance 5kg dog Feed",
     "price": 17800,
@@ -329,7 +302,7 @@
     "description": "Balance 5kg dog feed product for dog care.",
     "featured": true
   },
-     {
+  {
     "id": "pet-optimax-can",
     "name": "Optimax Can dog Feed",
     "price": 1750,
@@ -339,7 +312,7 @@
     "description": "Optimax Can dog feed product for dog care.",
     "featured": true
   },
-   {
+  {
     "id": "pet-reflex_5kg",
     "name": "Reflex 5kg cat Feed",
     "price": 17800,
@@ -348,7 +321,7 @@
     "image": "/images/pet/reflex_cat_food.jpg",
     "description": "Reflex 5kg cat feed product for cat care."
   },
-     {
+  {
     "id": "pet-tick-off-spray-250ml",
     "name": "Tick Off Spray 250ml",
     "price": 3500,
@@ -358,7 +331,7 @@
     "image": "/images/pet/tick_off_spray_250ml.png",
     "description": "Tick Off Spray 250ml for pet care."
   },
-     {
+  {
     "id": "pet_toy_bone",
     "name": "Toy Bone",
     "price": 3500,
@@ -410,7 +383,7 @@
     "image": "/images/drugs/Tylo-dox_extra.png",
     "description": "Tylodox Extra 100g veterinary medicine product for animal health management."
   },
-   {
+  {
     "id": "drugs-Aquaceryl",
     "name": "Aquaceryl",
     "price": 2000,
@@ -450,7 +423,7 @@
     "image": "/images/drugs/mintocare_1l.png",
     "description": "Mintocare veterinary product for poultry and farm animal management."
   },
-   {
+  {
     "id": "drugs-mintocare-100ml",
     "name": "Mintocare",
     "price": 2300,
@@ -471,16 +444,6 @@
     "description": "Kachflox veterinary product for poultry and farm animal management."
   },
   {
-    "id": "drugs-kachflox",
-    "name": "Kachflox",
-    "price": 2700,
-    "category": "drugs",
-    "subcategory": "antibiotics",
-    "slug": "kachflox",
-    "image": "/images/drugs/kachflox_100ml.png",
-    "description": "Kachflox veterinary product for poultry and farm animal management."
-  },
-   {
     "id": "drugs-Aquaflox",
     "name": "Aquaflox",
     "price": 2300,
@@ -550,7 +513,7 @@
     "image": "/images/drugs/Doxygen.png",
     "description": "Doxygen 100g veterinary medicine product for animal health management."
   },
-   {
+  {
     "id": "odour_out",
     "name": "Odour Out",
     "price": 9500,
@@ -580,7 +543,7 @@
     "image": "/images/drugs/Chick_on_200ml.png",
     "description": "Chick-On 200ml veterinary product for poultry and farm animal management."
   },
-    {
+  {
     "id": "Quail_feeder",
     "name": "Quail_feeder",
     "price": 1500,
@@ -609,7 +572,6 @@
     "image": "/images/drugs/Coffefin_200ml.png",
     "description": "Coffefin 200ml veterinary product for poultry and farm animal management."
   },
-  
   {
     "id": "drugs-otc",
     "name": "OTC Veterinary Product",
@@ -641,7 +603,7 @@
     "image": "/images/equipment/3_in_1_drinker.png",
     "description": "3-in-1 poultry drinker for farm water supply and poultry management."
   },
-    {
+  {
     "id": "equipment-small-drinker",
     "name": "Small Drinker",
     "price": 1300,
@@ -652,7 +614,7 @@
     "image": "/images/equipment/smalldrinker.jpg",
     "description": "Small poultry drinker for farm water supply and poultry management."
   },
-   {
+  {
     "id": "equipment-big-drinker",
     "name": "Big Drinker",
     "price": 3000,
@@ -705,7 +667,7 @@
     "description": "Blue Crown fish feed in 2mm size for fish farming and aquaculture.",
     "featured": true
   },
-    {
+  {
     "id": "feed-koudijs-prestarter",
     "name": "koudijs-prestarter",
     "price": 30000,
@@ -716,7 +678,7 @@
     "description": "koudijs-prestarter feed for poultry farming.",
     "featured": true
   },
-    {
+  {
     "id": "feed-Aller_aqua_2mm",
     "name": "Aller Aqua Fish Feed 2mm",
     "price": 62500,
