@@ -1431,57 +1431,80 @@ function setupCheckoutForm() {
         );
 
         if (submitButton) {
+            if (!submitButton.dataset.originalLabel) {
+                submitButton.dataset.originalLabel = submitButton.tagName === "INPUT"
+                    ? submitButton.value
+                    : submitButton.textContent.trim();
+            }
             submitButton.disabled = true;
         }
 
         try {
-           
-if (paymentMethod === "online" || paymentMethod === "transfer") {
-    if (!userDetails.name || !userDetails.email) {
-        alert("Please enter your name and email for payment.");
-        return;
-    }
+            // OPay online checkout. The server must calculate prices from its
+            // trusted product catalogue; this browser sends IDs and quantities only.
+            if (paymentMethod === "online") {
+                if (!String(userDetails.name || "").trim() ||
+                    !String(userDetails.email || "").trim()) {
+                    throw new Error("Please enter your name and email for payment.");
+                }
 
-    if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = "Connecting to Monnify...";
-    }
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    if (submitButton.tagName === "INPUT") {
+                        submitButton.value = "Connecting to OPay...";
+                    } else {
+                        submitButton.textContent = "Connecting to OPay...";
+                    }
+                }
 
-    const response = await fetch("/api/opay-init.js", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            customerName: userDetails.name,
-            customerEmail: userDetails.email,
-            items: listCart.map(item => ({
-                id: item.id,
-                quantity: Number(item.quantity)
-            }))
-        })
-    });
+                const response = await fetch("/api/opay-init.js", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        customerName: String(userDetails.name).trim(),
+                        customerEmail: String(userDetails.email).trim(),
+                        items: listCart.map(item => ({
+                            id: String(item.id),
+                            quantity: Number(item.quantity)
+                        }))
+                    })
+                });
 
-    const result = await response.json();
+                let result;
+                try {
+                    result = await response.json();
+                } catch (_) {
+                    throw new Error("The payment server returned an invalid response. Please try again.");
+                }
 
-    if (!response.ok || !result.success || !result.checkoutUrl) {
-        throw new Error(
-            result.message || "Unable to start Monnify payment."
-        );
-    }
+                if (!response.ok || !result || result.success !== true || !result.checkoutUrl) {
+                    throw new Error(
+                        (result && result.message) ||
+                        "Unable to start OPay payment. Please try again."
+                    );
+                }
 
-    sessionStorage.setItem(
-        "monnifyPaymentReference",
-        result.paymentReference
-    );
+                if (result.paymentReference) {
+                    sessionStorage.setItem("opayPaymentReference", String(result.paymentReference));
+                }
 
-    window.location.href = result.checkoutUrl;
-    return;
-}
+                window.location.assign(result.checkoutUrl);
+                return;
+            }
 
-// Keep pay-on-delivery working as before.
-window.location.href = "confirmation.html";
+            // Pay on delivery: only use this branch if your form's radio value
+            // is exactly "cod" or "delivery".
+            if (paymentMethod === "cod" || paymentMethod === "delivery") {
+                window.location.assign("confirmation.html");
+                return;
+            }
 
+            // Do not treat bank transfer as OPay or confirm an unpaid order.
+            if (paymentMethod === "transfer") {
+                throw new Error("Bank transfer checkout is not configured yet. Please select OPay or pay on delivery.");
+            }
+
+            throw new Error("Please select a supported payment method.");
 
         } catch (error) {
             console.error("Checkout error:", error);
@@ -1490,6 +1513,11 @@ window.location.href = "confirmation.html";
         } finally {
             if (submitButton) {
                 submitButton.disabled = false;
+                if (submitButton.tagName === "INPUT") {
+                    submitButton.value = submitButton.dataset.originalLabel || "Place Order";
+                } else if (submitButton.textContent.trim() === "Connecting to OPay...") {
+                    submitButton.textContent = submitButton.dataset.originalLabel || "Place Order";
+                }
             }
         }
     });
