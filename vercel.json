@@ -6,3 +6,11 @@
     }
   ]
 }
+
+{
+  "functions": {
+    "api/opay-init.mjs": {
+      "includeFiles": "product.json"
+    }
+  }
+}
