@@ -1,18 +1,8 @@
-
 {
   "rewrites": [
-    {
-      "source": "/product/:slug/",
-      "destination": "/product/index.html"
-    },
     {
       "source": "/product/:slug",
       "destination": "/product/index.html"
     }
-  ],
-  "functions": {
-    "api/opay-init.mjs": {
-      "includeFiles": "product.json"
-    }
-  }
+  ]
 }
