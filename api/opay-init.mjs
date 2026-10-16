@@ -1,290 +1,159 @@
+import { randomBytes } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
-import fs from "node:fs/promises";
-import path from "node:path";
+const SITE_URL = 'https://www.wittyfare.com';
+const API_URLS = {
+  sandbox: 'https://testapi.opaycheckout.com/api/v1/international/cashier/create',
+  production: 'https://liveapi.opaycheckout.com/api/v1/international/cashier/create'
+};
+
+function send(res, status, payload) {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  return res.status(status).json(payload);
+}
+
+function cleanText(value, max = 160) {
+  return typeof value === 'string' ? value.trim().slice(0, max) : '';
+}
+
+async function loadCatalogue() {
+  const file = path.join(process.cwd(), 'product.json');
+  const raw = await readFile(file, 'utf8');
+  const catalogue = JSON.parse(raw);
+  if (!Array.isArray(catalogue)) throw new Error('product.json must be a JSON array.');
+
+  const ids = new Set();
+  for (const product of catalogue) {
+    const id = String(product?.id ?? '').trim();
+    if (!id) throw new Error('Every product in product.json must have an id.');
+    if (ids.has(id)) throw new Error(`Duplicate product ID in product.json: ${id}`);
+    ids.add(id);
+    if (!Number.isSafeInteger(Number(product.price)) || Number(product.price) < 0) {
+      throw new Error(`Product ${id} has an invalid price.`);
+    }
+  }
+  return catalogue;
+}
 
 export default async function handler(req, res) {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "no-store");
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return send(res, 405, { success: false, message: 'Method not allowed.' });
+  }
 
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed"
-    });
+  const publicKey = process.env.OPAY_PUBLIC_KEY;
+  const merchantId = process.env.OPAY_MERCHANT_ID;
+  const env = String(process.env.OPAY_ENV || 'sandbox').toLowerCase();
+  const callbackUrl = process.env.OPAY_CALLBACK_URL || `${SITE_URL}/api/opay-callback`;
+
+  if (!publicKey || !merchantId) {
+    return send(res, 500, { success: false, message: 'OPay is not configured on the server.' });
+  }
+  if (!API_URLS[env]) {
+    return send(res, 500, { success: false, message: 'OPAY_ENV must be sandbox or production.' });
   }
 
   try {
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body)
-        : req.body;
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const customerName = cleanText(body?.customerName, 100);
+    const customerEmail = cleanText(body?.customerEmail, 180).toLowerCase();
+    const customerPhone = cleanText(body?.customerPhone, 30);
+    const items = body?.items;
 
-    const {
-      customerName,
-      customerEmail,
-      customerPhone,
-      items
-    } = body || {};
-
-    const email =
-      typeof customerEmail === "string"
-        ? customerEmail.trim()
-        : "";
-
-    if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-      !Array.isArray(items) ||
-      items.length === 0 ||
-      items.length > 50
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "Valid customer email and order items are required."
-      });
+    if (!customerName || !/^\S+@\S+\.\S+$/.test(customerEmail) || !customerPhone) {
+      return send(res, 400, { success: false, message: 'Enter your name, valid email, and phone number.' });
+    }
+    if (!Array.isArray(items) || items.length < 1 || items.length > 50) {
+      return send(res, 400, { success: false, message: 'Your cart is empty or contains too many items.' });
     }
 
-    // Read the trusted product catalogue.
-    const cataloguePath = path.join(
-      process.cwd(),
-      "product.json"
-    );
-
-    const catalogue = JSON.parse(
-      await fs.readFile(cataloguePath, "utf8")
-    );
-
-    if (!Array.isArray(catalogue)) {
-      throw new Error(
-        "Product catalogue must be a JSON array."
-      );
-    }
-
+    const catalogue = await loadCatalogue();
+    const byId = new Map(catalogue.map(p => [String(p.id), p]));
     let totalNaira = 0;
-    const seen = new Set();
+    const purchased = [];
 
     for (const item of items) {
-      const id = String(item?.id ?? "");
+      const id = cleanText(String(item?.id ?? ''), 160);
       const quantity = Number(item?.quantity);
-
-      if (
-        !id ||
-        seen.has(id) ||
-        !Number.isSafeInteger(quantity) ||
-        quantity < 1 ||
-        quantity > 1000
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: "An order item or quantity is invalid."
-        });
+      if (!id || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) {
+        return send(res, 400, { success: false, message: 'A cart item has an invalid product ID or quantity.' });
       }
-
-      seen.add(id);
-
-      const matches = catalogue.filter(
-        product => String(product.id) === id
-      );
-
-      if (matches.length === 0) {
-        return res.status(400).json({
-          success: false,
-          message: "A product in your cart is no longer available."
-        });
-      }
-
-      if (matches.length > 1) {
-        return res.status(409).json({
-          success: false,
-          message:
-            `Duplicate product IDs found for ${id}. ` +
-            "Correct product.json before accepting orders."
-        });
-      }
-
-      const price = Number(matches[0].price);
-
-      if (!Number.isSafeInteger(price) || price <= 0) {
-        return res.status(500).json({
-          success: false,
-          message: "A product price needs to be corrected."
-        });
-      }
-
+      const product = byId.get(id);
+      if (!product) return send(res, 400, { success: false, message: `Product not found: ${id}` });
+      const price = Number(product.price);
       totalNaira += price * quantity;
-
-      if (!Number.isSafeInteger(totalNaira)) {
-        return res.status(400).json({
-          success: false,
-          message: "Order total is too large."
-        });
-      }
+      purchased.push({ id, name: String(product.name || id), quantity, unitPrice: price });
     }
 
-    if (totalNaira <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Order total must be greater than zero."
-      });
+    if (!Number.isSafeInteger(totalNaira) || totalNaira < 1 || totalNaira > 100000000) {
+      return send(res, 400, { success: false, message: 'The order total is invalid.' });
     }
 
-    const totalKobo = totalNaira * 100;
+    // The reference identifies the attempted payment. Durable order storage and
+    // payment-status verification must be added before production use.
+    const reference = `WF${Date.now()}${randomBytes(5).toString('hex').toUpperCase()}`;
+    const productSummary = purchased.length === 1
+      ? purchased[0].name
+      : `${purchased[0].name} and ${purchased.length - 1} other item(s)`;
 
-    if (!Number.isSafeInteger(totalKobo)) {
-      return res.status(400).json({
-        success: false,
-        message: "Payment amount is too large."
-      });
-    }
-
-    const publicKey =
-      process.env.OPAY_PUBLIC_KEY?.trim();
-
-    const merchantId =
-      process.env.OPAY_MERCHANT_ID?.trim();
-
-    const env =
-      (process.env.OPAY_ENV || "sandbox").trim();
-
-    const callbackUrl =
-      process.env.OPAY_CALLBACK_URL?.trim();
-
-    if (
-      !publicKey ||
-      !merchantId ||
-      !callbackUrl ||
-      !["sandbox", "production"].includes(env)
-    ) {
-      console.error("OPay configuration is incomplete.");
-
-      return res.status(503).json({
-        success: false,
-        message: "Online payment is not fully configured yet."
-      });
-    }
-
-    let callback;
-
-    try {
-      callback = new URL(callbackUrl);
-    } catch {
-      return res.status(503).json({
-        success: false,
-        message: "The OPay callback URL is invalid."
-      });
-    }
-
-    if (callback.protocol !== "https:") {
-      return res.status(503).json({
-        success: false,
-        message: "The OPay callback URL must use HTTPS."
-      });
-    }
-
-    const baseUrl =
-      env === "production"
-        ? "https://liveapi.opaycheckout.com"
-        : "https://testapi.opaycheckout.com";
-
-    const reference =
-      `wittyfare_${Date.now()}_` +
-      cryptoRandomSuffix();
-
-    const payload = {
-      country: "NG",
+    const opayPayload = {
+      country: 'NG',
       reference,
-      amount: {
-        total: totalKobo,
-        currency: "NGN"
+      amount: { currency: 'NGN', total: totalNaira * 100 },
+      returnUrl: `${SITE_URL}/checkout.html?opay_return=1`,
+      callbackUrl,
+      cancelUrl: `${SITE_URL}/checkout.html?opay_cancel=1`,
+      expireAt: 30,
+      customerVisitSource: 'BROWSER',
+      userInfo: {
+        userName: customerName,
+        userEmail: customerEmail,
+        userMobile: customerPhone
       },
       product: {
-        name: "WittyFare Order",
-        description: `${items.length} product type(s)`
-      },
-      userInfo: {
-        userEmail: email,
-        userName:
-          typeof customerName === "string" &&
-          customerName.trim()
-            ? customerName.trim().slice(0, 100)
-            : "Customer"
-      },
-      callbackUrl,
-      returnUrl:
-        "https://www.wittyfare.com/confirmation.html",
-      cancelUrl:
-        "https://www.wittyfare.com/checkout.html"
+        name: 'WittyFare order',
+        description: productSummary.slice(0, 250)
+      }
     };
 
-    const opayResponse = await fetch(
-      `${baseUrl}/api/v1/international/cashier/create`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${publicKey}`,
-          MerchantId: merchantId
-        },
-        body: JSON.stringify(payload)
-      }
-    );
-
-    const responseText = await opayResponse.text();
+    const opayResponse = await fetch(API_URLS[env], {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${publicKey}`,
+        MerchantId: merchantId,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(opayPayload),
+      signal: AbortSignal.timeout(15000)
+    });
 
     let result;
-
-    try {
-      result = JSON.parse(responseText);
-    } catch {
-      console.error("OPay returned a non-JSON response.");
-
-      return res.status(502).json({
-        success: false,
-        message: "The payment provider returned an invalid response."
-      });
-    }
+    try { result = await opayResponse.json(); }
+    catch { return send(res, 502, { success: false, message: 'OPay returned an unreadable response.' }); }
 
     const checkoutUrl = result?.data?.cashierUrl;
-
-    if (
-      !opayResponse.ok ||
-      String(result?.code) !== "00000" ||
-      typeof checkoutUrl !== "string" ||
-      !checkoutUrl.startsWith("https://")
-    ) {
-      console.error("OPay session creation failed:", {
-        httpStatus: opayResponse.status,
-        providerCode: result?.code
-      });
-
-      return res.status(502).json({
-        success: false,
-        message: "OPay could not create the payment session."
-      });
+    if (!opayResponse.ok || result?.code !== '00000' || typeof checkoutUrl !== 'string' || !/^https:\/\//i.test(checkoutUrl)) {
+      console.error('OPay create-payment failure', { httpStatus: opayResponse.status, code: result?.code, message: result?.message });
+      return send(res, 502, { success: false, message: 'OPay could not start this payment. Please try again.' });
     }
 
-    return res.status(200).json({
+    // NOTE: this response is not a durable order database. Persist the reference,
+    // customer, item snapshot, amount and pending status before production use.
+    return send(res, 200, {
       success: true,
       checkoutUrl,
-      paymentReference: reference
+      paymentReference: reference,
+      amountNaira: totalNaira,
+      orderStatus: 'pending'
     });
-
   } catch (error) {
-    console.error(
-      "OPay initialization error:",
-      error?.message || "Unknown error"
-    );
-
-    return res.status(500).json({
-      success: false,
-      message: "Unable to initialize payment. Please try again."
-    });
+    console.error('OPay initialization error:', error?.message || 'Unknown error');
+    if (String(error?.message || '').startsWith('Duplicate product ID') || String(error?.message || '').includes('product.json')) {
+      return send(res, 500, { success: false, message: 'The product catalogue needs correction before checkout can continue.' });
+    }
+    return send(res, 500, { success: false, message: 'Unable to start payment right now. Please try again.' });
   }
-}
-
-function cryptoRandomSuffix() {
-  return Array.from(
-    crypto.getRandomValues(new Uint8Array(8)),
-    byte => byte.toString(16).padStart(2, "0")
-  ).join("");
 }

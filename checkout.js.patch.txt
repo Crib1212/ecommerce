@@ -1,0 +1,25 @@
+Apply these changes in your existing checkout.js; do not replace the whole file with this patch.
+
+1) In setupCheckoutForm(), replace:
+   const response = await fetch("/api/opay-init.js", {
+
+   with:
+   const response = await fetch("/api/opay-init", {
+
+2) In the JSON body, send the phone field as well:
+   body: JSON.stringify({
+       customerName: String(userDetails.name).trim(),
+       customerEmail: String(userDetails.email).trim(),
+       customerPhone: String(userDetails.phone || userDetails.whatsapp || "").trim(),
+       items: listCart.map(item => ({
+           id: String(item.id),
+           quantity: Number(item.quantity)
+       }))
+   })
+
+3) The payment radio values should be exactly:
+   online   = OPay online checkout
+   transfer = bank transfer (currently disabled in this integration)
+   delivery = pay on delivery
+
+4) Keep the server as the source of truth for prices. Do not send the browser's item prices or total to /api/opay-init.
