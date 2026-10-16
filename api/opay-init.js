@@ -1,68 +1,99 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+function setupCheckoutForm() {
+    const form = document.getElementById("checkoutForm");
+    if (!form) return;
 
-  try {
-    const { amount, email, reference, name } = req.body;
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-    if (!amount || !email) {
-      return res.status(400).json({ error: 'amount and email required' });
-    }
+        if (!Array.isArray(listCart) || listCart.length === 0) {
+            alert("Your cart is empty.");
+            return;
+        }
 
-    const publicKey = process.env.OPAY_PUBLIC_KEY?.trim();
-    const privateKey = process.env.OPAY_PRIVATE_KEY?.trim();
-    const merchantId = process.env.OPAY_MERCHANT_ID?.trim();
-    const env = process.env.OPAY_ENV?.trim() || 'sandbox';
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
 
-    console.log('ENV CHECK:', { hasPublic: !!publicKey, hasPrivate: !!privateKey, hasMerchant: !!merchantId, env });
+        const formData = new FormData(form);
+        const userDetails = Object.fromEntries(formData.entries());
+        const selectedPayment = form.querySelector('input[name="paymentMethod"]:checked');
 
-    if (!publicKey || !privateKey || !merchantId) {
-      return res.status(500).json({ error: 'OPay env vars missing in Vercel' });
-    }
+        if (!selectedPayment) {
+            alert("Please select a payment method.");
+            return;
+        }
 
-    const baseUrl = env === 'production' 
-      ? 'https://liveapi.opaycheckout.com' 
-      : 'https://testapi.opaycheckout.com';
+        const paymentMethod = selectedPayment.value;
+        listCart = listCart.map(normalizeProduct);
+        const totals = getCartTotals();
 
-    const payload = {
-      amount: { total: Math.round(Number(amount) * 100), currency: 'NGN' },
-      reference: reference || `wittyfare_${Date.now()}`,
-      product: { name: name || 'Wittyfare Order', description: 'Wittyfare Order' },
-      callbackUrl: 'https://wittyfare.com/order-success',
-      returnUrl: 'https://wittyfare.com/order-success',
-      customer: { email: email },
-      merchantId: merchantId
-    };
+        userDetails.totalQuantity = totals.totalQuantity;
+        userDetails.totalPrice = totals.totalPrice.toFixed(2);
+        sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
+        sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
+        sessionStorage.setItem("currentOrder", JSON.stringify({
+            customer: userDetails,
+            products: listCart,
+            totalQuantity: totals.totalQuantity,
+            totalPrice: totals.totalPrice,
+            paymentMethod: paymentMethod,
+            createdAt: new Date().toISOString()
+        }));
 
-    const response = await fetch(`${baseUrl}/api/v1/international/cashier/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${privateKey}`,
-        'MerchantId': merchantId
-      },
-      body: JSON.stringify(payload)
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton ? submitButton.textContent : "";
+
+        try {
+            if (paymentMethod === "online" || paymentMethod === "transfer") {
+                if (!userDetails.name || !userDetails.email) {
+                    alert("Please enter name and email.");
+                    return;
+                }
+
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = "Connecting to OPay...";
+                }
+
+                console.log("Starting OPay with", totals.totalPrice);
+
+                const response = await fetch("/api/opay-init", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        customerName: userDetails.name,
+                        customerEmail: userDetails.email,
+                        amount: totals.totalPrice,
+                        totalPrice: totals.totalPrice,
+                        items: listCart
+                    })
+                });
+
+                const result = await response.json();
+                console.log("OPay result", result);
+
+                if (!response.ok || !result.success || !result.checkoutUrl) {
+                    throw new Error(result.message || JSON.stringify(result.details) || "OPay failed");
+                }
+
+                sessionStorage.setItem("opayPaymentReference", result.paymentReference);
+                // THIS IS THE REDIRECT - must be last line
+                window.location.href = result.checkoutUrl;
+                return; // stop here, don't go to confirmation
+            }
+
+            // Pay on delivery only
+            window.location.href = "confirmation.html";
+
+        } catch (error) {
+            console.error("Checkout error:", error);
+            alert(error.message);
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText || "Pay Now";
+            }
+        }
     });
-
-    const text = await response.text();
-    console.log('OPay raw response:', text);
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      return res.status(500).json({ error: 'OPay returned non-JSON', raw: text });
-    }
-
-    if (!response.ok) {
-      return res.status(500).json({ error: 'OPay failed', details: data });
-    }
-
-    return res.status(200).json(data);
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: err.message });
-  }
 }
