@@ -842,11 +842,15 @@ function setupCheckoutForm() {
              * Make sure confirmation.html handles each method separately.
              * This redirect does not permanently save the order to a server.
              */
-            if (paymentMethod === "transfer" ||
-                paymentMethod === "delivery") {
-                window.location.assign(CHECKOUT_CONFIG.confirmationPage);
-                return;
-            }
+          if (paymentMethod === "transfer") {
+    window.location.assign("bank-transfer.html");
+    return;
+}
+
+if (paymentMethod === "delivery") {
+    window.location.assign(CHECKOUT_CONFIG.confirmationPage);
+    return;
+}
 
             throw new Error("Please select a supported payment method.");
 
