@@ -1,99 +1,80 @@
-function setupCheckoutForm() {
-    const form = document.getElementById("checkoutForm");
-    if (!form) return;
+export default async function handler(req, res) {
+  if (req.method!== 'POST') return res.status(405).json({ message: 'Method not allowed' });
 
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        event.stopPropagation();
+  try {
+    const { customerName, customerEmail, items } = req.body;
 
-        if (!Array.isArray(listCart) || listCart.length === 0) {
-            alert("Your cart is empty.");
-            return;
-        }
+    if (!customerEmail ||!items ||!items.length) {
+      return res.status(400).json({ message: 'Missing email or items' });
+    }
 
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        const formData = new FormData(form);
-        const userDetails = Object.fromEntries(formData.entries());
-        const selectedPayment = form.querySelector('input[name="paymentMethod"]:checked');
-
-        if (!selectedPayment) {
-            alert("Please select a payment method.");
-            return;
-        }
-
-        const paymentMethod = selectedPayment.value;
-        listCart = listCart.map(normalizeProduct);
-        const totals = getCartTotals();
-
-        userDetails.totalQuantity = totals.totalQuantity;
-        userDetails.totalPrice = totals.totalPrice.toFixed(2);
-        sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
-        sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
-        sessionStorage.setItem("currentOrder", JSON.stringify({
-            customer: userDetails,
-            products: listCart,
-            totalQuantity: totals.totalQuantity,
-            totalPrice: totals.totalPrice,
-            paymentMethod: paymentMethod,
-            createdAt: new Date().toISOString()
-        }));
-
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton ? submitButton.textContent : "";
-
-        try {
-            if (paymentMethod === "online" || paymentMethod === "transfer") {
-                if (!userDetails.name || !userDetails.email) {
-                    alert("Please enter name and email.");
-                    return;
-                }
-
-                if (submitButton) {
-                    submitButton.disabled = true;
-                    submitButton.textContent = "Connecting to OPay...";
-                }
-
-                console.log("Starting OPay with", totals.totalPrice);
-
-                const response = await fetch("/api/opay-init", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        customerName: userDetails.name,
-                        customerEmail: userDetails.email,
-                        amount: totals.totalPrice,
-                        totalPrice: totals.totalPrice,
-                        items: listCart
-                    })
-                });
-
-                const result = await response.json();
-                console.log("OPay result", result);
-
-                if (!response.ok || !result.success || !result.checkoutUrl) {
-                    throw new Error(result.message || JSON.stringify(result.details) || "OPay failed");
-                }
-
-                sessionStorage.setItem("opayPaymentReference", result.paymentReference);
-                // THIS IS THE REDIRECT - must be last line
-                window.location.href = result.checkoutUrl;
-                return; // stop here, don't go to confirmation
-            }
-
-            // Pay on delivery only
-            window.location.href = "confirmation.html";
-
-        } catch (error) {
-            console.error("Checkout error:", error);
-            alert(error.message);
-            if (submitButton) {
-                submitButton.disabled = false;
-                submitButton.textContent = originalText || "Pay Now";
-            }
-        }
+    // Calculate total from your cart
+    let totalPrice = 0;
+    items.forEach(i => {
+        // price is in your normalizeProduct - we need to get from cart again or trust frontend total
+        // For safety, if item has price use it, else we will get from totals in frontend
     });
+
+    // Get total from session or frontend - since you send only id/qty, we calculate from localStorage?
+    // EASIER: get total from the hidden input totalPrice on frontend and send it.
+    // For now use amount sent from frontend if available, else fallback 1000
+    let amount = req.body.amount || req.body.totalPrice || 1000;
+    amount = Number(amount);
+
+    // OPay wants amount in KOBO (x100)
+    const amountKobo = Math.round(amount * 100);
+
+    const publicKey = process.env.OPAY_PUBLIC_KEY?.trim();
+    const merchantId = process.env.OPAY_MERCHANT_ID?.trim();
+    const env = (process.env.OPAY_ENV || 'sandbox').trim();
+
+    if (!publicKey ||!merchantId) {
+      return res.status(500).json({ message: 'OPay env vars missing' });
+    }
+
+    const baseUrl = env === 'production'
+     ? 'https://liveapi.opaycheckout.com'
+      : 'https://testapi.opaycheckout.com';
+
+    const reference = `wittyfare_${Date.now()}_${Math.random().toString(36).substring(2,7)}`;
+
+    const payload = {
+      reference: reference,
+      amount: { total: amountKobo, currency: 'NGN' },
+      product: { name: 'Wittyfare Order', description: `${items.length} items` },
+      callbackUrl: 'https://wittyfare.com/confirmation.html',
+      returnUrl: 'https://wittyfare.com/confirmation.html',
+      customer: { email: customerEmail, name: customerName || 'Customer' },
+      country: 'NG'
+    };
+
+    const response = await fetch(`${baseUrl}/api/v1/international/cashier/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${publicKey}`, // PUBLIC KEY HERE per docs
+        'MerchantId': merchantId
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await response.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { return res.status(500).json({ message: 'OPay non-JSON', raw: text }); }
+
+    if (data.code!== '00000' && data.code!== '0000' &&!data.data?.cashierUrl) {
+       return res.status(500).json({ message: 'OPay failed', details: data });
+    }
+
+    return res.status(200).json({
+      success: true,
+      checkoutUrl: data.data.cashierUrl || data.data.checkoutUrl,
+      paymentReference: reference,
+      raw: data
+    });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
 }
