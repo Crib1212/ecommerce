@@ -1,6 +1,8 @@
+
 {
   "name": "ecommerce",
   "version": "1.0.0",
+  "type": "module",
   "description": "Wittyfare Agrovet & Farms",
   "main": "server.js",
   "scripts": {
