@@ -1,80 +1,66 @@
+
 export default async function handler(req, res) {
-  if (req.method!== 'POST') return res.status(405).json({ message: 'Method not allowed' });
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({
+      success: false,
+      message: "Method not allowed"
+    });
+  }
 
   try {
-    const { customerName, customerEmail, items } = req.body;
+    const { customerName, customerEmail, items } = req.body || {};
 
-    if (!customerEmail ||!items ||!items.length) {
-      return res.status(400).json({ message: 'Missing email or items' });
+    if (
+      typeof customerEmail !== "string" ||
+      !customerEmail.trim() ||
+      !Array.isArray(items) ||
+      items.length === 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide your email and cart items."
+      });
     }
 
-    // Calculate total from your cart
-    let totalPrice = 0;
-    items.forEach(i => {
-        // price is in your normalizeProduct - we need to get from cart again or trust frontend total
-        // For safety, if item has price use it, else we will get from totals in frontend
-    });
-
-    // Get total from session or frontend - since you send only id/qty, we calculate from localStorage?
-    // EASIER: get total from the hidden input totalPrice on frontend and send it.
-    // For now use amount sent from frontend if available, else fallback 1000
-    let amount = req.body.amount || req.body.totalPrice || 1000;
-    amount = Number(amount);
-
-    // OPay wants amount in KOBO (x100)
-    const amountKobo = Math.round(amount * 100);
-
-    const publicKey = process.env.OPAY_PUBLIC_KEY?.trim();
-    const merchantId = process.env.OPAY_MERCHANT_ID?.trim();
-    const env = (process.env.OPAY_ENV || 'sandbox').trim();
-
-    if (!publicKey ||!merchantId) {
-      return res.status(500).json({ message: 'OPay env vars missing' });
+    if (
+      items.some(item =>
+        !item ||
+        typeof item.id !== "string" ||
+        !item.id.trim() ||
+        !Number.isInteger(Number(item.quantity)) ||
+        Number(item.quantity) < 1 ||
+        Number(item.quantity) > 100
+      )
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Your cart contains invalid products or quantities."
+      });
     }
 
-    const baseUrl = env === 'production'
-     ? 'https://liveapi.opaycheckout.com'
-      : 'https://testapi.opaycheckout.com';
+    /*
+      SECURITY:
+      Connect product.json or a trusted server-side catalogue here.
+      Look up each submitted product ID and calculate the total using
+      server-side prices. Never trust an amount from the browser.
+    */
 
-    const reference = `wittyfare_${Date.now()}_${Math.random().toString(36).substring(2,7)}`;
-
-    const payload = {
-      reference: reference,
-      amount: { total: amountKobo, currency: 'NGN' },
-      product: { name: 'Wittyfare Order', description: `${items.length} items` },
-      callbackUrl: 'https://wittyfare.com/confirmation.html',
-      returnUrl: 'https://wittyfare.com/confirmation.html',
-      customer: { email: customerEmail, name: customerName || 'Customer' },
-      country: 'NG'
-    };
-
-    const response = await fetch(`${baseUrl}/api/v1/international/cashier/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${publicKey}`, // PUBLIC KEY HERE per docs
-        'MerchantId': merchantId
-      },
-      body: JSON.stringify(payload)
+    return res.status(501).json({
+      success: false,
+      message:
+        "Online payment is temporarily unavailable while product pricing is configured securely."
     });
 
-    const text = await response.text();
-    let data;
-    try { data = JSON.parse(text); }
-    catch { return res.status(500).json({ message: 'OPay non-JSON', raw: text }); }
+  } catch (error) {
+    console.error("OPay initialization error:", error);
 
-    if (data.code!== '00000' && data.code!== '0000' &&!data.data?.cashierUrl) {
-       return res.status(500).json({ message: 'OPay failed', details: data });
-    }
-
-    return res.status(200).json({
-      success: true,
-      checkoutUrl: data.data.cashierUrl || data.data.checkoutUrl,
-      paymentReference: reference,
-      raw: data
+    return res.status(500).json({
+      success: false,
+      message: "Unable to initialize payment. Please try again."
     });
-
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
   }
 }
