@@ -1447,7 +1447,7 @@ if (paymentMethod === "online" || paymentMethod === "transfer") {
         submitButton.textContent = "Connecting to Monnify...";
     }
 
-    const response = await fetch("/api/monnify-init", {
+    const response = await fetch("/api/opay-init.js", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
