@@ -363,6 +363,27 @@
     "description": "Juvenile fish for fish farmers and aquaculture production.",
     "featured": true
   },
+     {
+    "id": "coctreat-001",
+    "name": "Coctreat Diclazuril 2.5% Oral Solution",
+    "category": "drugs",
+    "subcategory": "anticocidiosis",
+    "slug": "coctreat-diclazuril",
+    "image": "/images/drugs/coctreat-option.png",
+    "images": ["images/coctreat-1.png", "images/coctreat-2.png"],
+    "description": "For treatment of coccidiosis in poultry and livestock.",
+    "minPrice": 3500,
+    "maxPrice": 21500,
+    "displayPrice": "₦3,500 - ₦21,500",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "COC-100", "label": "Size", "name": "100ml", "price": 3500, "stock": 50 },
+      { "sku": "COC-250", "label": "Size", "name": "250ml", "price": 7500, "stock": 30 },
+      { "sku": "COC-500", "label": "Size", "name": "500ml", "price": 12500, "stock": 20 },
+      { "sku": "COC-1000", "label": "Size", "name": "1L - Best Value", "price": 21500, "stock": 15, "bestValue": true }
+    ]
+  },
   {
     "id": "equipment-pulse-sprayer-15l",
     "name": "Pulse Sprayer 15L",

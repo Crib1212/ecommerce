@@ -2,7 +2,7 @@
 /* =========================================================
    WITTYFARE AGROVET & FARMS
    COMPLETE CHECKOUT.JS
-   Cart | Checkout | OPay | Confirmation
+   Cart | Product Variants | OPay | Confirmation
 ========================================================= */
 
 "use strict";
@@ -17,7 +17,9 @@ let checkoutSubmitting = false;
 const CHECKOUT_CONFIG = {
     opayEndpoint: "/api/opay-init",
     confirmationPage: "confirmation.html",
-    currency: "₦"
+    transferPage: "bank-transfer.html",
+    currency: "₦",
+    maxQuantity: 999
 };
 
 /* =========================================================
@@ -45,13 +47,7 @@ function formatNaira(amount) {
 
 function normalizeProduct(product) {
     if (!product || typeof product !== "object") {
-        return {
-            id: "",
-            name: "Product",
-            image: "",
-            price: 0,
-            quantity: 1
-        };
+        return null;
     }
 
     const rawPrice =
@@ -65,6 +61,8 @@ function normalizeProduct(product) {
         product.qty ??
         product.count ??
         1;
+
+    const quantity = Math.floor(Number(rawQuantity));
 
     return {
         id: String(
@@ -90,11 +88,37 @@ function normalizeProduct(product) {
 
         price: Number(rawPrice),
 
-        quantity: Math.max(
-            1,
-            Math.floor(Number(rawQuantity) || 1)
-        )
+        quantity: Number.isFinite(quantity) && quantity >= 1
+            ? quantity
+            : 1,
+
+        variantSku: product.variantSku
+            ? String(product.variantSku).trim()
+            : null,
+
+        variantName: product.variantName
+            ? String(product.variantName).trim()
+            : null,
+
+        variantLabel: product.variantLabel
+            ? String(product.variantLabel).trim()
+            : null
     };
+}
+
+/*
+   A product and each of its variants must have
+   different cart-item keys.
+
+   Example:
+   coctreat-001::COC-100
+   coctreat-001::COC-250
+*/
+
+function getCartItemKey(product) {
+    return `${String(product.id)}::${String(
+        product.variantSku || "default"
+    )}`;
 }
 
 /* =========================================================
@@ -115,18 +139,24 @@ function loadCart() {
         try {
             const stored = localStorage.getItem(key);
 
-            if (!stored) continue;
+            if (stored === null) {
+                continue;
+            }
 
             const parsed = JSON.parse(stored);
 
-            if (Array.isArray(parsed) && parsed.length > 0) {
+            if (Array.isArray(parsed)) {
                 foundCart = parsed;
 
                 console.log("Checkout cart loaded from:", key);
                 break;
             }
         } catch (error) {
-            console.warn("Could not read cart:", key, error);
+            console.warn(
+                "Could not read cart:",
+                key,
+                error
+            );
         }
     }
 
@@ -134,15 +164,38 @@ function loadCart() {
         ? foundCart.map(normalizeProduct)
         : [];
 
-    // Ignore malformed entries. The backend must still validate
-    // product IDs, quantities and prices before taking payment.
     listCart = listCart.filter(product =>
+        product &&
         product.id &&
         Number.isFinite(product.price) &&
-        product.price >= 0 &&
+        product.price > 0 &&
         Number.isSafeInteger(product.quantity) &&
-        product.quantity >= 1
+        product.quantity >= 1 &&
+        product.quantity <= CHECKOUT_CONFIG.maxQuantity
     );
+
+    /*
+       Combine duplicate entries only when their product ID
+       AND variant SKU match.
+    */
+
+    const mergedCart = new Map();
+
+    listCart.forEach(product => {
+        const key = getCartItemKey(product);
+        const existing = mergedCart.get(key);
+
+        if (existing) {
+            existing.quantity = Math.min(
+                CHECKOUT_CONFIG.maxQuantity,
+                existing.quantity + product.quantity
+            );
+        } else {
+            mergedCart.set(key, { ...product });
+        }
+    });
+
+    listCart = Array.from(mergedCart.values());
 
     saveCart();
 
@@ -155,7 +208,10 @@ function loadCart() {
 
 function saveCart() {
     try {
-        localStorage.setItem("listCart", JSON.stringify(listCart));
+        localStorage.setItem(
+            "listCart",
+            JSON.stringify(listCart)
+        );
     } catch (error) {
         console.error("Unable to save cart:", error);
     }
@@ -209,8 +265,24 @@ function updateItemsCount(totalQuantity) {
 
     if (element) {
         element.textContent =
-            `${totalQuantity} ${totalQuantity === 1 ? "Item" : "Items"}`;
+            `${totalQuantity} ${
+                totalQuantity === 1 ? "Item" : "Items"
+            }`;
     }
+}
+
+/* =========================================================
+   VARIANT DISPLAY
+========================================================= */
+
+function getProductDisplayName(product) {
+    if (product.variantName) {
+        const label = product.variantLabel || "Size";
+
+        return `${product.name} — ${label}: ${product.variantName}`;
+    }
+
+    return product.name;
 }
 
 /* =========================================================
@@ -238,7 +310,7 @@ function renderCheckoutCart() {
         document.querySelector(".checkout-button-total");
 
     if (!cartContainer) {
-        console.error("Checkout product container not found.");
+        console.warn("Checkout product container not found.");
         return;
     }
 
@@ -247,7 +319,8 @@ function renderCheckoutCart() {
     const totals = getCartTotals();
 
     quantityElements.forEach(element => {
-        element.textContent = totals.totalQuantity.toLocaleString();
+        element.textContent =
+            totals.totalQuantity.toLocaleString("en-NG");
     });
 
     priceElements.forEach(element => {
@@ -288,15 +361,19 @@ function renderCheckoutCart() {
         const quantity = Number(product.quantity);
         const price = Number(product.price);
         const subtotal = quantity * price;
+        const itemKey = getCartItemKey(product);
 
         const item = document.createElement("div");
         item.className = "checkout-product-item";
+
+        /* Product image */
 
         const imageContainer = document.createElement("div");
         imageContainer.className = "checkout-product-image";
 
         if (product.image) {
             const image = document.createElement("img");
+
             image.src = product.image;
             image.alt = product.name;
             image.loading = "lazy";
@@ -306,6 +383,7 @@ function renderCheckoutCart() {
 
                 const icon = document.createElement("i");
                 icon.className = "fa-solid fa-box";
+
                 imageContainer.appendChild(icon);
             }, { once: true });
 
@@ -313,8 +391,11 @@ function renderCheckoutCart() {
         } else {
             const icon = document.createElement("i");
             icon.className = "fa-solid fa-box";
+
             imageContainer.appendChild(icon);
         }
+
+        /* Product details */
 
         const info = document.createElement("div");
         info.className = "checkout-product-info";
@@ -322,11 +403,26 @@ function renderCheckoutCart() {
         const name = document.createElement("h3");
         name.textContent = product.name;
 
+        if (product.variantName) {
+            const variant = document.createElement("div");
+
+            variant.className = "checkout-variant-name";
+            variant.textContent =
+                `${product.variantLabel || "Size"}: ${product.variantName}`;
+
+            info.append(name, variant);
+        } else {
+            info.appendChild(name);
+        }
+
         const meta = document.createElement("div");
         meta.className = "checkout-product-meta";
-        meta.textContent = `${formatNaira(price)} × ${quantity}`;
+        meta.textContent =
+            `${formatNaira(price)} × ${quantity}`;
 
-        info.append(name, meta);
+        info.appendChild(meta);
+
+        /* Subtotal and remove button */
 
         const right = document.createElement("div");
         right.className = "checkout-product-right";
@@ -335,19 +431,23 @@ function renderCheckoutCart() {
         subtotalElement.textContent = formatNaira(subtotal);
 
         const removeButton = document.createElement("button");
+
         removeButton.type = "button";
         removeButton.className = "delete-btn checkout-delete";
-        removeButton.dataset.id = product.id;
+        removeButton.dataset.key = itemKey;
         removeButton.title = "Remove product";
+
         removeButton.setAttribute(
             "aria-label",
-            `Remove ${product.name}`
+            `Remove ${getProductDisplayName(product)}`
         );
+
         removeButton.innerHTML =
             '<i class="fa-solid fa-trash"></i> Remove';
 
         right.append(subtotalElement, removeButton);
         item.append(imageContainer, info, right);
+
         cartContainer.appendChild(item);
     });
 }
@@ -370,6 +470,7 @@ function renderSlideCart() {
                 <p>Your cart is empty.</p>
             </div>
         `;
+
         return;
     }
 
@@ -377,17 +478,25 @@ function renderSlideCart() {
         const item = document.createElement("div");
         item.className = "item";
 
+        const itemKey = getCartItemKey(product);
+
+        /* Image */
+
         const image = document.createElement("img");
         image.alt = product.name;
+        image.loading = "lazy";
 
         if (product.image) {
             image.src = product.image;
+
             image.addEventListener("error", () => {
                 image.style.display = "none";
             }, { once: true });
         } else {
             image.style.display = "none";
         }
+
+        /* Name and price */
 
         const content = document.createElement("div");
         content.className = "content";
@@ -396,54 +505,76 @@ function renderSlideCart() {
         name.className = "name";
         name.textContent = product.name;
 
+        if (product.variantName) {
+            const variant = document.createElement("div");
+
+            variant.className = "variant-name";
+            variant.textContent =
+                `${product.variantLabel || "Size"}: ${product.variantName}`;
+
+            name.appendChild(variant);
+        }
+
         const price = document.createElement("div");
         price.className = "price";
+
         price.textContent = formatNaira(
             product.price * product.quantity
         );
 
         content.append(name, price);
 
+        /* Controls */
+
         const controls = document.createElement("div");
         controls.className = "cartControls";
 
         const remove = document.createElement("button");
+
         remove.type = "button";
         remove.className = "deleteBtn slide-cart-delete";
-        remove.dataset.id = product.id;
+        remove.dataset.key = itemKey;
         remove.textContent = "🗑";
-        remove.setAttribute("aria-label", `Remove ${product.name}`);
+
+        remove.setAttribute(
+            "aria-label",
+            `Remove ${getProductDisplayName(product)}`
+        );
 
         const qtyControls = document.createElement("div");
         qtyControls.className = "verticalQty";
 
         const plus = document.createElement("button");
+
         plus.type = "button";
         plus.className = "slide-cart-plus";
-        plus.dataset.id = product.id;
+        plus.dataset.key = itemKey;
         plus.textContent = "+";
         plus.setAttribute("aria-label", "Increase quantity");
 
         const input = document.createElement("input");
+
         input.type = "number";
         input.min = "1";
+        input.max = String(CHECKOUT_CONFIG.maxQuantity);
         input.step = "1";
         input.value = String(product.quantity);
         input.className = "slide-cart-qty";
-        input.dataset.id = product.id;
+        input.dataset.key = itemKey;
         input.setAttribute("aria-label", "Quantity");
 
         const minus = document.createElement("button");
+
         minus.type = "button";
         minus.className = "slide-cart-minus";
-        minus.dataset.id = product.id;
+        minus.dataset.key = itemKey;
         minus.textContent = "−";
         minus.setAttribute("aria-label", "Decrease quantity");
 
         qtyControls.append(plus, input, minus);
         controls.append(remove, qtyControls);
-        item.append(image, content, controls);
 
+        item.append(image, content, controls);
         cartContainer.appendChild(item);
     });
 }
@@ -460,80 +591,101 @@ function refreshCartUI() {
 }
 
 /* =========================================================
-   REMOVE / CHANGE QUANTITY
+   REMOVE PRODUCT
 ========================================================= */
 
-function removeProduct(productId) {
-    const id = String(productId);
+function removeProduct(itemKey) {
+    if (!itemKey) return;
 
     listCart = listCart.filter(
-        product => String(product.id) !== id
+        product => getCartItemKey(product) !== String(itemKey)
     );
 
     refreshCartUI();
 }
 
-function increaseQuantity(productId) {
+/* =========================================================
+   INCREASE QUANTITY
+========================================================= */
+
+function increaseQuantity(itemKey) {
     const product = listCart.find(
-        item => String(item.id) === String(productId)
+        item => getCartItemKey(item) === String(itemKey)
     );
 
     if (!product) return;
 
-    if (product.quantity >= 999) {
+    if (product.quantity >= CHECKOUT_CONFIG.maxQuantity) {
         alert("The maximum quantity allowed here is 999.");
         return;
     }
 
     product.quantity += 1;
+
     refreshCartUI();
 }
 
-function decreaseQuantity(productId) {
+/* =========================================================
+   DECREASE QUANTITY
+========================================================= */
+
+function decreaseQuantity(itemKey) {
     const product = listCart.find(
-        item => String(item.id) === String(productId)
+        item => getCartItemKey(item) === String(itemKey)
     );
 
     if (!product) return;
 
     if (product.quantity <= 1) {
-        removeProduct(productId);
+        removeProduct(itemKey);
         return;
     }
 
     product.quantity -= 1;
+
     refreshCartUI();
 }
 
-function setProductQuantity(productId, quantity) {
+/* =========================================================
+   SET QUANTITY
+========================================================= */
+
+function setProductQuantity(itemKey, quantity) {
     const product = listCart.find(
-        item => String(item.id) === String(productId)
+        item => getCartItemKey(item) === String(itemKey)
     );
 
     if (!product) return;
 
     const newQuantity = Number(quantity);
 
-    if (!Number.isSafeInteger(newQuantity) ||
+    if (
+        !Number.isSafeInteger(newQuantity) ||
         newQuantity < 1 ||
-        newQuantity > 999) {
+        newQuantity > CHECKOUT_CONFIG.maxQuantity
+    ) {
         alert("Please enter a quantity between 1 and 999.");
+
         renderSlideCart();
+        renderCheckoutCart();
+
         return;
     }
 
     product.quantity = newQuantity;
+
     refreshCartUI();
 }
 
 /* =========================================================
-   SET UP SLIDE CART
+   SET UP SLIDE-OUT CART
 ========================================================= */
 
 function setupCart() {
     const iconCart = document.querySelector(".iconCart");
     const cart = document.querySelector(".cart");
     const closeButton = document.querySelector(".cart .close");
+
     const checkoutContainer =
         document.querySelector(".checkout-container");
 
@@ -541,11 +693,13 @@ function setupCart() {
 
     function openCart() {
         renderSlideCart();
+
         cart.style.transition = "right 0.3s ease";
         cart.style.right = "0";
 
         if (checkoutContainer) {
-            checkoutContainer.style.transform = "translateX(-400px)";
+            checkoutContainer.style.transform =
+                "translateX(-400px)";
         }
     }
 
@@ -561,7 +715,8 @@ function setupCart() {
     iconCart.addEventListener("click", event => {
         event.preventDefault();
 
-        const isOpen = cart.style.right === "0px" ||
+        const isOpen =
+            cart.style.right === "0px" ||
             cart.style.right === "0";
 
         if (isOpen) {
@@ -587,43 +742,60 @@ function setupCartControls() {
     document.addEventListener("click", event => {
         const target = event.target;
 
-        const removeCheckout = target.closest(".checkout-delete");
+        if (!(target instanceof Element)) return;
+
+        const removeCheckout =
+            target.closest(".checkout-delete");
+
         if (removeCheckout) {
-            removeProduct(removeCheckout.dataset.id);
+            removeProduct(removeCheckout.dataset.key);
             return;
         }
 
-        const removeSlide = target.closest(".slide-cart-delete");
+        const removeSlide =
+            target.closest(".slide-cart-delete");
+
         if (removeSlide) {
-            removeProduct(removeSlide.dataset.id);
+            removeProduct(removeSlide.dataset.key);
             return;
         }
 
         const plus = target.closest(".slide-cart-plus");
+
         if (plus) {
-            increaseQuantity(plus.dataset.id);
+            increaseQuantity(plus.dataset.key);
             return;
         }
 
         const minus = target.closest(".slide-cart-minus");
+
         if (minus) {
-            decreaseQuantity(minus.dataset.id);
+            decreaseQuantity(minus.dataset.key);
         }
     });
 
     document.addEventListener("change", event => {
-        const input = event.target.closest(".slide-cart-qty");
+        const target = event.target;
+
+        if (!(target instanceof Element)) return;
+
+        const input = target.closest(".slide-cart-qty");
 
         if (input) {
-            setProductQuantity(input.dataset.id, input.value);
+            setProductQuantity(
+                input.dataset.key,
+                input.value
+            );
+
             return;
         }
 
-        const checkoutInput = event.target.closest(".quantity-input");
+        const checkoutInput =
+            target.closest(".quantity-input");
 
         if (checkoutInput) {
             setProductQuantity(
-                checkoutInput.dataset.id,
+                checkoutInput.dataset.key,
                 checkoutInput.value
             );
         }
@@ -635,15 +807,19 @@ function setupCartControls() {
 ========================================================= */
 
 function setupPaymentOptions() {
-    const options = document.querySelectorAll(".payment-option");
+    const options =
+        document.querySelectorAll(".payment-option");
 
     options.forEach(option => {
-        const radio = option.querySelector('input[type="radio"]');
+        const radio =
+            option.querySelector('input[type="radio"]');
 
         if (!radio) return;
 
         radio.addEventListener("change", () => {
-            options.forEach(item => item.classList.remove("selected"));
+            options.forEach(item => {
+                item.classList.remove("selected");
+            });
 
             if (radio.checked) {
                 option.classList.add("selected");
@@ -657,7 +833,7 @@ function setupPaymentOptions() {
 }
 
 /* =========================================================
-   SAVE ORDER SNAPSHOT FOR THE EXISTING CONFIRMATION PAGE
+   SAVE ORDER SNAPSHOT
 ========================================================= */
 
 function saveOrderSnapshot(userDetails, paymentMethod) {
@@ -665,7 +841,11 @@ function saveOrderSnapshot(userDetails, paymentMethod) {
 
     const order = {
         customer: userDetails,
-        products: listCart.map(product => ({ ...product })),
+
+        products: listCart.map(product => ({
+            ...product
+        })),
+
         totalQuantity: totals.totalQuantity,
         totalPrice: totals.totalPrice,
         paymentMethod,
@@ -673,9 +853,24 @@ function saveOrderSnapshot(userDetails, paymentMethod) {
         createdAt: new Date().toISOString()
     };
 
-    sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
-    sessionStorage.setItem("checkoutCart", JSON.stringify(listCart));
-    sessionStorage.setItem("currentOrder", JSON.stringify(order));
+    try {
+        sessionStorage.setItem(
+            "userDetails",
+            JSON.stringify(userDetails)
+        );
+
+        sessionStorage.setItem(
+            "checkoutCart",
+            JSON.stringify(listCart)
+        );
+
+        sessionStorage.setItem(
+            "currentOrder",
+            JSON.stringify(order)
+        );
+    } catch (error) {
+        console.error("Unable to save order snapshot:", error);
+    }
 
     return order;
 }
@@ -705,7 +900,9 @@ function setupCheckoutForm() {
         }
 
         const formData = new FormData(form);
-        const userDetails = Object.fromEntries(formData.entries());
+
+        const userDetails =
+            Object.fromEntries(formData.entries());
 
         const selectedPayment = form.querySelector(
             'input[name="paymentMethod"]:checked'
@@ -718,25 +915,37 @@ function setupCheckoutForm() {
 
         const paymentMethod = selectedPayment.value;
 
-        // Validate cart structure before sending it to the server.
+        /* Validate cart structure */
+
         const invalidCart = listCart.some(product =>
             !product.id ||
             !Number.isSafeInteger(Number(product.quantity)) ||
             Number(product.quantity) < 1 ||
-            Number(product.quantity) > 999
+            Number(product.quantity) > CHECKOUT_CONFIG.maxQuantity ||
+            !Number.isFinite(Number(product.price)) ||
+            Number(product.price) <= 0
         );
 
         if (invalidCart) {
-            alert("Your cart contains an invalid item. Please refresh and try again.");
+            alert(
+                "Your cart contains an invalid item. Please refresh and try again."
+            );
+
             return;
         }
 
-        // Online checkout requires an email for the payment request.
+        /* Validate online payment details */
+
         if (paymentMethod === "online") {
-            if (!userDetails.name?.trim() ||
+            if (
+                !userDetails.name?.trim() ||
                 !userDetails.email?.trim() ||
-                !userDetails.phone?.trim()) {
-                alert("Enter your full name, phone number and email address for online payment.");
+                !userDetails.phone?.trim()
+            ) {
+                alert(
+                    "Enter your full name, phone number and email address for online payment."
+                );
+
                 return;
             }
         }
@@ -752,12 +961,14 @@ function setupCheckoutForm() {
             'button[type="submit"], input[type="submit"]'
         );
 
-        const originalButtonHTML = submitButton?.innerHTML;
+        const originalButtonHTML =
+            submitButton?.innerHTML;
 
         checkoutSubmitting = true;
 
         if (submitButton) {
             submitButton.disabled = true;
+
             submitButton.textContent =
                 paymentMethod === "online"
                     ? "Connecting to OPay..."
@@ -765,25 +976,31 @@ function setupCheckoutForm() {
         }
 
         try {
+            /* =============================================
+               ONLINE PAYMENT — OPay
+            ============================================= */
+
             if (paymentMethod === "online") {
-                /*
-                 * IMPORTANT:
-                 * The server must load product.json and calculate prices
-                 * independently. Never trust browser-submitted prices.
-                 */
                 const response = await fetch(
                     CHECKOUT_CONFIG.opayEndpoint,
                     {
                         method: "POST",
+
                         headers: {
                             "Content-Type": "application/json"
                         },
+
                         body: JSON.stringify({
                             customerName: userDetails.name.trim(),
                             customerEmail: userDetails.email.trim(),
                             customerPhone: userDetails.phone.trim(),
+
                             items: listCart.map(product => ({
                                 id: product.id,
+
+                                // The backend must validate this SKU.
+                                sku: product.variantSku || null,
+
                                 quantity: Number(product.quantity)
                             }))
                         })
@@ -800,28 +1017,33 @@ function setupCheckoutForm() {
                     );
                 }
 
-                if (!response.ok ||
+                if (
+                    !response.ok ||
                     !result ||
                     result.success !== true ||
                     typeof result.checkoutUrl !== "string" ||
-                    !result.checkoutUrl) {
+                    !result.checkoutUrl
+                ) {
                     throw new Error(
                         result?.message ||
                         `Unable to start OPay payment (HTTP ${response.status}).`
                     );
                 }
 
-                // Accept only HTTPS checkout URLs from the payment provider.
                 let checkoutURL;
 
                 try {
                     checkoutURL = new URL(result.checkoutUrl);
                 } catch {
-                    throw new Error("The payment server returned an invalid checkout link.");
+                    throw new Error(
+                        "The payment server returned an invalid checkout link."
+                    );
                 }
 
                 if (checkoutURL.protocol !== "https:") {
-                    throw new Error("The payment server returned an insecure checkout link.");
+                    throw new Error(
+                        "The payment server returned an insecure checkout link."
+                    );
                 }
 
                 if (result.paymentReference) {
@@ -832,27 +1054,37 @@ function setupCheckoutForm() {
                 }
 
                 window.location.assign(checkoutURL.href);
+
                 return;
             }
 
-            /*
-             * BANK TRANSFER AND PAY ON DELIVERY
-             *
-             * This retains the existing confirmation-page flow.
-             * Make sure confirmation.html handles each method separately.
-             * This redirect does not permanently save the order to a server.
-             */
-          if (paymentMethod === "transfer") {
-    window.location.assign("bank-transfer.html");
-    return;
-}
+            /* =============================================
+               BANK TRANSFER
+            ============================================= */
 
-if (paymentMethod === "delivery") {
-    window.location.assign(CHECKOUT_CONFIG.confirmationPage);
-    return;
-}
+            if (paymentMethod === "transfer") {
+                window.location.assign(
+                    CHECKOUT_CONFIG.transferPage
+                );
 
-            throw new Error("Please select a supported payment method.");
+                return;
+            }
+
+            /* =============================================
+               PAY ON DELIVERY
+            ============================================= */
+
+            if (paymentMethod === "delivery") {
+                window.location.assign(
+                    CHECKOUT_CONFIG.confirmationPage
+                );
+
+                return;
+            }
+
+            throw new Error(
+                "Please select a supported payment method."
+            );
 
         } catch (error) {
             console.error("Checkout error:", error);
@@ -883,6 +1115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("WITTYFARE CHECKOUT INITIALIZING");
 
     loadCart();
+
     renderCheckoutCart();
     renderSlideCart();
 

@@ -120,8 +120,50 @@
             Number(price || 0).toLocaleString("en-NG");
     }
 
+        /* =========================================================
+    💰 variant price javascript
+    ========================================================= */
 
-    /* =========================================================
+function getDisplayPrice(product) {
+    if (product.hasVariants && Array.isArray(product.variants) &&
+        product.variants.length) {
+        const prices = product.variants
+            .map(v => Number(v.price))
+            .filter(p => Number.isFinite(p) && p >= 0);
+
+        if (!prices.length) return "Price unavailable";
+
+        const min = Math.min(...prices);
+        const max = Math.max(...prices);
+
+        return min === max
+            ? formatPrice(min)
+            : `${formatPrice(min)} - ${formatPrice(max)}`;
+    }
+
+    return formatPrice(product.price);
+}
+
+function getVariant(product, sku) {
+    if (!product || !product.hasVariants ||
+        !Array.isArray(product.variants)) return null;
+
+    return product.variants.find(v =>
+        String(v.sku) === String(sku)
+    ) || null;
+}
+
+function getCartItemKey(item) {
+    return `${item.id}::${item.variantSku || "default"}`;
+}
+
+function getAvailableStock(product, variant) {
+    const stock = variant ? variant.stock : product.stock;
+    return stock == null ? Infinity : Math.max(0, Number(stock) || 0);
+}
+
+  
+/* =========================================================
 🖼 PRODUCT IMAGE PATH — OLD VERSION
 ========================================================= */
 
@@ -311,80 +353,79 @@ function getProductImage(image) {
     🛒 ADD TO CART
     ========================================================= */
 
-    window.addCart = function (idProduct) {
+window.addCart = function (idProduct, variantSku = null) {
+    const product = products.find(
+        p => String(p.id) === String(idProduct)
+    );
 
-        const product =
-            products.find(
-                item =>
-                    String(item.id) ===
-                    String(idProduct)
-            );
+    if (!product) {
+        showToast("Product not found");
+        return;
+    }
 
-        if (!product) {
+    let variant = null;
 
-            console.error(
-                "Wittyfare: Product not found:",
-                idProduct
-            );
+    if (product.hasVariants) {
+        variant = getVariant(product, variantSku);
 
+        if (!variant) {
+            showToast("Please select a valid product size", product.name);
             return;
         }
 
+        if (getAvailableStock(product, variant) <= 0) {
+            showToast("This size is out of stock", product.name);
+            return;
+        }
+    }
 
-        const existing =
-            listCart.find(
-                item =>
-                    String(item.id) ===
-                    String(idProduct)
-            );
+    const price = Number(variant ? variant.price : product.price);
 
+    if (!Number.isFinite(price) || price < 0) {
+        showToast("Invalid product price", product.name);
+        return;
+    }
 
-        if (existing) {
+    const cartItem = {
+        ...product,
+        price,
+        quantity: 1,
+        variantSku: variant ? variant.sku : null,
+        variantName: variant ? variant.name : null,
+        variantLabel: variant ? (variant.label || "Size") : null,
+        variantStock: variant ? variant.stock : product.stock
+    };
 
-            existing.quantity =
-                Number(existing.quantity || 0) + 1;
+    const key = getCartItemKey(cartItem);
 
-        } else {
+    const existing = listCart.find(
+        item => getCartItemKey(item) === key
+    );
 
-            listCart.push({
+    const stock = getAvailableStock(product, variant);
 
-                ...product,
-
-                price:
-                    Number(product.price) || 0,
-
-                quantity: 1
-
-            });
+    if (existing) {
+        if (existing.quantity + 1 > stock) {
+            showToast("Maximum available stock reached", product.name);
+            return;
         }
 
+        existing.quantity += 1;
+    } else {
+        listCart.push(cartItem);
+    }
 
-        saveCart();
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
 
-        updateCartCounter();
-
-        renderCartItems();
-
-        calculateCheckoutTotal();
-
-
-        showToast(
-            "Added to cart",
-            product.name || "Product",
-            getToastImage(product.image)
-        );
-
-
-        /*
-        Optional:
-        Open the cart automatically only when the
-        product page specifically requests it.
-
-        We do NOT automatically open the cart here
-        because it can be annoying on homepage/category pages.
-        */
-
-    };
+    showToast(
+        variant ? `${variant.name} added to cart` : "Added to cart",
+        product.name,
+        getToastImage(product.image)
+    );
+};
 
 
     /* =========================================================
@@ -430,336 +471,190 @@ function getProductImage(image) {
     }
 
 
-    /* =========================================================
-    ➕➖ CHANGE QUANTITY
-    ========================================================= */
+window.changeQuantity = function (itemKey, type) {
+    const item = listCart.find(
+        p => getCartItemKey(p) === String(itemKey)
+    );
 
-    window.changeQuantity = function (
-        idProduct,
-        type
-    ) {
+    if (!item) return;
 
-        const item =
-            listCart.find(
-                product =>
-                    String(product.id) ===
-                    String(idProduct)
-            );
-
-        if (!item) return;
-
-
-        if (type === "+") {
-
-            item.quantity =
-                Number(item.quantity || 0) + 1;
-        }
-
-
-        if (type === "-") {
-
-            item.quantity =
-                Number(item.quantity || 0) - 1;
-        }
-
+    if (type === "-") {
+        item.quantity = Number(item.quantity || 1) - 1;
 
         if (item.quantity <= 0) {
-
-            listCart =
-                listCart.filter(
-                    product =>
-                        String(product.id) !==
-                        String(idProduct)
-                );
-        }
-
-
-        saveCart();
-
-        updateCartCounter();
-
-        renderCartItems();
-
-        calculateCheckoutTotal();
-    };
-
-
-    /* =========================================================
-    ✏️ MANUAL QUANTITY
-    ========================================================= */
-
-    window.updateQuantity = function (
-        idProduct,
-        value
-    ) {
-
-        const item =
-            listCart.find(
-                product =>
-                    String(product.id) ===
-                    String(idProduct)
+            listCart = listCart.filter(
+                p => getCartItemKey(p) !== String(itemKey)
             );
+        }
+    } else if (type === "+") {
+        const stock = item.variantStock == null
+            ? Infinity
+            : Number(item.variantStock);
 
-        if (!item) return;
-
-
-        let quantity =
-            parseInt(value, 10);
-
-
-        if (
-            Number.isNaN(quantity) ||
-            quantity < 1
-        ) {
-
-            quantity = 1;
+        if (item.quantity + 1 > stock) {
+            showToast("Maximum available stock reached", item.name);
+            return;
         }
 
+        item.quantity += 1;
+    }
 
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+};
+
+window.updateQuantity = function (itemKey, value) {
+    const item = listCart.find(
+        p => getCartItemKey(p) === String(itemKey)
+    );
+
+    if (!item) return;
+
+    let quantity = parseInt(value, 10);
+
+    if (!Number.isFinite(quantity) || quantity < 1) {
+        quantity = 1;
+    }
+
+    const stock = item.variantStock == null
+        ? Infinity
+        : Number(item.variantStock);
+
+    if (quantity > stock) {
+        quantity = stock;
+        showToast("Quantity adjusted to available stock", item.name);
+    }
+
+    if (quantity < 1) {
+        listCart = listCart.filter(
+            p => getCartItemKey(p) !== String(itemKey)
+        );
+    } else {
         item.quantity = quantity;
+    }
 
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+};
 
-        saveCart();
+window.removeItem = function (itemKey) {
+    listCart = listCart.filter(
+        p => getCartItemKey(p) !== String(itemKey)
+    );
 
-        updateCartCounter();
-
-        renderCartItems();
-
-        calculateCheckoutTotal();
-    };
-
-
-    /* =========================================================
-    🗑 REMOVE ITEM
-    ========================================================= */
-
-    window.removeItem = function (idProduct) {
-
-        listCart =
-            listCart.filter(
-                product =>
-                    String(product.id) !==
-                    String(idProduct)
-            );
-
-
-        saveCart();
-
-        updateCartCounter();
-
-        renderCartItems();
-
-        calculateCheckoutTotal();
-    };
+    saveCart();
+    updateCartCounter();
+    renderCartItems();
+    calculateCheckoutTotal();
+};
 
 
     /* =========================================================
     🧾 RENDER CART
     ========================================================= */
 
-    function renderCartItems() {
+   
+function renderCartItems() {
+    const listCartHTML = document.querySelector(".listCart");
+    if (!listCartHTML) return;
 
-        const listCartHTML =
-            document.querySelector(".listCart");
+    listCartHTML.innerHTML = "";
 
-        if (!listCartHTML) return;
-
-
-        listCartHTML.innerHTML = "";
-
-
-        if (listCart.length === 0) {
-
-            listCartHTML.innerHTML = `
-                <p class="empty-cart">
-                    Your cart is empty.
-                </p>
-            `;
-
-            return;
-        }
-
-
-        listCart.forEach(product => {
-
-            const item =
-                document.createElement("div");
-
-            item.classList.add("item");
-
-
-            const image =
-                getCartImage(product.image);
-
-
-            item.innerHTML = `
-
-                <img
-                    src="${escapeAttribute(image)}"
-                    alt="${escapeAttribute(product.name || "Product")}"
-                    loading="lazy"
-                >
-
-                <div class="content">
-
-                    <div class="name">
-                        ${escapeHTML(product.name || "Product")}
-                    </div>
-
-                    <div class="price">
-                        ${formatPrice(product.price)}
-                    </div>
-
-                </div>
-
-                <div class="cartControls">
-
-                    <button
-                        type="button"
-                        class="deleteBtn"
-                        data-remove-id="${escapeAttribute(product.id)}"
-                        aria-label="Remove ${escapeAttribute(product.name || "product")}"
-                    >
-                        🗑
-                    </button>
-
-                    <div class="verticalQty">
-
-                        <button
-                            type="button"
-                            data-qty-action="increase"
-                            data-product-id="${escapeAttribute(product.id)}"
-                        >
-                            +
-                        </button>
-
-                        <input
-                            type="number"
-                            min="1"
-                            value="${Number(product.quantity) || 1}"
-                            id="qty-${escapeAttribute(product.id)}"
-                            aria-label="Quantity for ${escapeAttribute(product.name || "product")}"
-                        >
-
-                        <button
-                            type="button"
-                            data-qty-action="decrease"
-                            data-product-id="${escapeAttribute(product.id)}"
-                        >
-                            -
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-
-            listCartHTML.appendChild(item);
-
-
-            /*
-            Delete button
-            */
-
-            const deleteButton =
-                item.querySelector(
-                    "[data-remove-id]"
-                );
-
-            if (deleteButton) {
-
-                deleteButton.addEventListener(
-                    "click",
-                    () => {
-
-                        removeItem(
-                            product.id
-                        );
-
-                    }
-                );
-            }
-
-
-            /*
-            Increase/decrease
-            */
-
-            const quantityButtons =
-                item.querySelectorAll(
-                    "[data-qty-action]"
-                );
-
-
-            quantityButtons.forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const action =
-                            button.dataset.qtyAction;
-
-                        changeQuantity(
-                            product.id,
-                            action === "increase"
-                                ? "+"
-                                : "-"
-                        );
-
-                    }
-                );
-
-            });
-
-
-            /*
-            Manual quantity
-            */
-
-            const qtyInput =
-                item.querySelector(
-                    `#qty-${CSS.escape(String(product.id))}`
-                );
-
-
-            if (qtyInput) {
-
-                qtyInput.addEventListener(
-                    "keydown",
-                    event => {
-
-                        if (event.key === "Enter") {
-
-                            event.preventDefault();
-
-                            updateQuantity(
-                                product.id,
-                                qtyInput.value
-                            );
-                        }
-
-                    }
-                );
-
-
-                qtyInput.addEventListener(
-                    "change",
-                    () => {
-
-                        updateQuantity(
-                            product.id,
-                            qtyInput.value
-                        );
-
-                    }
-                );
-            }
-
-        });
+    if (!listCart.length) {
+        listCartHTML.innerHTML = `
+            <p class="empty-cart">Your cart is empty.</p>
+        `;
+        return;
     }
 
+    listCart.forEach(product => {
+        const item = document.createElement("div");
+        item.classList.add("item");
+
+        const itemKey = getCartItemKey(product);
+        const image = getCartImage(product.image);
+
+        item.innerHTML = `
+            <img
+                src="${escapeAttribute(image)}"
+                alt="${escapeAttribute(product.name || "Product")}"
+                loading="lazy"
+            >
+
+            <div class="content">
+                <div class="name">
+                    ${escapeHTML(product.name || "Product")}
+                    ${product.variantName ? `
+                        <div class="variant-name">
+                            ${escapeHTML(product.variantLabel || "Size")}:
+                            ${escapeHTML(product.variantName)}
+                        </div>
+                    ` : ""}
+                </div>
+
+                <div class="price">
+                    ${formatPrice(product.price)}
+                </div>
+            </div>
+
+            <div class="cartControls">
+                <button
+                    type="button"
+                    class="deleteBtn"
+                    data-remove-id="${escapeAttribute(itemKey)}"
+                    aria-label="Remove ${escapeAttribute(product.name || "product")}"
+                >🗑</button>
+
+                <div class="verticalQty">
+                    <button type="button" data-qty-action="increase">+</button>
+
+                    <input
+                        type="number"
+                        min="1"
+                        value="${Number(product.quantity) || 1}"
+                        aria-label="Quantity for ${escapeAttribute(product.name || "product")}"
+                    >
+
+                    <button type="button" data-qty-action="decrease">-</button>
+                </div>
+            </div>
+        `;
+
+        listCartHTML.appendChild(item);
+
+        const deleteButton = item.querySelector("[data-remove-id]");
+        deleteButton.addEventListener("click", () => {
+            removeItem(itemKey);
+        });
+
+        item.querySelectorAll("[data-qty-action]").forEach(button => {
+            button.addEventListener("click", () => {
+                const action = button.dataset.qtyAction;
+                changeQuantity(
+                    itemKey,
+                    action === "increase" ? "+" : "-"
+                );
+            });
+        });
+
+        const qtyInput = item.querySelector('input[type="number"]');
+
+        qtyInput.addEventListener("change", () => {
+            updateQuantity(itemKey, qtyInput.value);
+        });
+
+        qtyInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                updateQuantity(itemKey, qtyInput.value);
+            }
+        });
+    });
+}
 
     /* =========================================================
     🖼 CART IMAGE
@@ -899,255 +794,157 @@ function getProductPageURL(slug) {
     🛍 PRODUCT CARD
     ========================================================= */
 
-    function createProductCard(
-        product,
-        highlight = ""
-    ) {
-
-        if (!product) {
-            return null;
-        }
-
-
-        const {
-            name = "",
-            category = "",
-            description = "",
-            vendor = "",
-            image = "",
-            price = 0,
-            id,
-            slug,
-            farmSize = "",
-            includes = [],
-            packageType = ""
-        } = product;
-
-
-        const highlightedName =
-            highlightText(
-                name,
-                highlight
-            );
-
-
-        const highlightedCategory =
-            highlightText(
-                category,
-                highlight
-            );
-
-
-        const highlightedDescription =
-            highlightText(
-                description,
-                highlight
-            );
-
-
-        const newProduct =
-            document.createElement("div");
-
-
-        newProduct.classList.add("item");
-
-
-        /*
-        Farm package special class
-        */
-
-        if (
-            category === "farm-packages"
-        ) {
-
-            newProduct.classList.add(
-                "farm-package-card"
-            );
-        }
-
-
-        /*
-        Package contents
-        */
-
-        let packageContents = "";
-
-
-        if (
-            category === "farm-packages" &&
-            Array.isArray(includes) &&
-            includes.length
-        ) {
-
-            packageContents = `
-
-                <div class="package-includes">
-
-                    <strong>
-                        Includes:
-                    </strong>
-
-                    <ul>
-
-                        ${includes
-                            .slice(0, 4)
-                            .map(item => `
-                                <li>
-                                    ${escapeHTML(item)}
-                                </li>
-                            `)
-                            .join("")}
-
-                    </ul>
-
-                    ${
-                        includes.length > 4
-                            ? `
-                                <small>
-                                    + ${includes.length - 4}
-                                    more items
-                                </small>
-                            `
-                            : ""
-                    }
-
-                </div>
-            `;
-        }
-
-
-        /*
-        IMPORTANT:
-        All product cards now use the same clean
-        permanent product URL.
-        */
-
-        const productURL =
-            getProductPageURL(slug);
-
-
-        const productImage =
-            getCardImage(image);
-
-
-        newProduct.innerHTML = `
-
-            <a
-                href="${escapeAttribute(productURL)}"
-                class="product-page-link"
-            >
-
-                <img
-                    src="${escapeAttribute(productImage)}"
-                    alt="${escapeAttribute(name)}"
-                    loading="lazy"
-                >
-
-                <h2>
-                    ${highlightedName}
-                </h2>
-
-
-                ${
-                    vendor
-                        ? `
-                            <p class="vendor">
-                                Vendor:
-                                ${escapeHTML(vendor)}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                ${
-                    category === "farm-packages" &&
-                    farmSize
-                        ? `
-                            <p class="package-farm-size">
-                                🌱 Designed for:
-                                <strong>
-                                    ${escapeHTML(farmSize)}
-                                </strong>
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                ${
-                    category
-                        ? `
-                            <p class="category">
-                                Category:
-                                ${highlightedCategory}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                ${
-                    description
-                        ? `
-                            <p class="desc">
-                                ${highlightedDescription}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                ${packageContents}
-
-
-                <div class="price">
-                    ${formatPrice(price)}
-                </div>
-
-            </a>
-
-
-            <button
-                type="button"
-                class="add-to-cart-btn"
-                data-add-product="${escapeAttribute(id)}"
-            >
-                Add to cart
-            </button>
-        `;
-
-
-        /*
-        Add-to-cart button
-        */
-
-        const addButton =
-            newProduct.querySelector(
-                "[data-add-product]"
-            );
-
-
-        if (addButton) {
-
-            addButton.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-                    addCart(id);
-
-                }
-            );
-        }
-
-
-        return newProduct;
+    
+function createProductCard(product, highlight = "") {
+    if (!product) return null;
+
+    const {
+        name = "",
+        category = "",
+        description = "",
+        vendor = "",
+        image = "",
+        id,
+        slug,
+        farmSize = "",
+        includes = [],
+        packageType = ""
+    } = product;
+
+    const newProduct = document.createElement("div");
+    newProduct.classList.add("item");
+
+    if (category === "farm-packages") {
+        newProduct.classList.add("farm-package-card");
     }
 
+    const productURL = getProductPageURL(slug);
+    const productImage = getCardImage(image);
+
+    const variantOptions =
+        product.hasVariants &&
+        Array.isArray(product.variants) &&
+        product.variants.length
+        ? `
+            <label for="variant-${escapeAttribute(id)}">
+                Choose size
+            </label>
+            <select
+                id="variant-${escapeAttribute(id)}"
+                class="card-variant-select"
+                aria-label="Choose ${escapeAttribute(name)} size"
+            >
+                <option value="">Select size</option>
+                ${product.variants.map(v => {
+                    const outOfStock =
+                        v.stock != null && Number(v.stock) <= 0;
+
+                    return `
+                        <option
+                            value="${escapeAttribute(v.sku)}"
+                            ${outOfStock ? "disabled" : ""}
+                        >
+                            ${escapeHTML(v.name)} — ${formatPrice(v.price)}
+                            ${outOfStock ? " (Out of stock)" : ""}
+                        </option>
+                    `;
+                }).join("")}
+            </select>
+        `
+        : "";
+
+    const packageContents =
+        category === "farm-packages" &&
+        Array.isArray(includes) &&
+        includes.length
+        ? `
+            <div class="package-includes">
+                <strong>Includes:</strong>
+                <ul>
+                    ${includes.slice(0, 4).map(value =>
+                        `<li>${escapeHTML(value)}</li>`
+                    ).join("")}
+                </ul>
+                ${includes.length > 4
+                    ? `<small>+ ${includes.length - 4} more items</small>`
+                    : ""}
+            </div>
+        `
+        : "";
+
+    newProduct.innerHTML = `
+        <a href="${escapeAttribute(productURL)}"
+           class="product-page-link">
+
+            <img
+                src="${escapeAttribute(productImage)}"
+                alt="${escapeAttribute(name)}"
+                loading="lazy"
+            >
+
+            <h2>${highlightText(name, highlight)}</h2>
+
+            ${vendor ? `
+                <p class="vendor">Vendor: ${escapeHTML(vendor)}</p>
+            ` : ""}
+
+            ${category === "farm-packages" && farmSize ? `
+                <p class="package-farm-size">
+                    🌱 Designed for:
+                    <strong>${escapeHTML(farmSize)}</strong>
+                </p>
+            ` : ""}
+
+            ${category ? `
+                <p class="category">
+                    Category: ${highlightText(category, highlight)}
+                </p>
+            ` : ""}
+
+            ${description ? `
+                <p class="desc">
+                    ${highlightText(description, highlight)}
+                </p>
+            ` : ""}
+
+            ${packageContents}
+
+            ${category === "farm-packages" && packageType ? `
+                <p>${escapeHTML(packageType)}</p>
+            ` : ""}
+
+            <div class="price">${getDisplayPrice(product)}</div>
+        </a>
+
+        ${variantOptions}
+
+        <button
+            type="button"
+            class="add-to-cart-btn"
+            data-add-product="${escapeAttribute(id)}"
+        >Add to cart</button>
+    `;
+
+    const addButton = newProduct.querySelector("[data-add-product]");
+
+    addButton.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const select = newProduct.querySelector(".card-variant-select");
+        const sku = select ? select.value : null;
+
+        if (select && !sku) {
+            showToast("Please select a size first", name, getToastImage(image));
+            select.focus();
+            return;
+        }
+
+        addCart(id, sku);
+    });
+
+    return newProduct;
+}
 
     /* =========================================================
     🖼 CARD IMAGE
@@ -1653,6 +1450,7 @@ try {
     }
 
 
+
     /* =========================================================
     🔗 GET PRODUCT FROM URL
     ========================================================= */
@@ -1762,9 +1560,7 @@ try {
             return;
         }
 
-if (location.search && product.slug) {
-    history.replaceState(null, "", `/product/${encodeURIComponent(product.slug)}/`);
-}
+
         if (
             !Array.isArray(products) ||
             products.length === 0
@@ -1791,7 +1587,9 @@ if (location.search && product.slug) {
 
             return;
         }
-
+if (location.search && product.slug) {
+    history.replaceState(null, "", `/product/${encodeURIComponent(product.slug)}/`);
+}
 
         /*
         Render product
@@ -1918,13 +1716,9 @@ if (location.search && product.slug) {
         PRICE
         */
 
-        if (priceElement) {
-
-            priceElement.textContent =
-                formatPrice(
-                    product.price
-                );
-        }
+      if (priceElement) {
+    priceElement.textContent = getDisplayPrice(product);
+}
 
 
         /*
@@ -2149,25 +1943,65 @@ if (location.search && product.slug) {
         }
 
 
-        /*
-        ADD TO CART
-        */
+       
+/*
+    PRODUCT VARIANT SELECTOR + ADD TO CART
+*/
 
-        if (addButton) {
+const optionsContainer = document.getElementById("productOptions");
 
-            addButton.type =
-                "button";
+if (optionsContainer) {
+    if (
+        product.hasVariants &&
+        Array.isArray(product.variants) &&
+        product.variants.length
+    ) {
+        optionsContainer.innerHTML = `
+            <label for="variantSelect">
+                Choose size
+            </label>
 
+            <select id="variantSelect">
+                <option value="">Select size</option>
 
-            addButton.onclick =
-                function () {
+                ${product.variants.map(v => {
+                    const outOfStock =
+                        v.stock != null && Number(v.stock) <= 0;
 
-                    addCart(
-                        product.id
-                    );
+                    return `
+                        <option
+                            value="${escapeAttribute(v.sku)}"
+                            ${outOfStock ? "disabled" : ""}
+                        >
+                            ${escapeHTML(v.name)} — ${formatPrice(v.price)}
+                            ${outOfStock ? " (Out of stock)" : ""}
+                        </option>
+                    `;
+                }).join("")}
+            </select>
+        `;
+    } else {
+        optionsContainer.innerHTML = "";
+    }
+}
 
-                };
+if (addButton) {
+    addButton.type = "button";
+
+    addButton.onclick = function () {
+        const select = document.getElementById("variantSelect");
+        const sku = select ? select.value : null;
+
+        if (product.hasVariants && !sku) {
+            showToast("Please select a size first", product.name);
+            select?.focus();
+            return;
         }
+
+        addCart(product.id, sku);
+    };
+}
+
     }
 
 
@@ -3412,12 +3246,12 @@ if (location.search && product.slug) {
             );
 
 
-        if (addButton) {
-
-            addButton.style.display =
-                "none";
-        }
-    }
+       if (addButton) {
+    addButton.type = "button";
+    addButton.disabled = true;
+    addButton.onclick = null;
+}
+}
 
 
     /* =========================================================

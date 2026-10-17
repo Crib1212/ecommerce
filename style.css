@@ -3377,3 +3377,99 @@ footer {
     padding: 10px;
     margin: 0;
 }
+
+/* =========================================
+   WITTYFARE PRODUCT VARIANT DROPDOWN
+========================================= */
+
+.card-variant-select,
+#variantSelect {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    margin: 12px 0;
+    padding: 12px 42px 12px 14px;
+
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #245b2c;
+
+    background-color: #f5fff6;
+    border: 1.5px solid #65db80;
+    border-radius: 10px;
+
+    cursor: pointer;
+    outline: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Hover */
+
+.card-variant-select:hover,
+#variantSelect:hover {
+    border-color: #28a745;
+    background-color: #edfff0;
+}
+
+/* Focus */
+
+.card-variant-select:focus,
+#variantSelect:focus {
+    border-color: #2c8a38;
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+    background-color: #ffffff;
+}
+
+/* Dropdown options */
+
+.card-variant-select option,
+#variantSelect option {
+    padding: 12px;
+    color: #243b28;
+    background-color: #ffffff;
+    font-weight: 500;
+}
+
+/* Disabled / unavailable sizes */
+
+.card-variant-select option:disabled,
+#variantSelect option:disabled {
+    color: #999999;
+}
+
+/* Labels above dropdown */
+
+.item > label,
+#productOptions label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    color: #2c8a38;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+    .card-variant-select,
+    #variantSelect {
+        min-height: 46px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+}
