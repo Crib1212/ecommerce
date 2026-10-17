@@ -1,86 +1,594 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Bank Transfer | WittyFare Agrovet & Farms</title>
+    <meta name="theme-color" content="#28a745">
+
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --wf-light: #65db80;
+            --wf-green: #28a745;
+            --wf-dark: #2c8a38;
+            --wf-text: #203326;
+            --wf-muted: #6b7a70;
+            --wf-bg: #f3faf4;
+            --wf-border: #dcefe0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--wf-bg);
+            color: var(--wf-text);
+            font-family: "Open Sans", Arial, sans-serif;
+        }
+
+        .transfer-header {
+            background: linear-gradient(120deg, var(--wf-dark), var(--wf-green));
+            color: white;
+            padding: 23px 18px;
+            box-shadow: 0 5px 18px #2c8a3820;
+        }
+
+        .transfer-header-inner {
+            max-width: 1050px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .brand-icon {
+            width: 49px;
+            height: 49px;
+            background: #ffffff25;
+            border: 1px solid #ffffff55;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            display: block;
+            margin-top: 3px;
+            font-size: 12px;
+            opacity: .9;
+        }
+
+        .transfer-wrapper {
+            width: min(650px, calc(100% - 28px));
+            margin: 32px auto 45px;
+        }
+
+        .success-banner {
+            text-align: center;
+            padding: 27px 20px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #e0f9e5, #ffffff);
+            border: 1px solid #c8edcf;
+            margin-bottom: 20px;
+        }
+
+        .success-icon {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 15px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: white;
+            background: linear-gradient(135deg, var(--wf-light), var(--wf-green));
+            box-shadow: 0 8px 22px #28a74530;
+            font-size: 31px;
+        }
+
+        .success-banner h1 {
+            font-size: clamp(23px, 5vw, 30px);
+            margin: 0 0 9px;
+        }
+
+        .success-banner p {
+            color: var(--wf-muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .transfer-card {
+            background: white;
+            border: 1px solid var(--wf-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px #163c2010;
+            margin-bottom: 18px;
+        }
+
+        .card-heading {
+            padding: 20px 23px;
+            background: #e9f9ec;
+            border-bottom: 1px solid var(--wf-border);
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .heading-icon {
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--wf-green);
+            border-radius: 13px;
+            font-size: 19px;
+        }
+
+        .card-heading h2 {
+            margin: 0 0 4px;
+            font-size: 18px;
+        }
+
+        .card-heading p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--wf-muted);
+        }
+
+        .card-body {
+            padding: 23px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid #edf3ee;
+        }
+
+        .account-row:last-of-type {
+            border-bottom: 0;
+        }
+
+        .field-label {
+            color: var(--wf-muted);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .field-value {
+            font-size: 16px;
+            font-weight: 750;
+            overflow-wrap: anywhere;
+        }
+
+        .account-number {
+            font-size: clamp(20px, 5vw, 26px);
+            letter-spacing: 1px;
+            color: var(--wf-dark);
+        }
+
+        .copy-button {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 13px;
+            color: white;
+            background: var(--wf-green);
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .2s, transform .2s;
+        }
+
+        .copy-button:hover {
+            background: var(--wf-dark);
+            transform: translateY(-1px);
+        }
+
+        .amount-panel {
+            padding: 23px;
+            color: white;
+            background: linear-gradient(120deg, var(--wf-dark), var(--wf-green));
+            border-radius: 17px;
+            margin-bottom: 19px;
+        }
+
+        .amount-label {
+            font-size: 13px;
+            opacity: .9;
+        }
+
+        .amount-value {
+            font-size: clamp(29px, 7vw, 39px);
+            font-weight: 850;
+            margin-top: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: #ffffff20;
+            border: 1px solid #ffffff50;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .steps {
+            display: grid;
+            gap: 17px;
+        }
+
+        .step {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 31px;
+            height: 31px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            color: var(--wf-dark);
+            background: #e4f8e8;
+            border-radius: 50%;
+            font-weight: 800;
+        }
+
+        .step strong {
+            display: block;
+            margin: 3px 0 5px;
+        }
+
+        .step p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--wf-muted);
+            line-height: 1.65;
+        }
+
+        .notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 16px;
+            color: #74521a;
+            background: #fff8e6;
+            border: 1px solid #f5e4b5;
+            border-radius: 13px;
+            font-size: 13px;
+            line-height: 1.65;
+            margin-top: 18px;
+        }
+
+        .notice i {
+            margin-top: 3px;
+        }
+
+        .action-buttons {
+            display: grid;
+            gap: 12px;
+            margin-top: 21px;
+        }
+
+        .action-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 750;
+            transition: .2s;
+        }
+
+        .primary-button {
+            color: white;
+            background: var(--wf-green);
+            box-shadow: 0 5px 14px #28a74525;
+        }
+
+        .primary-button:hover {
+            background: var(--wf-dark);
+        }
+
+        .secondary-button {
+            color: var(--wf-dark);
+            background: white;
+            border: 1px solid #bfe5c6;
+        }
+
+        .secondary-button:hover {
+            background: #eaf8ed;
+        }
+
+        .support-line {
+            text-align: center;
+            margin-top: 22px;
+            color: var(--wf-muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .support-line a {
+            color: var(--wf-dark);
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .transfer-footer {
+            text-align: center;
+            padding: 22px 15px;
+            background: white;
+            border-top: 1px solid var(--wf-border);
+            color: var(--wf-muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .transfer-wrapper {
+                margin-top: 20px;
+            }
+
+            .card-body {
+                padding: 18px;
+            }
+
+            .card-heading {
+                padding: 17px;
+            }
+
+            .account-row {
+                align-items: flex-start;
+            }
+
+            .copy-button {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <main class="checkout-container">
+
+<header class="transfer-header">
+    <div class="transfer-header-inner">
+        <div class="brand-icon">
+            <i class="fa-solid fa-leaf"></i>
+        </div>
+        <div>
+            <div class="brand-name">WittyFare</div>
+            <span class="brand-subtitle">Agrovet & Farms · Your trusted farm partner</span>
+        </div>
+    </div>
+</header>
+
+<main class="transfer-wrapper">
+
+    <section class="success-banner">
+        <div class="success-icon">
+            <i class="fa-solid fa-building-columns"></i>
+        </div>
         <h1>Complete Your Bank Transfer</h1>
-        <p>Your order has been prepared. Please transfer the exact amount below.</p>
+        <p>Your order details are ready. Transfer the exact amount to the account below to proceed with payment.</p>
+    </section>
 
-        <section class="checkout-card">
-            <h2>WittyFare Bank Account</h2>
+    <section class="transfer-card">
+        <div class="card-heading">
+            <div class="heading-icon">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div>
+                <h2>Transfer Details</h2>
+                <p>Use these details when making your transfer.</p>
+            </div>
+        </div>
 
-            <p><strong>Bank:</strong> <span id="bankName">moniepoint</span></p>
-            <p><strong>Account name:</strong> <span id="accountName">wittyfare services</span></p>
-            <p><strong>Account number:</strong> <span id="accountNumber">6711391485</span></p>
+        <div class="card-body">
 
-            <hr>
+            <div class="amount-panel">
+                <div class="amount-label">Total amount to transfer</div>
+                <div class="amount-value" id="transferAmount">Loading...</div>
+                <div class="status-pill">
+                    <i class="fa-regular fa-clock"></i>
+                    Payment pending
+                </div>
+            </div>
 
-            <p>Order amount</p>
-            <h2 id="transferAmount">Loading...</h2>
+            <div class="account-row">
+                <div>
+                    <div class="field-label">moniepoint</div>
+                    <div class="field-value" id="bankName">moniepoint</div>
+                </div>
+            </div>
 
-            <p id="transferStatus"></p>
+            <div class="account-row">
+                <div>
+                    <div class="field-label">wittyfare service</div>
+                    <div class="field-value" id="accountName">wittyfare service</div>
+                </div>
+            </div>
 
-            <button type="button" id="copyAccount">Copy Account Number</button>
-            <a href="index.html">Continue Shopping</a>
-        </section>
-    </main>
+            <div class="account-row">
+                <div>
+                    <div class="field-label">6711391485</div>
+                    <div class="field-value account-number" id="accountNumber">6711391485</div>
+                </div>
+                <button type="button" class="copy-button" id="copyAccount">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
 
-    <script>
-    (() => {
-        const orderText = sessionStorage.getItem("currentOrder");
-        const status = document.getElementById("transferStatus");
+            <div class="notice">
+                <i class="fa-solid fa-shield-halved"></i>
+                <div>
+                    <strong>Important:</strong> Only transfer to the verified WittyFare account shown here. Your order is not marked as paid until the payment has been verified.
+                </div>
+            </div>
 
-        if (!orderText) {
-            document.getElementById("transferAmount").textContent =
-                "Order details unavailable";
-            status.textContent =
-                "Please return to checkout and place your order again.";
-            document.getElementById("copyAccount").disabled = true;
+        </div>
+    </section>
+
+    <section class="transfer-card">
+        <div class="card-heading">
+            <div class="heading-icon">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+                <h2>What to do next</h2>
+                <p>Three simple steps to complete your payment.</p>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Make the transfer</strong>
+                        <p>Transfer the exact amount displayed above to the WittyFare account.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Keep your receipt</strong>
+                        <p>Save your bank transfer receipt or transaction reference for verification.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Contact our team</strong>
+                        <p>Send your payment receipt and order details to WittyFare for confirmation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a class="action-button primary-button"
+                   href="https://wa.me/2348101234567"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Send Transfer Receipt
+                </a>
+
+                <a class="action-button secondary-button" href="index.html">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Continue Shopping
+                </a>
+            </div>
+
+            <div class="support-line">
+                Need help with your transfer?<br>
+                Contact <a href="https://wa.me/2348101234567" target="_blank" rel="noopener noreferrer">WittyFare Customer Support</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="transfer-footer">
+    © 2026 WittyFare Agrovet & Farms. All rights reserved.
+</footer>
+
+<script>
+(() => {
+    const bankDetails = {
+        bankName: "ADD YOUR BANK NAME",
+        accountName: "ADD YOUR ACCOUNT NAME",
+        accountNumber: "0000000000"
+    };
+
+    document.getElementById("bankName").textContent = bankDetails.bankName;
+    document.getElementById("accountName").textContent = bankDetails.accountName;
+    document.getElementById("accountNumber").textContent = bankDetails.accountNumber;
+
+    const amountElement = document.getElementById("transferAmount");
+    const copyButton = document.getElementById("copyAccount");
+
+    function showUnavailable(message) {
+        amountElement.textContent = "Unavailable";
+        const notice = document.querySelector(".notice");
+        notice.textContent = message;
+        copyButton.disabled = true;
+    }
+
+    try {
+        const savedOrder = sessionStorage.getItem("currentOrder");
+
+        if (!savedOrder) {
+            showUnavailable("Order details were not found. Please return to checkout and place your order again.");
+            return;
+        }
+
+        const order = JSON.parse(savedOrder);
+
+        if (order.paymentMethod !== "transfer" ||
+            !Number.isFinite(Number(order.totalPrice)) ||
+            Number(order.totalPrice) < 0) {
+            showUnavailable("The bank transfer order details could not be verified. Please return to checkout.");
+            return;
+        }
+
+        amountElement.textContent = "₦" +
+            Number(order.totalPrice).toLocaleString("en-NG", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+    } catch (error) {
+        showUnavailable("We could not read your order details. Please return to checkout and try again.");
+    }
+
+    copyButton.addEventListener("click", async () => {
+        const account = bankDetails.accountNumber;
+
+        if (!/^\d{10}$/.test(account)) {
+            alert("Please configure your correct 10-digit bank account number first.");
             return;
         }
 
         try {
-            const order = JSON.parse(orderText);
-
-            if (!Number.isFinite(Number(order.totalPrice)) ||
-                Number(order.totalPrice) < 0 ||
-                order.paymentMethod !== "transfer") {
-                throw new Error("Invalid transfer order");
-            }
-
-            document.getElementById("transferAmount").textContent =
-                "₦" + Number(order.totalPrice).toLocaleString("en-NG");
-
-            status.textContent =
-                "Payment status: Pending. Your order is not yet marked as paid.";
+            await navigator.clipboard.writeText(account);
+            copyButton.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
         } catch {
-            document.getElementById("transferAmount").textContent =
-                "Order details unavailable";
-            status.textContent = "Please return to checkout and try again.";
-            document.getElementById("copyAccount").disabled = true;
+            alert("Copy failed. Please select and copy the account number manually.");
         }
+    });
+})();
+</script>
 
-        document.getElementById("copyAccount").addEventListener("click", async () => {
-            const account = document.getElementById("accountNumber").textContent.trim();
-
-            if (!/^\d{10}$/.test(account)) {
-                alert("Please configure your real 10-digit account number first.");
-                return;
-            }
-
-            try {
-                await navigator.clipboard.writeText(account);
-                alert("Account number copied.");
-            } catch {
-                alert("Please copy the account number manually.");
-            }
-        });
-    })();
-    </script>
 </body>
 </html>
+```
