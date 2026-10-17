@@ -3,706 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Confirm Your Order | WittyFare</title>
-
     <link rel="stylesheet" href="style.css">
-
     <style>
-        /* =====================================================
-           WITTYFARE ORDER CONFIRMATION
-        ===================================================== */
-
-        .confirmation-page {
-            min-height: 100vh;
-            background: #f6f8f7;
-            padding-bottom: 50px;
-        }
-
-        .confirmation-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .confirmation-header-inner {
-            max-width: 1000px;
-            margin: auto;
-            padding: 16px 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .confirmation-logo {
-            font-size: 23px;
-            font-weight: 800;
-            color: #2c8a38;
-            text-decoration: none;
-        }
-
-        .secure-label {
-            font-size: 12px;
-            color: #667085;
-        }
-
-
-        /* ===============================
-           MAIN
-        =============================== */
-
-        .confirmation-container {
-            width: 100%;
-            max-width: 900px;
-
-            margin: 0 auto;
-            padding: 35px 20px;
-        }
-
-
-        /* ===============================
-           SUCCESS
-        =============================== */
-
-        .confirmation-success {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .success-icon {
-            width: 70px;
-            height: 70px;
-
-            margin: 0 auto 15px;
-
-            display: grid;
-            place-items: center;
-
-            background: #e8f7ec;
-            color: #2c8a38;
-
-            border-radius: 50%;
-
-            font-size: 34px;
-            font-weight: 800;
-        }
-
-        .confirmation-success h1 {
-            margin: 0 0 8px;
-
-            color: #20252b;
-
-            font-size: 29px;
-        }
-
-        .confirmation-success p {
-            max-width: 560px;
-
-            margin: auto;
-
-            color: #667085;
-
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-
-        /* ===============================
-           CONFIRMATION CARD
-        =============================== */
-
-        .confirmation-card {
-            background: #ffffff;
-
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-
-            box-shadow: 0 5px 22px rgba(20, 40, 25, .05);
-
-            overflow: hidden;
-
-            margin-bottom: 18px;
-        }
-
-        .confirmation-card-header {
-            padding: 19px 22px;
-
-            border-bottom: 1px solid #edf0f1;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .confirmation-card-header h2 {
-            margin: 0;
-
-            font-size: 17px;
-        }
-
-        .review-label {
-            color: #667085;
-
-            font-size: 11px;
-        }
-
-
-        /* ===============================
-           PRODUCTS
-        =============================== */
-
-        .confirmation-products {
-            padding: 5px 22px;
-        }
-
-        .confirmation-product {
-            display: grid;
-
-            grid-template-columns: 60px 1fr auto;
-
-            align-items: center;
-
-            gap: 12px;
-
-            padding: 14px 0;
-
-            border-bottom: 1px solid #f0f1f2;
-        }
-
-        .confirmation-product:last-child {
-            border-bottom: none;
-        }
-
-        .confirmation-product img {
-            width: 60px;
-            height: 60px;
-
-            object-fit: contain;
-
-            background: #f5f7f6;
-
-            border-radius: 9px;
-        }
-
-        .confirmation-product-info {
-            min-width: 0;
-        }
-
-        .confirmation-product-info h3 {
-            margin: 0 0 5px;
-
-            color: #20252b;
-
-            font-size: 13px;
-        }
-
-        .confirmation-product-info p {
-            margin: 0;
-
-            color: #667085;
-
-            font-size: 11px;
-        }
-
-        .confirmation-product-price {
-            color: #20252b;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            white-space: nowrap;
-        }
-
-
-        /* ===============================
-           TOTAL
-        =============================== */
-
-        .confirmation-total {
-            padding: 18px 22px;
-
-            background: #f8faf9;
-
-            border-top: 1px solid #edf0f1;
-        }
-
-        .confirmation-total-row {
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin: 7px 0;
-
-            color: #667085;
-
-            font-size: 13px;
-        }
-
-        .confirmation-total-row.grand {
-            margin-top: 13px;
-            padding-top: 13px;
-
-            border-top: 1px dashed #d9dfe0;
-
-            color: #20252b;
-
-            font-size: 16px;
-            font-weight: 800;
-        }
-
-        .confirmation-total-row.grand strong {
-            color: #2c8a38;
-
-            font-size: 21px;
-        }
-
-
-        /* ===============================
-           CUSTOMER DETAILS
-        =============================== */
-
-        .customer-details {
-            display: grid;
-
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 0;
-
-            padding: 5px 22px;
-        }
-
-        .customer-detail {
-            padding: 14px 0;
-
-            border-bottom: 1px solid #f0f1f2;
-        }
-
-        .customer-detail:nth-last-child(-n+2) {
-            border-bottom: none;
-        }
-
-        .customer-detail-label {
-            display: block;
-
-            margin-bottom: 4px;
-
-            color: #8a9298;
-
-            font-size: 10px;
-            text-transform: uppercase;
-
-            letter-spacing: .4px;
-        }
-
-        .customer-detail-value {
-            color: #20252b;
-
-            font-size: 13px;
-            font-weight: 600;
-
-            word-break: break-word;
-        }
-
-
-        /* ===============================
-           NOTICE
-        =============================== */
-
-        .confirmation-notice {
-            display: flex;
-
-            gap: 10px;
-
-            margin-bottom: 18px;
-            padding: 14px;
-
-            background: #edf8ef;
-
-            border-radius: 11px;
-        }
-
-        .confirmation-notice-icon {
-            font-size: 19px;
-        }
-
-        .confirmation-notice strong {
-            display: block;
-
-            margin-bottom: 3px;
-
-            color: #245f2c;
-
-            font-size: 12px;
-        }
-
-        .confirmation-notice p {
-            margin: 0;
-
-            color: #56705a;
-
-            font-size: 11px;
-            line-height: 1.5;
-        }
-
-
-        /* ===============================
-           BUTTONS
-        =============================== */
-
-        .confirmation-actions {
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
-
-            margin-top: 20px;
-        }
-
-        .confirm-order-button,
-        .continue-shopping-button {
-            min-height: 52px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 11px;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            text-decoration: none;
-
-            cursor: pointer;
-
-            transition: .2s ease;
-        }
-
-        .confirm-order-button {
-            border: none;
-
-            background: #49D8B9;
-            color: #10362e;
-        }
-
-        .confirm-order-button:hover {
-            background: #35c9aa;
-        }
-
-        .confirm-order-button:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-        }
-
-        .continue-shopping-button {
-            background: #ffffff;
-
-            color: #2c8a38;
-
-            border: 1px solid #cfd7d1;
-        }
-
-        .continue-shopping-button:hover {
-            background: #f3faf4;
-
-            border-color: #2c8a38;
-        }
-
-
-        /* ===============================
-           FOOTER NOTE
-        =============================== */
-
-        .confirmation-footer-note {
-            margin-top: 24px;
-
-            color: #8a9298;
-
-            font-size: 10px;
-
-            text-align: center;
-            line-height: 1.5;
-        }
-
-
-        /* ===============================
-           MOBILE
-        =============================== */
-
+        .confirmation-page { min-height: 100vh; background: #f6f8f7; padding-bottom: 50px; }
+        .confirmation-header { background: #ffffff; border-bottom: 1px solid #e5e7eb; }
+        .confirmation-header-inner { max-width: 1000px; margin: auto; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .confirmation-logo { font-size: 23px; font-weight: 800; color: #2c8a38; text-decoration: none; }
+        .secure-label { font-size: 12px; color: #667085; }
+        .confirmation-container { width: 100%; max-width: 900px; margin: 0 auto; padding: 35px 20px; }
+        .confirmation-success { text-align: center; margin-bottom: 30px; }
+        .success-icon { width: 70px; height: 70px; margin: 0 auto 15px; display: grid; place-items: center; background: #e8f7ec; color: #2c8a38; border-radius: 50%; font-size: 34px; font-weight: 800; }
+        .confirmation-success h1 { margin: 0 0 8px; color: #20252b; font-size: 29px; }
+        .confirmation-success p { max-width: 560px; margin: auto; color: #667085; font-size: 14px; line-height: 1.6; }
+        .confirmation-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 5px 22px rgba(20, 40, 25, .05); overflow: hidden; margin-bottom: 18px; }
+        .confirmation-card-header { padding: 19px 22px; border-bottom: 1px solid #edf0f1; display: flex; justify-content: space-between; align-items: center; }
+        .confirmation-card-header h2 { margin: 0; font-size: 17px; }
+        .review-label { color: #667085; font-size: 11px; }
+        .confirmation-products { padding: 5px 22px; }
+        .confirmation-product { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f0f1f2; }
+        .confirmation-product:last-child { border-bottom: none; }
+        .confirmation-product img { width: 60px; height: 60px; object-fit: contain; background: #f5f7f6; border-radius: 9px; }
+        .confirmation-product-info { min-width: 0; }
+        .confirmation-product-info h3 { margin: 0 0 5px; color: #20252b; font-size: 13px; }
+        .confirmation-product-info p { margin: 0; color: #667085; font-size: 11px; }
+        .confirmation-product-price { color: #20252b; font-size: 13px; font-weight: 800; white-space: nowrap; }
+        .confirmation-total { padding: 18px 22px; background: #f8faf9; border-top: 1px solid #edf0f1; }
+        .confirmation-total-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 7px 0; color: #667085; font-size: 13px; }
+        .confirmation-total-row.grand { margin-top: 13px; padding-top: 13px; border-top: 1px dashed #d9dfe0; color: #20252b; font-size: 16px; font-weight: 800; }
+        .confirmation-total-row.grand strong { color: #2c8a38; font-size: 21px; }
+        .customer-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; padding: 5px 22px; }
+        .customer-detail { padding: 14px 0; border-bottom: 1px solid #f0f1f2; }
+        .customer-detail:nth-last-child(-n+2) { border-bottom: none; }
+        .customer-detail-label { display: block; margin-bottom: 4px; color: #8a9298; font-size: 10px; text-transform: uppercase; letter-spacing: .4px; }
+        .customer-detail-value { color: #20252b; font-size: 13px; font-weight: 600; word-break: break-word; }
+        .confirmation-notice { display: flex; gap: 10px; margin-bottom: 18px; padding: 14px; background: #edf8ef; border-radius: 11px; }
+        .confirmation-notice-icon { font-size: 19px; }
+        .confirmation-notice strong { display: block; margin-bottom: 3px; color: #245f2c; font-size: 12px; }
+        .confirmation-notice p { margin: 0; color: #56705a; font-size: 11px; line-height: 1.5; }
+        .confirmation-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .confirm-order-button, .continue-shopping-button { min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 11px; font-size: 13px; font-weight: 800; text-decoration: none; cursor: pointer; transition: .2s ease; }
+        .confirm-order-button { border: none; background: #49D8B9; color: #10362e; }
+        .confirm-order-button:hover { background: #35c9aa; }
+        .confirm-order-button:disabled { opacity: .6; cursor: not-allowed; }
+        .continue-shopping-button { background: #ffffff; color: #2c8a38; border: 1px solid #cfd7d1; }
+        .continue-shopping-button:hover { background: #f3faf4; border-color: #2c8a38; }
+        .confirmation-footer-note { margin-top: 24px; color: #8a9298; font-size: 10px; text-align: center; line-height: 1.5; }
         @media (max-width: 600px) {
-
-            .confirmation-container {
-                padding: 25px 12px;
-            }
-
-            .confirmation-header-inner {
-                padding: 13px 14px;
-            }
-
-            .confirmation-logo {
-                font-size: 20px;
-            }
-
-            .secure-label {
-                font-size: 10px;
-            }
-
-            .confirmation-success h1 {
-                font-size: 24px;
-            }
-
-            .confirmation-success p {
-                font-size: 12px;
-            }
-
-            .success-icon {
-                width: 62px;
-                height: 62px;
-
-                font-size: 29px;
-            }
-
-            .confirmation-card-header {
-                padding: 16px;
-            }
-
-            .confirmation-products {
-                padding: 4px 16px;
-            }
-
-            .confirmation-product {
-                grid-template-columns: 52px 1fr;
-
-                gap: 10px;
-            }
-
-            .confirmation-product img {
-                width: 52px;
-                height: 52px;
-            }
-
-            .confirmation-product-price {
-                grid-column: 2;
-
-                text-align: left;
-            }
-
-            .confirmation-total {
-                padding: 16px;
-            }
-
-            .customer-details {
-                grid-template-columns: 1fr;
-
-                padding: 4px 16px;
-            }
-
-            .customer-detail:nth-last-child(-n+2) {
-                border-bottom: 1px solid #f0f1f2;
-            }
-
-            .customer-detail:last-child {
-                border-bottom: none;
-            }
-
-            .confirmation-actions {
-                grid-template-columns: 1fr;
-            }
-
-            .confirm-order-button {
-                order: 1;
-            }
-
-            .continue-shopping-button {
-                order: 2;
-            }
+            .confirmation-container { padding: 25px 12px; }
+            .confirmation-header-inner { padding: 13px 14px; }
+            .confirmation-logo { font-size: 20px; }
+            .secure-label { font-size: 10px; }
+            .confirmation-success h1 { font-size: 24px; }
+            .confirmation-success p { font-size: 12px; }
+            .success-icon { width: 62px; height: 62px; font-size: 29px; }
+            .confirmation-card-header { padding: 16px; }
+            .confirmation-products { padding: 4px 16px; }
+            .confirmation-product { grid-template-columns: 52px 1fr; gap: 10px; }
+            .confirmation-product img { width: 52px; height: 52px; }
+            .confirmation-product-price { grid-column: 2; text-align: left; }
+            .confirmation-total { padding: 16px; }
+            .customer-details { grid-template-columns: 1fr; padding: 4px 16px; }
+            .customer-detail:nth-last-child(-n+2) { border-bottom: 1px solid #f0f1f2; }
+            .customer-detail:last-child { border-bottom: none; }
+            .confirmation-actions { grid-template-columns: 1fr; }
+            .confirm-order-button { order: 1; }
+            .continue-shopping-button { order: 2; }
         }
     </style>
 </head>
-
 <body>
-
 <div class="confirmation-page">
-
-    <!-- HEADER -->
     <header class="confirmation-header">
         <div class="confirmation-header-inner">
-
-            <a href="index.html" class="confirmation-logo">
-                WittyFare
-            </a>
-
-            <span class="secure-label">
-                🔒 Secure Order
-            </span>
-
+            <a href="index.html" class="confirmation-logo">WittyFare</a>
+            <span class="secure-label">🔒 Secure Order</span>
         </div>
     </header>
 
-
     <main class="confirmation-container">
-
-        <!-- SUCCESS MESSAGE -->
         <section class="confirmation-success">
-
-            <div class="success-icon">
-                ✓
-            </div>
-
+            <div class="success-icon">✓</div>
             <h1>Review Your Order</h1>
-
-            <p>
-                Please confirm that your details and selected products are correct
-                before sending your order.
-            </p>
-
+            <p>Please confirm that your details and selected products are correct before sending your order.</p>
         </section>
 
+        <!-- OPay PAYMENT STATUS - Added for OPay -->
+        <section class="confirmation-card" id="opayStatusBox" style="display:none; border-left:4px solid #49D8B9;">
+            <div style="padding:16px 22px;">
+                <strong id="opayStatusTitle" style="font-size:13px;">🔍 Checking payment...</strong>
+                <p id="opayStatusText" style="margin:6px 0 0; font-size:12px; color:#667085; line-height:1.5;">Please wait</p>
+            </div>
+        </section>
 
-        <!-- ORDER SUMMARY -->
         <section class="confirmation-card">
-
             <div class="confirmation-card-header">
                 <h2>Order Summary</h2>
-
-                <span class="review-label">
-                    Please review
-                </span>
+                <span class="review-label">Please review</span>
             </div>
-
-            <div class="confirmation-products" id="cartDetails">
-                <!-- Products inserted by JavaScript -->
-            </div>
-
+            <div class="confirmation-products" id="cartDetails"></div>
             <div class="confirmation-total">
-
-                <div class="confirmation-total-row">
-                    <span>Total Quantity</span>
-                    <strong id="totalQuantity">0</strong>
-                </div>
-
-                <div class="confirmation-total-row grand">
-                    <span>Total</span>
-                    <strong id="totalPrice">₦0</strong>
-                </div>
-
+                <div class="confirmation-total-row"><span>Total Quantity</span><strong id="totalQuantity">0</strong></div>
+                <div class="confirmation-total-row grand"><span>Total</span><strong id="totalPrice">₦0</strong></div>
             </div>
-
         </section>
 
-
-        <!-- CUSTOMER DETAILS -->
         <section class="confirmation-card">
-
-            <div class="confirmation-card-header">
-                <h2>Delivery Details</h2>
-            </div>
-
+            <div class="confirmation-card-header"><h2>Delivery Details</h2></div>
             <div class="customer-details">
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        Full Name
-                    </span>
-
-                    <div class="customer-detail-value" id="customerName">
-                        —
-                    </div>
-                </div>
-
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        Phone
-                    </span>
-
-                    <div class="customer-detail-value" id="customerPhone">
-                        —
-                    </div>
-                </div>
-
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        Email
-                    </span>
-
-                    <div class="customer-detail-value" id="customerEmail">
-                        —
-                    </div>
-                </div>
-
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        City
-                    </span>
-
-                    <div class="customer-detail-value" id="customerCity">
-                        —
-                    </div>
-                </div>
-
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        Address
-                    </span>
-
-                    <div class="customer-detail-value" id="customerAddress">
-                        —
-                    </div>
-                </div>
-
-
-                <div class="customer-detail">
-                    <span class="customer-detail-label">
-                        Country
-                    </span>
-
-                    <div class="customer-detail-value" id="customerCountry">
-                        —
-                    </div>
-                </div>
-
+                <div class="customer-detail"><span class="customer-detail-label">Full Name</span><div class="customer-detail-value" id="customerName">—</div></div>
+                <div class="customer-detail"><span class="customer-detail-label">Phone</span><div class="customer-detail-value" id="customerPhone">—</div></div>
+                <div class="customer-detail"><span class="customer-detail-label">Email</span><div class="customer-detail-value" id="customerEmail">—</div></div>
+                <div class="customer-detail"><span class="customer-detail-label">City</span><div class="customer-detail-value" id="customerCity">—</div></div>
+                <div class="customer-detail"><span class="customer-detail-label">Address</span><div class="customer-detail-value" id="customerAddress">—</div></div>
+                <div class="customer-detail"><span class="customer-detail-label">Country</span><div class="customer-detail-value" id="customerCountry">—</div></div>
             </div>
-
         </section>
 
-
-        <!-- NOTICE -->
         <div class="confirmation-notice">
-
-            <div class="confirmation-notice-icon">
-                📦
-            </div>
-
-            <div>
-
-                <strong>Before you confirm</strong>
-
-                <p>
-                    Make sure your phone number, delivery address and order items
-                    are correct. Once submitted, we'll receive your order details
-                    and contact you regarding delivery and payment.
-                </p>
-
-            </div>
-
+            <div class="confirmation-notice-icon">📦</div>
+            <div><strong>Before you confirm</strong><p>Make sure your phone number, delivery address and order items are correct. Once submitted, we'll receive your order details and contact you regarding delivery and payment.</p></div>
         </div>
 
-
-        <!-- FORM -->
-        <form
-            id="orderForm"
-            action="https://formspree.io/f/mgveabqr"
-            method="POST"
-        >
-
+        <form id="orderForm" action="https://formspree.io/f/mgveabqr" method="POST">
             <input type="hidden" name="name" id="formName">
             <input type="hidden" name="phone" id="formPhone">
             <input type="hidden" name="address" id="formAddress">
@@ -712,258 +135,142 @@
             <input type="hidden" name="totalQuantity" id="formTotalQuantity">
             <input type="hidden" name="totalPrice" id="formTotalPrice">
             <input type="hidden" name="products" id="formProducts">
-
-
             <div class="confirmation-actions">
-
-                <button
-                    type="submit"
-                    id="submitOrder"
-                    class="confirm-order-button"
-                >
-                    Confirm & Send Order
-                </button>
-
-                <a
-                    href="index.html"
-                    class="continue-shopping-button"
-                >
-                    Continue Shopping
-                </a>
-
+                <button type="submit" id="submitOrder" class="confirm-order-button">Confirm & Send Order</button>
+                <a href="index.html" class="continue-shopping-button">Continue Shopping</a>
             </div>
-
         </form>
 
-
-        <p class="confirmation-footer-note">
-            Your order information is used only to process your purchase and
-            arrange delivery.
-        </p>
-
+        <p class="confirmation-footer-note">Your order information is used only to process your purchase and arrange delivery.</p>
     </main>
-
 </div>
 
-
 <script>
-
     function escapeHTML(value) {
         const div = document.createElement('div');
         div.textContent = value ?? '';
         return div.innerHTML;
     }
 
+    async function checkOpayPayment() {
+        const ref = sessionStorage.getItem('opayPaymentReference');
+        const box = document.getElementById('opayStatusBox');
+        const title = document.getElementById('opayStatusTitle');
+        const text = document.getElementById('opayStatusText');
+
+        if (!ref || !box) return;
+
+        box.style.display = 'block';
+        
+        try {
+            const res = await fetch(`/api/opay-verify.mjs?reference=${encodeURIComponent(ref)}`);
+            const data = await res.json();
+            
+            if (data.success) {
+                title.textContent = '✅ Payment Verified';
+                title.style.color = '#2c8a38';
+                text.innerHTML = `Reference: ${escapeHTML(ref)}<br>Your payment was confirmed. We will contact you for delivery.`;
+                box.style.borderLeftColor = '#2c8a38';
+                box.style.background = '#edf8ef';
+                
+                localStorage.removeItem('listCart');
+                localStorage.removeItem('cart');
+                sessionStorage.setItem('paymentStatus', 'paid');
+                
+                const h1 = document.querySelector('.confirmation-success h1');
+                const p = document.querySelector('.confirmation-success p');
+                const icon = document.querySelector('.success-icon');
+                if(h1) h1.textContent = 'Payment Successful!';
+                if(p) p.textContent = 'Thank you! Your order has been paid and confirmed.';
+                if(icon) { icon.textContent = '✓'; icon.style.background = '#2c8a38'; icon.style.color = '#fff'; }
+            } else {
+                title.textContent = '⚠️ Payment Pending';
+                title.style.color = '#b76a00';
+                text.innerHTML = `Reference: ${escapeHTML(ref)}<br>We haven't received your transfer yet. If you already transferred, wait 2 mins and refresh.<br><br><small>In sandbox, go to OPay Dashboard > Test Mode > Transactions > Simulate Success, then refresh this page.</small>`;
+                box.style.borderLeftColor = '#f5a623';
+                box.style.background = '#fff8e6';
+            }
+        } catch (e) {
+            title.textContent = 'Could not verify payment';
+            text.textContent = 'Network error. Refresh page.';
+            console.log(e);
+        }
+    }
 
     function displayConfirmation() {
+        const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+        const listCart = JSON.parse(sessionStorage.getItem('checkoutCart'));
 
-        const userDetails =
-            JSON.parse(sessionStorage.getItem('userDetails'));
-
-        const listCart =
-            JSON.parse(sessionStorage.getItem('checkoutCart'));
-
-
-        if (
-            !userDetails ||
-            !Array.isArray(listCart) ||
-            listCart.length === 0
-        ) {
+        if (!userDetails || !Array.isArray(listCart) || listCart.length === 0) {
             window.location.href = 'checkout.html';
             return;
         }
 
-
         let totalQuantity = 0;
         let totalPrice = 0;
-
-        const productsContainer =
-            document.getElementById('cartDetails');
-
+        const productsContainer = document.getElementById('cartDetails');
         const productsList = [];
 
-
-        /* ===============================
-           CUSTOMER DETAILS
-        =============================== */
-
-        document.getElementById('customerName').textContent =
-            userDetails.name || '—';
-
-        document.getElementById('customerPhone').textContent =
-            userDetails.phone || '—';
-
-        document.getElementById('customerEmail').textContent =
-            userDetails.email || '—';
-
-        document.getElementById('customerAddress').textContent =
-            userDetails.address || '—';
-
-        document.getElementById('customerCountry').textContent =
-            userDetails.country || '—';
-
-        document.getElementById('customerCity').textContent =
-            userDetails.city || '—';
-
-
-        /* ===============================
-           PRODUCTS
-        =============================== */
+        document.getElementById('customerName').textContent = userDetails.name || '—';
+        document.getElementById('customerPhone').textContent = userDetails.phone || '—';
+        document.getElementById('customerEmail').textContent = userDetails.email || '—';
+        document.getElementById('customerAddress').textContent = userDetails.address || '—';
+        document.getElementById('customerCountry').textContent = userDetails.country || '—';
+        document.getElementById('customerCity').textContent = userDetails.city || '—';
 
         productsContainer.innerHTML = '';
 
-
         listCart.forEach(product => {
-
             const quantity = Number(product.quantity) || 0;
             const price = Number(product.price) || 0;
-
             const subtotal = price * quantity;
-
             totalQuantity += quantity;
             totalPrice += subtotal;
 
-
-            const item =
-                document.createElement('div');
-
-            item.className =
-                'confirmation-product';
-
-
+            const item = document.createElement('div');
+            item.className = 'confirmation-product';
             item.innerHTML = `
-
-                <img
-                    src="${escapeHTML(product.image || '')}"
-                    alt="${escapeHTML(product.name || 'Product')}"
-                >
-
+                <img src="${escapeHTML(product.image || '')}" alt="${escapeHTML(product.name || 'Product')}">
                 <div class="confirmation-product-info">
-
-                    <h3>
-                        ${escapeHTML(product.name)}
-                    </h3>
-
-                    <p>
-                        ₦${price.toLocaleString()}
-                        × ${quantity}
-                    </p>
-
+                    <h3>${escapeHTML(product.name)}</h3>
+                    <p>₦${price.toLocaleString()} × ${quantity}</p>
                 </div>
-
-                <div class="confirmation-product-price">
-                    ₦${subtotal.toLocaleString()}
-                </div>
+                <div class="confirmation-product-price">₦${subtotal.toLocaleString()}</div>
             `;
-
-
             productsContainer.appendChild(item);
-
-
-            productsList.push(
-                `${product.name} - Quantity: ${quantity} - Unit Price: ₦${price.toLocaleString()} - Subtotal: ₦${subtotal.toLocaleString()}`
-            );
-
+            productsList.push(`${product.name} - Qty: ${quantity} - Unit: ₦${price.toLocaleString()} - Subtotal: ₦${subtotal.toLocaleString()}`);
         });
 
+        document.getElementById('totalQuantity').textContent = totalQuantity.toLocaleString();
+        document.getElementById('totalPrice').textContent = '₦' + totalPrice.toLocaleString();
 
-        /* ===============================
-           TOTALS
-        =============================== */
+        document.getElementById('formName').value = userDetails.name || '';
+        document.getElementById('formPhone').value = userDetails.phone || '';
+        document.getElementById('formAddress').value = userDetails.address || '';
+        document.getElementById('formEmail').value = userDetails.email || '';
+        document.getElementById('formCountry').value = userDetails.country || '';
+        document.getElementById('formCity').value = userDetails.city || '';
+        document.getElementById('formTotalQuantity').value = totalQuantity;
+        document.getElementById('formTotalPrice').value = totalPrice.toFixed(2);
+        document.getElementById('formProducts').value = productsList.join('\n');
 
-        document.getElementById('totalQuantity').textContent =
-            totalQuantity.toLocaleString();
-
-        document.getElementById('totalPrice').textContent =
-            '₦' + totalPrice.toLocaleString();
-
-
-        /* ===============================
-           FORMSPREE DATA
-        =============================== */
-
-        document.getElementById('formName').value =
-            userDetails.name || '';
-
-        document.getElementById('formPhone').value =
-            userDetails.phone || '';
-
-        document.getElementById('formAddress').value =
-            userDetails.address || '';
-
-        document.getElementById('formEmail').value =
-            userDetails.email || '';
-
-        document.getElementById('formCountry').value =
-            userDetails.country || '';
-
-        document.getElementById('formCity').value =
-            userDetails.city || '';
-
-        document.getElementById('formTotalQuantity').value =
-            totalQuantity;
-
-        document.getElementById('formTotalPrice').value =
-            totalPrice.toFixed(2);
-
-        document.getElementById('formProducts').value =
-            productsList.join('\n');
-
+        checkOpayPayment();
     }
 
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        const button = document.getElementById('submitOrder');
+        const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+        const listCart = JSON.parse(sessionStorage.getItem('checkoutCart'));
+        if (!userDetails || !Array.isArray(listCart) || listCart.length === 0) {
+            event.preventDefault();
+            alert('Your order information is missing. Please return to checkout.');
+            return;
+        }
+        button.disabled = true;
+        button.textContent = 'Sending Order...';
+    });
 
-    /* ===============================
-       SUBMIT
-    =============================== */
-
-    document.getElementById('orderForm')
-        .addEventListener('submit', function(event) {
-
-            const button =
-                document.getElementById('submitOrder');
-
-            const userDetails =
-                JSON.parse(sessionStorage.getItem('userDetails'));
-
-            const listCart =
-                JSON.parse(sessionStorage.getItem('checkoutCart'));
-
-
-            if (
-                !userDetails ||
-                !Array.isArray(listCart) ||
-                listCart.length === 0
-            ) {
-
-                event.preventDefault();
-
-                alert(
-                    'Your order information is missing. Please return to checkout.'
-                );
-
-                return;
-            }
-
-
-            /*
-                Prevent double clicking.
-            */
-
-            button.disabled = true;
-
-            button.textContent =
-                'Sending Order...';
-
-        });
-
-
-    document.addEventListener(
-        'DOMContentLoaded',
-        displayConfirmation
-    );
-
+    document.addEventListener('DOMContentLoaded', displayConfirmation);
 </script>
-
 </body>
 </html>
-```
