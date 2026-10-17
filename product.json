@@ -115,22 +115,69 @@
   {
     "id": "feed-hybrid-grower-mash-25kg",
     "name": "Hybrid Grower Mash 25kg",
-    "price": 12200,
+    "price": 12450,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-grower-mash-25kg",
     "image": "/images/poultryfeed/Hybrid_grower_mash-2.png",
-    "description": "Hybrid Grower Mash 25kg poultry feed for growing birds."
+    "description": "Hybrid Grower Mash 25kg poultry feed for growing birds.",
+    "featured": true
   },
+   {
+    "id": "feed-hybrid-grower-crumbled-25kg",
+    "name": "Hybrid Grower crumbled 25kg",
+    "price": 12900,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-grower-crumbled-25kg",
+    "image": "/images/poultryfeed/hybrid-grower-crumbled.png",
+    "description": "Hybrid Grower crumbled 25kg poultry feed for growing birds.",
+    "featured": true
+  },
+  {
+    "id": "feed-hybrid-chick-crumbled-25kg",
+    "name": "Hybrid Chick crumbled 25kg",
+    "price": 16900,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-chick-crumbled-25kg",
+    "image": "/images/poultryfeed/hybrid-chick-crumbled-25kg.png",
+    "description": "Hybrid Chick crumbled 25kg poultry feed for growing birds.",
+    "featured": true
+  },
+   {
+    "id": "feed-hybrid-starter-crumbled-25kg",
+    "name": "Hybrid Starter crumbled 25kg",
+    "price": 17600,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-starter-crumbled-25kg",
+    "image": "/images/poultryfeed/hybrid-starter-crumbled.png",
+    "description": "Hybrid Starter crumbled 25kg poultry feed for growing birds.",
+    "featured": true
+  },
+
   {
     "id": "feed-hybrid-layer-mash-25kg",
     "name": "Hybrid Layer Mash 25kg",
-    "price": 13000,
+    "price": 13750,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-layer-mash-25kg",
     "image": "/images/poultryfeed/Hybrid_layer_mash-3.png",
-    "description": "Hybrid Layer Mash 25kg poultry feed for laying birds."
+    "description": "Hybrid Layer Mash 25kg poultry feed for laying birds.",
+    "featured": true
+  },
+  {
+    "id": "feed-hybrid-layer-combo-25kg",
+    "name": "Hybrid Layer Combo 25kg",
+    "price": 13450,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-layer-combo-25kg",
+    "image": "/images/poultryfeed/hybrid-layer-combo-25kg.png",
+    "description": "Hybrid Layer Combo 25kg poultry feed for laying birds.",
+    "featured": true
   },
   {
     "id": "feed-chikun-gower-pellet",
@@ -140,7 +187,8 @@
     "subcategory": "poultry-feed",
     "slug": "chikun-grower-pellet-25kg",
     "image": "/images/poultryfeed/Chikun_grower_pellet.png",
-    "description": "Chikun Grower Pellet 25kg poultry feed for growing birds."
+    "description": "Chikun Grower Pellet 25kg poultry feed for growing birds.",
+    "featured": true
   },
   {
     "id": "feed-dcp-25kg",
@@ -165,12 +213,24 @@
   {
     "id": "feed-hybrid-3-in-1-25kg",
     "name": "Hybrid 3-in-1 25kg",
-    "price": 20000,
+    "price": 20600,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-3-in-1-25kg",
     "image": "/images/poultryfeed/Hybrid_3_in_1_Special-4.png",
-    "description": "Hybrid 3-in-1 25kg poultry feed for laying birds."
+    "description": "Hybrid 3-in-1 25kg poultry feed for laying birds.",
+    "featured": true
+  },
+   {
+    "id": "feed-hybrid-base-2-finisher-25kg",
+    "name": "Hybrid Base 2 Finisher 25kg",
+    "price": 19400,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-base-2-finisher-25kg",
+    "image": "/images/poultryfeed/Hybrid-base-2-finisher.png",
+    "description": "Hybrid Base 2 Finisher 25kg poultry feed for laying birds.",
+    "featured": true
   },
   {
     "id": "feed-top_line_grower_mash-25kg",
@@ -235,22 +295,25 @@
   {
     "id": "feed-hybrid-base1-super-starter-25kg",
     "name": "Hybrid Base1 Super Starter 25kg",
-    "price": 19750,
+    "price": 19900,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-base1-super-starter-25kg",
     "image": "/images/poultryfeed/Hybrid_base1_Starter-25kg-6.png",
-    "description": "Hybrid Base1 Super Starter poultry feed in a 25kg bag."
+    "description": "Hybrid Base1 Super Starter poultry feed in a 25kg bag.",
+    "featured": true
   },
   {
     "id": "feed-hybrid-finisher-pellet-25kg",
     "name": "Hybrid Finisher Pellet 25kg",
-    "price": 16700,
+    "price": 17500,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-finisher-pellet-25kg",
     "image": "/images/poultryfeed/Hybrid_finisher_pellet_25kg-7.png",
-    "description": "Hybrid Finisher Pellet 25kg poultry feed for broiler finishing."
+    "description": "Hybrid Finisher Pellet 25kg poultry feed for broiler finishing.",
+    "featured": true
+
   },
   {
     "id": "feed-ultima-finisher",
@@ -382,6 +445,26 @@
       { "sku": "COC-250", "label": "Size", "name": "250ml", "price": 7500, "stock": 30 },
       { "sku": "COC-500", "label": "Size", "name": "500ml", "price": 12500, "stock": 20 },
       { "sku": "COC-1000", "label": "Size", "name": "1L - Best Value", "price": 21500, "stock": 15, "bestValue": true }
+    ]
+  },
+   {
+    "id": "hybrid-301",
+    "name": "Hybrib 301 - 303 25kg",
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "hybrid-301",
+    "image": "/images/poultryfeed/hybrid-special-301-303.png",
+    "images": ["images/hybrid-301-1.png", "images/hybrid-301-2.png"],
+    "description": "poultry feed and livestock.",
+    "minPrice": 19400,
+    "maxPrice": 20600,
+    "displayPrice": "₦19,300 - ₦20,600",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "hyb-303", "label": "Size", "name": "hybrid special 303", "price": 19400, "stock": 50 },
+      { "sku": "hyb-302", "label": "Size", "name": "hybrid special 302", "price": 18900, "stock": 30 },
+      { "sku": "hyb-301", "label": "Size", "name": "hybrid special 301", "price": 20600, "stock": 50, "bestValue": true }
     ]
   },
   {
