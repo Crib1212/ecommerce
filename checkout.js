@@ -807,22 +807,24 @@ function setupCartControls() {
 ========================================================= */
 
 function setupPaymentOptions() {
-    const options =
-        document.querySelectorAll(".payment-option");
+    const options = document.querySelectorAll(".payment-option");
+    const form = document.getElementById("checkoutForm");
 
     options.forEach(option => {
-        const radio =
-            option.querySelector('input[type="radio"]');
+        const radio = option.querySelector('input[type="radio"]');
 
         if (!radio) return;
 
         radio.addEventListener("change", () => {
-            options.forEach(item => {
-                item.classList.remove("selected");
-            });
+            options.forEach(item => item.classList.remove("selected"));
 
             if (radio.checked) {
                 option.classList.add("selected");
+            }
+
+            // Automatically submit when the customer chooses a method.
+            if (radio.checked && form) {
+                form.requestSubmit();
             }
         });
 
@@ -831,6 +833,7 @@ function setupPaymentOptions() {
         }
     });
 }
+
 
 /* =========================================================
    SAVE ORDER SNAPSHOT
