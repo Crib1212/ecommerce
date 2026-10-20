@@ -883,6 +883,24 @@ function setupCheckoutForm() {
     const form = document.getElementById("checkoutForm");
 
     if (!form) return;
+        // Restore checkout when the browser returns to this page.
+    const submitButton = form.querySelector(
+        'button[type="submit"], input[type="submit"]'
+    );
+
+    const defaultButtonHTML = submitButton?.innerHTML;
+
+    window.addEventListener("pageshow", () => {
+        checkoutSubmitting = false;
+
+        if (submitButton) {
+            submitButton.disabled = false;
+
+            if (defaultButtonHTML !== undefined) {
+                submitButton.innerHTML = defaultButtonHTML;
+            }
+        }
+    });
 
     form.addEventListener("submit", async event => {
         event.preventDefault();
