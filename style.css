@@ -3473,3 +3473,33 @@ footer {
         border-radius: 8px;
     }
 }
+
+/* Standby: Pink */
+#checkoutForm button[type="submit"],
+#checkoutForm .place-order-btn {
+    background: #ff69b4 !important;
+    color: #ffffff !important;
+    border: 1px solid #ff69b4 !important;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Hover: Turquoise green */
+#checkoutForm button[type="submit"]:hover,
+#checkoutForm .place-order-btn:hover {
+    background: #40e0d0 !important;
+    color: #145523 !important;
+    border-color: #40e0d0 !important;
+}
+
+/* Waiting after clicking: Pink */
+#checkoutForm button[type="submit"]:disabled,
+#checkoutForm .place-order-btn:disabled {
+    background: #ff69b4 !important;
+    color: #ffffff !important;
+    border-color: #ff69b4 !important;
+    opacity: 1 !important;
+    cursor: wait;
+}
+    
