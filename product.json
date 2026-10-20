@@ -626,6 +626,17 @@
     "image": "/images/chemical/Odour_out.png",
     "description": "Odour Out veterinary medicine product for animal health management."
   },
+   {
+    "id": "broad-killer",
+    "name": "broad killer",
+    "price": 3000,
+    "category": "chemical",
+    "subcategory": "agrochemicals",
+    "slug": "broad-killer",
+    "image": "/images/chemical/broad-killer.png",
+    "description": "Broad Killer veterinary medicine product for animal health management.",
+    "featured": true
+  },
   {
     "id": "drugs-chick-on-1l",
     "name": "Chick-On 1L",
