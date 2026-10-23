@@ -2633,180 +2633,93 @@ if (addButton) {
     🔍 SEARCH ENGINE
     ========================================================= */
 
-    function performSearch(query) {
 
-        const searchTerm =
-            String(query || "")
-                .trim();
-
-
-        /*
-        Empty search
-        */
-
-        if (!searchTerm) {
-
-            const pageProducts =
-                getProductsForCurrentPage();
-
-
-            addDataToHTML(
-                pageProducts
-            );
-
-
-            return;
-        }
-
-
-        const pageCategory =
-            getPageCategory();
-
-
-        let searchableProducts;
-
-
-        /*
-        Category page:
-        Search only that category.
-        */
-
-        if (pageCategory) {
-
-            searchableProducts =
-                products.filter(
-                    product =>
-
-                        String(
-                            product.category || ""
-                        ).toLowerCase() ===
-                        pageCategory.toLowerCase()
-                );
-
-        }
-
-
-        /*
-        Homepage:
-        Search ALL products.
-        */
-
-        else {
-
-            searchableProducts =
-                products;
-        }
-
-
-        const normalizedQuery =
-            normalizeText(
-                searchTerm
-            );
-
-
-        const results =
-            searchableProducts.filter(
-                product => {
-
-                    const searchableText = [
-
-                        product.name,
-
-                        product.description,
-
-                        product.category,
-
-                        product.slug,
-
-                        product.vendor,
-
-                        product.farmSize,
-
-                        product.packageType,
-
-                        Array.isArray(
-                            product.includes
-                        )
-                            ? product.includes.join(" ")
-                            : product.includes
-
-                    ]
-                        .filter(Boolean)
-                        .join(" ");
-
-
-                    return normalizeText(
-                        searchableText
-                    ).includes(
-                        normalizedQuery
-                    );
-
-                }
-            );
-
-
-        const listProduct =
-            document.querySelector(
-                ".listProduct:not(#relatedProducts)"
-            );
-
-
-        if (!listProduct) {
-            return;
-        }
-
-
-        listProduct.innerHTML =
-            "";
-
-
-        if (!results.length) {
-
-            listProduct.innerHTML = `
-
-                <div class="search-no-results">
-
-                    <h3>
-                        No products found
-                    </h3>
-
-                    <p>
-
-                        We couldn't find any product
-                        matching
-
-                        "<strong>
-                            ${escapeHTML(searchTerm)}
-                        </strong>".
-
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-        }
-
-
-        results.forEach(product => {
-
-            const card =
-                createProductCard(
-                    product,
-                    searchTerm
-                );
-
-
-            if (card) {
-
-                listProduct.appendChild(
-                    card
-                );
-            }
-
-        });
+function performSearch(query) {
+    const searchTerm = String(query ?? "").trim();
+    const listProduct = document.querySelector(
+        ".listProduct:not(#relatedProducts)"
+    );
+
+    if (!listProduct) return;
+
+    // Empty search: restore normal page products.
+    if (!searchTerm) {
+        addDataToHTML(getProductsForCurrentPage());
+        return;
     }
+
+    // Search the whole catalogue on the homepage.
+    // On category pages, stay within the selected category.
+    const pageCategory = getPageCategory();
+
+    let searchableProducts = products;
+
+    if (pageCategory) {
+        searchableProducts = products.filter(product =>
+            String(product.category || "").toLowerCase() ===
+            pageCategory.toLowerCase()
+        );
+    }
+
+    // Normalize the query so even one letter works immediately.
+    const normalizedQuery = normalizeText(searchTerm);
+
+    const results = searchableProducts.filter(product => {
+        const searchableText = [
+            product.name,
+            product.description,
+            product.category,
+            product.subcategory,
+            product.slug,
+            product.vendor,
+            product.farmSize,
+            product.packageType,
+            ...(Array.isArray(product.includes)
+                ? product.includes
+                : [product.includes]),
+            ...(Array.isArray(product.variants)
+                ? product.variants.map(v => v.name)
+                : [])
+        ]
+            .filter(Boolean)
+            .join(" ");
+
+        return normalizeText(searchableText)
+            .includes(normalizedQuery);
+    });
+
+    // Update results on every keystroke.
+    listProduct.innerHTML = "";
+
+    if (!results.length) {
+        listProduct.innerHTML = `
+            <div class="search-no-results">
+                <h3>No products found</h3>
+                <p>
+                    No products match
+                    "<strong>${escapeHTML(searchTerm)}</strong>".
+                </p>
+                <button type="button" id="showAllBtn">
+                    Show All Products
+                </button>
+            </div>
+        `;
+
+        document.getElementById("showAllBtn")
+            ?.addEventListener("click", () => {
+                const input = document.getElementById("searchInput");
+                if (input) input.value = "";
+                addDataToHTML(getProductsForCurrentPage());
+            });
+
+        return;
+    }
+
+    results.forEach(product => {
+        const card = createProductCard(product, searchTerm);
+        if (card) listProduct.appendChild(card);
+    });
+}
 
 
     /* =========================================================
