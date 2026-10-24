@@ -2720,7 +2720,25 @@ function performSearch(query) {
         if (card) listProduct.appendChild(card);
     });
 }
+function highlightSearchText(text, query) {
+    const safeText = escapeHTML(String(text ?? ""));
+    const normalizedQuery = String(query ?? "").trim();
 
+    if (!normalizedQuery) return safeText;
+
+    // Escape special characters so they are treated literally
+    const escapedQuery = normalizedQuery.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+    );
+
+    const regex = new RegExp(`(${escapedQuery})`, "gi");
+
+    return safeText.replace(
+        regex,
+        '<mark class="search-highlight">$1</mark>'
+    );
+}
 
     /* =========================================================
     🔍 SEARCH EVENTS
