@@ -722,16 +722,13 @@ function renderCartItems() {
     🔍 NORMALIZE SEARCH TEXT
     ========================================================= */
 
-    function normalizeText(text) {
-
-        return String(text || "")
-            .toLowerCase()
-            .replace(
-                /['’`"“”.,\\\-_/()[\]]/g,
-                ""
-            )
-            .replace(/\s+/g, "");
-    }
+function normalizeText(value) {
+    return String(value ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
 
 
     /* =========================================================
@@ -2632,7 +2629,14 @@ if (addButton) {
     /* =========================================================
     🔍 SEARCH ENGINE
     ========================================================= */
-
+function normalizeSearchWords(value) {
+    return String(value ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim();
+}
 
 function performSearch(query) {
     const searchTerm = String(query ?? "").trim();
@@ -2662,9 +2666,11 @@ function performSearch(query) {
     }
 
     // Normalize the query so even one letter works immediately.
-    const normalizedQuery = normalizeText(searchTerm);
+   const searchWords = normalizeSearchWords(searchTerm)
+    .split(/\s+/)
+    .filter(Boolean);
 
-    const results = searchableProducts.filter(product => {
+const results = searchableProducts.filter(product => {
         const searchableText = [
             product.name,
             product.description,
@@ -2684,8 +2690,12 @@ function performSearch(query) {
             .filter(Boolean)
             .join(" ");
 
-        return normalizeText(searchableText)
-            .includes(normalizedQuery);
+       const normalizedProductText =
+    normalizeSearchWords(searchableText);
+
+return searchWords.every(word =>
+    normalizedProductText.includes(word)
+);
     });
 
     // Update results on every keystroke.
