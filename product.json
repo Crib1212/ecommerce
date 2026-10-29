@@ -115,7 +115,7 @@
   {
     "id": "feed-hybrid-grower-mash-25kg",
     "name": "Hybrid Grower Mash 25kg",
-    "price": 12450,
+    "price": 12950,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-grower-mash-25kg",
@@ -126,7 +126,7 @@
    {
     "id": "feed-hybrid-grower-crumbled-25kg",
     "name": "Hybrid Grower crumbled 25kg",
-    "price": 12900,
+    "price": 13400,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-grower-crumbled-25kg",
@@ -137,7 +137,7 @@
   {
     "id": "feed-hybrid-chick-crumbled-25kg",
     "name": "Hybrid Chick crumbled 25kg",
-    "price": 16900,
+    "price": 17400,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-chick-crumbled-25kg",
@@ -148,7 +148,7 @@
    {
     "id": "feed-hybrid-starter-crumbled-25kg",
     "name": "Hybrid Starter crumbled 25kg",
-    "price": 17600,
+    "price": 18500,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-starter-crumbled-25kg",
@@ -160,7 +160,7 @@
   {
     "id": "feed-hybrid-layer-mash-25kg",
     "name": "Hybrid Layer Mash 25kg",
-    "price": 13750,
+    "price": 14250,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-layer-mash-25kg",
@@ -171,7 +171,7 @@
   {
     "id": "feed-hybrid-layer-combo-25kg",
     "name": "Hybrid Layer Combo 25kg",
-    "price": 13450,
+    "price": 13950,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-layer-combo-25kg",
@@ -212,7 +212,7 @@
   {
     "id": "feed-hybrid-3-in-1-25kg",
     "name": "Hybrid 3-in-1 25kg",
-    "price": 20600,
+    "price": 21500,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-3-in-1-25kg",
@@ -223,7 +223,7 @@
    {
     "id": "feed-hybrid-base-2-finisher-25kg",
     "name": "Hybrid Base 2 Finisher 25kg",
-    "price": 19400,
+    "price": 20300,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-base-2-finisher-25kg",
@@ -305,7 +305,7 @@
   {
     "id": "feed-hybrid-finisher-pellet-25kg",
     "name": "Hybrid Finisher Pellet 25kg",
-    "price": 17500,
+    "price": 18400,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "hybrid-finisher-pellet-25kg",
@@ -455,15 +455,15 @@
     "image": "/images/poultryfeed/hybrid-special-301-303.png",
     "images": ["images/hybrid-301-1.png", "images/hybrid-301-2.png"],
     "description": "poultry feed and livestock.",
-    "minPrice": 19400,
-    "maxPrice": 20600,
-    "displayPrice": "₦19,300 - ₦20,600",
+    "minPrice": 20300,
+    "maxPrice": 21500,
+    "displayPrice": "₦20,300 - ₦21,500",
     "hasVariants": true,
     "featured": true,
     "variants": [
-      { "sku": "hyb-303", "label": "Size", "name": "hybrid special 303", "price": 19400, "stock": 50 },
-      { "sku": "hyb-302", "label": "Size", "name": "hybrid special 302", "price": 18900, "stock": 30 },
-      { "sku": "hyb-301", "label": "Size", "name": "hybrid special 301", "price": 20600, "stock": 50, "bestValue": true }
+      { "sku": "hyb-303", "label": "Size", "name": "hybrid special 303", "price": 20300, "stock": 50 },
+      { "sku": "hyb-302", "label": "Size", "name": "hybrid special 302", "price": 19800, "stock": 30 },
+      { "sku": "hyb-301", "label": "Size", "name": "hybrid special 301", "price": 21500, "stock": 50, "bestValue": true }
     ]
   },
   {
