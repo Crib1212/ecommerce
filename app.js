@@ -213,6 +213,52 @@ function getProductImage(image) {
     if (/^(https?:|data:)/.test(p)) return p;
     return "/images/" + p.replace(/^(\.\.\/|\.\/|\/)?(images\/)?/, "");
 }
+
+function changeProductImage(img) {
+    let images = [];
+
+    try {
+        images = JSON.parse(img.dataset.images || "[]");
+    } catch (error) {
+        console.error("Image data error:", error);
+        return;
+    }
+
+    if (images.length < 2) return;
+
+    let current = 1;
+
+    // Change immediately on hover
+    img.src = getCardImage(images[current]);
+
+    clearInterval(img.imageTimer);
+
+    // Continue cycling through images
+    img.imageTimer = setInterval(() => {
+        current++;
+
+        if (current >= images.length) {
+            current = 1;
+        }
+
+        img.src = getCardImage(images[current]);
+
+    }, 1500);
+}
+
+function resetProductImage(img) {
+    clearInterval(img.imageTimer);
+
+    try {
+        const images = JSON.parse(img.dataset.images || "[]");
+
+        if (images.length > 0) {
+            img.src = getCardImage(images[0]);
+        }
+    } catch (error) {
+        console.error("Image reset error:", error);
+    }
+}
     /* =========================================================
     🛒 CART STORAGE
     ========================================================= */
@@ -580,10 +626,24 @@ function renderCartItems() {
 
         item.innerHTML = `
             <img
-                src="${escapeAttribute(image)}"
-                alt="${escapeAttribute(product.name || "Product")}"
-                loading="lazy"
-            >
+    <img
+    src="${escapeAttribute(image)}"
+    alt="${escapeAttribute(product.name || "Product")}"
+    loading="lazy"
+>
+    data-images="${escapeAttribute(
+        JSON.stringify(
+            Array.isArray(product.images) && product.images.length
+                ? product.images
+                : [product.image]
+        )
+    )}"
+    class="product-image"
+    alt="${escapeAttribute(name)}"
+    loading="lazy"
+    onmouseenter="changeProductImage(this)"
+    onmouseleave="resetProductImage(this)"
+>
 
             <div class="content">
                 <div class="name">
@@ -816,7 +876,11 @@ function createProductCard(product, highlight = "") {
     }
 
     const productURL = getProductPageURL(slug);
-    const productImage = getCardImage(image);
+const productImage = getCardImage(image);
+
+const productImages = Array.isArray(product.images) && product.images.length
+    ? [image, ...product.images.filter(img => img !== image)].map(getCardImage)
+    : [productImage];
 
     const variantOptions =
         product.hasVariants &&
@@ -874,10 +938,14 @@ function createProductCard(product, highlight = "") {
            class="product-page-link">
 
             <img
-                src="${escapeAttribute(productImage)}"
-                alt="${escapeAttribute(name)}"
-                loading="lazy"
-            >
+    src="${escapeAttribute(productImage)}"
+    data-images="${escapeAttribute(JSON.stringify(productImages))}"
+    class="product-image"
+    alt="${escapeAttribute(name)}"
+    loading="lazy"
+    onmouseenter="changeProductImage(this)"
+    onmouseleave="resetProductImage(this)"
+>
 
             <h2>${highlightText(name, highlight)}</h2>
 
@@ -2210,7 +2278,6 @@ if (addButton) {
             product.slug
                 ? `${window.location.origin}/product/${encodeURIComponent(product.slug)}/`
                 : `${window.location.origin}/product/?id=${encodeURIComponent(product.id)}`;
-
 
         /*
         =====================================================

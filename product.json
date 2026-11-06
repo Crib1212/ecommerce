@@ -2,7 +2,7 @@
   {
     "id": "day-old-agrited-broiler-chicks",
     "name": "Agrited Day-Old Broiler Chicks",
-    "price": 2300,
+    "price": 2200,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/dayold/agriteddoc.webp",
@@ -12,7 +12,7 @@
   {
     "id": "day-old-sayed-broiler-chicks",
     "name": "Sayed Day-Old Broiler Chicks",
-    "price": 2300,
+    "price": 2200,
     "category": "day-old",
     "slug": "sayed-broiler-chicks",
     "image": "/images/dayold/sayed-dayold-broiler.png",
@@ -22,7 +22,7 @@
   {
     "id": "day-old-olam-broiler-chicks",
     "name": "Olam Day-Old Broiler Chicks",
-    "price": 2250,
+    "price": 2150,
     "category": "day-old",
     "slug": "olam-broiler-chicks",
     "image": "/images/dayold/olam-broiler-chicks.png",
@@ -121,6 +121,28 @@
     "slug": "hybrid-grower-mash-25kg",
     "image": "/images/poultryfeed/Hybrid_grower_mash-2.png",
     "description": "Hybrid Grower Mash 25kg poultry feed for growing birds.",
+    "featured": true
+  },
+  {
+    "id": "feed-lionstonestartercrumbled-25kg",
+    "name": "Lionstone Starter Crumbled 25kg",
+    "price": 18500,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "lionstonestartercrumbled-25kg",
+    "image": "/images/poultryfeed/lionstonestartercrumble.png",
+    "description": "Lionstone Starter Crumbled 25kg poultry feed for growing birds.",
+    "featured": true
+  },
+  {
+    "id": "feed-happyturkeystarter1crumbs-25kg",
+    "name": "Happy Turkey Starter 1 Crumbs 25kg",
+    "price": 18500,
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "happyturkeystarter1crumbs-25kg",
+    "image": "/images/poultryfeed/happyturkeystarter1crumbs.png",
+    "description": "Happy Turkey Starter 1 Crumbs 25kg poultry feed for growing birds.",
     "featured": true
   },
    {
@@ -567,6 +589,40 @@
     "description": "Maxiboost veterinary product for poultry and farm animal management."
   },
   {
+  "id": "drugs-nadis-broiler-booster-100g",
+  "name": "Nadis Broiler Booster with Multivitamins and Calcium",
+  "price": 3000,
+  "category": "drugs",
+  "subcategory": "supplements",
+  "slug": "nadis-broiler-booster-multivitamin-calcium",
+  "image": "/images/drugs/nadisbroilerbooster.png",
+  "images": [
+        "/images/drugs/nadisbroilerboosterbackview.png"
+    ],
+  "description": "Nadis Broiler Booster with Multivitamins and Calcium: Boost Growth and Productivity - 100g",
+  "fullDescription": "Nadis Agro-Allied Ventures presents Broiler Booster with Multivitamins and Calcium, a powerful 100g nutritional supplement designed to enhance the health, growth, and performance of your poultry and livestock. Formulated with a premium blend of essential vitamins (A, D3, E, K3, B-complex), amino acids (Lysine, Methionine, Threonine), and vital minerals (Calcium, Iron, Zinc, Copper), this supplement ensures optimal nutrition for your animals.\n\nKey Benefits:\n- Promotes rapid weight gain and improves feed conversion rates in broilers and cattle.\n- Boosts egg production in laying hens and extends the laying period.\n- Relieves stress caused by transportation, vaccination, feed changes, and climatic variations.\n- Enhances immunity, reducing the risk of diseases.\n- Long-term use results in brighter feathers and fur.\n\nIdeal For:\n- Poultry performance deficiencies and stress conditions.\n- High production periods such as laying or growth phases.\n- Recovery after antibiotic treatment.\n\nAdministration:\nSimply mix with drinking water or feed for easy oral administration.\n\nStorage:\nStore in a cool, dry place, away from direct sunlight. Keep out of reach of children.",
+  "benefits": [
+    "Promotes rapid weight gain and improves feed conversion",
+    "Boosts egg production in laying hens",
+    "Relieves stress and enhances immunity",
+    "Brighter feathers and fur"
+  ],
+  "administration": "Mix with drinking water or feed",
+  "storage": "Store in a cool, dry place, away from direct sunlight",
+  "featured": true
+},
+    {
+    "id": "drugs-faamaboostervit150g",
+    "name": "Faama Booster Vit 150g",
+    "price": 3000,
+    "category": "drugs",
+    "subcategory": "multivitamins",
+    "slug": "faamaboostervit150g",
+    "image": "/images/drugs/faamaboostervit.png",
+    "description": "Faama Booster Vit 150g veterinary product for poultry and farm animal management.",
+    "featured": true
+  },
+  {
     "id": "drugs-medecol_200ml",
     "name": "Medecol 200ml",
     "price": 1200,
@@ -586,6 +642,20 @@
     "image": "/images/drugs/Neotreat.png",
     "description": "Neotreat veterinary product for poultry and farm animal management."
   },
+  {
+    "id": "drugs-centerncoflor150g",
+    "name": "Centern Coflor 150g",
+    "price": 9000,
+    "category": "drugs",
+    "subcategory": "antibiotics",
+    "slug": "centerncoflor150g",
+    "image": "/images/drugs/CenternCoflor150g.jpg",
+    "images": [
+        "/images/drugs/CenternCoflorbackview.jpg"
+    ],
+    "description": "Center nCoflor 150g veterinary product for poultry and farm animal management.",
+    "featured": true
+},
   {
     "id": "drugs-promin",
     "name": "Promin",
