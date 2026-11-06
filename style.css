@@ -959,6 +959,7 @@ input[type="number"] {
 .menu ul li {
     padding: 15px;
     text-align: center;
+    line-height: 1.5;
 }
 
 .menu ul li a {
