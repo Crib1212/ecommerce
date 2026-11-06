@@ -937,7 +937,7 @@ input[type="number"] {
     position: fixed;
 
     bottom: 5px;
-    top: 275px;
+    top: 210px;
 
     border-radius: 5px;
 
@@ -956,7 +956,7 @@ input[type="number"] {
 .menu ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin-top: -10px;
 }
 
 .menu ul li {
@@ -3509,3 +3509,23 @@ footer {
     border-radius: 4px;
     font-weight: 700;
 }
+@media (max-width: 768px) {
+    .menu ul {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+}
+  .menu {
+        top: 150px;
+        bottom: 5px;
+        height: auto;
+    }
+
+    .menu ul {
+        margin-top: -20px;
+    }
+
+    .menu ul li {
+        padding: 8px;
+        text-align: center;
+    }
