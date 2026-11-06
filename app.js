@@ -1792,8 +1792,9 @@ if (location.search && product.slug) {
         */
 
         const description =
-            product.description ||
-            `Buy ${product.name || "this product"} from Wittyfare Agrovet & Farms.`;
+    product.fullDescription ||
+    product.description ||
+    `Buy ${product.name || "this product"} from Wittyfare Agrovet & Farms.`;
 
 
         if (descriptionElement) {
