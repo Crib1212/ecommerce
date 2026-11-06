@@ -631,19 +631,7 @@ function renderCartItems() {
     alt="${escapeAttribute(product.name || "Product")}"
     loading="lazy"
 >
-    data-images="${escapeAttribute(
-        JSON.stringify(
-            Array.isArray(product.images) && product.images.length
-                ? product.images
-                : [product.image]
-        )
-    )}"
-    class="product-image"
-    alt="${escapeAttribute(name)}"
-    loading="lazy"
-    onmouseenter="changeProductImage(this)"
-    onmouseleave="resetProductImage(this)"
->
+
 
             <div class="content">
                 <div class="name">
