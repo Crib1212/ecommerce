@@ -935,21 +935,14 @@ input[type="number"] {
 
 .menu {
     position: fixed;
-
     bottom: 5px;
-    top: 210px;
-
+    top: 250px;
     border-radius: 5px;
-
     left: -150px;
-
     width: 150px;
-    height: 80%;
-
+    height: auto;
     background-color: #000;
-
     transition: left 0.3s ease;
-
     z-index: 2500;
 }
 
@@ -977,7 +970,6 @@ input[type="number"] {
 .menu.open {
     left: 0;
 }
-
 
 /* =========================================================
    BLOG
@@ -3529,3 +3521,19 @@ footer {
         padding: 8px;
         text-align: center;
     }
+/* DESKTOP MENU */
+.menu {
+    top: 210px;
+    bottom: 5px;
+    height: auto;
+}
+
+.menu ul {
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.menu ul li {
+    padding: 12px;
+    text-align: center;
+}
