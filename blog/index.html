@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WittyFare Blog | Agriculture, Technology & Business</title>
+
+    <meta name="description" content="Explore practical agriculture, technology, farming and business guides on WittyFare.">
+
+    <link rel="icon" href="../images/logo.png">
+
+    <link rel="stylesheet" href="blog.css">
+</head>
+
+<body>
+
+<header class="blog-header">
+
+    <a href="../index.html" class="blog-logo">
+        WittyFare
+    </a>
+
+    <nav class="blog-nav">
+        <a href="../index.html">Store</a>
+        <a href="index.html">Blog Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#latest">Latest Articles</a>
+    </nav>
+
+    <a href="../index.html" class="store-button">
+        Visit Store
+    </a>
+
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+    <section class="blog-hero">
+
+        <p class="eyebrow">THE WITTYFARE JOURNAL</p>
+
+        <h1>
+            Knowledge, Ideas and Guides
+            <span>For Everyday Decisions</span>
+        </h1>
+
+        <p>
+            Discover useful information about agriculture,
+            technology, business and everyday life.
+        </p>
+
+        <div class="blog-search">
+
+            <input
+                type="search"
+                id="articleSearch"
+                placeholder="Search articles..."
+            >
+
+            <button onclick="searchArticles()">
+                Search
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURED ARTICLE -->
+    <section class="blog-section">
+
+        <h2>Featured Article</h2>
+
+        <div id="featuredArticle"></div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="blog-section" id="categories">
+
+        <h2>Explore Categories</h2>
+
+        <div class="blog-categories">
+
+            <button onclick="filterCategory('All')">
+                All Topics
+            </button>
+
+            <button onclick="filterCategory('Agriculture')">
+                Agriculture
+            </button>
+
+            <button onclick="filterCategory('Poultry Farming')">
+                Poultry
+            </button>
+
+            <button onclick="filterCategory('Fish Farming')">
+                Fish Farming
+            </button>
+
+            <button onclick="filterCategory('Technology')">
+                Technology
+            </button>
+
+            <button onclick="filterCategory('Business')">
+                Business
+            </button>
+
+            <button onclick="filterCategory('Buying Guides')">
+                Buying Guides
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- LATEST ARTICLES -->
+    <section class="blog-section" id="latest">
+
+        <h2>Latest Articles</h2>
+
+        <div id="articleContainer" class="article-grid">
+
+            <p>Loading articles...</p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="blog-footer">
+
+    <h3>WittyFare</h3>
+
+    <p>
+        Agriculture, technology, business and useful information.
+    </p>
+
+    <div>
+        <a href="../index.html">Main Store</a>
+        <a href="../return-policy/about.html">About Us</a>
+        <a href="../return-policy/contact.html">Contact</a>
+    </div>
+
+    <p>
+        © <span id="currentYear"></span> WittyFare
+    </p>
+
+</footer>
+
+
+<script src="blog.js"></script>
+
+</body>
+</html>

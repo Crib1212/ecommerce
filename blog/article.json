@@ -1,0 +1,66 @@
+
+[
+  {
+    "id": "article-001",
+    "title": "How to Start Catfish Farming in Nigeria",
+    "slug": "how-to-start-catfish-farming-in-nigeria",
+    "category": "Fish Farming",
+    "author": "WittyFare Editorial Team",
+    "date": "2026-11-05",
+    "description": "A practical guide to starting a catfish farm in Nigeria.",
+    "image": "../images/fish/Standard-juvenile.png",
+    "featured": true,
+    "content": "<h2>Introduction</h2><p>Catfish farming can be a rewarding business when properly planned. Start by identifying your market, choosing a suitable pond system and preparing your water supply.</p><h2>Preparing your farm</h2><p>Choose a location with reliable water, good drainage and access to your market. Select a pond system that matches your budget and management capacity.</p><h2>Choosing fingerlings</h2><p>Buy healthy fingerlings from a reputable hatchery. Check their size and condition before stocking.</p><h2>Feeding and management</h2><p>Use appropriate feed sizes, monitor water quality and keep records of feed consumption and fish growth.</p><h2>Conclusion</h2><p>Start with a manageable stocking level and plan your market before investing.</p>"
+  },
+  {
+    "id": "article-002",
+    "title": "Why Broiler Chickens Grow Slowly",
+    "slug": "why-broiler-chickens-grow-slowly",
+    "category": "Poultry Farming",
+    "author": "WittyFare Editorial Team",
+    "date": "2026-11-04",
+    "description": "Understand the factors that affect broiler growth.",
+    "image": "../images/dayold/Olam.png",
+    "featured": false,
+    "content": "<h2>Introduction</h2><p>Slow growth in broilers can result from several management problems.</p><h2>Feed quality</h2><p>Provide appropriate feed for the age and production stage of your birds.</p><h2>Water supply</h2><p>Ensure clean drinking water is always available.</p><h2>Temperature and ventilation</h2><p>Maintain suitable brooding temperatures and good ventilation.</p><h2>Health management</h2><p>Watch for unusual signs and seek veterinary advice when necessary.</p>"
+  },
+  {
+    "id": "article-003",
+    "title": "What to Check Before Buying a Power Station",
+    "slug": "what-to-check-before-buying-a-power-station",
+    "category": "Technology",
+    "author": "WittyFare Editorial Team",
+    "date": "2026-11-03",
+    "description": "Understand power capacity, output and battery specifications.",
+    "image": "../images/banner_2.jpg",
+    "featured": false,
+    "content": "<h2>Introduction</h2><p>Choosing a portable power station requires understanding your electricity needs.</p><h2>Battery capacity</h2><p>Check the watt-hour rating and estimate how long your appliances will run.</p><h2>Output power</h2><p>Make sure the continuous output can support your appliances, including their starting requirements.</p><h2>Warranty</h2><p>Check warranty conditions, local support and availability of replacement parts.</p>"
+  },
+  {
+    "id": "article-004",
+    "title": "Five Records Every Small Farm Should Keep",
+    "slug": "five-records-every-small-farm-should-keep",
+    "category": "Business",
+    "author": "WittyFare Editorial Team",
+    "date": "2026-11-02",
+    "description": "Simple records that help farmers manage costs and income.",
+    "image": "../images/banner_2.jpg",
+    "featured": false,
+    "status": "published",
+    "content": "<h2>Introduction</h2><p>Good record keeping helps you understand the performance of your farm.</p><h2>Purchases</h2><p>Record feed, equipment, livestock and other purchases.</p><h2>Production</h2><p>Record stocking numbers, production output and feed consumption.</p><h2>Sales</h2><p>Record customers, sales, payments and expenses.</p><h2>Conclusion</h2><p>Review your records regularly to identify opportunities to improve profitability.</p>"
+  },
+  
+{
+  "slug": "how-to-prevent-coccidiosis-in-broilers",
+  "title": "How to Prevent Coccidiosis in Broiler Chickens",
+  "category": "Poultry Farming",
+  "description": "Learn practical ways to prevent coccidiosis in broiler chickens, maintain good poultry hygiene and reduce farm losses.",
+  "author": "WittyFare Editorial Team",
+  "date": "2026-11-05",
+  "image": "../images/dayold/Olam.png",
+  "featured": true,
+  "status": "published",
+  "content": "<h2>Understanding Coccidiosis</h2><p>Coccidiosis is an important poultry health challenge caused by protozoan parasites. It can affect the growth and performance of broiler chickens.</p><h2>Prevention measures</h2><p>Maintain dry litter, provide clean drinking water, avoid overcrowding and follow good biosecurity practices. Consult a qualified veterinarian when birds show signs of illness.</p><h2>Conclusion</h2><p>Good management, early observation and appropriate veterinary guidance can help reduce the impact of coccidiosis on your farm.</p>"
+}
+
+]

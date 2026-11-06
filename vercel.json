@@ -1,8 +1,21 @@
+
 {
   "rewrites": [
     {
       "source": "/product/:slug",
       "destination": "/product/index.html"
+    },
+    {
+      "source": "/product/:slug/",
+      "destination": "/product/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/article.html"
+    },
+    {
+      "source": "/blog/:slug/",
+      "destination": "/blog/article.html"
     }
   ]
 }

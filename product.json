@@ -867,7 +867,6 @@
     "slug": "50-broiler-starter-package",
     "image": "/images/farm-packages/50-broiler.jpg",
     "description": "Starter farm package for farmers beginning with 50 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
-    "featured": true,
     "packageType": "poultry",
     "farmSize": "50 broilers",
     "includes": [
@@ -889,7 +888,6 @@
     "slug": "100-broiler-starter-package",
     "image": "/images/farm-packages/100-broiler.jpg",
     "description": "Starter farm package for farmers beginning with 100 broiler chicks. Includes chicks, poultry feed, feeders, drinkers, vitamins, disinfectant and basic farm supplies.",
-    "featured": true,
     "packageType": "poultry",
     "farmSize": "100 broilers",
     "includes": [
@@ -911,7 +909,6 @@
     "slug": "100-catfish-starter-package",
     "image": "/images/farm-packages/100-catfish.jpg",
     "description": "Starter fish farming package for farmers beginning with 100 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
-    "featured": true,
     "packageType": "fish",
     "farmSize": "100 catfish",
     "includes": [
@@ -930,7 +927,6 @@
     "slug": "500-catfish-starter-package",
     "image": "/images/farm-packages/500-catfish.jpg",
     "description": "Starter fish farming package for farmers beginning with 500 catfish fingerlings. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
-    "featured": true,
     "packageType": "fish",
     "farmSize": "500 catfish",
     "includes": [
@@ -949,7 +945,6 @@
     "slug": "1000-catfish-commercial-package",
     "image": "/images/farm-packages/1000-catfish.jpg",
     "description": "Commercial fish farming package for farmers stocking 1,000 catfish. Includes fingerlings, fish feed, vitamins and basic farm supplies.",
-    "featured": true,
     "packageType": "fish",
     "farmSize": "1,000 catfish",
     "includes": [
@@ -968,7 +963,6 @@
     "slug": "poultry-restock-package",
     "image": "/images/farm-packages/poultry-restock.jpg",
     "description": "Poultry restock package for existing farmers who need poultry feed, vitamins, disinfectant and basic farm supplies.",
-    "featured": true,
     "packageType": "poultry-restock",
     "farmSize": "Existing poultry farm",
     "includes": [
@@ -987,7 +981,6 @@
     "slug": "small-farm-equipment-package",
     "image": "/images/farm-packages/small-equipment.jpg",
     "description": "Practical farm equipment package for small poultry and agricultural operations.",
-    "featured": true,
     "packageType": "equipment",
     "farmSize": "Small farm",
     "includes": [
