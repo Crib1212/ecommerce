@@ -867,6 +867,12 @@ function createProductCard(product, highlight = "") {
         includes = [],
         packageType = ""
     } = product;
+    const descriptionElement = document.getElementById("productDescription");
+
+if (descriptionElement) {
+    descriptionElement.innerHTML = (product.fullDescription || product.description || "")
+        .replace(/\n/g, "<br>");
+}
 
     const newProduct = document.createElement("div");
     newProduct.classList.add("item");
