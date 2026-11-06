@@ -3,40 +3,34 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Agriculture, Poultry & Fish Farming Blog | WittyFare</title>
 
-    <meta name="description"
-        content="Explore practical farming guides, poultry management, catfish farming, animal health, agribusiness and agricultural technology in Nigeria.">
-
-    <meta name="keywords"
-        content="agriculture blog Nigeria, poultry farming, catfish farming, livestock farming, agribusiness, veterinary products">
+    <meta name="description" content="Explore practical farming guides, poultry management, catfish farming, animal health, agribusiness and agricultural technology in Nigeria.">
 
     <meta name="author" content="WittyFare Agrovet & Farms">
+    <meta name="robots" content="index, follow">
 
     <link rel="canonical" href="https://www.wittyfare.com/blog/">
 
     <meta property="og:title" content="WittyFare Agriculture Blog">
-    <meta property="og:description"
-        content="Practical agricultural knowledge for farmers and agribusiness owners.">
+    <meta property="og:description" content="Practical agricultural knowledge for farmers and agribusiness owners in Nigeria.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.wittyfare.com/blog/">
     <meta property="og:image" content="https://www.wittyfare.com/images/banner_2.jpg">
 
-    <link rel="stylesheet" href="/blog/blog.css">
+    <meta name="twitter:card" content="summary_large_image">
 
+    <link rel="stylesheet" href="/blog/blog.css">
     <link rel="icon" href="/images/logo.png">
 
 </head>
 
 <body>
 
-<!-- =================================
-     HEADER
-================================= -->
+<!-- HEADER -->
 
 <header class="blog-header">
 
@@ -49,16 +43,10 @@
         <nav class="blog-nav">
 
             <a href="/">Home</a>
-
             <a href="/blog/">Blog</a>
-
             <a href="#topics">Topics</a>
-
             <a href="#latest">Latest Articles</a>
-
-            <a href="/" class="store-link">
-                Visit Store
-            </a>
+            <a href="/" class="store-link">Visit Store</a>
 
         </nav>
 
@@ -67,9 +55,7 @@
 </header>
 
 
-<!-- =================================
-     HERO SECTION
-================================= -->
+<!-- HERO -->
 
 <section class="blog-hero">
 
@@ -85,16 +71,21 @@
 
         <div class="blog-search">
 
-            <form action="/blog/" method="get">
+            <form id="blog-search-form" action="/blog/" method="get">
 
                 <input
                     type="search"
+                    id="blog-search-input"
                     name="q"
                     placeholder="Search farming topics and articles..."
                     aria-label="Search blog articles"
                 >
 
+                <button type="submit">Search</button>
+
             </form>
+
+            <p id="search-status" aria-live="polite"></p>
 
         </div>
 
@@ -106,9 +97,7 @@
 <main class="blog-container">
 
 
-<!-- =================================
-     TOPICS
-================================= -->
+<!-- TOPICS -->
 
 <section class="blog-section blog-topics" id="topics">
 
@@ -116,64 +105,38 @@
 
         <h2>Explore Farming Topics</h2>
 
-        <p>
-            Find useful information by category.
-        </p>
+        <p>Find useful information by category.</p>
 
     </div>
 
     <div class="topic-list">
 
-        <a href="#poultry">
-            Poultry Farming
-        </a>
-
-        <a href="#fish-farming">
-            Fish Farming
-        </a>
-
-        <a href="#livestock">
-            Livestock
-        </a>
-
-        <a href="#animal-health">
-            Animal Health
-        </a>
-
-        <a href="#farm-management">
-            Farm Management
-        </a>
-
-        <a href="#agribusiness">
-            Agribusiness
-        </a>
-
-        <a href="#technology">
-            Agricultural Technology
-        </a>
+        <a href="#poultry">Poultry Farming</a>
+        <a href="#fish-farming">Fish Farming</a>
+        <a href="#livestock">Livestock</a>
+        <a href="#animal-health">Animal Health</a>
+        <a href="#farm-management">Farm Management</a>
+        <a href="#agribusiness">Agribusiness</a>
+        <a href="#technology">Agricultural Technology</a>
 
     </div>
 
 </section>
 
 
-<!-- =================================
-     FEATURED ARTICLE
-================================= -->
+<!-- FEATURED ARTICLE -->
 
-<section class="blog-section">
+<section class="blog-section" id="featured-section">
 
     <div class="blog-section-title">
 
         <h2>Featured Article</h2>
 
-        <p>
-            Start with our selected farming guide.
-        </p>
+        <p>Start with our selected farming guide.</p>
 
     </div>
 
-    <div class="featured-article">
+    <div class="featured-article searchable-article">
 
         <a href="fish-farming/how-to-start-catfish-farming.html">
 
@@ -186,9 +149,7 @@
 
         <div class="featured-content">
 
-            <span class="article-category">
-                Fish Farming
-            </span>
+            <span class="article-category">Fish Farming</span>
 
             <h2>
                 <a href="fish-farming/how-to-start-catfish-farming.html">
@@ -217,9 +178,12 @@
 </section>
 
 
-<!-- =================================
-     POULTRY FARMING
-================================= -->
+<!-- LATEST ARTICLES -->
+
+<div id="latest">
+
+
+<!-- POULTRY -->
 
 <section class="blog-section" id="poultry">
 
@@ -236,9 +200,9 @@
 
     <div class="article-grid">
 
-        <article class="article-card">
+        <article class="article-card searchable-article">
 
-            <a href="/blog/poultry/why-broiler-chickens-grow-slowly/">
+            <a href="poultry/why-broiler-chickens-grow-slowly.html">
 
                 <img
                     src="/images/dayold/Olam.png"
@@ -250,12 +214,10 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Poultry Farming
-                </span>
+                <span class="article-category">Poultry Farming</span>
 
                 <h3>
-                    <a href="/blog/poultry/why-broiler-chickens-grow-slowly/">
+                    <a href="poultry/why-broiler-chickens-grow-slowly.html">
                         Why Broiler Chickens Grow Slowly
                     </a>
                 </h3>
@@ -266,7 +228,7 @@
                 </p>
 
                 <a
-                    href="/blog/poultry/why-broiler-chickens-grow-slowly/"
+                    href="poultry/why-broiler-chickens-grow-slowly.html"
                     class="read-more"
                 >
                     Read More →
@@ -277,9 +239,9 @@
         </article>
 
 
-        <article class="article-card">
+        <article class="article-card searchable-article">
 
-            <a href="/blog/poultry/how-to-prevent-coccidiosis/">
+            <a href="poultry/how-to-prevent-coccidiosis.html">
 
                 <img
                     src="/images/dayold/Olam.png"
@@ -291,12 +253,10 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Poultry Health
-                </span>
+                <span class="article-category">Poultry Health</span>
 
                 <h3>
-                    <a href="/blog/poultry/how-to-prevent-coccidiosis/">
+                    <a href="poultry/how-to-prevent-coccidiosis.html">
                         How to Prevent Coccidiosis in Poultry
                     </a>
                 </h3>
@@ -307,7 +267,7 @@
                 </p>
 
                 <a
-                    href="/blog/poultry/how-to-prevent-coccidiosis/"
+                    href="poultry/how-to-prevent-coccidiosis.html"
                     class="read-more"
                 >
                     Read More →
@@ -322,9 +282,7 @@
 </section>
 
 
-<!-- =================================
-     FISH FARMING
-================================= -->
+<!-- FISH FARMING -->
 
 <section class="blog-section" id="fish-farming">
 
@@ -341,9 +299,9 @@
 
     <div class="article-grid">
 
-        <article class="article-card">
+        <article class="article-card searchable-article">
 
-            <a href="/blog/fish-farming/how-to-start-catfish-farming/">
+            <a href="fish-farming/how-to-start-catfish-farming.html">
 
                 <img
                     src="/images/fish/Standard-juvenile.png"
@@ -355,12 +313,10 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Catfish Farming
-                </span>
+                <span class="article-category">Catfish Farming</span>
 
                 <h3>
-                    <a href="/blog/fish-farming/how-to-start-catfish-farming/">
+                    <a href="fish-farming/how-to-start-catfish-farming.html">
                         How to Start Catfish Farming in Nigeria
                     </a>
                 </h3>
@@ -371,7 +327,7 @@
                 </p>
 
                 <a
-                    href="/blog/fish-farming/how-to-start-catfish-farming/"
+                    href="fish-farming/how-to-start-catfish-farming.html"
                     class="read-more"
                 >
                     Read More →
@@ -386,9 +342,7 @@
 </section>
 
 
-<!-- =================================
-     LIVESTOCK
-================================= -->
+<!-- LIVESTOCK -->
 
 <section class="blog-section" id="livestock">
 
@@ -396,9 +350,7 @@
 
         <h2>Livestock Farming</h2>
 
-        <p>
-            Practical information for livestock farmers.
-        </p>
+        <p>Practical information for livestock farmers.</p>
 
     </div>
 
@@ -414,13 +366,9 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Livestock
-                </span>
+                <span class="article-category">Livestock</span>
 
-                <h3>
-                    Livestock Farming Guides for Beginners
-                </h3>
+                <h3>Livestock Farming Guides for Beginners</h3>
 
                 <p>
                     Practical livestock production and
@@ -440,9 +388,7 @@
 </section>
 
 
-<!-- =================================
-     ANIMAL HEALTH
-================================= -->
+<!-- ANIMAL HEALTH -->
 
 <section class="blog-section" id="animal-health">
 
@@ -469,13 +415,9 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Animal Health
-                </span>
+                <span class="article-category">Animal Health</span>
 
-                <h3>
-                    Understanding Animal Health Management
-                </h3>
+                <h3>Understanding Animal Health Management</h3>
 
                 <p>
                     Learn why farm hygiene, observation,
@@ -496,9 +438,7 @@
 </section>
 
 
-<!-- =================================
-     FARM MANAGEMENT
-================================= -->
+<!-- FARM MANAGEMENT -->
 
 <section class="blog-section" id="farm-management">
 
@@ -515,7 +455,7 @@
 
     <div class="article-grid">
 
-        <article class="article-card">
+        <article class="article-card searchable-article">
 
             <img
                 src="/images/banner_2.jpg"
@@ -525,12 +465,10 @@
 
             <div class="article-card-content">
 
-                <span class="article-category">
-                    Farm Management
-                </span>
+                <span class="article-category">Farm Management</span>
 
                 <h3>
-                    <a href="/blog/farm-management/five-records-every-farmer-should-keep/">
+                    <a href="farm-management/five-records-every-farmer-should-keep.html">
                         Five Important Records Every Small Farm Should Keep
                     </a>
                 </h3>
@@ -541,7 +479,7 @@
                 </p>
 
                 <a
-                    href="/blog/farm-management/five-records-every-farmer-should-keep/"
+                    href="farm-management/five-records-every-farmer-should-keep.html"
                     class="read-more"
                 >
                     Read More →
@@ -556,9 +494,7 @@
 </section>
 
 
-<!-- =================================
-     AGRIBUSINESS
-================================= -->
+<!-- AGRIBUSINESS -->
 
 <section class="blog-section" id="agribusiness">
 
@@ -581,9 +517,7 @@
 </section>
 
 
-<!-- =================================
-     AGRICULTURAL TECHNOLOGY
-================================= -->
+<!-- AGRICULTURAL TECHNOLOGY -->
 
 <section class="blog-section" id="technology">
 
@@ -605,10 +539,10 @@
 
 </section>
 
+</div>
 
-<!-- =================================
-     WITTYFARE STORE CTA
-================================= -->
+
+<!-- STORE CTA -->
 
 <section class="blog-cta">
 
@@ -619,19 +553,14 @@
         fish farming supplies, poultry equipment and more.
     </p>
 
-    <a href="/">
-        Visit WittyFare Store →
-    </a>
+    <a href="/">Visit WittyFare Store →</a>
 
 </section>
-
 
 </main>
 
 
-<!-- =================================
-     FOOTER
-================================= -->
+<!-- FOOTER -->
 
 <footer class="blog-footer">
 
@@ -650,13 +579,24 @@
 
         <div>
 
-            <h3>Quick Links</h3>
+            <h3>Explore</h3>
 
             <a href="/">Home</a>
-
             <a href="/blog/">Blog</a>
-
             <a href="/#categories">Shop Products</a>
+            <a href="/blog/about.html">About Us</a>
+            <a href="/blog/contact.html">Contact Us</a>
+
+        </div>
+
+        <div>
+
+            <h3>Information</h3>
+
+            <a href="/blog/privacy-policy.html">Privacy Policy</a>
+            <a href="/blog/terms.html">Terms & Conditions</a>
+            <a href="/blog/disclaimer.html">Disclaimer</a>
+            <a href="/blog/advertise.html">Advertise With Us</a>
 
         </div>
 
@@ -665,13 +605,141 @@
     <div style="text-align:center; margin-top:30px;">
 
         <p>
-            © 2026 WittyFare Agrovet & Farms.
+            © <span id="year"></span> WittyFare Agrovet & Farms.
             All rights reserved.
         </p>
 
     </div>
 
 </footer>
+
+
+<!-- SEARCH FUNCTION -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("blog-search-input");
+    const searchForm = document.getElementById("blog-search-form");
+    const searchStatus = document.getElementById("search-status");
+
+    const articles = document.querySelectorAll(".searchable-article");
+    const sections = document.querySelectorAll("#latest .blog-section");
+
+    function performSearch() {
+
+        const query = searchInput.value.trim().toLowerCase();
+
+        let results = 0;
+
+        articles.forEach(function (article) {
+
+            const content = article.textContent.toLowerCase();
+
+            const matches = content.includes(query);
+
+            article.style.display = matches ? "" : "none";
+
+            if (matches) {
+                results++;
+            }
+
+        });
+
+        sections.forEach(function (section) {
+
+            const grid = section.querySelector(".article-grid");
+
+            if (grid) {
+
+                const visibleCards = grid.querySelectorAll(
+                    ".searchable-article:not([style*='display: none'])"
+                );
+
+                const hasVisibleCards = visibleCards.length > 0;
+
+                section.style.display = hasVisibleCards ? "" : "none";
+
+            }
+
+        });
+
+        const featured = document.getElementById("featured-section");
+
+        if (featured) {
+
+            const featuredArticle = featured.querySelector(".searchable-article");
+
+            featured.style.display =
+                featuredArticle && featuredArticle.style.display === "none"
+                ? "none"
+                : "";
+
+        }
+
+        if (query === "") {
+
+            searchStatus.textContent = "";
+
+        } else if (results === 0) {
+
+            searchStatus.textContent =
+                "No articles found for '" + searchInput.value + "'.";
+
+        } else {
+
+            searchStatus.textContent =
+                results + " matching article(s) found.";
+
+        }
+
+    }
+
+    searchForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const query = searchInput.value.trim();
+
+        const url = new URL(window.location.href);
+
+        if (query) {
+            url.searchParams.set("q", query);
+        } else {
+            url.searchParams.delete("q");
+        }
+
+        window.history.replaceState({}, "", url);
+
+        performSearch();
+
+    });
+
+    searchInput.addEventListener("input", function () {
+
+        performSearch();
+
+    });
+
+    const params = new URLSearchParams(window.location.search);
+
+    const initialQuery = params.get("q");
+
+    if (initialQuery) {
+
+        searchInput.value = initialQuery;
+
+        performSearch();
+
+    }
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+});
+
+</script>
 
 </body>
 </html>
