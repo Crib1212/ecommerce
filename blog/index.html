@@ -1,164 +1,677 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>WittyFare Blog | Agriculture, Technology & Business</title>
+    <title>Agriculture, Poultry & Fish Farming Blog | WittyFare</title>
 
-    <meta name="description" content="Explore practical agriculture, technology, farming and business guides on WittyFare.">
+    <meta name="description"
+        content="Explore practical farming guides, poultry management, catfish farming, animal health, agribusiness and agricultural technology in Nigeria.">
 
-    <link rel="icon" href="../images/logo.png">
+    <meta name="keywords"
+        content="agriculture blog Nigeria, poultry farming, catfish farming, livestock farming, agribusiness, veterinary products">
 
-    <link rel="stylesheet" href="blog.css">
+    <meta name="author" content="WittyFare Agrovet & Farms">
+
+    <link rel="canonical" href="https://www.wittyfare.com/blog/">
+
+    <meta property="og:title" content="WittyFare Agriculture Blog">
+    <meta property="og:description"
+        content="Practical agricultural knowledge for farmers and agribusiness owners.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wittyfare.com/blog/">
+    <meta property="og:image" content="https://www.wittyfare.com/images/banner_2.jpg">
+
+    <link rel="stylesheet" href="/blog/blog.css">
+
+    <link rel="icon" href="/images/logo.png">
+
 </head>
 
 <body>
 
+<!-- =================================
+     HEADER
+================================= -->
+
 <header class="blog-header">
 
-    <a href="../index.html" class="blog-logo">
-        WittyFare
-    </a>
+    <div class="blog-header-inner">
 
-    <nav class="blog-nav">
-        <a href="../index.html">Store</a>
-        <a href="index.html">Blog Home</a>
-        <a href="#categories">Categories</a>
-        <a href="#latest">Latest Articles</a>
-    </nav>
+        <a href="/blog/" class="blog-logo">
+            WittyFare
+        </a>
 
-    <a href="../index.html" class="store-button">
-        Visit Store
-    </a>
+        <nav class="blog-nav">
+
+            <a href="/">Home</a>
+
+            <a href="/blog/">Blog</a>
+
+            <a href="#topics">Topics</a>
+
+            <a href="#latest">Latest Articles</a>
+
+            <a href="/" class="store-link">
+                Visit Store
+            </a>
+
+        </nav>
+
+    </div>
 
 </header>
 
 
-<main>
+<!-- =================================
+     HERO SECTION
+================================= -->
 
-    <!-- HERO -->
-    <section class="blog-hero">
+<section class="blog-hero">
 
-        <p class="eyebrow">THE WITTYFARE JOURNAL</p>
+    <div class="blog-container">
 
-        <h1>
-            Knowledge, Ideas and Guides
-            <span>For Everyday Decisions</span>
-        </h1>
+        <h1>Knowledge That Grows Your Farm</h1>
 
         <p>
-            Discover useful information about agriculture,
-            technology, business and everyday life.
+            Practical farming guides, poultry management,
+            fish farming, animal health, agribusiness and
+            agricultural technology for Nigerian farmers.
         </p>
 
         <div class="blog-search">
 
-            <input
-                type="search"
-                id="articleSearch"
-                placeholder="Search articles..."
-            >
+            <form action="/blog/" method="get">
 
-            <button onclick="searchArticles()">
-                Search
-            </button>
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search farming topics and articles..."
+                    aria-label="Search blog articles"
+                >
+
+            </form>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- FEATURED ARTICLE -->
-    <section class="blog-section">
+<main class="blog-container">
+
+
+<!-- =================================
+     TOPICS
+================================= -->
+
+<section class="blog-section blog-topics" id="topics">
+
+    <div class="blog-section-title">
+
+        <h2>Explore Farming Topics</h2>
+
+        <p>
+            Find useful information by category.
+        </p>
+
+    </div>
+
+    <div class="topic-list">
+
+        <a href="#poultry">
+            Poultry Farming
+        </a>
+
+        <a href="#fish-farming">
+            Fish Farming
+        </a>
+
+        <a href="#livestock">
+            Livestock
+        </a>
+
+        <a href="#animal-health">
+            Animal Health
+        </a>
+
+        <a href="#farm-management">
+            Farm Management
+        </a>
+
+        <a href="#agribusiness">
+            Agribusiness
+        </a>
+
+        <a href="#technology">
+            Agricultural Technology
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     FEATURED ARTICLE
+================================= -->
+
+<section class="blog-section">
+
+    <div class="blog-section-title">
 
         <h2>Featured Article</h2>
 
-        <div id="featuredArticle"></div>
+        <p>
+            Start with our selected farming guide.
+        </p>
 
-    </section>
+    </div>
 
+    <div class="featured-article">
 
-    <!-- CATEGORIES -->
-    <section class="blog-section" id="categories">
+        <a href="fish-farming/how-to-start-catfish-farming.html">
 
-        <h2>Explore Categories</h2>
+            <img
+                src="/images/fish/Standard-juvenile.png"
+                alt="Catfish juveniles in aquaculture farming"
+            >
 
-        <div class="blog-categories">
+        </a>
 
-            <button onclick="filterCategory('All')">
-                All Topics
-            </button>
+        <div class="featured-content">
 
-            <button onclick="filterCategory('Agriculture')">
-                Agriculture
-            </button>
-
-            <button onclick="filterCategory('Poultry Farming')">
-                Poultry
-            </button>
-
-            <button onclick="filterCategory('Fish Farming')">
+            <span class="article-category">
                 Fish Farming
-            </button>
+            </span>
 
-            <button onclick="filterCategory('Technology')">
-                Technology
-            </button>
+            <h2>
+                <a href="fish-farming/how-to-start-catfish-farming.html">
+                    How to Start Catfish Farming in Nigeria
+                </a>
+            </h2>
 
-            <button onclick="filterCategory('Business')">
-                Business
-            </button>
+            <p>
+                Thinking about starting a catfish farm?
+                Learn about pond selection, fingerlings,
+                feeding, water management, production costs
+                and selling your harvested fish.
+            </p>
 
-            <button onclick="filterCategory('Buying Guides')">
-                Buying Guides
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- LATEST ARTICLES -->
-    <section class="blog-section" id="latest">
-
-        <h2>Latest Articles</h2>
-
-        <div id="articleContainer" class="article-grid">
-
-            <p>Loading articles...</p>
+            <a
+                href="fish-farming/how-to-start-catfish-farming.html"
+                class="read-more"
+            >
+                Read Full Article →
+            </a>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
+
+
+<!-- =================================
+     POULTRY FARMING
+================================= -->
+
+<section class="blog-section" id="poultry">
+
+    <div class="blog-section-title">
+
+        <h2>Poultry Farming</h2>
+
+        <p>
+            Broiler production, layers, chicks, feeding,
+            vaccination and poultry health.
+        </p>
+
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article-card">
+
+            <a href="/blog/poultry/why-broiler-chickens-grow-slowly/">
+
+                <img
+                    src="/images/dayold/Olam.png"
+                    alt="Broiler poultry farming"
+                    loading="lazy"
+                >
+
+            </a>
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Poultry Farming
+                </span>
+
+                <h3>
+                    <a href="/blog/poultry/why-broiler-chickens-grow-slowly/">
+                        Why Broiler Chickens Grow Slowly
+                    </a>
+                </h3>
+
+                <p>
+                    Discover common causes of poor broiler
+                    growth and how to improve flock performance.
+                </p>
+
+                <a
+                    href="/blog/poultry/why-broiler-chickens-grow-slowly/"
+                    class="read-more"
+                >
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="article-card">
+
+            <a href="/blog/poultry/how-to-prevent-coccidiosis/">
+
+                <img
+                    src="/images/dayold/Olam.png"
+                    alt="Healthy broiler chickens"
+                    loading="lazy"
+                >
+
+            </a>
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Poultry Health
+                </span>
+
+                <h3>
+                    <a href="/blog/poultry/how-to-prevent-coccidiosis/">
+                        How to Prevent Coccidiosis in Poultry
+                    </a>
+                </h3>
+
+                <p>
+                    Learn about litter management, hygiene,
+                    monitoring and disease prevention.
+                </p>
+
+                <a
+                    href="/blog/poultry/how-to-prevent-coccidiosis/"
+                    class="read-more"
+                >
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     FISH FARMING
+================================= -->
+
+<section class="blog-section" id="fish-farming">
+
+    <div class="blog-section-title">
+
+        <h2>Fish Farming</h2>
+
+        <p>
+            Catfish production, fingerlings, fish feed,
+            pond management and aquaculture.
+        </p>
+
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article-card">
+
+            <a href="/blog/fish-farming/how-to-start-catfish-farming/">
+
+                <img
+                    src="/images/fish/Standard-juvenile.png"
+                    alt="Catfish juveniles"
+                    loading="lazy"
+                >
+
+            </a>
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Catfish Farming
+                </span>
+
+                <h3>
+                    <a href="/blog/fish-farming/how-to-start-catfish-farming/">
+                        How to Start Catfish Farming in Nigeria
+                    </a>
+                </h3>
+
+                <p>
+                    A beginner's guide to starting and managing
+                    a catfish farming business.
+                </p>
+
+                <a
+                    href="/blog/fish-farming/how-to-start-catfish-farming/"
+                    class="read-more"
+                >
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     LIVESTOCK
+================================= -->
+
+<section class="blog-section" id="livestock">
+
+    <div class="blog-section-title">
+
+        <h2>Livestock Farming</h2>
+
+        <p>
+            Practical information for livestock farmers.
+        </p>
+
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article-card">
+
+            <img
+                src="/images/banner_2.jpg"
+                alt="Livestock farming"
+                loading="lazy"
+            >
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Livestock
+                </span>
+
+                <h3>
+                    Livestock Farming Guides for Beginners
+                </h3>
+
+                <p>
+                    Practical livestock production and
+                    farm management information.
+                </p>
+
+                <span class="article-date">
+                    More articles coming soon
+                </span>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     ANIMAL HEALTH
+================================= -->
+
+<section class="blog-section" id="animal-health">
+
+    <div class="blog-section-title">
+
+        <h2>Animal Health</h2>
+
+        <p>
+            Veterinary care, disease prevention and
+            responsible animal management.
+        </p>
+
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article-card">
+
+            <img
+                src="/images/banner_2.jpg"
+                alt="Animal health and veterinary care"
+                loading="lazy"
+            >
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Animal Health
+                </span>
+
+                <h3>
+                    Understanding Animal Health Management
+                </h3>
+
+                <p>
+                    Learn why farm hygiene, observation,
+                    vaccination planning and veterinary
+                    guidance matter.
+                </p>
+
+                <span class="article-date">
+                    More articles coming soon
+                </span>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     FARM MANAGEMENT
+================================= -->
+
+<section class="blog-section" id="farm-management">
+
+    <div class="blog-section-title">
+
+        <h2>Farm Management</h2>
+
+        <p>
+            Farm records, production planning,
+            cost control and profitability.
+        </p>
+
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article-card">
+
+            <img
+                src="/images/banner_2.jpg"
+                alt="Farm business management"
+                loading="lazy"
+            >
+
+            <div class="article-card-content">
+
+                <span class="article-category">
+                    Farm Management
+                </span>
+
+                <h3>
+                    <a href="/blog/farm-management/five-records-every-farmer-should-keep/">
+                        Five Important Records Every Small Farm Should Keep
+                    </a>
+                </h3>
+
+                <p>
+                    Understand the records that help farmers
+                    monitor costs, production and sales.
+                </p>
+
+                <a
+                    href="/blog/farm-management/five-records-every-farmer-should-keep/"
+                    class="read-more"
+                >
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     AGRIBUSINESS
+================================= -->
+
+<section class="blog-section" id="agribusiness">
+
+    <div class="blog-section-title">
+
+        <h2>Agribusiness</h2>
+
+        <p>
+            Agricultural business ideas, market opportunities,
+            sourcing and farming investments.
+        </p>
+
+    </div>
+
+    <p>
+        Explore upcoming agribusiness guides and
+        practical business opportunities for Nigerian farmers.
+    </p>
+
+</section>
+
+
+<!-- =================================
+     AGRICULTURAL TECHNOLOGY
+================================= -->
+
+<section class="blog-section" id="technology">
+
+    <div class="blog-section-title">
+
+        <h2>Agricultural Technology</h2>
+
+        <p>
+            Modern farming equipment, irrigation,
+            fish farming equipment and digital agriculture.
+        </p>
+
+    </div>
+
+    <p>
+        Practical information about technology and equipment
+        that can improve agricultural production.
+    </p>
+
+</section>
+
+
+<!-- =================================
+     WITTYFARE STORE CTA
+================================= -->
+
+<section class="blog-cta">
+
+    <h2>Looking for Agricultural Products?</h2>
+
+    <p>
+        Explore agricultural inputs, veterinary products,
+        fish farming supplies, poultry equipment and more.
+    </p>
+
+    <a href="/">
+        Visit WittyFare Store →
+    </a>
+
+</section>
+
 
 </main>
 
 
-<!-- FOOTER -->
+<!-- =================================
+     FOOTER
+================================= -->
+
 <footer class="blog-footer">
 
-    <h3>WittyFare</h3>
+    <div class="blog-footer-inner">
 
-    <p>
-        Agriculture, technology, business and useful information.
-    </p>
+        <div>
 
-    <div>
-        <a href="../index.html">Main Store</a>
-        <a href="../return-policy/about.html">About Us</a>
-        <a href="../return-policy/contact.html">Contact</a>
+            <h3>WittyFare Agrovet & Farms</h3>
+
+            <p>
+                Practical agricultural knowledge and
+                access to farming products.
+            </p>
+
+        </div>
+
+        <div>
+
+            <h3>Quick Links</h3>
+
+            <a href="/">Home</a>
+
+            <a href="/blog/">Blog</a>
+
+            <a href="/#categories">Shop Products</a>
+
+        </div>
+
     </div>
 
-    <p>
-        © <span id="currentYear"></span> WittyFare
-    </p>
+    <div style="text-align:center; margin-top:30px;">
+
+        <p>
+            © 2026 WittyFare Agrovet & Farms.
+            All rights reserved.
+        </p>
+
+    </div>
 
 </footer>
-
-
-<script src="blog.js"></script>
 
 </body>
 </html>
