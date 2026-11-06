@@ -475,7 +475,7 @@
     "subcategory": "poultry-feed",
     "slug": "hybrid-301",
     "image": "/images/poultryfeed/hybrid-special-301-303.png",
-    "images": ["images/hybrid-301-1.png", "images/hybrid-301-2.png"],
+    "images": ["/images/hybrid-301-1.png", "/images/hybrid-301-2.png"],
     "description": "poultry feed and livestock.",
     "minPrice": 20300,
     "maxPrice": 21500,
@@ -649,9 +649,9 @@
     "category": "drugs",
     "subcategory": "antibiotics",
     "slug": "centerncoflor150g",
-    "image": "/images/drugs/CenternCoflor150g.jpg",
+    "image": "/images/drugs/centerncoflor150g.jpg",
     "images": [
-        "/images/drugs/CenternCoflorbackview.jpg"
+        "/images/drugs/centerncoflorbackview.jpg"
     ],
     "description": "Center nCoflor 150g veterinary product for poultry and farm animal management.",
     "featured": true
