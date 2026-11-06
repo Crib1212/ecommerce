@@ -858,7 +858,7 @@ function createProductCard(product, highlight = "") {
     const {
         name = "",
         category = "",
-        description = "",
+        productDescription = "",
         vendor = "",
         image = "",
         id,
