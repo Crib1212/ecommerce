@@ -932,11 +932,15 @@ input[type="number"] {
 /* =========================================================
    MENU
 ========================================================= */
-
+.menu {
+    top: 330px;
+    bottom: 5px;
+    height: auto;
+}
 .menu {
     position: fixed;
     bottom: 5px;
-    top: 250px;
+    top: 330px;
     border-radius: 5px;
     left: -150px;
     width: 150px;
@@ -3501,39 +3505,46 @@ footer {
     border-radius: 4px;
     font-weight: 700;
 }
-@media (max-width: 768px) {
-    .menu ul {
-        margin-top: 10px;
-        padding-top: 10px;
-    }
+/* =========================
+   DESKTOP MENU
+========================= */
+
+.menu {
+    top: 315px;
+    bottom: 5px;
+    height: auto;
 }
-  .menu {
+
+.menu ul {
+    margin-top: -15px;
+}
+
+.menu ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+@media screen and (max-width: 768px) {
+
+    .menu {
         top: 150px;
         bottom: 5px;
         height: auto;
     }
 
     .menu ul {
-        margin-top: -20px;
+        margin-top: 20px;
+        padding-top: 10px;
     }
 
     .menu ul li {
         padding: 8px;
         text-align: center;
     }
-/* DESKTOP MENU */
-.menu {
-    top: 210px;
-    bottom: 5px;
-    height: auto;
-}
 
-.menu ul {
-    margin-top: 10px;
-    padding-top: 10px;
-}
-
-.menu ul li {
-    padding: 12px;
-    text-align: center;
 }
