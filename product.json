@@ -337,16 +337,6 @@
 
   },
   {
-    "id": "feed-ultima-finisher",
-    "name": "Ultima Finisher",
-    "price": 20150,
-    "category": "feed",
-    "subcategory": "poultry-feed",
-    "slug": "ultima-finisher-20150",
-    "image": "/images/poultryfeed/Ultima_finisher.png",
-    "description": "Ultima finisher poultry feed for broiler finishing and poultry production."
-  },
-  {
     "id": "pet-booster_can",
     "name": "Booster dog Feed",
     "price": 1750,
