@@ -2,7 +2,7 @@
   {
     "id": "day-old-agrited-broiler-chicks",
     "name": "Agrited Day-Old Broiler Chicks",
-    "price": 2200,
+    "price": 2300,
     "category": "day-old",
     "slug": "agrited-broiler-chicks",
     "image": "/images/dayold/agriteddoc.webp",
@@ -490,6 +490,26 @@
       { "sku": "hyb-301", "label": "Size", "name": "hybrid special 301", "price": 21500, "stock": 50, "bestValue": true }
     ]
   },
+    {
+    "id": "newhope510-512",
+    "name": "New Hope 510-512 25kg",
+    "category": "feed",
+    "subcategory": "poultry-feed",
+    "slug": "newhope510-512",
+    "image": "/images/poultryfeed/newhope510-512.png",
+    "images": ["/images/poultryfeed/newhope510.png", "/images/poultryfeed/newhope511.png", "/images/poultryfeed/newhope512.png"],
+    "description": "poultry feed and livestock.",
+    "minPrice": 23700,
+    "maxPrice": 24500,
+    "displayPrice": "₦23,700 - ₦24,500",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "newhopefinisher-512", "label": "Size", "name": "New Hope finisher 512", "price": 23700, "stock": 50 },
+      { "sku": "newhopestarter-511", "label": "Size", "name": "New Hope starter 511", "price": 23800, "stock": 30 },
+      { "sku": "newhopeextrastarter-510", "label": "Size", "name": "New Hope extra starter 510", "price": 24500, "stock": 50, "bestValue": true }
+    ]
+  },
   {
     "id": "equipment-pulse-sprayer-15l",
     "name": "Pulse Sprayer 15L",
@@ -611,6 +631,30 @@
   ],
   "administration": "Mix with drinking water or feed",
   "storage": "Store in a cool, dry place, away from direct sunlight",
+  "featured": true
+},
+{
+  "id": "chemical-Goodnight-multi-insect-killer-300ml",
+  "name": "Goodnight Multi-Insect Killer - 300ml",
+  "price": 3500,
+  "category": "chemicals",
+  "subcategory": "pesticides",
+  "slug": "goodnight-multi-insect-killer-300ml",
+  "image": "/images/chemical/goodnightinsectkiller.png",
+  "images": [
+    "/images/chemical/goodnightinsectkiller.png",
+    "/images/chemical/goodnightinsectkillerbackview.png"
+  ],
+  "description": "Fast-acting multi-insect killer with lemon fragrance. Kills mosquitoes, flies & cockroaches instantly.",
+  "fullDescription": " Good Knight Multi Insect Killer with refreshing Lemon Fragrance. Powerful aerosol spray that provides instant action against mosquitoes, flies and cockroaches. Suitable for household use with pleasant scent. Net content: 320ml (sold as 300ml).",
+  "benefits": [
+    "Kills mosquitoes, flies and cockroaches instantly",
+    "Refreshing lemon fragrance - no harsh smell",
+    "Instant action formula",
+    "Suitable for home, office and kitchen use"
+  ],
+  "administration": "Close doors and windows. Shake well and spray towards corners and mosquito hiding areas. Keep room closed for 20-30 mins then ventilate. Keep out of reach of children.",
+  "storage": "Pressurized container. Keep away from heat, sparks and open flame. Do not expose to temperature exceeding 50°C. Store in cool, dry place.",
   "featured": true
 },
     {
