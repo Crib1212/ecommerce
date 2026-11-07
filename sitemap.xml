@@ -77,7 +77,7 @@ https://www.wittyfare.com/images/dayold/sayed-dayold-broiler.png
 </g:image_link>
 
 <g:price>
-2300.00 NGN
+2200.00 NGN
 </g:price>
 
 <g:availability>
@@ -124,7 +124,7 @@ https://www.wittyfare.com/images/dayold/olam-broiler-chicks.png
 </g:image_link>
 
 <g:price>
-2250.00 NGN
+2150.00 NGN
 </g:price>
 
 <g:availability>
@@ -535,7 +535,101 @@ https://www.wittyfare.com/images/poultryfeed/Hybrid_grower_mash-2.png
 </g:image_link>
 
 <g:price>
-12450.00 NGN
+12950.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>feed-lionstonestartercrumbled-25kg</g:id>
+
+<title>Lionstone Starter Crumbled 25kg</title>
+
+<description>
+Lionstone Starter Crumbled 25kg poultry feed for growing birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=lionstonestartercrumbled-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/lionstonestartercrumble.png
+</g:image_link>
+
+<g:price>
+18500.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>feed-happyturkeystarter1crumbs-25kg</g:id>
+
+<title>Happy Turkey Starter 1 Crumbs 25kg</title>
+
+<description>
+Happy Turkey Starter 1 Crumbs 25kg poultry feed for growing birds.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=happyturkeystarter1crumbs-25kg</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/happyturkeystarter1crumbs.png
+</g:image_link>
+
+<g:price>
+18500.00 NGN
 </g:price>
 
 <g:availability>
@@ -582,7 +676,7 @@ https://www.wittyfare.com/images/poultryfeed/hybrid-grower-crumbled.png
 </g:image_link>
 
 <g:price>
-12900.00 NGN
+13400.00 NGN
 </g:price>
 
 <g:availability>
@@ -629,7 +723,7 @@ https://www.wittyfare.com/images/poultryfeed/hybrid-chick-crumbled-25kg.png
 </g:image_link>
 
 <g:price>
-16900.00 NGN
+17400.00 NGN
 </g:price>
 
 <g:availability>
@@ -676,7 +770,7 @@ https://www.wittyfare.com/images/poultryfeed/hybrid-starter-crumbled.png
 </g:image_link>
 
 <g:price>
-17600.00 NGN
+18500.00 NGN
 </g:price>
 
 <g:availability>
@@ -723,7 +817,7 @@ https://www.wittyfare.com/images/poultryfeed/Hybrid_layer_mash-3.png
 </g:image_link>
 
 <g:price>
-13750.00 NGN
+14250.00 NGN
 </g:price>
 
 <g:availability>
@@ -770,7 +864,7 @@ https://www.wittyfare.com/images/poultryfeed/hybrid-layer-combo-25kg.png
 </g:image_link>
 
 <g:price>
-13450.00 NGN
+13950.00 NGN
 </g:price>
 
 <g:availability>
@@ -946,7 +1040,7 @@ https://www.wittyfare.com/images/poultryfeed/Hybrid_3_in_1_Special-4.png
 </g:image_link>
 
 <g:price>
-20600.00 NGN
+21500.00 NGN
 </g:price>
 
 <g:availability>
@@ -993,7 +1087,7 @@ https://www.wittyfare.com/images/poultryfeed/hybrid-base-2-finisher.png
 </g:image_link>
 
 <g:price>
-19400.00 NGN
+20300.00 NGN
 </g:price>
 
 <g:availability>
@@ -1345,7 +1439,7 @@ https://www.wittyfare.com/images/poultryfeed/Hybrid_finisher_pellet_25kg-7.png
 </g:image_link>
 
 <g:price>
-17500.00 NGN
+18400.00 NGN
 </g:price>
 
 <g:availability>
@@ -1846,7 +1940,7 @@ https://www.wittyfare.com/images/fish/juvefish.jpg
 </g:image_link>
 
 <g:price>
-100.00 NGN
+150.00 NGN
 </g:price>
 
 <g:availability>
@@ -1937,6 +2031,147 @@ poultry feed and livestock.
 
 <g:image_link>
 https://www.wittyfare.com/images/poultryfeed/hybrid-special-301-303.png
+</g:image_link>
+
+<g:price>
+0.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; poultry-feed
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>bluecrown2mm-9mm</g:id>
+
+<title>Blue Crown 2mm - 9mm</title>
+
+<description>
+fish feed for various aquatic species.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=bluecrown2mm-9mm</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/fishfeed/Blue_crown_2mm.png
+</g:image_link>
+
+<g:price>
+0.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; fish-feed
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>alleraqua2mm-3mm</g:id>
+
+<title>Aller Aqua 2mm - 3mm</title>
+
+<description>
+fish feed for various aquatic species.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=alleraqua2mm-3mm</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/fishfeed/ALLERAQUA.jpg
+</g:image_link>
+
+<g:price>
+0.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+feed &gt; fish-feed
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>newhope510-512</g:id>
+
+<title>New Hope 510-512 25kg</title>
+
+<description>
+poultry feed and livestock.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=newhope510-512</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/poultryfeed/newhope510-512.png
 </g:image_link>
 
 <g:price>
@@ -2112,7 +2347,7 @@ Diclamax veterinary product for poultry and farm animal management.
 <link>https://www.wittyfare.com/product/?slug=diclamax</link>
 
 <g:image_link>
-https://www.wittyfare.com/images/drugs/diclamax.png
+https://www.wittyfare.com/images/drugs/Diclamax.png
 </g:image_link>
 
 <g:price>
@@ -2402,6 +2637,147 @@ drugs &gt; multivitamins
 
 <item>
 
+<g:id>drugs-nadis-broiler-booster-100g</g:id>
+
+<title>Nadis Broiler Booster with Multivitamins and Calcium</title>
+
+<description>
+Nadis Broiler Booster with Multivitamins and Calcium: Boost Growth and Productivity - 100g
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=nadis-broiler-booster-multivitamin-calcium</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/drugs/nadisbroilerbooster.png
+</g:image_link>
+
+<g:price>
+3000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+drugs &gt; supplements
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>chemical-Goodnight-multi-insect-killer-300ml</g:id>
+
+<title>Goodnight Multi-Insect Killer - 300ml</title>
+
+<description>
+Fast-acting multi-insect killer with lemon fragrance. Kills mosquitoes, flies &amp; cockroaches instantly.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=goodnight-multi-insect-killer-300ml</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/chemical/goodnightinsectkiller.png
+</g:image_link>
+
+<g:price>
+3500.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+chemicals &gt; pesticides
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
+<g:id>drugs-faamaboostervit150g</g:id>
+
+<title>Faama Booster Vit 150g</title>
+
+<description>
+Faama Booster Vit 150g veterinary product for poultry and farm animal management.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=faamaboostervit150g</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/drugs/faamaboostervit.png
+</g:image_link>
+
+<g:price>
+3000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+drugs &gt; multivitamins
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
+
+</item>
+
+<item>
+
 <g:id>drugs-medecol_200ml</g:id>
 
 <title>Medecol 200ml</title>
@@ -2483,6 +2859,53 @@ no
 drugs &gt; antibiotics
 </g:product_type>
 
+
+</item>
+
+<item>
+
+<g:id>drugs-centerncoflor150g</g:id>
+
+<title>Centern Coflor 150g</title>
+
+<description>
+Center nCoflor 150g veterinary product for poultry and farm animal management.
+</description>
+
+<link>https://www.wittyfare.com/product/?slug=centerncoflor150g</link>
+
+<g:image_link>
+https://www.wittyfare.com/images/drugs/centerncoflor150g.jpg
+</g:image_link>
+
+<g:price>
+9000.00 NGN
+</g:price>
+
+<g:availability>
+in stock
+</g:availability>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+Wittyfare
+</g:brand>
+
+<g:identifier_exists>
+no
+</g:identifier_exists>
+
+<g:product_type>
+drugs &gt; antibiotics
+</g:product_type>
+
+
+<g:custom_label_0>
+featured
+</g:custom_label_0>
 
 </item>
 
@@ -3266,53 +3689,6 @@ vaccines &gt; animal-vaccines
 
 <item>
 
-<g:id>feed-blue-crown-2mm</g:id>
-
-<title>Blue Crown Fish Feed 2mm</title>
-
-<description>
-Blue Crown fish feed in 2mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=blue-crown-fish-feed-2mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/Blue_crown_2mm.png
-</g:image_link>
-
-<g:price>
-33000.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
 <g:id>feed-koudijs-prestarter</g:id>
 
 <title>koudijs-prestarter</title>
@@ -3328,7 +3704,7 @@ https://www.wittyfare.com/images/poultryfeed/koudijs-prestarter.png
 </g:image_link>
 
 <g:price>
-30000.00 NGN
+28000.00 NGN
 </g:price>
 
 <g:availability>
@@ -3360,53 +3736,6 @@ featured
 
 <item>
 
-<g:id>feed-Aller_aqua_2mm</g:id>
-
-<title>Aller Aqua Fish Feed 2mm</title>
-
-<description>
-Aller Aqua fish feed in 2mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=aller-aqua-fish-feed-2mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/ALLERAQUA.jpg
-</g:image_link>
-
-<g:price>
-62500.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
 <g:id>feed-Aller_aqua_crumb_0.9-1.5</g:id>
 
 <title>Aller Aqua crumble 0.9-1.5mm</title>
@@ -3423,194 +3752,6 @@ https://www.wittyfare.com/images/fishfeed/alleraquacrumb.png
 
 <g:price>
 55500.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
-<g:id>feed-blue-crown-3mm</g:id>
-
-<title>Blue Crown Fish Feed 3mm</title>
-
-<description>
-Blue Crown fish feed in 3mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=blue-crown-fish-feed-3mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/Bluecrown-3mm-53.png
-</g:image_link>
-
-<g:price>
-26900.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
-<g:id>feed-blue-crown-4mm</g:id>
-
-<title>Blue Crown Fish Feed 4mm</title>
-
-<description>
-Blue Crown fish feed in 4mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=blue-crown-fish-feed-4mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/Bluecrown-4mm-54.png
-</g:image_link>
-
-<g:price>
-26200.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
-<g:id>feed-blue-crown-6mm</g:id>
-
-<title>Blue Crown Fish Feed 6mm</title>
-
-<description>
-Blue Crown fish feed in 6mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=blue-crown-fish-feed-6mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/Bluecrown-6mm-56.png
-</g:image_link>
-
-<g:price>
-23950.00 NGN
-</g:price>
-
-<g:availability>
-in stock
-</g:availability>
-
-<g:condition>
-new
-</g:condition>
-
-<g:brand>
-Wittyfare
-</g:brand>
-
-<g:identifier_exists>
-no
-</g:identifier_exists>
-
-<g:product_type>
-feed &gt; fish-feed
-</g:product_type>
-
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
-</item>
-
-<item>
-
-<g:id>feed-blue-crown-9mm</g:id>
-
-<title>Blue Crown Fish Feed 9mm</title>
-
-<description>
-Blue Crown fish feed in 9mm size for fish farming and aquaculture.
-</description>
-
-<link>https://www.wittyfare.com/product/?slug=blue-crown-fish-feed-9mm</link>
-
-<g:image_link>
-https://www.wittyfare.com/images/fishfeed/Bluecrown-9mm-59.png
-</g:image_link>
-
-<g:price>
-22650.00 NGN
 </g:price>
 
 <g:availability>
@@ -3681,10 +3822,6 @@ farm-packages
 </g:product_type>
 
 
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
 <g:custom_label_1>
 poultry
 </g:custom_label_1>
@@ -3735,10 +3872,6 @@ no
 farm-packages
 </g:product_type>
 
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
 
 <g:custom_label_1>
 poultry
@@ -3791,10 +3924,6 @@ farm-packages
 </g:product_type>
 
 
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
 <g:custom_label_1>
 fish
 </g:custom_label_1>
@@ -3845,10 +3974,6 @@ no
 farm-packages
 </g:product_type>
 
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
 
 <g:custom_label_1>
 fish
@@ -3901,10 +4026,6 @@ farm-packages
 </g:product_type>
 
 
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
 <g:custom_label_1>
 fish
 </g:custom_label_1>
@@ -3956,10 +4077,6 @@ farm-packages
 </g:product_type>
 
 
-<g:custom_label_0>
-featured
-</g:custom_label_0>
-
 <g:custom_label_1>
 poultry-restock
 </g:custom_label_1>
@@ -4010,10 +4127,6 @@ no
 farm-packages
 </g:product_type>
 
-
-<g:custom_label_0>
-featured
-</g:custom_label_0>
 
 <g:custom_label_1>
 equipment
