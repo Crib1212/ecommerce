@@ -986,7 +986,17 @@ const productImages = Array.isArray(product.images) && product.images.length
                 <p>${escapeHTML(packageType)}</p>
             ` : ""}
 
-            <div class="price">${getDisplayPrice(product)}</div>
+            <div class="price">
+    ${product.oldPrice ? `
+        <del class="old-price">
+            ${formatPrice(product.oldPrice)}
+        </del>
+    ` : ""}
+
+    <span class="new-price">
+        ${getDisplayPrice(product)}
+    </span>
+</div>
         </a>
 
         ${variantOptions}
@@ -2016,6 +2026,7 @@ if (location.search && product.slug) {
                 detailsElement.innerHTML =
                     detailsHTML;
             }
+            renderProductGallery(product);
         }
 
 
@@ -3410,7 +3421,39 @@ function highlightSearchText(text, query) {
 
         }
     );
+function renderProductGallery(product) {
 
+    const mainImage = document.getElementById("mainProductImage");
+    const thumbnails = document.getElementById("productThumbnails");
+
+    if (!mainImage || !thumbnails) return;
+
+    const images = product.images?.length
+        ? product.images
+        : [product.image];
+
+    mainImage.src = images[0];
+    mainImage.alt = product.name || "Product";
+
+    thumbnails.innerHTML = images.map((image, index) => `
+        <img
+            src="${image}"
+            class="product-thumbnail ${index === 0 ? "active" : ""}"
+            onclick="selectProductImage('${image}', this)"
+            alt="${product.name || "Product"}"
+        >
+    `).join("");
+}
+
+function selectProductImage(image, thumbnail) {
+
+    document.getElementById("mainProductImage").src = image;
+
+    document.querySelectorAll(".product-thumbnail")
+        .forEach(img => img.classList.remove("active"));
+
+    thumbnail.classList.add("active");
+}
 
     /* =========================================================
     🔄 STORAGE EVENT

@@ -3563,3 +3563,48 @@ footer {
     line-height: 1.8;
     margin-top: 15px;
 }
+.old-price {
+    color: red;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-right: 8px;
+    font-weight: normal;
+}
+
+.new-price {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 18px;
+}
+.product-gallery {
+    width: 100%;
+}
+
+.main-product-image {
+    width: 100%;
+    max-width: 450px;
+    height: 350px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.product-thumbnails {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.product-thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.product-thumbnail.active {
+    border: 2px solid #28a745;
+}

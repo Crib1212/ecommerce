@@ -439,7 +439,8 @@
   {
     "id": "juvenile-fish",
     "name": "Juvenile Fish",
-    "price": 100,
+    "price": 150,
+    "oldPrice": 180,
     "category": "fish",
     "subcategory": "fish-stock",
     "slug": "juvenile-fish",
@@ -901,6 +902,7 @@
     "id": "feed-koudijs-prestarter",
     "name": "koudijs-prestarter",
     "price": 28000,
+    "oldPrice": 30000,
     "category": "feed",
     "subcategory": "poultry-feed",
     "slug": "koudijs-prestarter",
