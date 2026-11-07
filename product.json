@@ -480,9 +480,9 @@
     "image": "/images/poultryfeed/hybrid-special-301-303.png",
     "images": ["/images/poultryfeed/hybrid301.png", "/images/poultryfeed/hybrid302.png", "/images/poultryfeed/hybrid301.png"],
     "description": "poultry feed and livestock.",
-    "minPrice": 20300,
+    "minPrice": 23000,
     "maxPrice": 21500,
-    "displayPrice": "₦20,300 - ₦21,500",
+    "displayPrice": "₦23,000 - ₦21,500",
     "hasVariants": true,
     "featured": true,
     "variants": [
@@ -491,6 +491,47 @@
       { "sku": "hyb-301", "label": "Size", "name": "hybrid special 301", "price": 21500, "stock": 50, "bestValue": true }
     ]
   },
+  {
+    "id": "bluecrown2mm-9mm",
+    "name": "Blue Crown 2mm - 9mm",
+    "category": "feed",
+    "subcategory": "fish-feed",
+    "slug": "bluecrown2mm-9mm",
+    "image": "/images/fishfeed/Blue_crown_2mm.png",
+    "images": ["/images/fishfeed/Blue_crown_2mm.png", "/images/fishfeed/Bluecrown-3mm-53.png", "/images/fishfeed/Bluecrown-4mm-54.png", "/images/fishfeed/Bluecrown-6mm-56.png", "/images/fishfeed/Bluecrown-9mm-59.png"],
+    "description": "fish feed for various aquatic species.",
+    "minPrice": 24000,
+    "maxPrice": 32000,
+    "displayPrice": "₦24,000 - ₦32,000",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "blc-9mm", "label": "Size", "name": "Blue Crown 9mm", "price": 24000, "stock": 50 },
+      { "sku": "blc-6mm", "label": "Size", "name": "Blue Crown 6mm", "price": 25000, "stock": 30 },
+      { "sku": "blc-4mm", "label": "Size", "name": "Blue Crown 4mm", "price": 26500, "stock": 30 },
+      { "sku": "blc-3mm", "label": "Size", "name": "Blue Crown 3mm", "price": 28000, "stock": 30 },
+      { "sku": "blc-2mm", "label": "Size", "name": "Blue Crown 2mm", "price": 32000, "stock": 50, "bestValue": true }
+    ]
+  },
+    {
+    "id": "alleraqua2mm-3mm",
+    "name": "Aller Aqua 2mm - 3mm",
+    "category": "feed",
+    "subcategory": "fish-feed",
+    "slug": "alleraqua2mm-3mm",
+    "image": "/images/fishfeed/ALLERAQUA.jpg",
+    "images": ["/images/fishfeed/ALLERAQUA.jpg", "/images/fishfeed/ALLERAQUA.jpg"],
+    "description": "fish feed for various aquatic species.",
+    "minPrice": 65000,
+    "maxPrice": 70000,
+    "displayPrice": "₦65,000 - ₦70,000",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "alq-3mm", "label": "Size", "name": "Aller Aqua 3mm", "price": 65000, "stock": 30 },
+      { "sku": "alq-2mm", "label": "Size", "name": "Aller Aqua 2mm", "price": 70000, "stock": 50, "bestValue": true }
+    ]
+  },  
     {
     "id": "newhope510-512",
     "name": "New Hope 510-512 25kg",
@@ -887,17 +928,7 @@
     "image": "/images/vaccine/DHLPP.png",
     "description": "DHLPP vaccine product for animal health management."
   },
-  {
-    "id": "feed-blue-crown-2mm",
-    "name": "Blue Crown Fish Feed 2mm",
-    "price": 33000,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "blue-crown-fish-feed-2mm",
-    "image": "/images/fishfeed/Blue_crown_2mm.png",
-    "description": "Blue Crown fish feed in 2mm size for fish farming and aquaculture.",
-    "featured": true
-  },
+
   {
     "id": "feed-koudijs-prestarter",
     "name": "koudijs-prestarter",
@@ -911,17 +942,6 @@
     "featured": true
   },
   {
-    "id": "feed-Aller_aqua_2mm",
-    "name": "Aller Aqua Fish Feed 2mm",
-    "price": 62500,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "aller-aqua-fish-feed-2mm",
-    "image": "/images/fishfeed/ALLERAQUA.jpg",
-    "description": "Aller Aqua fish feed in 2mm size for fish farming and aquaculture.",
-    "featured": true
-  },
-  {
     "id": "feed-Aller_aqua_crumb_0.9-1.5",
     "name": "Aller Aqua crumble 0.9-1.5mm",
     "price": 55500,
@@ -930,50 +950,6 @@
     "slug": "aller-aqua-fish-feed-0.9-1.5mm",
     "image": "/images/fishfeed/alleraquacrumb.png",
     "description": "Aller Aqua fish feed in 0.9-1.5mm size for fish farming and aquaculture.",
-    "featured": true
-  },
-  {
-    "id": "feed-blue-crown-3mm",
-    "name": "Blue Crown Fish Feed 3mm",
-    "price": 26900,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "blue-crown-fish-feed-3mm",
-    "image": "/images/fishfeed/Bluecrown-3mm-53.png",
-    "description": "Blue Crown fish feed in 3mm size for fish farming and aquaculture.",
-    "featured": true
-  },
-  {
-    "id": "feed-blue-crown-4mm",
-    "name": "Blue Crown Fish Feed 4mm",
-    "price": 26200,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "blue-crown-fish-feed-4mm",
-    "image": "/images/fishfeed/Bluecrown-4mm-54.png",
-    "description": "Blue Crown fish feed in 4mm size for fish farming and aquaculture.",
-    "featured": true
-  },
-  {
-    "id": "feed-blue-crown-6mm",
-    "name": "Blue Crown Fish Feed 6mm",
-    "price": 23950,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "blue-crown-fish-feed-6mm",
-    "image": "/images/fishfeed/Bluecrown-6mm-56.png",
-    "description": "Blue Crown fish feed in 6mm size for fish farming and aquaculture.",
-    "featured": true
-  },
-  {
-    "id": "feed-blue-crown-9mm",
-    "name": "Blue Crown Fish Feed 9mm",
-    "price": 22650,
-    "category": "feed",
-    "subcategory": "fish-feed",
-    "slug": "blue-crown-fish-feed-9mm",
-    "image": "/images/fishfeed/Bluecrown-9mm-59.png",
-    "description": "Blue Crown fish feed in 9mm size for fish farming and aquaculture.",
     "featured": true
   },
   {

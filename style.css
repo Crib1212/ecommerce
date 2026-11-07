@@ -3608,3 +3608,12 @@ footer {
 .product-thumbnail.active {
     border: 2px solid #28a745;
 }
+/* Google rejects tiny or hidden images */
+#mainProductImage{
+  display:block !important;
+  width:100%;
+  max-width:600px;
+  height:auto;
+  object-fit:contain;
+  background:#fff;
+}
