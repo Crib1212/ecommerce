@@ -213,51 +213,71 @@ function getProductImage(image) {
     if (/^(https?:|data:)/.test(p)) return p;
     return "/images/" + p.replace(/^(\.\.\/|\.\/|\/)?(images\/)?/, "");
 }
+/* =========================================================
+🖼 AUTOMATIC IMAGE SLIDER + MOUSE HOVER
+========================================================= */
 
-function changeProductImage(img) {
-    let images = [];
+function showNextProductImage(img) {
 
-    try {
-        images = JSON.parse(img.dataset.images || "[]");
-    } catch (error) {
-        console.error("Image data error:", error);
-        return;
-    }
+    const images = JSON.parse(
+        img.dataset.images || "[]"
+    );
 
     if (images.length < 2) return;
 
-    let current = 1;
+    img.imageIndex =
+        (img.imageIndex + 1) % images.length;
 
-    // Change immediately on hover
-    img.src = getCardImage(images[current]);
-
-    clearInterval(img.imageTimer);
-
-    // Continue cycling through images
-    img.imageTimer = setInterval(() => {
-        current++;
-
-        if (current >= images.length) {
-            current = 1;
-        }
-
-        img.src = getCardImage(images[current]);
-
-    }, 1500);
+    img.src = images[img.imageIndex];
 }
 
+
+// Mouse hover
+function changeProductImage(img) {
+    showNextProductImage(img);
+}
+
+
+// Mouse leaves
 function resetProductImage(img) {
-    clearInterval(img.imageTimer);
+    // Automatic rotation continues
+}
 
-    try {
-        const images = JSON.parse(img.dataset.images || "[]");
 
-        if (images.length > 0) {
-            img.src = getCardImage(images[0]);
+// Start automatic rotation
+function startProductImageSlider() {
+
+    document.querySelectorAll(
+        ".product-image[data-images]"
+    ).forEach(img => {
+
+        let images = [];
+
+        try {
+            images = JSON.parse(
+                img.dataset.images || "[]"
+            );
+        } catch (error) {
+            return;
         }
-    } catch (error) {
-        console.error("Image reset error:", error);
-    }
+
+        if (
+            images.length < 2 ||
+            img.dataset.sliderStarted === "true"
+        ) {
+            return;
+        }
+
+        img.dataset.sliderStarted = "true";
+        img.imageIndex = 0;
+
+        img.imageTimer = setInterval(() => {
+
+            showNextProductImage(img);
+
+        }, 2000);
+
+    });
 }
     /* =========================================================
     🛒 CART STORAGE
@@ -625,8 +645,7 @@ function renderCartItems() {
         const image = getCartImage(product.image);
 
         item.innerHTML = `
-            <img
-    <img
+           <img
     src="${escapeAttribute(image)}"
     alt="${escapeAttribute(product.name || "Product")}"
     loading="lazy"
@@ -1169,6 +1188,7 @@ const productImages = Array.isArray(product.images) && product.images.length
             }
 
         });
+        startProductImageSlider();
     }
 
 
@@ -1227,8 +1247,9 @@ const productImages = Array.isArray(product.images) && product.images.length
             }
 
         });
-    }
+        startProductImageSlider();
 
+    }
 
     /* =========================================================
     🏷️ CATEGORY
@@ -2176,6 +2197,7 @@ if (addButton) {
             }
 
         });
+        startProductImageSlider();
     }
 
 
@@ -2783,9 +2805,11 @@ return searchWords.every(word =>
     }
 
     results.forEach(product => {
-        const card = createProductCard(product, searchTerm);
-        if (card) listProduct.appendChild(card);
-    });
+    const card = createProductCard(product, searchTerm);
+    if (card) listProduct.appendChild(card);
+});
+
+startProductImageSlider();
 }
 function highlightSearchText(text, query) {
     const safeText = escapeHTML(String(text ?? ""));
@@ -2801,10 +2825,10 @@ function highlightSearchText(text, query) {
 
     const regex = new RegExp(`(${escapedQuery})`, "gi");
 
-    return safeText.replace(
-        regex,
-        '<mark class="search-highlight">$1</mark>'
-    );
+ return safeText.replace(
+    regex,
+    '<mark class="search-highlight">$1</mark>'
+);
 }
 
     /* =========================================================
