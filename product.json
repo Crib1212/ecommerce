@@ -438,6 +438,28 @@
     "description": "Juvenile fish for fish farmers and aquaculture production.",
     "featured": true
   },
+    {
+    "id": "broodstock-fish",
+    "name": "brood stock Fish 1kg",
+    "price": 12000,
+    "oldPrice": 13000,
+    "category": "fish",
+    "subcategory": "fish-stock",
+    "slug": "broodstock-fish",
+    "image": "/images/fish/femalebroodstock.png",
+    "images":[ "/images/fish/malebroodstock.png"],
+    "description": "broodstock fish for fish farmers and aquaculture production.",
+     "minPrice": 12000,
+    "maxPrice": 13000,
+    "displayPrice": "₦12,000 - ₦13,000",
+    "hasVariants": true,
+    "featured": true,
+    "variants": [
+      { "sku": "female", "label": "Size", "name": "broostock female 1kg", "price": 12000, "stock": 50 },
+      { "sku": "male", "label": "Size", "name": "broodstock male 1kg", "price": 12000, "stock": 30 }
+   
+    ]
+  },
      {
     "id": "coctreat-001",
     "name": "Coctreat Diclazuril 2.5% Oral Solution",
@@ -662,6 +684,28 @@
     "Brighter feathers and fur"
   ],
   "administration": "Mix with drinking water or feed",
+  "storage": "Store in a cool, dry place, away from direct sunlight",
+  "featured": true
+},
+{
+  "id": "vaccine-ovulin",
+  "name": "ovulin 10ml",
+  "price": 18600,
+  "category": "vaccines",
+  "subcategory": "hormones",
+  "slug": "ovulin-10ml",
+  "image": "/images/vaccine/ovulin.png",
+  "images": [
+        "/images/vaccine/ovulinbottle.png","/images/vaccine/ovulinpack.png"
+    ],
+  "description": "ovulin 10ml: Hormone  for fish and Livestock",
+  "fullDescription": "ovulin 10ml is a hormone  designed to enhance the spawning process in fish reproduction and performance of your fish and livestock.",
+   "benefits": ["Promotes rapid weight gain and improves feed conversion",
+    "Boosts egg production in fish",
+    "Relieves stress and enhances immunity"
+    
+  ],
+  "administration": "inject 0.5ml per 1kg fish or livestock",
   "storage": "Store in a cool, dry place, away from direct sunlight",
   "featured": true
 },
