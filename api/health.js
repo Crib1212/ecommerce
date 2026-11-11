@@ -1,7 +1,6 @@
+import { supabaseRequest } from "./_lib/supabase.js";
 
-const { supabaseRequest } = require("./_lib/supabase");
-
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method !== "GET") {
         return res.status(405).json({
             success: false,
@@ -18,12 +17,11 @@ module.exports = async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error("Database connection test failed:", error.message);
+        console.error("Database connection test failed:", error);
 
         return res.status(500).json({
             success: false,
-            message: "Database connection failed. Check your Vercel environment variables and Supabase orders table."
+            message: "Database connection failed. Check Vercel environment variables and the Supabase orders table."
         });
     }
-};
-
+}
