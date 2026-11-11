@@ -506,6 +506,17 @@
                     Send Transfer Receipt
                 </a>
 
+
+<button
+    type="button"
+    class="action-button primary-button"
+    id="submitTransferOrder"
+>
+    <i class="fa-solid fa-check-circle"></i>
+    Submit Order & Continue to Confirmation
+</button>
+
+
                 <a class="action-button secondary-button" href="index.html">
                     <i class="fa-solid fa-arrow-left"></i>
                     Continue Shopping
@@ -532,6 +543,42 @@
         accountName: "wittyfare service",
         accountNumber: "6711391485"
     };
+
+const submitButton = document.getElementById("submitTransferOrder");
+
+submitButton.addEventListener("click", () => {
+    const savedOrder = sessionStorage.getItem("currentOrder");
+
+    if (!savedOrder) {
+        alert("Order details not found. Please return to checkout.");
+        return;
+    }
+
+    try {
+        const order = JSON.parse(savedOrder);
+
+        if (
+            order.paymentMethod !== "transfer" ||
+            !Number.isFinite(Number(order.totalPrice)) ||
+            Number(order.totalPrice) <= 0
+        ) {
+            alert("Invalid bank transfer order.");
+            return;
+        }
+
+        // This records submission, NOT payment.
+        order.orderSubmitted = true;
+        order.paymentStatus = "pending";
+
+        sessionStorage.setItem("currentOrder", JSON.stringify(order));
+
+        window.location.href = "confirmation.html";
+
+    } catch (error) {
+        alert("Unable to submit your order. Please try again.");
+    }
+});
+
 
     document.getElementById("bankName").textContent = bankDetails.bankName;
     document.getElementById("accountName").textContent = bankDetails.accountName;
@@ -594,4 +641,3 @@
 
 </body>
 </html>
-```

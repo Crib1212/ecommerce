@@ -1,80 +1,465 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WittyFare Price List Generator</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#28a745">
+
+    <title>WittyFare Product Price Generator</title>
+
     <link rel="stylesheet" href="price-list.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7f4;
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: #ffffff;
+            text-align: center;
+            padding: 25px 15px;
+            border-bottom: 4px solid #28a745;
+        }
+
+        .logo h1 {
+            margin: 0;
+            color: #28a745;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .logo p {
+            margin: 4px 0;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .header h2 {
+            margin: 18px 0 5px;
+            font-size: 23px;
+        }
+
+        .header > p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .search-section,
+        .filter-section {
+            margin-bottom: 15px;
+        }
+
+        #searchProduct,
+        #categoryFilter {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        .list-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0 15px;
+        }
+
+        .list-heading h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        #productCount {
+            background: #e8f5e9;
+            color: #218838;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        #priceList {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .category-title {
+            background: #e8f5e9;
+            color: #218838;
+            padding: 12px;
+            border-left: 4px solid #28a745;
+            margin: 20px 0 12px;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .price-product {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .price-product input {
+            width: 19px;
+            height: 19px;
+            accent-color: #28a745;
+            flex-shrink: 0;
+        }
+
+        .price-product img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .product-information {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-information strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .product-information p {
+            margin: 5px 0;
+            color: #218838;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .action-buttons button {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 10px;
+            background: #28a745;
+            color: #fff;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background: #218838;
+        }
+
+        .action-buttons button:nth-child(2) {
+            background: #dc3545;
+        }
+
+        .action-buttons button:nth-child(3) {
+            background: #343a40;
+        }
+
+        .action-buttons button:nth-child(4) {
+            background: #1769aa;
+        }
+
+        .action-buttons button:nth-child(5) {
+            background: #6f42c1;
+        }
+
+        .footer {
+            text-align: center;
+            background: #ffffff;
+            border-top: 3px solid #28a745;
+            padding: 25px 15px;
+            margin-top: 30px;
+        }
+
+        .footer h3 {
+            color: #28a745;
+            margin: 0 0 10px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        @media (max-width: 500px) {
+
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .price-product img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 <body>
 
-<div class="container">
 
-    <header>
-        <h1>WittyFare Agrovet & Farms</h1>
-        <p>Product Price List Generator</p>
-    </header>
+<!-- =================================================
+     HEADER
+================================================== -->
 
-    <section class="form-section">
-        <h2>Add Product</h2>
+<header class="header">
 
-        <input type="text" id="productName"
-               placeholder="Product name">
+    <div class="logo">
 
-        <input type="text" id="category"
-               placeholder="Category e.g. Hybrid Feed">
+        <h1>WITTYFARE</h1>
 
-        <input type="text" id="size"
-               placeholder="Size e.g. 25kg">
+        <p>AGROVET & FARMS</p>
 
-        <input type="number" id="price"
-               placeholder="Selling price (₦)">
+    </div>
 
-        <button onclick="addProduct()">
-            Add Product
+    <h2>PRODUCT PRICE GENERATOR</h2>
+
+    <p>Quality Agro & Veterinary Products</p>
+
+</header>
+
+
+
+<!-- =================================================
+     MAIN
+================================================== -->
+
+<main class="container">
+
+
+    <!-- SEARCH -->
+
+    <section class="search-section">
+
+        <input
+            type="search"
+            id="searchProduct"
+            placeholder="Search product name..."
+            autocomplete="off"
+        >
+
+    </section>
+
+
+
+    <!-- CATEGORY FILTER -->
+
+    <section class="filter-section">
+
+        <select id="categoryFilter">
+
+            <option value="all">All Products</option>
+
+            <option value="hybrid">Hybrid</option>
+
+            <option value="day-old-chicks">
+                Day-Old Chicks
+            </option>
+
+            <option value="feeds">Feeds</option>
+
+            <option value="drugs">
+                Veterinary Drugs
+            </option>
+
+            <option value="vaccines">
+                Vaccines
+            </option>
+
+            <option value="fish">
+                Fish Products
+            </option>
+
+            <option value="equipment">
+                Equipment
+            </option>
+
+            <option value="chemical">
+                Chemicals
+            </option>
+
+            <option value="pet-store">
+                Pet Products
+            </option>
+
+            <option value="farm-packages">
+                Farm Packages
+            </option>
+
+        </select>
+
+    </section>
+
+
+
+    <!-- PRODUCT INFORMATION -->
+
+    <section class="list-heading">
+
+        <h3>Available Products</h3>
+
+        <span id="productCount">
+            0 Products
+        </span>
+
+    </section>
+
+
+
+    <!-- PRODUCT LIST -->
+
+    <section id="priceList">
+
+        <p>Loading products...</p>
+
+    </section>
+
+
+
+    <!-- ACTION BUTTONS -->
+
+    <section class="action-buttons">
+
+        <button
+            type="button"
+            onclick="selectAllProducts()"
+        >
+            SELECT ALL
         </button>
-    </section>
 
-    <section class="list-section">
 
-        <div class="list-header">
-            <h2>Product Price List</h2>
-            <span id="date"></span>
-        </div>
+        <button
+            type="button"
+            onclick="clearAllProducts()"
+        >
+            CLEAR ALL
+        </button>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>S/N</th>
-                    <th>Product</th>
-                    <th>Category</th>
-                    <th>Size</th>
-                    <th>Price</th>
-                    <th class="no-print">Action</th>
-                </tr>
-            </thead>
 
-            <tbody id="productList">
-            </tbody>
-        </table>
+        <button
+            type="button"
+            onclick="printPriceList()"
+        >
+            PRINT PRICE LIST
+        </button>
 
-        <div class="buttons">
-            <button onclick="printList()">
-                Print / Save PDF
-            </button>
 
-            <button class="clear"
-                    onclick="clearList()">
-                Clear List
-            </button>
-        </div>
+        <button
+            type="button"
+            onclick="downloadPricePDF()"
+        >
+            DOWNLOAD PDF
+        </button>
+
+
+        <button
+            type="button"
+            onclick="downloadPriceJPEG()"
+        >
+            DOWNLOAD JPEG
+        </button>
 
     </section>
 
-</div>
+
+</main>
+
+
+
+<!-- =================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+    <h3>WITTYFARE AGROVET & FARMS</h3>
+
+    <p>www.wittyfare.com</p>
+
+    <p>Quality Products. Affordable Prices.</p>
+
+</footer>
+
+
+
+<!-- =================================================
+     PDF LIBRARY
+================================================== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+<!-- =================================================
+     PRICE GENERATOR JAVASCRIPT
+================================================== -->
 
 <script src="price-list.js"></script>
+
+
+<!-- CATEGORY FILTER CONNECTION -->
+
+<script>
+
+    document.getElementById("categoryFilter")
+        .addEventListener("change", function() {
+
+            filterCategory(this.value);
+
+        });
+
+</script>
+
+
 </body>
+
 </html>
 
