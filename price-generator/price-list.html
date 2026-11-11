@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WittyFare Price List Generator</title>
+    <link rel="stylesheet" href="price-list.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>WittyFare Agrovet & Farms</h1>
+        <p>Product Price List Generator</p>
+    </header>
+
+    <section class="form-section">
+        <h2>Add Product</h2>
+
+        <input type="text" id="productName"
+               placeholder="Product name">
+
+        <input type="text" id="category"
+               placeholder="Category e.g. Hybrid Feed">
+
+        <input type="text" id="size"
+               placeholder="Size e.g. 25kg">
+
+        <input type="number" id="price"
+               placeholder="Selling price (₦)">
+
+        <button onclick="addProduct()">
+            Add Product
+        </button>
+    </section>
+
+    <section class="list-section">
+
+        <div class="list-header">
+            <h2>Product Price List</h2>
+            <span id="date"></span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th class="no-print">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="productList">
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button onclick="printList()">
+                Print / Save PDF
+            </button>
+
+            <button class="clear"
+                    onclick="clearList()">
+                Clear List
+            </button>
+        </div>
+
+    </section>
+
+</div>
+
+<script src="price-list.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,167 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f5f3;
+    padding: 20px;
+    color: #222;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+header {
+    background: #218838;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.form-section,
+.list-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #218838;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    background: #218838;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 3px;
+}
+
+button:hover {
+    background: #176b2b;
+}
+
+.clear {
+    background: #dc3545;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #218838;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background: #f4f8f5;
+}
+
+.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Mobile view */
+
+@media(max-width: 600px) {
+
+    body {
+        padding: 8px;
+    }
+
+    .form-section,
+    .list-section {
+        padding: 12px;
+    }
+
+    header h1 {
+        font-size: 19px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    th, td {
+        padding: 8px 4px;
+    }
+}
+
+/* Printing */
+
+@media print {
+
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .form-section,
+    .no-print,
+    .buttons {
+        display: none !important;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .list-section {
+        box-shadow: none;
+    }
+
+    header {
+        background: #218838 !important;
+        color: white !important;
+        print-color-adjust: exact;
+    }
+
+    table {
+        width: 100%;
+    }
+}
+
