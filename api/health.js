@@ -1,5 +1,5 @@
 
-const { supabaseRequest } = require("../lib/supabase");
+const { supabaseRequest } = require("./_lib/supabase");
 
 module.exports = async function handler(req, res) {
     if (req.method !== "GET") {
