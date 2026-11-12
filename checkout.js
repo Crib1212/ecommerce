@@ -2,10 +2,14 @@
 /* =========================================================
    WITTYFARE AGROVET & FARMS
    COMPLETE CHECKOUT.JS
-   Cart | Product Variants | OPay | Confirmation
+   Cart | Product Variants | OPay | Bank Transfer | Confirmation
 ========================================================= */
 
 "use strict";
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
 let listCart = [];
 let checkoutSubmitting = false;
@@ -16,6 +20,7 @@ let checkoutSubmitting = false;
 
 const CHECKOUT_CONFIG = {
     opayEndpoint: "/api/opay-init",
+    createOrderEndpoint: "/api/create-order",
     confirmationPage: "confirmation.html",
     transferPage: "bank-transfer.html",
     currency: "₦",
@@ -106,19 +111,26 @@ function normalizeProduct(product) {
     };
 }
 
-/*
-   A product and each of its variants must have
-   different cart-item keys.
+/* =========================================================
+   VARIANT CART ITEM KEY
 
-   Example:
-   coctreat-001::COC-100
-   coctreat-001::COC-250
-*/
+   Different variants of the same product remain separate.
+========================================================= */
 
 function getCartItemKey(product) {
     return `${String(product.id)}::${String(
         product.variantSku || "default"
     )}`;
+}
+
+function getProductDisplayName(product) {
+    if (product.variantName) {
+        const label = product.variantLabel || "Size";
+
+        return `${product.name} — ${label}: ${product.variantName}`;
+    }
+
+    return product.name;
 }
 
 /* =========================================================
@@ -149,14 +161,11 @@ function loadCart() {
                 foundCart = parsed;
 
                 console.log("Checkout cart loaded from:", key);
+
                 break;
             }
         } catch (error) {
-            console.warn(
-                "Could not read cart:",
-                key,
-                error
-            );
+            console.warn("Could not read cart:", key, error);
         }
     }
 
@@ -175,8 +184,7 @@ function loadCart() {
     );
 
     /*
-       Combine duplicate entries only when their product ID
-       AND variant SKU match.
+       Merge duplicates only when product ID AND variant SKU match.
     */
 
     const mergedCart = new Map();
@@ -269,20 +277,6 @@ function updateItemsCount(totalQuantity) {
                 totalQuantity === 1 ? "Item" : "Items"
             }`;
     }
-}
-
-/* =========================================================
-   VARIANT DISPLAY
-========================================================= */
-
-function getProductDisplayName(product) {
-    if (product.variantName) {
-        const label = product.variantLabel || "Size";
-
-        return `${product.name} — ${label}: ${product.variantName}`;
-    }
-
-    return product.name;
 }
 
 /* =========================================================
@@ -407,6 +401,7 @@ function renderCheckoutCart() {
             const variant = document.createElement("div");
 
             variant.className = "checkout-variant-name";
+
             variant.textContent =
                 `${product.variantLabel || "Size"}: ${product.variantName}`;
 
@@ -417,6 +412,7 @@ function renderCheckoutCart() {
 
         const meta = document.createElement("div");
         meta.className = "checkout-product-meta";
+
         meta.textContent =
             `${formatNaira(price)} × ${quantity}`;
 
@@ -446,6 +442,7 @@ function renderCheckoutCart() {
             '<i class="fa-solid fa-trash"></i> Remove';
 
         right.append(subtotalElement, removeButton);
+
         item.append(imageContainer, info, right);
 
         cartContainer.appendChild(item);
@@ -483,6 +480,7 @@ function renderSlideCart() {
         /* Image */
 
         const image = document.createElement("img");
+
         image.alt = product.name;
         image.loading = "lazy";
 
@@ -509,6 +507,7 @@ function renderSlideCart() {
             const variant = document.createElement("div");
 
             variant.className = "variant-name";
+
             variant.textContent =
                 `${product.variantLabel || "Size"}: ${product.variantName}`;
 
@@ -575,6 +574,7 @@ function renderSlideCart() {
         controls.append(remove, qtyControls);
 
         item.append(image, content, controls);
+
         cartContainer.appendChild(item);
     });
 }
@@ -698,8 +698,7 @@ function setupCart() {
         cart.style.right = "0";
 
         if (checkoutContainer) {
-            checkoutContainer.style.transform =
-                "translateX(-400px)";
+            checkoutContainer.style.transform = "translateX(-400px)";
         }
     }
 
@@ -807,7 +806,9 @@ function setupCartControls() {
 ========================================================= */
 
 function setupPaymentOptions() {
-    const options = document.querySelectorAll(".payment-option");
+    const options =
+        document.querySelectorAll(".payment-option");
+
     const form = document.getElementById("checkoutForm");
 
     options.forEach(option => {
@@ -816,13 +817,15 @@ function setupPaymentOptions() {
         if (!radio) return;
 
         radio.addEventListener("change", () => {
-            options.forEach(item => item.classList.remove("selected"));
+            options.forEach(item => {
+                item.classList.remove("selected");
+            });
 
             if (radio.checked) {
                 option.classList.add("selected");
             }
 
-            // Automatically submit when the customer chooses a method.
+            // Submit when the customer chooses a payment method.
             if (radio.checked && form) {
                 form.requestSubmit();
             }
@@ -833,7 +836,6 @@ function setupPaymentOptions() {
         }
     });
 }
-
 
 /* =========================================================
    SAVE ORDER SNAPSHOT
@@ -879,6 +881,26 @@ function saveOrderSnapshot(userDetails, paymentMethod) {
 }
 
 /* =========================================================
+   CUSTOMER DETAILS VALIDATION
+========================================================= */
+
+function validatePaymentCustomer(userDetails) {
+    if (
+        !userDetails.name?.trim() ||
+        !userDetails.email?.trim() ||
+        !userDetails.phone?.trim()
+    ) {
+        alert(
+            "Enter your full name, phone number and email address."
+        );
+
+        return false;
+    }
+
+    return true;
+}
+
+/* =========================================================
    CHECKOUT FORM
 ========================================================= */
 
@@ -886,12 +908,14 @@ function setupCheckoutForm() {
     const form = document.getElementById("checkoutForm");
 
     if (!form) return;
-        // Restore checkout when the browser returns to this page.
+
     const submitButton = form.querySelector(
         'button[type="submit"], input[type="submit"]'
     );
 
     const defaultButtonHTML = submitButton?.innerHTML;
+
+    // Restore checkout when the browser returns to this page.
 
     window.addEventListener("pageshow", () => {
         checkoutSubmitting = false;
@@ -955,18 +979,13 @@ function setupCheckoutForm() {
             return;
         }
 
-        /* Validate online payment details */
+        /* Validate customer details for online and transfer payments */
 
-        if (paymentMethod === "online") {
-            if (
-                !userDetails.name?.trim() ||
-                !userDetails.email?.trim() ||
-                !userDetails.phone?.trim()
-            ) {
-                alert(
-                    "Enter your full name, phone number and email address for online payment."
-                );
-
+        if (
+            paymentMethod === "online" ||
+            paymentMethod === "transfer"
+        ) {
+            if (!validatePaymentCustomer(userDetails)) {
                 return;
             }
         }
@@ -978,12 +997,7 @@ function setupCheckoutForm() {
 
         saveOrderSnapshot(userDetails, paymentMethod);
 
-        const submitButton = form.querySelector(
-            'button[type="submit"], input[type="submit"]'
-        );
-
-        const originalButtonHTML =
-            submitButton?.innerHTML;
+        const originalButtonHTML = submitButton?.innerHTML;
 
         checkoutSubmitting = true;
 
@@ -997,8 +1011,9 @@ function setupCheckoutForm() {
         }
 
         try {
+
             /* =============================================
-               ONLINE PAYMENT — OPay
+               ONLINE PAYMENT — OPAY
             ============================================= */
 
             if (paymentMethod === "online") {
@@ -1019,7 +1034,7 @@ function setupCheckoutForm() {
                             items: listCart.map(product => ({
                                 id: product.id,
 
-                                // The backend must validate this SKU.
+                                // Backend must validate this SKU.
                                 sku: product.variantSku || null,
 
                                 quantity: Number(product.quantity)
@@ -1080,10 +1095,72 @@ function setupCheckoutForm() {
             }
 
             /* =============================================
-               BANK TRANSFER
+               BANK TRANSFER — CREATE ORDER
             ============================================= */
 
             if (paymentMethod === "transfer") {
+                const response = await fetch(
+                    CHECKOUT_CONFIG.createOrderEndpoint,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            customerName: userDetails.name.trim(),
+                            customerEmail: userDetails.email.trim(),
+                            customerPhone: userDetails.phone.trim(),
+
+                            items: listCart.map(product => ({
+                                id: product.id,
+                                sku: product.variantSku || null,
+                                quantity: Number(product.quantity)
+                            }))
+                        })
+                    }
+                );
+
+                let result;
+
+                try {
+                    result = await response.json();
+                } catch {
+                    throw new Error(
+                        `Order server returned an invalid response (HTTP ${response.status}).`
+                    );
+                }
+
+                if (
+                    !response.ok ||
+                    !result ||
+                    result.success !== true ||
+                    typeof result.reference !== "string" ||
+                    !Number.isFinite(Number(result.amountNaira)) ||
+                    Number(result.amountNaira) <= 0
+                ) {
+                    throw new Error(
+                        result?.message ||
+                        `Unable to create bank transfer order (HTTP ${response.status}).`
+                    );
+                }
+
+                const savedOrder = JSON.parse(
+                    sessionStorage.getItem("currentOrder") || "{}"
+                );
+
+                savedOrder.reference = result.reference;
+                savedOrder.totalPrice = Number(result.amountNaira);
+                savedOrder.paymentMethod = "transfer";
+                savedOrder.paymentStatus = "pending";
+                savedOrder.orderSubmitted = false;
+
+                sessionStorage.setItem(
+                    "currentOrder",
+                    JSON.stringify(savedOrder)
+                );
+
                 window.location.assign(
                     CHECKOUT_CONFIG.transferPage
                 );
@@ -1149,3 +1226,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("WittyFare checkout initialized.");
 });
+
