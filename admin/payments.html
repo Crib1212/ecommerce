@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Dashboard | WittyFare</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f7f4;
+            color: #263328;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        h1 { color: #238b3a; font-size: 23px; }
+
+        button {
+            padding: 11px 15px;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .refresh { background: #238b3a; }
+        .logout { background: #555; }
+        .approve { background: #218838; }
+        .reject { background: #c62828; }
+
+        #message {
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .order {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 9px #0000000c;
+            overflow-wrap: anywhere;
+        }
+
+        .order h3 {
+            margin-top: 0;
+            color: #238b3a;
+        }
+
+        .amount {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .details {
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .items {
+            background: #f4f7f4;
+            padding: 12px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 500px) {
+            body { padding: 12px; }
+            .order { padding: 14px; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>WittyFare Payments</h1>
+
+        <div>
+            <button class="refresh" id="refreshButton">Refresh</button>
+            <button class="logout" id="logoutButton">Logout</button>
+        </div>
+    </header>
+
+    <h2>Pending Bank Transfers</h2>
+
+    <div id="message">Loading orders...</div>
+    <main id="orders"></main>
+
+    <script>
+        const ordersContainer = document.getElementById('orders');
+        const message = document.getElementById('message');
+
+        function addText(parent, tag, value, className) {
+            const element = document.createElement(tag);
+            element.textContent = value ?? '';
+
+            if (className) element.className = className;
+
+            parent.appendChild(element);
+            return element;
+        }
+
+        function formatMoney(kobo, currency = 'NGN') {
+            return new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: currency
+            }).format(Number(kobo) / 100);
+        }
+
+        function formatItems(items) {
+            if (!Array.isArray(items)) {
+                return JSON.stringify(items, null, 2);
+            }
+
+            return items.map(item => {
+                return `${item.name || item.title || item.productName || 'Product'} - Quantity: ${item.quantity || 1}`;
+            }).join('\n');
+        }
+
+        async function loadOrders() {
+            message.textContent = 'Loading orders...';
+            ordersContainer.replaceChildren();
+
+            try {
+                const response = await fetch('/api/admin-orders', {
+                    credentials: 'same-origin',
+                    cache: 'no-store'
+                });
+
+                if (response.status === 401) {
+                    window.location.href = '/admin/login.html';
+                    return;
+                }
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Unable to load orders.');
+                }
+
+                if (!result.orders.length) {
+                    message.textContent = 'No pending bank-transfer orders.';
+                    return;
+                }
+
+                message.textContent =
+                    `${result.orders.length} pending order(s) found.`;
+
+                result.orders.forEach(order => {
+                    const card = document.createElement('section');
+                    card.className = 'order';
+
+                    addText(card, 'h3', `Order: ${order.reference}`);
+
+                    addText(
+                        card,
+                        'div',
+                        formatMoney(order.amount_kobo, order.currency),
+                        'amount'
+                    );
+
+                    const details = document.createElement('div');
+                    details.className = 'details';
+
+                    addText(details, 'p',
+                        `Customer: ${order.customer_name}`);
+
+                    addText(details, 'p',
+                        `Email: ${order.customer_email}`);
+
+                    addText(details, 'p',
+                        `Phone: ${order.customer_phone}`);
+
+                    addText(details, 'p',
+                        `Payment: ${order.payment_method}`);
+
+                    addText(details, 'p',
+                        `Status: ${order.payment_status}`);
+
+                    addText(details, 'p',
+                        `Date: ${new Date(order.created_at).toLocaleString()}`);
+
+                    card.appendChild(details);
+
+                    addText(card, 'h4', 'Order items');
+
+                    addText(
+                        card,
+                        'div',
+                        formatItems(order.items),
+                        'items'
+                    );
+
+                    const actions = document.createElement('div');
+                    actions.className = 'actions';
+
+                    const approve = document.createElement('button');
+                    approve.className = 'approve';
+                    approve.textContent = 'Approve Payment';
+
+                    approve.addEventListener('click', () => {
+                        reviewPayment(order.reference, 'approve');
+                    });
+
+                    const reject = document.createElement('button');
+                    reject.className = 'reject';
+                    reject.textContent = 'Reject Payment';
+
+                    reject.addEventListener('click', () => {
+                        reviewPayment(order.reference, 'reject');
+                    });
+
+                    actions.append(approve, reject);
+                    card.appendChild(actions);
+
+                    ordersContainer.appendChild(card);
+                });
+
+            } catch (error) {
+                message.textContent = error.message;
+            }
+        }
+
+        async function reviewPayment(reference, action) {
+            let note = '';
+
+            if (action === 'approve') {
+                const confirmed = confirm(
+                    'Have you confirmed that the money has entered your bank account?'
+                );
+
+                if (!confirmed) return;
+
+                note = 'Bank credit confirmed by administrator.';
+            } else {
+                note = prompt('Enter the reason for rejecting this payment:');
+
+                if (note === null || !note.trim()) {
+                    alert('A rejection reason is required.');
+                    return;
+                }
+            }
+
+            try {
+                const response = await fetch('/api/verify-payment', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reference,
+                        action,
+                        note
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.status === 401) {
+                    window.location.href = '/admin/login.html';
+                    return;
+                }
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Payment update failed.');
+                }
+
+                alert(result.message);
+                await loadOrders();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        document.getElementById('refreshButton')
+            .addEventListener('click', loadOrders);
+
+        document.getElementById('logoutButton')
+            .addEventListener('click', async () => {
+                try {
+                    await fetch('/api/admin-logout', {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    });
+                } finally {
+                    window.location.href = '/admin/login.html';
+                }
+            });
+
+        async function checkAdminSession() {
+            try {
+                const response = await fetch('/api/admin-session', {
+                    credentials: 'same-origin',
+                    cache: 'no-store'
+                });
+
+                if (!response.ok) {
+                    window.location.replace('/admin/login.html');
+                    return;
+                }
+
+                loadOrders();
+
+            } catch (error) {
+                message.textContent = 'Unable to verify administrator session.';
+            }
+        }
+
+        checkAdminSession(); 
+    </script>
+</body>
+</html>
+
