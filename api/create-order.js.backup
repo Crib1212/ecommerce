@@ -1,0 +1,175 @@
+
+import { randomBytes } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { supabaseRequest } from './_lib/supabase.js';
+
+function send(res, status, payload) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(status).json(payload);
+}
+
+function cleanText(value, max = 160) {
+    return typeof value === 'string'
+        ? value.trim().slice(0, max)
+        : '';
+}
+
+async function loadCatalogue() {
+    const file = path.join(process.cwd(), 'product.json');
+    const raw = await readFile(file, 'utf8');
+    const catalogue = JSON.parse(raw);
+
+    if (!Array.isArray(catalogue)) {
+        throw new Error('Invalid product catalogue.');
+    }
+
+    return catalogue;
+}
+
+export default async function handler(req, res) {
+    if (req.method !== 'POST') {
+        res.setHeader('Allow', 'POST');
+        return send(res, 405, {
+            success: false,
+            message: 'Method not allowed.'
+        });
+    }
+
+    try {
+        const body = typeof req.body === 'string'
+            ? JSON.parse(req.body)
+            : req.body;
+
+        const customerName = cleanText(body?.customerName, 100);
+        const customerEmail = cleanText(body?.customerEmail, 180).toLowerCase();
+        const customerPhone = cleanText(body?.customerPhone, 30);
+        const items = body?.items;
+
+        if (
+            !customerName ||
+            !/^\S+@\S+\.\S+$/.test(customerEmail) ||
+            !customerPhone
+        ) {
+            return send(res, 400, {
+                success: false,
+                message: 'Enter your name, valid email and phone number.'
+            });
+        }
+
+        if (!Array.isArray(items) || items.length < 1 || items.length > 50) {
+            return send(res, 400, {
+                success: false,
+                message: 'Invalid or empty shopping cart.'
+            });
+        }
+
+        const catalogue = await loadCatalogue();
+        const byId = new Map(
+            catalogue.map(product => [String(product.id), product])
+        );
+
+        let totalNaira = 0;
+        const purchased = [];
+
+        for (const item of items) {
+            const id = cleanText(String(item?.id ?? ''), 160);
+            const quantity = Number(item?.quantity);
+
+            if (
+                !id ||
+                !Number.isSafeInteger(quantity) ||
+                quantity < 1 ||
+                quantity > 1000
+            ) {
+                return send(res, 400, {
+                    success: false,
+                    message: 'Invalid product or quantity.'
+                });
+            }
+
+            const product = byId.get(id);
+
+            if (!product) {
+                return send(res, 400, {
+                    success: false,
+                    message: 'A product in your cart was not found.'
+                });
+            }
+
+            const price = Number(product.price);
+
+            if (!Number.isSafeInteger(price) || price < 1) {
+                return send(res, 400, {
+                    success: false,
+                    message: 'A product has an invalid price.'
+                });
+            }
+
+            totalNaira += price * quantity;
+
+            purchased.push({
+                id,
+                name: String(product.name || id),
+                quantity,
+                unitPrice: price
+            });
+        }
+
+        if (
+            !Number.isSafeInteger(totalNaira) ||
+            totalNaira < 1 ||
+            totalNaira > 100000000
+        ) {
+            return send(res, 400, {
+                success: false,
+                message: 'Invalid order total.'
+            });
+        }
+
+        const reference =
+            `WFBT${Date.now()}${randomBytes(5).toString('hex').toUpperCase()}`;
+
+        const savedOrder = await supabaseRequest('orders', {
+            method: 'POST',
+            headers: {
+                Prefer: 'return=representation'
+            },
+            body: JSON.stringify({
+                reference,
+                customer_name: customerName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                items: purchased,
+                amount_kobo: totalNaira * 100,
+                currency: 'NGN',
+                payment_method: 'bank_transfer',
+                payment_status: 'pending',
+                order_status: 'pending'
+            })
+        });
+
+        if (!Array.isArray(savedOrder) || !savedOrder[0]) {
+            throw new Error('Order was not saved.');
+        }
+
+        return send(res, 201, {
+            success: true,
+            message: 'Order saved successfully.',
+            reference,
+            amountNaira: totalNaira,
+            paymentStatus: 'pending',
+            order: savedOrder[0]
+        });
+
+    } catch (error) {
+        console.error('Create order error:', error.message);
+
+        return send(res, 500, {
+            success: false,
+            message: 'Unable to save your order. Please try again.'
+        });
+    }
+}
+
