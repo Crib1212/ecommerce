@@ -1,4 +1,3 @@
-
 import { randomBytes } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -94,7 +93,7 @@ export default async function handler(req, res) {
 
         const catalogue = await loadCatalogue();
         const byId = new Map(
-            catalogue.map(p => [String(p.id), p])
+            catalogue.map(product => [String(product.id), product])
         );
 
         let totalNaira = 0;
@@ -102,6 +101,7 @@ export default async function handler(req, res) {
 
         for (const item of items) {
             const id = cleanText(String(item?.id ?? ''), 160);
+            const sku = cleanText(String(item?.sku ?? ''), 100);
             const quantity = Number(item?.quantity);
 
             if (
@@ -125,22 +125,77 @@ export default async function handler(req, res) {
                 });
             }
 
-            const price = Number(product.price);
+            let price;
+            let variant = null;
+
+            if (Array.isArray(product.variants) && product.variants.length > 0) {
+                if (!sku) {
+                    return send(res, 400, {
+                        success: false,
+                        message: `Please select a variant for ${product.name}.`
+                    });
+                }
+
+                variant = product.variants.find(
+                    entry => String(entry.sku) === sku
+                );
+
+                if (!variant) {
+                    return send(res, 400, {
+                        success: false,
+                        message: `The selected variant for ${product.name} is invalid.`
+                    });
+                }
+
+                price = Number(variant.price);
+
+                if (
+                    Number.isFinite(Number(variant.stock)) &&
+                    Number(variant.stock) < quantity
+                ) {
+                    return send(res, 400, {
+                        success: false,
+                        message: `Insufficient stock for ${product.name} (${variant.name}).`
+                    });
+                }
+            } else {
+                price = Number(product.price);
+
+                if (!Number.isSafeInteger(price) || price < 1) {
+                    return send(res, 400, {
+                        success: false,
+                        message: `The price for ${product.name} is invalid.`
+                    });
+                }
+            }
 
             if (!Number.isSafeInteger(price) || price < 1) {
                 return send(res, 400, {
                     success: false,
-                    message: 'A product has an invalid price.'
+                    message: `The selected price for ${product.name} is invalid.`
                 });
             }
 
-            totalNaira += price * quantity;
+            const lineTotal = price * quantity;
+
+            if (!Number.isSafeInteger(lineTotal)) {
+                return send(res, 400, {
+                    success: false,
+                    message: 'An item total is invalid.'
+                });
+            }
+
+            totalNaira += lineTotal;
 
             purchased.push({
                 id,
+                sku: variant ? String(variant.sku) : null,
                 name: String(product.name || id),
+                variantName: variant ? String(variant.name || '') : null,
+                variantLabel: variant ? String(variant.label || '') : null,
                 quantity,
-                unitPrice: price
+                unitPrice: price,
+                lineTotal
             });
         }
 
@@ -228,7 +283,6 @@ export default async function handler(req, res) {
             });
         }
 
-        // Save the order before giving the checkout link to the customer.
         const savedOrder = await supabaseRequest('orders', {
             method: 'POST',
             headers: {
@@ -249,7 +303,7 @@ export default async function handler(req, res) {
         });
 
         if (!Array.isArray(savedOrder) || !savedOrder[0]) {
-            throw new Error('Unable to save OPay order.');
+            throw new Error('Unable to save OPay order to the database.');
         }
 
         return send(res, 200, {
@@ -261,12 +315,14 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error('OPay initialization error:', error?.message || 'Unknown error');
+        console.error(
+            'OPay initialization error:',
+            error?.message || 'Unknown error'
+        );
 
         return send(res, 500, {
             success: false,
-            message: 'Unable to start payment right now. Please try again.'
+            message: error?.message || 'Unknown server error'
         });
     }
 }
-
