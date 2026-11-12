@@ -5,8 +5,12 @@ import path from 'node:path';
 import { supabaseRequest } from './_lib/supabase.js';
 
 function send(res, status, payload) {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader(
+        'Content-Type',
+        'application/json; charset=utf-8'
+    );
     res.setHeader('Cache-Control', 'no-store');
+
     return res.status(status).json(payload);
 }
 
@@ -31,6 +35,7 @@ async function loadCatalogue() {
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST');
+
         return send(res, 405, {
             success: false,
             message: 'Method not allowed.'
@@ -50,7 +55,10 @@ export default async function handler(req, res) {
         }
 
         const customerName = cleanText(body.customerName, 100);
-        const customerEmail = cleanText(body.customerEmail, 180).toLowerCase();
+        const customerEmail = cleanText(
+            body.customerEmail,
+            180
+        ).toLowerCase();
         const customerPhone = cleanText(body.customerPhone, 30);
 
         const items = body.items;
@@ -87,6 +95,7 @@ export default async function handler(req, res) {
         );
 
         let totalNaira = 0;
+
         const purchased = [];
         const stockRequested = new Map();
 
@@ -97,7 +106,6 @@ export default async function handler(req, res) {
             );
 
             const sku = cleanText(item?.sku, 100);
-
             const quantity = Number(item?.quantity);
 
             if (
@@ -125,7 +133,8 @@ export default async function handler(req, res) {
                 ? product.variants
                 : [];
 
-            const hasVariants = product.hasVariants === true ||
+            const hasVariants =
+                product.hasVariants === true ||
                 variants.length > 0;
 
             let selectedVariant = null;
@@ -156,7 +165,6 @@ export default async function handler(req, res) {
                 itemName = String(
                     selectedVariant.name || product.name
                 );
-
                 stock = selectedVariant.stock;
             } else {
                 if (sku) {
@@ -255,26 +263,45 @@ export default async function handler(req, res) {
         const reference =
             `WFBT${Date.now()}${randomBytes(5).toString('hex').toUpperCase()}`;
 
+        // Customer information for the existing JSONB column.
+        const customer = {
+            name: customerName,
+            email: customerEmail,
+            phone: customerPhone
+        };
+
+        // Fields required by the existing Supabase orders table,
+        // plus fields used by the current checkout backend.
+        const orderData = {
+            order_reference: reference,
+            customer,
+            items: purchased,
+            subtotal: totalNaira,
+            total_price: totalNaira,
+            payment_method: 'bank_transfer',
+
+            reference,
+            customer_name: customerName,
+            customer_email: customerEmail,
+            customer_phone: customerPhone,
+            amount_kobo: totalNaira * 100,
+            currency: 'NGN',
+            payment_status: 'pending',
+            order_status: 'pending'
+        };
+
         const savedOrder = await supabaseRequest('orders', {
             method: 'POST',
             headers: {
                 Prefer: 'return=representation'
             },
-            body: JSON.stringify({
-                reference,
-                customer_name: customerName,
-                customer_email: customerEmail,
-                customer_phone: customerPhone,
-                items: purchased,
-                amount_kobo: totalNaira * 100,
-                currency: 'NGN',
-                payment_method: 'bank_transfer',
-                payment_status: 'pending',
-                order_status: 'pending'
-            })
+            body: JSON.stringify(orderData)
         });
 
-        if (!Array.isArray(savedOrder) || !savedOrder[0]) {
+        if (
+            !Array.isArray(savedOrder) ||
+            !savedOrder[0]
+        ) {
             throw new Error('Order was not saved.');
         }
 
