@@ -1,3 +1,4 @@
+cat > api/create-order.js << 'EOF'
 import { randomBytes } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -52,54 +53,16 @@ export default async function handler(req, res) {
             const id = cleanText(String(item?.id ?? ''), 160);
             const sku = cleanText(item?.sku, 100);
             const quantity = Number(item?.quantity);
-            if (!id || !Number.isSafeInteger(quantity) || quantity < 1) return send(res, 400, { success: false, message: 'Invalid product quantity or ID.' });
-            const product = byId.get(id);
-            if (!product) return send(res, 400, { success: false, message: 'A product in your cart is unavailable.' });
             
-            let price = Number(product.price);
-            if (!Number.isSafeInteger(price) || price < 1) throw new Error(`Invalid price for ${id}`);
-            const lineTotal = price * quantity;
-            totalNaira += lineTotal;
-            purchased.push({ id, sku: sku || null, name: String(product.name || id), quantity, unitPrice: price, lineTotal });
-        }
-
-        const reference = `WFBT${Date.now()}${randomBytes(5).toString('hex').toUpperCase()}`;
-        const customer = { name: customerName, email: customerEmail, phone: customerPhone };
-
-        // FIXED: Only send columns that definitely exist
-        const orderData = {
-            order_reference: reference,
-            customer,
-            items: purchased,
-            subtotal: totalNaira,
-            total_price: totalNaira,
-            payment_method: 'bank_transfer',
-            reference: reference,
-            customer_name: customerName,
-            customer_email: customerEmail,
-            customer_phone: customerPhone,
-            amount_kobo: totalNaira * 100,
-            currency: 'NGN',
-            payment_status: 'pending',
-            order_status: 'pending'
-        };
-
-        const savedOrder = await supabaseRequest('orders', {
-            method: 'POST',
-            headers: { Prefer: 'return=representation' },
-            body: JSON.stringify(orderData)
-        });
-
-        if (!Array.isArray(savedOrder) || !savedOrder[0]) throw new Error('Order was not saved.');
-
-        return send(res, 201, { success: true, message: 'Order saved successfully.', reference, amountNaira: totalNaira, paymentStatus: 'pending' });
-
-    } catch (error) {
-        // FIXED: This will show the REAL Supabase error in your server logs
-        console.error('Create order error:', error.message, error.stack, error.details || '');
-        return send(res, 500, {
-            success: false,
-            message: `Unable to save your order: ${error.message}` // Now shows real reason
-        });
-    }
-}
+            if (!id || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) {
+                return send(res, 400, { success: false, message: 'Invalid product quantity or ID.' });
+            }
+            
+            const product = byId.get(id);
+            if (!product) {
+                return send(res, 400, { success: false, message: 'A product in your cart is unavailable.' });
+            }
+            
+            const price = Number(product.price);
+            if (!Number.isSafeInteger(price) || price < 1) {
+               

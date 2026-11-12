@@ -1,3 +1,4 @@
+cat > api/_lib/supabase.js << 'EOF'
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
 
@@ -12,8 +13,9 @@ export async function supabaseRequest(path, options = {}) {
             ...options,
             headers: {
                 apikey: SUPABASE_SECRET_KEY,
+                Authorization: `Bearer ${SUPABASE_SECRET_KEY}`,
                 "Content-Type": "application/json",
-                ...(options.headers || {})
+                ...(options.headers || {}),
             }
         }
     );
@@ -21,9 +23,10 @@ export async function supabaseRequest(path, options = {}) {
     if (!response.ok) {
         const errorText = await response.text();
         console.error("Supabase error:", response.status, errorText);
-        throw new Error(`Database request failed: ${response.status}`);
+        throw new Error(errorText || `Database request failed: ${response.status}`);
     }
 
     const text = await response.text();
     return text ? JSON.parse(text) : null;
 }
+EOF
