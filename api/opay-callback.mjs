@@ -1,12 +1,18 @@
-import { supabaseRequest } from './_lib/supabase.js';
 
-export default async function handler(req, res) {
+import { verifyAndUpdateOrder } from './opay-verify.mjs';
+
+function send(res, status, data) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
 
+  return res.status(status).json(data);
+}
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
-    return res.status(405).json({
+
+    return send(res, 405, {
       status: 'method_not_allowed'
     });
   }
@@ -17,51 +23,48 @@ export default async function handler(req, res) {
       : req.body;
 
     if (!body || typeof body !== 'object' || Array.isArray(body)) {
-      return res.status(400).json({
+      return send(res, 400, {
         status: 'invalid_payload'
       });
     }
 
-    const reference = typeof body.reference === 'string'
-      ? body.reference.trim()
+    const payload = body.payload || body;
+
+    const reference = typeof payload.reference === 'string'
+      ? payload.reference.trim()
       : '';
 
     if (!/^[A-Za-z0-9_-]{6,100}$/.test(reference)) {
-      return res.status(400).json({
+      return send(res, 400, {
         status: 'invalid_reference'
       });
     }
 
-    const orders = await supabaseRequest(
-      `orders?reference=eq.${encodeURIComponent(reference)}&payment_method=eq.opay&select=reference,payment_status`
-    );
-
-    if (!Array.isArray(orders) || !orders.length) {
-      console.log('OPay callback: order not found', reference);
-
-      return res.status(200).json({
-        status: 'received',
-        verified: false
-      });
-    }
-
-    console.log('OPay callback received', {
+    console.log('OPay callback received:', {
       reference,
-      receivedAt: new Date().toISOString()
+      notificationStatus: payload.status || 'unknown'
     });
 
-    // A callback is only a notification.
-    // Payment must be independently verified through opay-verify.mjs.
-    return res.status(200).json({
+    const result = await verifyAndUpdateOrder(reference);
+
+    console.log('OPay callback verification:', {
+      reference,
+      verified: result.success,
+      status: result.status
+    });
+
+    return send(res, 200, {
       status: 'received',
-      verified: false
+      verified: result.success,
+      paymentStatus: result.status
     });
 
   } catch (error) {
     console.error('OPay callback error:', error.message);
 
-    return res.status(500).json({
-      status: 'server_error'
+    return send(res, 500, {
+      status: 'verification_failed'
     });
   }
 }
+

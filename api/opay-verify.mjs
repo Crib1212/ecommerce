@@ -1,10 +1,12 @@
+
 import { createHmac } from 'node:crypto';
 import { supabaseRequest } from './_lib/supabase.js';
 
-const API_URLS = {
-  sandbox: 'https://testapi.opaycheckout.com',
-  production: 'https://liveapi.opaycheckout.com'
-};
+const ENV = process.env.OPAY_ENV || 'sandbox';
+
+const BASE_URL = ENV === 'production'
+  ? 'https://liveapi.opaycheckout.com'
+  : 'https://testapi.opaycheckout.com';
 
 function send(res, status, data) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -12,9 +14,168 @@ function send(res, status, data) {
   return res.status(status).json(data);
 }
 
+function signRequest(body) {
+  const secret = process.env.OPAY_SECRET_KEY;
+
+  if (!secret) {
+    throw new Error('OPAY_SECRET_KEY is missing.');
+  }
+
+  return createHmac('sha512', secret)
+    .update(JSON.stringify(body))
+    .digest('hex');
+}
+
+async function getOrder(reference) {
+  const rows = await supabaseRequest(
+    `orders?reference=eq.${encodeURIComponent(reference)}&payment_method=eq.opay&select=reference,amount_kobo,currency,payment_method,payment_status,order_status`
+  );
+
+  return Array.isArray(rows) ? rows[0] : null;
+}
+
+export async function verifyAndUpdateOrder(reference) {
+  if (!reference || typeof reference !== 'string') {
+    throw new Error('Invalid payment reference.');
+  }
+
+  const merchantId = process.env.OPAY_MERCHANT_ID;
+
+  if (!merchantId) {
+    throw new Error('OPAY_MERCHANT_ID is missing.');
+  }
+
+  const order = await getOrder(reference);
+
+  if (!order) {
+    return {
+      success: false,
+      status: 'ORDER_NOT_FOUND',
+      reference
+    };
+  }
+
+  if (
+    order.payment_status === 'paid' &&
+    order.order_status === 'paid'
+  ) {
+    return {
+      success: true,
+      status: 'SUCCESS',
+      reference,
+      alreadyPaid: true
+    };
+  }
+
+  if (
+    order.payment_method !== 'opay' ||
+    order.currency !== 'NGN' ||
+    !Number.isSafeInteger(Number(order.amount_kobo)) ||
+    Number(order.amount_kobo) <= 0
+  ) {
+    throw new Error('Order payment details are invalid.');
+  }
+
+  const requestBody = {
+    country: 'NG',
+    reference
+  };
+
+  const signature = signRequest(requestBody);
+
+  const response = await fetch(
+    `${BASE_URL}/api/v1/international/cashier/status`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${signature}`,
+        MerchantId: merchantId
+      },
+      body: JSON.stringify(requestBody)
+    }
+  );
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok || !result) {
+    throw new Error('Unable to query OPay payment status.');
+  }
+
+  if (result.code !== '00000' || !result.data) {
+    throw new Error(
+      `OPay status query failed: ${result.message || result.code}`
+    );
+  }
+
+  const payment = result.data;
+
+  if (payment.reference !== reference) {
+    throw new Error('OPay reference mismatch.');
+  }
+
+  const status = String(payment.status || '').toUpperCase();
+
+  if (status !== 'SUCCESS') {
+    return {
+      success: false,
+      status,
+      reference,
+      message: payment.failureReason || 'Payment is not successful.'
+    };
+  }
+
+  const paidAmount = Number(payment.amount?.total);
+  const expectedAmount = Number(order.amount_kobo);
+
+  if (
+    payment.amount?.currency !== 'NGN' ||
+    !Number.isSafeInteger(paidAmount) ||
+    paidAmount !== expectedAmount
+  ) {
+    throw new Error('Payment amount or currency mismatch.');
+  }
+
+  const updated = await supabaseRequest(
+    `orders?reference=eq.${encodeURIComponent(reference)}&payment_method=eq.opay&payment_status=eq.pending`,
+    {
+      method: 'PATCH',
+      headers: {
+        Prefer: 'return=representation'
+      },
+      body: {
+        payment_status: 'paid',
+        order_status: 'paid'
+      }
+    }
+  );
+
+  if (!Array.isArray(updated) || updated.length === 0) {
+    const latestOrder = await getOrder(reference);
+
+    if (
+      latestOrder?.payment_status !== 'paid' ||
+      latestOrder?.order_status !== 'paid'
+    ) {
+      throw new Error('Could not update the order payment status.');
+    }
+  }
+
+  console.log('OPay payment verified:', reference);
+
+  return {
+    success: true,
+    status: 'SUCCESS',
+    reference,
+    amount_kobo: paidAmount
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
+
     return send(res, 405, {
       success: false,
       message: 'Method not allowed.'
@@ -31,140 +192,21 @@ export default async function handler(req, res) {
       });
     }
 
-    const env = String(process.env.OPAY_ENV || 'sandbox').trim().toLowerCase();
-    const merchantId = process.env.OPAY_MERCHANT_ID?.trim();
-    const secretKey = process.env.OPAY_SECRET_KEY?.trim();
+    const result = await verifyAndUpdateOrder(reference);
 
-    if (!API_URLS[env] || !merchantId || !secretKey) {
-      return send(res, 500, {
-        success: false,
-        message: 'OPay verification is not configured.'
-      });
+    if (result.status === 'ORDER_NOT_FOUND') {
+      return send(res, 404, result);
     }
 
-    // Find the original order.
-    const orders = await supabaseRequest(
-      `orders?reference=eq.${encodeURIComponent(reference)}&select=reference,amount_kobo,currency,payment_method,payment_status,order_status`
-    );
-
-    const order = Array.isArray(orders) ? orders[0] : null;
-
-    if (!order || order.payment_method !== 'opay') {
-      return send(res, 404, {
-        success: false,
-        message: 'OPay order not found.'
-      });
-    }
-
-    if (order.payment_status === 'paid') {
-      return send(res, 200, {
-        success: true,
-        status: 'SUCCESS',
-        reference,
-        message: 'Payment already confirmed.'
-      });
-    }
-
-    // OPay requires this exact JSON body to be signed.
-    const requestBody = JSON.stringify({
-      country: 'NG',
-      reference
-    });
-
-    const signature = createHmac('sha512', secretKey)
-      .update(requestBody)
-      .digest('hex');
-
-    const response = await fetch(
-      `${API_URLS[env]}/api/v1/international/cashier/status`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${signature}`,
-          MerchantId: merchantId,
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: requestBody,
-        signal: AbortSignal.timeout(15000)
-      }
-    );
-
-    const result = await response.json();
-    const payment = result?.data;
-
-    if (!response.ok || result?.code !== '00000' || !payment) {
-      console.error('OPay status check failed:', {
-        httpStatus: response.status,
-        code: result?.code
-      });
-
-      return send(res, 502, {
-        success: false,
-        status: 'UNKNOWN',
-        message: 'Unable to verify payment with OPay.'
-      });
-    }
-
-    // Never accept a different reference, amount or currency.
-    const amountMatches =
-      Number(payment.amount?.total) === Number(order.amount_kobo);
-
-    const validPayment =
-      payment.reference === reference &&
-      payment.status === 'SUCCESS' &&
-      payment.amount?.currency === 'NGN' &&
-      order.currency === 'NGN' &&
-      amountMatches;
-
-    if (!validPayment) {
-      return send(res, 200, {
-        success: false,
-        status: payment.status || 'UNKNOWN',
-        reference,
-        message: 'Payment has not been confirmed.'
-      });
-    }
-
-    // Update only the matching pending OPay order.
-    const updated = await supabaseRequest(
-      `orders?reference=eq.${encodeURIComponent(reference)}&payment_method=eq.opay&payment_status=eq.pending`,
-      {
-        method: 'PATCH',
-        headers: {
-          Prefer: 'return=representation'
-        },
-        body: JSON.stringify({
-          payment_status: 'paid',
-          order_status: 'paid'
-        })
-      }
-    );
-
-    if (!Array.isArray(updated) || !updated.length) {
-      // Check whether another request already completed the update.
-      const check = await supabaseRequest(
-        `orders?reference=eq.${encodeURIComponent(reference)}&select=payment_status`
-      );
-
-      if (check?.[0]?.payment_status !== 'paid') {
-        throw new Error('Could not update the confirmed order.');
-      }
-    }
-
-    return send(res, 200, {
-      success: true,
-      status: 'SUCCESS',
-      reference,
-      message: 'Payment successfully verified.'
-    });
+    return send(res, 200, result);
 
   } catch (error) {
     console.error('OPay verification error:', error.message);
 
-    return send(res, 500, {
+    return send(res, 502, {
       success: false,
-      message: 'Payment verification failed. Please try again.'
+      message: 'Payment verification temporarily unavailable.'
     });
   }
 }
+
