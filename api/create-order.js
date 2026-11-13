@@ -186,8 +186,9 @@ export default async function handler(req, res) {
         const reference =
             `WFBT${Date.now()}${randomBytes(5).toString('hex').toUpperCase()}`;
 
-        const orderData = {
-            reference,
+       const orderData = {
+    order_reference: reference,
+    reference: reference,
             customer_name: customerName,
             customer_email: customerEmail,
             customer_phone: customerPhone,
