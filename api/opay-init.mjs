@@ -1,3 +1,4 @@
+
 import { randomBytes } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -35,6 +36,7 @@ async function loadCatalogue() {
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST');
+
         return send(res, 405, {
             success: false,
             message: 'Method not allowed.'
@@ -92,6 +94,7 @@ export default async function handler(req, res) {
         }
 
         const catalogue = await loadCatalogue();
+
         const byId = new Map(
             catalogue.map(product => [String(product.id), product])
         );
@@ -150,6 +153,8 @@ export default async function handler(req, res) {
                 price = Number(variant.price);
 
                 if (
+                    variant.stock !== null &&
+                    variant.stock !== undefined &&
                     Number.isFinite(Number(variant.stock)) &&
                     Number(variant.stock) < quantity
                 ) {
@@ -283,20 +288,29 @@ export default async function handler(req, res) {
             });
         }
 
+        // Save the pending order in Supabase.
         const savedOrder = await supabaseRequest('orders', {
             method: 'POST',
             headers: {
                 Prefer: 'return=representation'
             },
             body: JSON.stringify({
-                reference,
+                order_reference: reference,
+                reference: reference,
+
                 customer_name: customerName,
                 customer_email: customerEmail,
                 customer_phone: customerPhone,
+
                 items: purchased,
+
+                subtotal: totalNaira,
+                delivery_fee: 0,
+                total_price: totalNaira,
                 amount_kobo: totalNaira * 100,
+
                 currency: 'NGN',
-                payment_method: 'opay',
+                payment_method: 'online',
                 payment_status: 'pending',
                 order_status: 'pending'
             })
