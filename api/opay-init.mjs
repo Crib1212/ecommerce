@@ -222,9 +222,10 @@ export default async function handler(req, res) {
             ? purchased[0].name
             : `${purchased[0].name} and ${purchased.length - 1} other item(s)`;
 
-        const opayPayload = {
-            country: 'NG',
-            reference,
+       const opayPayload = {
+    country: 'NG',
+    displayName: 'WittyFare Agrovet & Farms',
+    reference,
             amount: {
                 currency: 'NGN',
                 total: totalNaira * 100
