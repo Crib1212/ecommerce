@@ -195,7 +195,7 @@ export default async function handler(req, res) {
             subtotal: totalNaira,
             total_price: totalNaira,
             amount_kobo: amountKobo,
-            payment_method: 'bank_transfer',
+            payment_method: 'transfer',
             payment_status: 'pending',
             order_status: 'pending',
             currency: 'NGN',
